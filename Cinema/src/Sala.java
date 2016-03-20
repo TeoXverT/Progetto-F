@@ -10,8 +10,8 @@
  */
 public class Sala {
     
-    int numeroSala, numeroPosti, fileVip, x, y;
-    int[][] posti;
+    private int numeroSala, numeroPosti, fileVip, x, y;
+    private int[][] posti;
     
     //X E Y CORRISPONDONO AL MASSIMO NUMERO DI RIGHE E COLONNE CHE CI SONO IN UNA SALA
     
@@ -24,6 +24,30 @@ public class Sala {
         this.y = y;
         
         
+    }
+
+    public int getNumeroSala() {
+        return numeroSala;
+    }
+
+    public int getNumeroPosti() {
+        return numeroPosti;
+    }
+
+    public int getFileVip() {
+        return fileVip;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int[][] getPosti() {
+        return posti;
     }
     
 }
