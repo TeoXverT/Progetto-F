@@ -10,8 +10,8 @@
  */
 public class Film {
     
-    String nome ,  trama;
-    int idFilm , durata;
+    private String nome ,  trama;
+    private int idFilm , durata;
     
     //DURATA IN MINUTI
     
@@ -22,6 +22,22 @@ public class Film {
         this.durata = durata;
         this.trama = trama;
                 
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getTrama() {
+        return trama;
+    }
+
+    public int getIdFilm() {
+        return idFilm;
+    }
+
+    public int getDurata() {
+        return durata;
     }
     
 }
