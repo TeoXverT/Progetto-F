@@ -10,9 +10,9 @@
  */
 public class Prenotazione {
     
-    Proiezione nuovaProiezione;
     
-    public Prenotazione() {
+    
+    public Prenotazione(Proiezione nuovaProiezione) {
         
     }
     
