@@ -13,6 +13,7 @@ public class Prenotazione {
     
     
     public Prenotazione(Proiezione nuovaProiezione) {
+        bb
         
     }
     
