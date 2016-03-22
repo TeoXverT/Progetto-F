@@ -13,14 +13,13 @@ public class Prenotazione {
     
     
     public Prenotazione(Proiezione nuovaProiezione) {
-        bb
         
     }
     
     public double calcoloCosto() {
         
         
-        
+        return 2.0; // non vale niente
     };
     
     
