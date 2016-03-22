@@ -37,4 +37,10 @@ public class Gestione {
                 break;   
         }  
     }
+    
+    public void AggiungiFilm(String nome, String trama, int durata ) {
+        Film f = new Film(nome, trama, durata);
+        Film.add(f);
+        
+    }
 }
