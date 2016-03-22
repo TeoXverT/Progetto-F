@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*
@@ -22,16 +23,18 @@ public class Gestione {
          Proiezioni = new ArrayList<>();
     }
     
-    public void AggiornaDati(String nome_file) {
+    public void AggiornaDati(String nome_file) throws IOException {
         IODati IO = new IODati();
         switch(nome_file) {
             case "film.txt":
-                IO.caricaListaFilm(nome_file);
+                Film = IO.caricaListaFilm(nome_file);
                 break;
             case "sale.txt":
-                
-        }
-  
-        
+                Sale = IO.caricaListaSala(nome_file);
+                break;
+            case "proiezione.txt":
+                 Proiezioni = IO.caricaListaProiezione(nome_file);
+                break;   
+        }  
     }
 }
