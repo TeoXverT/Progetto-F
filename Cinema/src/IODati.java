@@ -96,7 +96,7 @@ public class IODati {
             parte4 = st.nextToken();
             parte5 = st.nextToken();
             
-            variabileProiezione = new Proiezione(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), parte4, parte5);
+            variabileProiezione = new Proiezione(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), new DataOra(parte4), parte5);
             listaProiezione.add(variabileProiezione);
             
     }
