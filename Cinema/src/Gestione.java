@@ -38,9 +38,10 @@ public class Gestione {
         }  
     }
     
-    public void AggiungiFilm(String nome, String trama, int durata ) {
-        Film f = new Film(nome, trama, durata);
+    public void AggiungiFilm(String nome,String trama, int durata ) {
+        int IDFilm = Film.size() + 1;
+        Film f = new Film(nome, IDFilm, trama, durata);
         Film.add(f);
-        
+        // metodo per aggiornare lista database!!! da fare!!
     }
 }

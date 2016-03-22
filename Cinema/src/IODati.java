@@ -22,7 +22,13 @@ public class IODati {
     private ArrayList<Sala> listaSala;
     private ArrayList<Proiezione> listaProiezione;
     
+    /*
+    CRIIIIII LEGGIIII
     
+    abbiamo rimesso idfilm nel costruttore!! quindi ri modifica tutto hahahahahaha
+    
+    
+    */
     
     public IODati() {
         

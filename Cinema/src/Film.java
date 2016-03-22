@@ -15,7 +15,7 @@ public class Film {
     
     //DURATA IN MINUTI
     
-    public Film(String nome, String trama, int durata) {
+    public Film(String nome, int idFilm, String trama, int durata) {
         
         this.nome = nome;
         this.idFilm = idFilm;
