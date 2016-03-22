@@ -80,7 +80,7 @@ public class IODati {
     
     public ArrayList<Proiezione> caricaListaProiezione(String nomeFile) throws FileNotFoundException, IOException {
         
-        Sala variabileProiezione;
+        Proiezione variabileProiezione;
         listaProiezione = new ArrayList<>();
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
@@ -96,7 +96,7 @@ public class IODati {
             parte4 = st.nextToken();
             parte5 = st.nextToken();
             
-            variabileProiezione = new Sala(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), Integer.parseInt(parte5));
+            variabileProiezione = new Proiezione(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), parte4, parte5);
             listaProiezione.add(variabileProiezione);
             
     }
