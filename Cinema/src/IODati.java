@@ -42,8 +42,8 @@ public class IODati {
             parte1 = st.nextToken();
             parte2 = st.nextToken();
             parte3 = st.nextToken();
-            parte4 = st.nextToken();
-            variabileFilm = new Film(parte1, Integer.parseInt(parte2), Integer.parseInt(parte3), parte4);
+            
+            variabileFilm = new Film( parte1, parte2, Integer.parseInt(parte3));
             listaFilm.add(variabileFilm);
     }
         
