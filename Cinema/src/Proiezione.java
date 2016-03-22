@@ -9,5 +9,18 @@
  * @author Yoga
  */
 public class Proiezione {
+    private int ID_proiezione;
+    private int ID_film;
+    private int ID_sala;
+    private String data_ora;
+    private String tipo;
+    
+    public Proiezione(int ID_Proiezione, int ID_film, int ID_sala, String data_ora, String tipo){
+        this.ID_proiezione = ID_proiezione;
+        this.ID_film = ID_film;
+        this.ID_sala = ID_sala;
+        this.data_ora = data_ora;
+        this.tipo = tipo;
+    }
     
 }
