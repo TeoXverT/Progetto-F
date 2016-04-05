@@ -25,6 +25,11 @@ public class Film {
         this.link = link;
 
     }
+
+    @Override
+    public String toString() {
+        return "Film{" + "titolo_film=" + titolo_film + ", genere=" + genere + ", descrizione=" + descrizione + ", link=" + link + ", id_film=" + id_film + ", durata=" + durata + '}';
+    }
     
 
 }

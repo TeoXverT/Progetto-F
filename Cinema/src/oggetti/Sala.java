@@ -24,4 +24,11 @@ public class Sala {
         this.posti_y = posti_y;
         this.posti_vip = posti_vip;
     }
+
+    @Override
+    public String toString() {
+        return "Sala{" + "id_sala=" + id_sala + ", posti_x=" + posti_x + ", posti_y=" + posti_y + ", posti_vip=" + posti_vip + '}';
+    }
+    
+    
 }
