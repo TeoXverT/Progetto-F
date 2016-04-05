@@ -8,9 +8,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-
+import oggetti.Prenotazione;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,7 +29,7 @@ public class IODati {
     private ArrayList<Film> listaFilm;
     private ArrayList<Sala> listaSala;
     private ArrayList<Proiezione> listaProiezione;
-    
+    private ArrayList<Prenotazione> listaPrenotazione;
     /*
     CRIIIIII LEGGIIII
     
@@ -46,16 +49,26 @@ public class IODati {
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
-        String parte1,parte2,parte3,parte4;
+        String parte1,parte2,parte3,parte4,parte5, parte6;
+        
+        inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
+        
         while((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
+           
+            
            
             StringTokenizer st = new StringTokenizer(riga, "\t");
             parte1 = st.nextToken();
             parte2 = st.nextToken();
             parte3 = st.nextToken();
+            parte4 = st.nextToken();
+            parte5  =st.nextToken();
+            parte6 = st.nextToken();
             
-            //variabileFilm = new Film( parte1, parte2, Integer.parseInt(parte3));
-           // listaFilm.add(variabileFilm);
+            variabileFilm = new Film( Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6);
+            listaFilm.add(variabileFilm);
+            
+           
     }
         
      return listaFilm;
@@ -70,7 +83,7 @@ public class IODati {
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         
-        String parte1,parte2,parte3,parte4,parte5;
+        String parte1,parte2,parte3,parte4;
         while((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
            
             StringTokenizer st = new StringTokenizer(riga, "\t");
@@ -78,9 +91,12 @@ public class IODati {
             parte2 = st.nextToken();
             parte3 = st.nextToken();
             parte4 = st.nextToken();
-            parte5 = st.nextToken();
             
-            variabileSala = new Sala(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), Integer.parseInt(parte5));
+           int [][] matriceVip= new int[40][2];
+           matriceVip = this.dividiParte4(parte4);
+           
+            
+            variabileSala = new Sala(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3),matriceVip);
             listaSala.add(variabileSala);
             
     }
@@ -97,7 +113,7 @@ public class IODati {
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         
-        String parte1,parte2,parte3,parte4,parte5;
+        String parte1,parte2,parte3,parte4,parte5, parte6, parte7;
         while((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
            
             StringTokenizer st = new StringTokenizer(riga, "\t");
@@ -106,13 +122,47 @@ public class IODati {
             parte3 = st.nextToken();
             parte4 = st.nextToken();
             parte5 = st.nextToken();
+            parte6 = st.nextToken();
+            parte7 = st.nextToken();
             
-            variabileProiezione = new Proiezione(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), new DataOra(parte4), parte5);
+            
+            
+            Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);
+            
+            variabileProiezione = new Proiezione(Integer.parseInt(parte1), Calendar.(parte2), Integer.parseInt(parte3), new DataOra(parte4), parte5);
             listaProiezione.add(variabileProiezione);
             
     }
         
         return listaProiezione;
+    };
+    
+    
+   
+    
+    
+    
+    
+    public int[][] dividiParte4(String postiVip){
+        int i=0;
+        int [][] matriceVip= new int[40][2];
+        
+        //String parte1, parte2;
+        
+        StringTokenizer st = new StringTokenizer(postiVip, ",");
+        StringTokenizer rt;
+        while (st.hasMoreTokens()) {
+       
+            rt = new StringTokenizer(st.nextToken(), ":");
+        
+            matriceVip[i][0] = Integer.parseInt(rt.nextToken());
+            matriceVip[i][1] = Integer.parseInt(rt.nextToken());
+            
+            i++;
+        
+        }        
+        
+        return matriceVip;
     };
         
     
