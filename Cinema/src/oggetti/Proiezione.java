@@ -20,7 +20,7 @@ public class Proiezione {
     private int prezzo_normale;
     private int prezzo_3d;
 
-    public Proiezione(int id_protezione, int data_ora, int id_film, int id_sala, String tipo_proiezione, int prezzo_normale, int prezzo_3d) {
+    public Proiezione(int id_protezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, int prezzo_normale, int prezzo_3d) {
         this.id_protezione = id_protezione;
         this.data_ora = data_ora;
         this.id_film = id_film;
