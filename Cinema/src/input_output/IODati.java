@@ -127,9 +127,9 @@ public class IODati {
             
             
             
-            Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);
+           
             
-            variabileProiezione = new Proiezione(Integer.parseInt(parte1), Calendar.(parte2), Integer.parseInt(parte3), new DataOra(parte4), parte5);
+            variabileProiezione = new Proiezione(Integer.parseInt(parte1), this.parse_Data_ora(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), parte5, Integer.parseInt(parte6), Integer.parseInt(parte7));
             listaProiezione.add(variabileProiezione);
             
     }
@@ -139,7 +139,27 @@ public class IODati {
     
     
    
+    public Calendar parse_Data_ora(String stringaCalendario )  {
+        int anno, mese, giorno, ora, min, sec;
+        
+        StringTokenizer st  = new StringTokenizer(stringaCalendario);
+        StringTokenizer rt = new StringTokenizer(st.nextToken(), "-");
+        
+        anno = Integer.parseInt(rt.nextToken());
+        mese = Integer.parseInt(rt.nextToken());
+        giorno = Integer.parseInt(rt.nextToken());
+        
+        rt = new StringTokenizer(st.nextToken(), ":");
+        
+        ora = Integer.parseInt(rt.nextToken());
+        min = Integer.parseInt(rt.nextToken());
+        sec = Integer.parseInt(rt.nextToken());
+        
+        
+     Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);  
     
+        return fine;
+    };
     
     
     
