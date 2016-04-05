@@ -39,7 +39,9 @@ public class IODati {
         while ((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
             StringTokenizer st = new StringTokenizer(riga, "\t");
             parte1 = st.nextToken();
+            System.out.println("ciao1");
             parte2 = st.nextToken();
+            System.out.println("ciao2");
             parte3 = st.nextToken();
             parte4 = st.nextToken();
             parte5 = st.nextToken();
