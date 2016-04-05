@@ -14,13 +14,14 @@ import java.util.Calendar;
  */
 public class Prenotazione {
   
-    private int id_sala, posti_x, posti_y;    
-    private int posti_vip[][];
+    private int id_prenotazione, id_proiezione;    
+    private int posti_prenotati[][];
     private Calendar data_ora;
+    private double prezzo;
 
     
     
-    public Prenotazione(int id_prenotazione, int id_proiezione, int[][] posti_prenotati,  Calendar data_ora,  nuovaProiezione) {
+    public Prenotazione(int id_prenotazione, int id_proiezione, int[][] posti_prenotati, Calendar data_ora,  double prezzo) {
         
     }
     
