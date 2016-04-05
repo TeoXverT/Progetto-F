@@ -22,29 +22,32 @@ public class IODati {
     private ArrayList<Sala> listaSala;
     private ArrayList<Proiezione> listaProiezione;
     private ArrayList<Prenotazione> listaPrenotazione;
-
     public IODati() {
 
     }
 
     public ArrayList<Film> caricaListaFilm(String nomeFile) throws FileNotFoundException, IOException {
-        Film variabileFilm;
+        
         listaFilm = new ArrayList<>();
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4, parte5, parte6;
         inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
-        
-        while ((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
+        System.out.println("din qui va");
+        while ((riga = inputBufferizzato.readLine()) != null) { 
+            //AGGIUNGE ALL'ARRAY LE COSE
             StringTokenizer st = new StringTokenizer(riga, "\t");
+             
             parte1 = st.nextToken();
             parte2 = st.nextToken();
             parte3 = st.nextToken();
+            System.out.println("din qui va2");
             parte4 = st.nextToken();
             parte5 = st.nextToken();
             parte6 = st.nextToken();
             variabileFilm = new Film(Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6);
+             
             listaFilm.add(variabileFilm);
         }
         return listaFilm;
