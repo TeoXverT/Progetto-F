@@ -194,6 +194,7 @@ public class IODati {
         String riga;
         String parte1,parte2,parte3,parte4,parte5;
         
+        
         inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
         
         while((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
@@ -208,13 +209,16 @@ public class IODati {
             parte5  =st.nextToken();
           
             
-            variabilePrenotazione = new Prenotazione( Integer.parseInt(parte1), Integer.parseInt(parte2), parte3, Integer.parseInt(parte4), Double.parseDouble(parte5));
+            int [][] matricePosti= new int[40][2];
+           matricePosti = this.dividiParte4(parte3);
+            
+            variabilePrenotazione = new Prenotazione( Integer.parseInt(parte1), Integer.parseInt(parte2), matricePosti, this.parse_Data_ora(parte4), Double.parseDouble(parte5));
             listaPrenotazione.add(variabilePrenotazione);
             
            
     }
         
-     return listaFilm;
+     return listaPrenotazione;
     };
     
         
