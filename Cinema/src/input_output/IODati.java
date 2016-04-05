@@ -25,6 +25,8 @@ public class IODati {
     public IODati() {
 
     }
+    
+    
 
     public ArrayList<Film> caricaListaFilm(String nomeFile) throws FileNotFoundException, IOException {
         
