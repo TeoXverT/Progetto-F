@@ -1,5 +1,7 @@
 package oggetti;
 
+import java.util.Calendar;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,11 +13,14 @@ package oggetti;
  * @author cri
  */
 public class Prenotazione {
-       private String titolo_film, genere, descrizione, link;
-    private int id_film, durata;
+  
+    private int id_sala, posti_x, posti_y;    
+    private int posti_vip[][];
+    private Calendar data_ora;
+
     
     
-    public Prenotazione(Proiezione nuovaProiezione) {
+    public Prenotazione(int id_prenotazione, int id_proiezione, int[][] posti_prenotati,  Calendar data_ora,  nuovaProiezione) {
         
     }
     
