@@ -1,4 +1,10 @@
+package gestore;
 
+
+import oggetti.Proiezione;
+import oggetti.Film;
+import input_output.IODati;
+import oggetti.Sala;
 import java.io.IOException;
 import java.util.ArrayList;
 
