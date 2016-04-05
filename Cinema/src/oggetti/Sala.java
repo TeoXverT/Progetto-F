@@ -13,7 +13,7 @@ package oggetti;
 public class Sala {
     
     private int id_sala, posti_x, posti_y;    
-    int posti_vip[][]=new int[50][1];
+    private int posti_vip[][];
     
     //X E Y CORRISPONDONO AL MASSIMO NUMERO DI RIGHE E COLONNE CHE CI SONO IN UNA SALA
     //il posto più alto a sinistra del proiettore è la riga zero e colonna zero
