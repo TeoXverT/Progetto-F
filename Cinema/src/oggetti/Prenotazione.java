@@ -27,4 +27,9 @@ public class Prenotazione {
         this.prezzo = prezzo;
     }
 
+    @Override
+    public String toString() {
+        return "Prenotazione{" + "id_prenotazione=" + id_prenotazione + ", id_proiezione=" + id_proiezione + ", posti_prenotati=" + posti_prenotati + ", data_ora=" + data_ora.getTime() + ", prezzo=" + prezzo + '}';
+    }
+
 }

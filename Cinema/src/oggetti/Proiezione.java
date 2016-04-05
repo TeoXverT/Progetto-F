@@ -31,6 +31,11 @@ public class Proiezione {
         this.prezzo_normale = prezzo_normale;
         this.prezzo_3d = prezzo_3d;
     }
+
+    @Override
+    public String toString() {
+        return "Proiezione{" + "id_protezione=" + id_protezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo_normale=" + prezzo_normale + ", prezzo_3d=" + prezzo_3d + '}';
+    }
     
     
  

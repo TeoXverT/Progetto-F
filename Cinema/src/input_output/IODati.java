@@ -21,11 +21,14 @@ public class IODati {
     private ArrayList<Prenotazione> listaPrenotazione;
 
     public IODati() {
+        listaFilm = new ArrayList<>();
+        listaSala = new ArrayList<>();
+        listaProiezione = new ArrayList<>();
+        listaPrenotazione = new ArrayList<>();
 
     }
 
     public ArrayList<Film> caricaListaFilm(String nomeFile) throws FileNotFoundException, IOException {
-        listaFilm = new ArrayList<>();
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
@@ -39,43 +42,34 @@ public class IODati {
             parte4 = st.nextToken();
             parte5 = st.nextToken();
             parte6 = st.nextToken();
-            Film variabileFilm = new Film(Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6);
-            listaFilm.add(variabileFilm);
+            listaFilm.add(new Film(Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6));
         }
         return listaFilm;
     }
 
     public ArrayList<Sala> caricaListaSala(String nomeFile) throws FileNotFoundException, IOException {
-        Sala variabileSala;
-        listaSala = new ArrayList<>();
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4;
         inputBufferizzato.readLine();
-
         while ((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
             StringTokenizer st = new StringTokenizer(riga, "\t");
             parte1 = st.nextToken();
             parte2 = st.nextToken();
             parte3 = st.nextToken();
             parte4 = st.nextToken();
-            int[][] matriceVip = new int[40][2];
-            matriceVip = this.parseMatrice(parte4);
-            variabileSala = new Sala(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), matriceVip);
-            listaSala.add(variabileSala);
+            listaSala.add(new Sala(Integer.parseInt(parte1), Integer.parseInt(parte2), Integer.parseInt(parte3), parseMatrice(parte4)));
         }
         return listaSala;
     }
 
     public ArrayList<Proiezione> caricaListaProiezione(String nomeFile) throws FileNotFoundException, IOException {
-        Proiezione variabileProiezione;
-        listaProiezione = new ArrayList<>();
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4, parte5, parte6, parte7;
-
+        inputBufferizzato.readLine();
         while ((riga = inputBufferizzato.readLine()) != null) {          //AGGIUNGE ALL'ARRAY LE COSE
             StringTokenizer st = new StringTokenizer(riga, "\t");
             parte1 = st.nextToken();
@@ -85,8 +79,7 @@ public class IODati {
             parte5 = st.nextToken();
             parte6 = st.nextToken();
             parte7 = st.nextToken();
-            variabileProiezione = new Proiezione(Integer.parseInt(parte1), this.parseData_ora(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), parte5, Integer.parseInt(parte6), Integer.parseInt(parte7));
-            listaProiezione.add(variabileProiezione);
+            listaProiezione.add(new Proiezione(Integer.parseInt(parte1), this.parseData_ora(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), parte5, Integer.parseInt(parte6), Integer.parseInt(parte7)));
         }
         return listaProiezione;
     }
@@ -129,9 +122,7 @@ public class IODati {
         return matriceVip;
     }
 
-    public ArrayList<Prenotazione> caricaListaPrenotazioni(String nomeFile) throws FileNotFoundException, IOException {
-        Prenotazione variabilePrenotazione;
-        listaPrenotazione = new ArrayList<>();
+    public ArrayList<Prenotazione> caricaListaPrenotazione(String nomeFile) throws FileNotFoundException, IOException {
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
@@ -146,10 +137,8 @@ public class IODati {
             parte3 = st.nextToken();
             parte4 = st.nextToken();
             parte5 = st.nextToken();
-            int[][] matricePosti = new int[40][2];
-            matricePosti = this.parseMatrice(parte3);
-            variabilePrenotazione = new Prenotazione(Integer.parseInt(parte1), Integer.parseInt(parte2), matricePosti, this.parseData_ora(parte4), Double.parseDouble(parte5));
-            listaPrenotazione.add(variabilePrenotazione);
+//            System.out.println("p1 "+parte1+" p2 "+parte2+" p3 "+ parte3+" p4 "+ parte4 + " p5 "+ parte5);
+            listaPrenotazione.add(new Prenotazione(Integer.parseInt(parte1), Integer.parseInt(parte2), parseMatrice(parte3), parseData_ora(parte4), Double.parseDouble(parte5)));
         }
         return listaPrenotazione;
     }
