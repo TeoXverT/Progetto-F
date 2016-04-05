@@ -1,0 +1,205 @@
+Nomi di pacchetto:  	package veicoli.auto
+Nomi delle classi: 	TestMilitare
+Nomi dei metodi:	ciaoMondo
+Nomi di variabili: 	nomeAnimale
+Costanti: 		COSTANTE_VOLANTE
+_____________________________________________________________________
+package figure;
+
+public enum Colore {
+    RED, BLUE, YELLOW, BLACK;
+    
+}
+________________________________________________________________
+
+public abstract class Figure implements Comparable<Figure> {
+
+ @Override
+    public int compareTo(Figure o) {
+        return this.colore.compareTo(o.colore);
+    }
+
+}
+
+
+
+    private ArrayList<Figure> i;
+        i = new ArrayList<>();
+
+	i.add(robba);
+ 	i.remove(int index) 
+        i.remove(Object o) 
+
+Collections.sort(i);
+
+______________________________________________________________________
+
+static void readThis() throws FileNotFoundException, IOException {
+        FileReader input = new FileReader("file.txt");
+        BufferedReader inputbufferizzato = new BufferedReader(input);
+        String Linea, one;
+        while ((Linea = inputbufferizzato.readLine()) != null) {
+            System.out.println(Linea);
+            StringTokenizer st = new StringTokenizer(Linea);
+            while (st.hasMoreTokens()) {
+                one = st.nextToken();
+                System.out.println(one);
+
+            }
+        }
+        input.close();
+    }
+
+
+    firstLetter = example.substring(0, 1);
+    int foo = Integer.parseInt("1234");
+
+______________________________________________________________________________
+
+
+ ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                manageAction(((CalcolatriceButton) ae.getSource()).getKeyCode());
+            }
+
+            private void manageAction(int b) {
+                calcolatrice.key(b);
+                screen.setText(calcolatrice.getDisplay());
+
+                //Gestisce i bottoni speciali
+                for (CalcolatriceButton cb : allButtons) {
+                    if (cb.isSpecialButton()) {
+                        cb.setForeground((calcolatrice.hasMemory()) ? Color.blue : Color.black);
+                    }
+                }
+            }
+        };
+
+ MioBottone.addActionListener(al);
+
+
+        //Tastierino Panel
+        tastierinoPanel = new JPanel();
+        JPanel p = new JPanel(new BorderLayout());
+
+        tastierinoPanel.setLayout(new GridLayout(4, 5, 10, 10));
+        for (CalcolatriceButton cb : allButtons) {
+            tastierinoPanel.add(cb);
+        }
+
+        //Screen Label
+        screen = new JLabel();
+        JLabel nome1 = new JLabel(Nome1,SwingConstants.CENTER);
+
+        screen.setText("HELLO!");
+
+        //Main Frame
+        setLayout(new BorderLPayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(500, 300));
+        setResizable(false);
+	setTitle("ciao mondo");
+
+        add(tastierinoPanel, BorderLayout.CENTER);
+        add(screen, BorderLayout.NORTH);
+
+
+        calcolatriceGUI.setVisible(true);
+
+
+________________________________________________________________-
+JRadioButton smallButton = new JRadioButton(“Small”);
+JRadioButton largeButton = new JRadioButton(“Large”);
+
+ButtonGroup group = new ButtonGroup
+group.add(smallButton);
+group.add(largeButton);
+
+if(largeButton.isSelected)
+System.out.println(“Hai premuto Large”);
+
+____________________________________________________________________________
+
+JCheckBox = new JCheckBox(“etichetta”);
+JComboBox mycombo = new JComboBox();
+Mycombo.addItem(“elemento1”);
+Mycombo.addItem(“elemento2”);
+String itemScelto = (String) mycombo.getSelectedItem();
+
+___________________________________________________________________________
+
+final int ROWS = 10; final int COLUMNS = 30;
+JTextArea textArea = new JTextArea(ROWS, COLUMNS);
+textArea.append(account.getBalance() + "\n");
+textArea.setEditable(false);
+JScrollPane scrollPane = new JScrollPane(textArea);
+___________________________________________________________________________
+Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);
+long differenzaInMillisecond = fine.getTime().getTime() - inizio.getTime().getTime();
+
+
+SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.EN_US);
+Date date = sdf.parse("Mon Mar 14 16:02:37 GMT 2011"));
+Calendar cal = sdf.getCalendar();
+__________________________________________________________________________________
+NEL MAIN
+
+    
+    try
+    {
+      checkSpelling();   
+    }
+    catch (SpellException se)   
+    {
+      System.out.println("Spell exception was: " + se.getError());
+    }
+  } 
+  
+NELLA FUNZIONE CHE PROVO
+
+  private static void checkSpelling() throws SpellException
+  {
+    if (s.equalsIgnoreCase("client"))
+      System.out.println("OK");
+    else
+      throw new SpellException("Cannot spell client");
+   }
+}  
+
+NELLA CLASSE CHE CREO
+
+public class DataException extends Exception {
+
+    String mistake;
+
+    public DataException() {
+        super();             
+        mistake = "unknown";
+    }
+    public DataException(String err) {
+        super(err);     
+        mistake = err;  
+    }
+    public String getError() {
+        return mistake;
+    }
+
+}
+_________________________________________________________________
+extends Observable
+setChanged();
+notifyObservers();
+
+implements Observer
+public void update(Observable observable, Object arg){}
+
+ observable.addObserver(observer);
+
+
+        list.setListData(Lettore.e.toArray());
+
+_____________________________________________________________________
+JOptionPane optionPane = new JOptionPane("non identificato, continuare?");
+JDialog dialog = optionPane.createDialog(new JFrame(), "Errore Evento");
+dialog.setVisible(true);
