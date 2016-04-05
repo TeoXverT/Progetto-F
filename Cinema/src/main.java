@@ -7,7 +7,7 @@ import oggetti.*;
 public class main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Progetto Cinema V 0.2/W la mozzarella");
+        System.out.println("Progetto Cinema V 0.2/W la pizza");
 
         IODati IO = new IODati();
 
