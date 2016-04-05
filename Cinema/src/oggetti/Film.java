@@ -5,41 +5,25 @@ package oggetti;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author cri
  */
 public class Film {
-    
-    private String nome ,  trama;
-    private int idFilm , durata;
-    
+
+    private String titolo_film, genere, descrizione, link;
+    private int id_film, durata;
+
     //DURATA IN MINUTI
-    
-    public Film(String nome, int idFilm, String trama, int durata) {
-        
-        this.nome = nome;
-        this.idFilm = idFilm;
+    public Film(int id_film, String titolo_film, String genere, int durata, String descrizione, String link) {
+
+        this.id_film = id_film;
+        this.titolo_film = titolo_film;
+        this.genere = genere;
         this.durata = durata;
-        this.trama = trama;
-                
+        this.descrizione = descrizione;
+        this.link = link;
+
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public String getTrama() {
-        return trama;
-    }
-
-    public int getIdFilm() {
-        return idFilm;
-    }
-
-    public int getDurata() {
-        return durata;
-    }
-    
 }

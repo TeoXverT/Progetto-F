@@ -11,22 +11,27 @@ package oggetti;
  * @author Yoga
  */
 public class Proiezione {
-    private int ID_proiezione;
-    private int ID_film;
-    private int ID_sala;
-    private DataOra data_ora;
-    private String tipo;
+    private int id_protezione;
+    private int data_ora;
+    private int id_film;
+    private int id_sala;
     
-    
-    public Proiezione(int ID_Proiezione, int ID_film, int ID_sala, DataOra data_ora, String tipo){
-        this.ID_proiezione = ID_proiezione;
-        this.ID_film = ID_film;
-        this.ID_sala = ID_sala;
+    private String tipo_proiezione;
+    private int prezzo_normale;
+    private int prezzo_3d;
+
+    public Proiezione(int id_protezione, int data_ora, int id_film, int id_sala, String tipo_proiezione, int prezzo_normale, int prezzo_3d) {
+        this.id_protezione = id_protezione;
         this.data_ora = data_ora;
-        this.tipo = tipo;
+        this.id_film = id_film;
+        this.id_sala = id_sala;
+        this.tipo_proiezione = tipo_proiezione;
+        this.prezzo_normale = prezzo_normale;
+        this.prezzo_3d = prezzo_3d;
     }
     
     
+ 
    
     
 }

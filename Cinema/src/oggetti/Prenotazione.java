@@ -11,7 +11,8 @@ package oggetti;
  * @author cri
  */
 public class Prenotazione {
-    
+       private String titolo_film, genere, descrizione, link;
+    private int id_film, durata;
     
     
     public Prenotazione(Proiezione nuovaProiezione) {

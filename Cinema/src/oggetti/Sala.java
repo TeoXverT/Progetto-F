@@ -12,44 +12,16 @@ package oggetti;
  */
 public class Sala {
     
-    private int numeroSala, numeroPosti, fileVip, x, y;
-    private int[][] posti;
+    private int id_sala, posti_x, posti_y;    
+    int posti_vip[][]=new int[50][1];
     
     //X E Y CORRISPONDONO AL MASSIMO NUMERO DI RIGHE E COLONNE CHE CI SONO IN UNA SALA
-    
-    public Sala(int numeroSala, int numeroPosti, int fileVip, int x, int y) {
-        
-        this.numeroSala = numeroSala;
-        this.numeroPosti = numeroPosti;
-        this.fileVip = fileVip;
-        this.x = x;
-        this.y = y;
-        
-        
-    }
+    //il posto più alto a sinistra del proiettore è la riga zero e colonna zero
 
-    public int getNumeroSala() {
-        return numeroSala;
+    public Sala(int id_sala, int posti_x, int posti_y, int[][] posti_vip) {
+        this.id_sala = id_sala;
+        this.posti_x = posti_x;
+        this.posti_y = posti_y;
+        this.posti_vip = posti_vip;
     }
-
-    public int getNumeroPosti() {
-        return numeroPosti;
-    }
-
-    public int getFileVip() {
-        return fileVip;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int[][] getPosti() {
-        return posti;
-    }
-    
 }
