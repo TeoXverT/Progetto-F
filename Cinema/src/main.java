@@ -12,7 +12,6 @@ public class main {
     
     
      public static void main(String[] args) {
-        // TODO code application logic here
          System.out.println("Progetto Cinema V 0.00000000000000000000000000000000000000000000001/W la mozzarella");
          
          
