@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import oggetti.Prenotazione;
