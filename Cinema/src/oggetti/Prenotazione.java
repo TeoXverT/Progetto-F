@@ -19,17 +19,12 @@ public class Prenotazione {
     private Calendar data_ora;
     private double prezzo;
 
-    
-    
-    public Prenotazione(int id_prenotazione, int id_proiezione, int[][] posti_prenotati, Calendar data_ora,  double prezzo) {
-        
+    public Prenotazione(int id_prenotazione, int id_proiezione, int[][] posti_prenotati, Calendar data_ora, double prezzo) {
+        this.id_prenotazione = id_prenotazione;
+        this.id_proiezione = id_proiezione;
+        this.posti_prenotati = posti_prenotati;
+        this.data_ora = data_ora;
+        this.prezzo = prezzo;
     }
-    
-    public double calcoloCosto() {
-        
-        
-        return 2.0; // non vale niente
-    };
-    
-    
+
 }

@@ -1,0 +1,5 @@
+id_prenotazione	id_proiezione posti_prenotati data_ora	prezzo 
+0 0 x1:y1,x2:y1 2016-04-02 10:38:05 20
+1 0 x1:y2,x2:y2,x2:y3 2016-04-01 11:30:01 30
+2 1 x0:y0	2016-03-30 19:00:00 15
+3 0 x1:y5	2016-04-04 07:35:52  10
