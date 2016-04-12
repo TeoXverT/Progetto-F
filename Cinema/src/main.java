@@ -11,7 +11,7 @@ import oggetti.*;
 public class main {
 
     public static void main(String[] args) throws IOException {
-      /*  System.out.println("Progetto Cinema V 0.1/W la pasta ");
+        System.out.println("Progetto Cinema V 0.1/W la pasta ");
 
         Input input = new Input();
 
@@ -46,7 +46,7 @@ public class main {
         System.out.println( output.caricaProiezione(listaProiezione,"file_db/proiezione_copy.txt") );
         System.out.println( output.caricaPrenotazione(listaPrenotazione,"file_db/prenotazione_copy.txt") );
 
-        */
+        
         /*
         
         
