@@ -1,0 +1,15 @@
+clienti:
+visualizzaProiezioni   proiezioni future
+visualizzaProiezioni filtrate
+scletaProiezione
+sceltaPosto
+calcolaPrezzo
+costoTotale
+scontrino
+
+gestore:
+creaProiezione
+aggiungiFilm
+modificaConfig
+visualizzaStato visalizza stato attuale sale/posti
+calcolaFatturato con passaggio date 
