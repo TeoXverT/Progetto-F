@@ -1,4 +1,7 @@
 package Gestore;
+
+import input_output.*;
+
 import oggetti.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,11 +15,12 @@ import oggetti.*;
  */
 public class Gestore {
     
-    public Gestore() {  
-    }
-  
-    void aggiungiFilm(String titolo_film, String genere, int durata, String descrizione, String link_trailer){
-        Film newFilm = new Film(0, titolo_film, genere, durata, descrizione, link_trailer);
-    }
+    private Controller_Dati_Gestore controller = new Controller_Dati_Gestore();
     
+    public Gestore() {}
+        
+        public boolean creaProiezione( String data_ora,int id_film, int id_sala, String  tipo_proiezione, double prezzo_normale, double prezzo_3d){ 
+            return false;
+        }
+        
 }
