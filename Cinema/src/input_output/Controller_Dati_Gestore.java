@@ -5,10 +5,16 @@
  */
 package input_output;
 
+import oggetti.Film;
+
 /**
  *
  * @author Yoga
  */
 public class Controller_Dati_Gestore {
     
+    void controllerFilm(){
+         //listaFilm.add(new Film(Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6));
+         // usa int size() per l'indice
+    }
 }
