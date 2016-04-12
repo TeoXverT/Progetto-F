@@ -22,6 +22,14 @@ public class Config {
     public String toString() {
         return "Config{" + "prezzo_poltrona_vip=" + prezzo_poltrona_vip + ", sconto_acquisti_maggiori_3=" + sconto_acquisti_maggiori_3 + '}';
     }
+
+    public double getPrezzo_poltrona_vip() {
+        return prezzo_poltrona_vip;
+    }
+
+    public double getSconto_acquisti_maggiori_3() {
+        return sconto_acquisti_maggiori_3;
+    }
     
     
 }

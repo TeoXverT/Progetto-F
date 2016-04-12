@@ -14,20 +14,28 @@ import java.util.GregorianCalendar;
 
 public class Input {
 
-    private ArrayList<Film> listaFilm;
-    private ArrayList<Sala> listaSala;
-    private ArrayList<Proiezione> listaProiezione;
-    private ArrayList<Prenotazione> listaPrenotazione;
-
     public Input() {
-        listaFilm = new ArrayList<>();
-        listaSala = new ArrayList<>();
-        listaProiezione = new ArrayList<>();
-        listaPrenotazione = new ArrayList<>();
 
     }
 
-    public ArrayList<Film> caricaListaFilm(String nomeFile) throws FileNotFoundException, IOException {
+    public Config scaricaConfig(String nomeFile) throws FileNotFoundException, IOException {
+        FileReader input = new FileReader(nomeFile);
+        BufferedReader inputBufferizzato = new BufferedReader(input);
+        String riga;
+        String parte1, parte2;
+
+        inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
+
+        riga = inputBufferizzato.readLine();
+        StringTokenizer st = new StringTokenizer(riga, "\t");
+        parte1 = st.nextToken();
+        parte2 = st.nextToken();
+        return new Config(Double.parseDouble(parte1), Double.parseDouble(parte2));
+    }
+
+    public ArrayList<Film> scaricaFilm(String nomeFile) throws FileNotFoundException, IOException {
+        ArrayList<Film> listaFilm = new ArrayList<>();
+
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
@@ -46,7 +54,9 @@ public class Input {
         return listaFilm;
     }
 
-    public ArrayList<Sala> caricaListaSala(String nomeFile) throws FileNotFoundException, IOException {
+    public ArrayList<Sala> scaricaSala(String nomeFile) throws FileNotFoundException, IOException {
+        ArrayList<Sala> listaSala = new ArrayList<>();
+
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
@@ -63,7 +73,9 @@ public class Input {
         return listaSala;
     }
 
-    public ArrayList<Proiezione> caricaListaProiezione(String nomeFile) throws FileNotFoundException, IOException {
+    public ArrayList<Proiezione> scaricaProiezione(String nomeFile) throws FileNotFoundException, IOException {
+        ArrayList<Proiezione> listaProiezione = new ArrayList<>();
+
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
@@ -83,45 +95,9 @@ public class Input {
         return listaProiezione;
     }
 
-    public Calendar parseData_ora(String stringaCalendario) {
-        int anno, mese, giorno, ora, min, sec;
+    public ArrayList<Prenotazione> scaricaPrenotazione(String nomeFile) throws FileNotFoundException, IOException {
+        ArrayList<Prenotazione> listaPrenotazione = new ArrayList<>();
 
-        StringTokenizer st = new StringTokenizer(stringaCalendario);
-        StringTokenizer rt = new StringTokenizer(st.nextToken(), "-");
-
-        anno = Integer.parseInt(rt.nextToken());
-        mese = Integer.parseInt(rt.nextToken());
-        giorno = Integer.parseInt(rt.nextToken());
-
-        rt = new StringTokenizer(st.nextToken(), ":");
-
-        ora = Integer.parseInt(rt.nextToken());
-        min = Integer.parseInt(rt.nextToken());
-        sec = Integer.parseInt(rt.nextToken());
-        Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);
-
-        return fine;
-    }
-
-    public int[][] parseMatrice(String postiVip) {
-        int i = 0;
-        int[][] matriceVip = new int[40][2];
-
-        if (!postiVip.equals("0")) {
-            //String parte1, parte2;
-            StringTokenizer st = new StringTokenizer(postiVip, ",");
-            StringTokenizer rt;
-            while (st.hasMoreTokens()) {
-                rt = new StringTokenizer(st.nextToken(), ":");
-                matriceVip[i][0] = Integer.parseInt(rt.nextToken());
-                matriceVip[i][1] = Integer.parseInt(rt.nextToken());
-                i++;
-            }
-        }
-        return matriceVip;
-    }
-
-    public ArrayList<Prenotazione> caricaListaPrenotazione(String nomeFile) throws FileNotFoundException, IOException {
         FileReader input = new FileReader(nomeFile);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
@@ -142,18 +118,38 @@ public class Input {
         return listaPrenotazione;
     }
 
-    public Config caricaConfig(String nomeFile) throws FileNotFoundException, IOException {
-        FileReader input = new FileReader(nomeFile);
-        BufferedReader inputBufferizzato = new BufferedReader(input);
-        String riga;
-        String parte1, parte2;
+    private Calendar parseData_ora(String stringaCalendario) {
+        int anno, mese, giorno, ora, min, sec;
 
-        inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
+        StringTokenizer st = new StringTokenizer(stringaCalendario);
+        StringTokenizer rt = new StringTokenizer(st.nextToken(), "-");
 
-        riga = inputBufferizzato.readLine();
-        StringTokenizer st = new StringTokenizer(riga, "\t");
-        parte1 = st.nextToken();
-        parte2 = st.nextToken();
-        return new Config(Double.parseDouble(parte1), Double.parseDouble(parte2));
+        anno = Integer.parseInt(rt.nextToken());
+        mese = Integer.parseInt(rt.nextToken());
+        giorno = Integer.parseInt(rt.nextToken());
+
+        rt = new StringTokenizer(st.nextToken(), ":");
+
+        ora = Integer.parseInt(rt.nextToken());
+        min = Integer.parseInt(rt.nextToken());
+        sec = Integer.parseInt(rt.nextToken());
+        Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);
+
+        return fine;
+    }
+
+    private ArrayList<Posti> parseMatrice(String postiVip) {
+        ArrayList<Posti> posti = new ArrayList<>();
+
+        if (!postiVip.equals("0")) {
+            StringTokenizer st = new StringTokenizer(postiVip, ",");
+            StringTokenizer rt;
+            while (st.hasMoreTokens()) {
+                rt = new StringTokenizer(st.nextToken(), ":");
+                posti.add(new Posti(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
+            }
+        }
+
+        return posti;
     }
 }

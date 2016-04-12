@@ -33,13 +33,13 @@ public class Gestione {
         Input IO = new Input();
         switch(nome_file) {
             case "film.txt":
-                Film = IO.caricaListaFilm(nome_file);
+                Film = IO.scaricaFilm(nome_file);
                 break;
             case "sale.txt":
-                Sale = IO.caricaListaSala(nome_file);
+                Sale = IO.scaricaSala(nome_file);
                 break;
             case "proiezione.txt":
-                 Proiezioni = IO.caricaListaProiezione(nome_file);
+                 Proiezioni = IO.scaricaProiezione(nome_file);
                 break;   
         }  
     }

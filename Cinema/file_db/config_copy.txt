@@ -1,2 +1,2 @@
 prezzo_poltrone_vip_cadauno	sconto_prenotazioni_maggiori_di_3_in_%_applicato_al_totale_ad_esempio
-5	15
+5.0	15.0

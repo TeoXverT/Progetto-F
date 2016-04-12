@@ -1,10 +1,4 @@
 package oggetti;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author cri
@@ -30,6 +24,33 @@ public class Film {
     public String toString() {
         return "Film{" + "titolo_film=" + titolo_film + ", genere=" + genere + ", descrizione=" + descrizione + ", link=" + link + ", id_film=" + id_film + ", durata=" + durata + '}';
     }
+
+    public String getTitolo_film() {
+        return titolo_film;
+    }
+
+    public String getGenere() {
+        return genere;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public int getId_film() {
+        return id_film;
+    }
+
+    public int getDurata() {
+        return durata;
+    }
+    
+    
+    
     
 
 }
