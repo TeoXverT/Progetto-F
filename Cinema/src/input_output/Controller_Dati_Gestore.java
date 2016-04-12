@@ -15,6 +15,8 @@ public class Controller_Dati_Gestore {
         this.output= new Output();
     }
     
-    
+    public boolean creaPriezione(){
+     return false;
+    }
     
 }
