@@ -3,7 +3,7 @@ package gestore;
 
 import oggetti.Proiezione;
 import oggetti.Film;
-import input_output.IODati;
+import input_output.Input;
 import oggetti.Sala;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Gestione {
     }
     
     public void AggiornaDati(String nome_file) throws IOException {
-        IODati IO = new IODati();
+        Input IO = new Input();
         switch(nome_file) {
             case "film.txt":
                 Film = IO.caricaListaFilm(nome_file);

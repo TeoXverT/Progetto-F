@@ -1,5 +1,5 @@
 
-import input_output.IODati;
+import input_output.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import oggetti.*;
@@ -9,7 +9,7 @@ public class main {
     public static void main(String[] args) throws IOException {
         System.out.println("Progetto Cinema V 0.1/W la pasta ");
 
-        IODati IO = new IODati();
+        Input IO = new Input();
 
         ArrayList<Film> listaFilm = IO.caricaListaFilm("file_db/film.txt");
         for (Film f : listaFilm) {
@@ -30,6 +30,9 @@ public class main {
         for (Prenotazione pe : listaPrenotazione) {
             System.out.println(pe.toString());
         }
+        
+        Config config = IO.caricaConfig("file_db/config.txt");
+        System.out.println(config.toString());
     }
 
 }

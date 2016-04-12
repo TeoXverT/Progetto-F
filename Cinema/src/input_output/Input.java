@@ -1,8 +1,7 @@
 package input_output;
 
-import oggetti.Sala;
-import oggetti.Film;
-import oggetti.Proiezione;
+import oggetti.*;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,14 +12,14 @@ import oggetti.Prenotazione;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class IODati {
+public class Input {
 
     private ArrayList<Film> listaFilm;
     private ArrayList<Sala> listaSala;
     private ArrayList<Proiezione> listaProiezione;
     private ArrayList<Prenotazione> listaPrenotazione;
 
-    public IODati() {
+    public Input() {
         listaFilm = new ArrayList<>();
         listaSala = new ArrayList<>();
         listaProiezione = new ArrayList<>();
@@ -141,5 +140,20 @@ public class IODati {
             listaPrenotazione.add(new Prenotazione(Integer.parseInt(parte1), Integer.parseInt(parte2), parseMatrice(parte3), parseData_ora(parte4), Double.parseDouble(parte5)));
         }
         return listaPrenotazione;
+    }
+
+    public Config caricaConfig(String nomeFile) throws FileNotFoundException, IOException {
+        FileReader input = new FileReader(nomeFile);
+        BufferedReader inputBufferizzato = new BufferedReader(input);
+        String riga;
+        String parte1, parte2;
+
+        inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
+
+        riga = inputBufferizzato.readLine();
+        StringTokenizer st = new StringTokenizer(riga, "\t");
+        parte1 = st.nextToken();
+        parte2 = st.nextToken();
+        return new Config(Double.parseDouble(parte1), Double.parseDouble(parte2));
     }
 }
