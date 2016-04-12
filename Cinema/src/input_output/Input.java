@@ -6,11 +6,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import oggetti.Prenotazione;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class Input {
 
@@ -133,6 +137,7 @@ public class Input {
         ora = Integer.parseInt(rt.nextToken());
         min = Integer.parseInt(rt.nextToken());
         sec = Integer.parseInt(rt.nextToken());
+        
         Calendar fine = new GregorianCalendar(anno, mese, giorno, ora, min, sec);
 
         return fine;

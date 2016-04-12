@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -72,21 +73,21 @@ public class Output {
         try (PrintWriter writer = new PrintWriter(nomeFile, "UTF-8")) {
             writer.println("id_proiezione\tdata_ora\tid_film\tid_sala\ttipo_proiezione\tprezzo_normale\tprezzo_3d");
             for (Proiezione p : listaProiezione) {
-                writer.println(p.getId_protezione() + "\t" + p.getData_ora() + "\t" + p.getId_film() + "\t" + p.getId_sala() + "\t" + p.getTipo_proiezione() + "\t" + p.getPrezzo_normale() + "\t" + p.getPrezzo_3d());
+                writer.println(p.getId_protezione() + "\t" + deparseData_ora(p.getData_ora()) + "\t" + p.getId_film() + "\t" + p.getId_sala() + "\t" + p.getTipo_proiezione() + "\t" + p.getPrezzo_normale() + "\t" + p.getPrezzo_3d());
             }
             sucesso = true;
         }
         return sucesso;
     }
-    
-      public boolean caricaPrenotazione(ArrayList<Prenotazione> listaPrenotazione, String nomeFile) throws FileNotFoundException, IOException {
+
+    public boolean caricaPrenotazione(ArrayList<Prenotazione> listaPrenotazione, String nomeFile) throws FileNotFoundException, IOException {
 
         boolean sucesso = false;
 
         try (PrintWriter writer = new PrintWriter(nomeFile, "UTF-8")) {
             writer.println("id_prenotazione\tid_proiezione\tposti_prenotati\tdata_ora\tprezzo");
             for (Prenotazione p : listaPrenotazione) {
-                writer.println(p.getId_prenotazione()+ "\t" + p.getId_proiezione() + "\t" + deparseMatrice(p.getPosti_prenotati()) + "\t" + deparseData_ora(p.getData_ora()) + "\t" + p.getPrezzo());
+                writer.println(p.getId_prenotazione() + "\t" + p.getId_proiezione() + "\t" + deparseMatrice(p.getPosti_prenotati()) + "\t" + deparseData_ora(p.getData_ora()) + "\t" + p.getPrezzo());
             }
             sucesso = true;
         }
@@ -106,16 +107,8 @@ public class Output {
     }
 
     private String deparseData_ora(Calendar data_ora) {
-        
-        int anno, mese, giorno, ora, min, sec;
-        anno = data_ora.get(data_ora.YEAR);
-        mese = data_ora.get(data_ora.MONTH);
-        giorno = data_ora.get(data_ora.DAY_OF_MONTH);
-        ora = data_ora.get(data_ora.HOUR_OF_DAY);
-        min = data_ora.get(data_ora.MINUTE);
-        sec = data_ora.get(data_ora.SECOND);
-        
-        return anno + "-" + mese + "-" + giorno + " " + ora + ":" + min+ ":" + sec;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+        dateFormat.setTimeZone(data_ora.getTimeZone());
+        return dateFormat.format(data_ora.getTime());
     }
-
 }
