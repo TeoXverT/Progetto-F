@@ -64,21 +64,45 @@ public class Output {
         }
         return sucesso;
     }
-    
-        public boolean caricaProiezione(ArrayList<Proiezione> listaProiezione, String nomeFile) throws FileNotFoundException, IOException {
+
+    public boolean caricaProiezione(ArrayList<Proiezione> listaProiezione, String nomeFile) throws FileNotFoundException, IOException {
 
         boolean sucesso = false;
 
         try (PrintWriter writer = new PrintWriter(nomeFile, "UTF-8")) {
             writer.println("id_proiezione\tdata_ora\tid_film\tid_sala\ttipo_proiezione\tprezzo_normale\tprezzo_3d");
             for (Proiezione p : listaProiezione) {
-                writer.println(p.getId_protezione() + "\t" + p.getData_ora() + "\t" + p.getId_film() + "\t" + p.getId_sala() + "\t" + p.getTipo_proiezione() + "\t" + p.getPrezzo_normale()+"\t"+p.getPrezzo_3d());
+                writer.println(p.getId_protezione() + "\t" + p.getData_ora() + "\t" + p.getId_film() + "\t" + p.getId_sala() + "\t" + p.getTipo_proiezione() + "\t" + p.getPrezzo_normale() + "\t" + p.getPrezzo_3d());
+            }
+            sucesso = true;
+        }
+        return sucesso;
+    }
+    
+      public boolean caricaPrenotazione(ArrayList<Prenotazione> listaPrenotazione, String nomeFile) throws FileNotFoundException, IOException {
+
+        boolean sucesso = false;
+
+        try (PrintWriter writer = new PrintWriter(nomeFile, "UTF-8")) {
+            writer.println("id_prenotazione\tid_proiezione\tposti_prenotati\tdata_ora\tprezzo");
+            for (Prenotazione p : listaPrenotazione) {
+                writer.println(p.getId_prenotazione()+ "\t" + p.getId_proiezione() + "\t" + deparseMatrice(p.getPosti_prenotati()) + "\t" + deparseData_ora(p.getData_ora()) + "\t" + p.getPrezzo());
             }
             sucesso = true;
         }
         return sucesso;
     }
 
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private String deparseMatrice(ArrayList<Posti> posti) {
         String linea_decodificata = "";
         if (posti.size() == 0) {
@@ -90,9 +114,8 @@ public class Output {
         }
         return linea_decodificata;
     }
-    
-        private String deparseData_ora( Calendar data_ora) {
-        int anno, mese, giorno, ora, min, sec;
+
+    private String deparseData_ora(Calendar data_ora) {
 
         return null;
     }
