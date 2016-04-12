@@ -40,6 +40,7 @@ public class main {
         System.out.println( output.caricaConfig(config,"file_db/config_copy.txt") );
         System.out.println( output.caricaSala(listaSala,"file_db/sala_copy.txt") );
         System.out.println( output.caricaProiezione(listaProiezione,"file_db/proiezione_copy.txt") );
+        System.out.println( output.caricaPrenotazione(listaPrenotazione,"file_db/prenotazione_copy.txt") );
 
          
 

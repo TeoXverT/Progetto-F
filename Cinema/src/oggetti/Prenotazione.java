@@ -32,4 +32,27 @@ public class Prenotazione {
         return "Prenotazione{" + "id_prenotazione=" + id_prenotazione + ", id_proiezione=" + id_proiezione + ", data_ora=" + data_ora + ", prezzo=" + prezzo + ", posti_prenotati=" + posti_prenotati + '}';
     }
 
+    public int getId_prenotazione() {
+        return id_prenotazione;
+    }
+
+    public int getId_proiezione() {
+        return id_proiezione;
+    }
+
+    public Calendar getData_ora() {
+        return data_ora;
+    }
+
+    public double getPrezzo() {
+        return prezzo;
+    }
+
+    public ArrayList<Posti> getPosti_prenotati() {
+        return posti_prenotati;
+    }
+    
+    
+    
+
 }

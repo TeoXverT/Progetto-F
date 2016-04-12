@@ -1,4 +1,4 @@
-package gestore;
+package Gestore;
 
 
 import oggetti.Proiezione;
@@ -18,12 +18,12 @@ import java.util.ArrayList;
  *
  * @author Yatin
  */
-public class Gestione {
+public class Gestore {
     ArrayList<Film> Film;
     ArrayList<Sala> Sale;
     ArrayList<Proiezione> Proiezioni;
     
-    public Gestione(){
+    public Gestore(){
          Film = new ArrayList<>();
          Sale = new ArrayList<>();
          Proiezioni = new ArrayList<>();
