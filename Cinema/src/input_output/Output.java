@@ -93,16 +93,6 @@ public class Output {
         return sucesso;
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private String deparseMatrice(ArrayList<Posti> posti) {
         String linea_decodificata = "";
         if (posti.size() == 0) {
@@ -116,8 +106,16 @@ public class Output {
     }
 
     private String deparseData_ora(Calendar data_ora) {
-
-        return null;
+        
+        int anno, mese, giorno, ora, min, sec;
+        anno = data_ora.get(data_ora.YEAR);
+        mese = data_ora.get(data_ora.MONTH);
+        giorno = data_ora.get(data_ora.DAY_OF_MONTH);
+        ora = data_ora.get(data_ora.HOUR_OF_DAY);
+        min = data_ora.get(data_ora.MINUTE);
+        sec = data_ora.get(data_ora.SECOND);
+        
+        return anno + "-" + mese + "-" + giorno + " " + ora + ":" + min+ ":" + sec;
     }
 
 }
