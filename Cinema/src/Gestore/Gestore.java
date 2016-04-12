@@ -11,5 +11,9 @@ package Gestore;
  * @author Yatin
  */
 public class Gestore {
+    
+    public Gestore() {
+        
+    }
   
 }
