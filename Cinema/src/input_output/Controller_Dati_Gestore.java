@@ -5,10 +5,16 @@
  */
 package input_output;
 
-/**
- *
- * @author Yoga
- */
 public class Controller_Dati_Gestore {
+ 
+    private Input input;
+    private Output output;
+
+    public Controller_Dati_Gestore() {
+        this.input = new Input();
+        this.output= new Output();
+    }
+    
+    
     
 }
