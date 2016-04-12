@@ -36,6 +36,34 @@ public class Proiezione {
     public String toString() {
         return "Proiezione{" + "id_protezione=" + id_protezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo_normale=" + prezzo_normale + ", prezzo_3d=" + prezzo_3d + '}';
     }
+
+    public int getId_protezione() {
+        return id_protezione;
+    }
+
+    public Calendar getData_ora() {
+        return data_ora;
+    }
+
+    public int getId_film() {
+        return id_film;
+    }
+
+    public int getId_sala() {
+        return id_sala;
+    }
+
+    public String getTipo_proiezione() {
+        return tipo_proiezione;
+    }
+
+    public int getPrezzo_normale() {
+        return prezzo_normale;
+    }
+
+    public int getPrezzo_3d() {
+        return prezzo_3d;
+    }
     
     
  
