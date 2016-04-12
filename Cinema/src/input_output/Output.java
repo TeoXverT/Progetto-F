@@ -93,16 +93,6 @@ public class Output {
         return sucesso;
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private String deparseMatrice(ArrayList<Posti> posti) {
         String linea_decodificata = "";
         if (posti.size() == 0) {
