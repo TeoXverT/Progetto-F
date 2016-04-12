@@ -9,6 +9,6 @@ package input_output;
  *
  * @author Yoga
  */
-public class Controller_Gestore {
+public class Controller_Dati_Gestore {
     
 }
