@@ -5,6 +5,8 @@
  */
 package input_output;
 
+import oggetti.*;
+
 public class Controller_Dati_Gestore {
  
     private Input input;
@@ -15,7 +17,11 @@ public class Controller_Dati_Gestore {
         this.output= new Output();
     }
     
-    public boolean creaPriezione(){
+    public boolean creaProiezione(Proiezione proiezione){
+        
+        
+        
+        
      return false;
     }
     

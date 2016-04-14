@@ -46,9 +46,9 @@ public class main {
         System.out.println( output.caricaProiezione(listaProiezione,"file_db/proiezione_copy.txt") );
         System.out.println( output.caricaPrenotazione(listaPrenotazione,"file_db/prenotazione_copy.txt") );
 
+        
+        
         */
-        
-        
         
         ArrayList<Proiezione> listaTotaleProiezioni;
         ArrayList<Proiezione> listaProiezioniFuture;
