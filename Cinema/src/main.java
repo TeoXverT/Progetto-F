@@ -47,29 +47,41 @@ public class main {
         System.out.println( output.caricaPrenotazione(listaPrenotazione,"file_db/prenotazione_copy.txt") );
 
         */
-        /*
         
         
         
-        ArrayList<Proiezione> listaProiezioni;
-         ArrayList<Proiezione> listaProiezioniFuture;
+        ArrayList<Proiezione> listaTotaleProiezioni;
+        ArrayList<Proiezione> listaProiezioniFuture;
         Cliente cliente = new Cliente();
         Input input = new Input();
         int i ;
         
-        listaProiezioni = cliente.listaProiezioniFuture( input.scaricaProiezione("file_db/proiezione.txt"));
+        
+        listaTotaleProiezioni = input.scaricaProiezione("file_db/proiezione.txt");
         
         
+        listaProiezioniFuture =   cliente.listaProiezioniFuture(listaTotaleProiezioni);
+       
         
-          listaProiezioniFuture =   cliente.listaProiezioniFuture(listaProiezioni);
-        
-        for(i = 0; i < listaProiezioniFuture.size(); i++) {
+        System.out.println("lista delle proiezioni future:\n");
+        for(i = 0; i <  listaProiezioniFuture.size(); i++) {
             
-            System.out.println(listaProiezioniFuture.get(i));
+            System.out.println(listaProiezioniFuture.get(i).getId_proiezione());
             
         }
         
-                */
+               
+        
+        System.out.println("lista totale proiezioni:\n");
+        
+        for(i = 0; i <  listaTotaleProiezioni.size(); i++) {
+            
+            System.out.println(listaTotaleProiezioni.get(i).getId_proiezione());
+            
+        }
+        
+        
+        
     }
     
     
