@@ -27,9 +27,12 @@ public class Cliente {
     
     
   public ArrayList<Proiezione> listaProiezioniFuture(ArrayList<Proiezione>  listaProiezione) {
-      int i, d=0;
+      int i;
       Calendar giornoAttuale;
       TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
+      Proiezione proiezioneProva;
+      
+      listaProiezioniFuture = new ArrayList<>();
       
       giornoAttuale = Calendar.getInstance(timezone);
 
@@ -37,7 +40,9 @@ public class Cliente {
           
           if(listaProiezione.get(i).getData_ora().after(giornoAttuale)) {
               
-              listaProiezioniFuture.add(listaProiezione.get(i));
+              proiezioneProva = new Proiezione(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getId_film(), listaProiezione.get(i).getId_sala(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo_normale(), listaProiezione.get(i).getPrezzo_3d());
+              
+              listaProiezioniFuture.add(proiezioneProva);
               
           }
           
