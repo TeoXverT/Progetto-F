@@ -13,7 +13,7 @@ import java.util.Calendar;
  * @author Yoga
  */
 public class Proiezione {
-    private int id_protezione;
+    private int id_proiezione;
     private Calendar data_ora;
     private int id_film;
     private int id_sala;
@@ -22,8 +22,8 @@ public class Proiezione {
     private int prezzo_normale;
     private int prezzo_3d;
 
-    public Proiezione(int id_protezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, int prezzo_normale, int prezzo_3d) {
-        this.id_protezione = id_protezione;
+    public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, int prezzo_normale, int prezzo_3d) {
+        this.id_proiezione = id_proiezione;
         this.data_ora = data_ora;
         this.id_film = id_film;
         this.id_sala = id_sala;
@@ -34,11 +34,11 @@ public class Proiezione {
 
     @Override
     public String toString() {
-        return "Proiezione{" + "id_protezione=" + id_protezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo_normale=" + prezzo_normale + ", prezzo_3d=" + prezzo_3d + '}';
+        return "Proiezione{" + "id_protezione=" + id_proiezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo_normale=" + prezzo_normale + ", prezzo_3d=" + prezzo_3d + '}';
     }
 
-    public int getId_protezione() {
-        return id_protezione;
+    public int getId_proiezione() {
+        return id_proiezione;
     }
 
     public Calendar getData_ora() {
