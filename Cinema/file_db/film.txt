@@ -4,8 +4,8 @@ id_film	titolo_film	genere	durata	descizione	link_trailer
 2	Cicciolina - Il ritorno del trivellatore	Thriller	230	blòa bla bla	https://www.youtube.com/watch?v=2Z4m4lnjxkY
 3	Fight Club	Action	120	once upon a time...	www.fight
 4	Fight Club	Action	120	once upon a time...	www.fight
-5	Fight Club	Action	120	once upon a time...	www.fight
 6	Fight Club	Action	120	once upon a time...	www.fight
-7	Fight Club	Action	120	once upon a time...	www.fight
 8	Fight Club	Action	120	once upon a time...	www.fight
 9	Fight Club	Action	120	once upon a time...	www.fight
+10	Fight Club	Action	120	once upon a time...	www.fight
+11	Fight Club	Action	120	once upon a time...	www.fight

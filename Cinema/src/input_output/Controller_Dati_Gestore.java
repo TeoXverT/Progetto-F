@@ -39,7 +39,10 @@ public class Controller_Dati_Gestore {
 
     public boolean controllerFilm(Film newFilm) throws IOException {
             listaFilm = input.scaricaFilm();
-            newFilm.setId_film(listaFilm.get(listaFilm.size()).getId_film()+1);
+            int dimenzione= listaFilm.size();
+            System.out.println(dimenzione);
+            System.out.println(listaFilm.get(dimenzione-1).getId_film());
+            newFilm.setId_film(listaFilm.get(dimenzione-1).getId_film()+1);
             listaFilm.add(newFilm);
             output.caricaFilm(listaFilm);
             System.out.println(newFilm);
