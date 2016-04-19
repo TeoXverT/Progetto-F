@@ -24,7 +24,7 @@ public class Controller_Dati_Gestore {
 
         if (newFilm.getDurata() < 300) {
             listaFilm = input.scaricaFilm();
-            newFilm.setId_film(listaFilm.size() + 1);
+            newFilm.setId_film(listaFilm.size());
             listaFilm.add(newFilm);
             output.caricaFilm(listaFilm);
             System.out.println(newFilm);
