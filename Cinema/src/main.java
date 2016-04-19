@@ -51,35 +51,35 @@ public class main {
         
         */
         
-        ArrayList<Proiezione> listaTotaleProiezioni;
-        ArrayList<Proiezione> listaProiezioniFuture;
-        Cliente cliente = new Cliente();
-        Input input = new Input();
-        int i ;
-        
-        
-        listaTotaleProiezioni = input.scaricaProiezione("file_db/proiezione.txt");
-        
-        
-        listaProiezioniFuture =   cliente.listaProiezioniFuture(listaTotaleProiezioni);
-       
-        
-        System.out.println("lista delle proiezioni future:\n");
-        for(i = 0; i <  listaProiezioniFuture.size(); i++) {
-            
-            System.out.println(listaProiezioniFuture.get(i).getId_proiezione());
-            
-        }
-        
-               
-        
-        System.out.println("lista totale proiezioni:\n");
-        
-        for(i = 0; i <  listaTotaleProiezioni.size(); i++) {
-            
-            System.out.println(listaTotaleProiezioni.get(i).getId_proiezione());
-            
-        }
+//        ArrayList<Proiezione> listaTotaleProiezioni;
+//        ArrayList<Proiezione> listaProiezioniFuture;
+//        Cliente cliente = new Cliente();
+//        Input input = new Input();
+//        int i ;
+//        
+//        
+//        listaTotaleProiezioni = input.scaricaProiezione("file_db/proiezione.txt");
+//        
+//        
+//        listaProiezioniFuture =   cliente.listaProiezioniFuture(listaTotaleProiezioni);
+//       
+//        
+//        System.out.println("lista delle proiezioni future:\n");
+//        for(i = 0; i <  listaProiezioniFuture.size(); i++) {
+//            
+//            System.out.println(listaProiezioniFuture.get(i).getId_proiezione());
+//            
+//        }
+//        
+//               
+//        
+//        System.out.println("lista totale proiezioni:\n");
+//        
+//        for(i = 0; i <  listaTotaleProiezioni.size(); i++) {
+//            
+//            System.out.println(listaTotaleProiezioni.get(i).getId_proiezione());
+//            
+//        }
         
         Gestore gest = new Gestore();
         boolean addmovie = gest.aggiungiFilm("Fight Club", "Action", 120, "once upon a time...", "www.fight");
