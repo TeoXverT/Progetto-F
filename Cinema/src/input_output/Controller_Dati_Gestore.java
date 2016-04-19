@@ -29,7 +29,7 @@ public class Controller_Dati_Gestore {
          listaFilm = i.scaricaFilm("file_db/film.txt");
          newFilm.setId_film(listaFilm.size() + 1);
          listaFilm.add(newFilm);
-         // usa int size() per l'indice
+         System.out.println(newFilm);
     }
     
 

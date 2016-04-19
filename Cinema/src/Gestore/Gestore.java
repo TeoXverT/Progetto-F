@@ -45,4 +45,7 @@ public class Gestore {
         return fine;
     }
         
+    public void aggiungiFilm(String titolo_film, String genere, int durata, String descrizione, String link_trailer){
+        Film newFilm = new Film(0, titolo_film, genere, durata, descrizione, link_trailer);
+    }
 }
