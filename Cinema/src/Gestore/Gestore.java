@@ -7,10 +7,7 @@ import java.util.StringTokenizer;
 import oggetti.*;
 
 
-/**
- *
- * @author Yatin
- */
+
 public class Gestore {
     
     private Controller_Dati_Gestore controller = new Controller_Dati_Gestore();
@@ -21,7 +18,6 @@ public class Gestore {
             Proiezione proiezione = new Proiezione(0, parseData_ora(data_ora),id_film, id_sala, tipo_proiezione, prezzo_normale, prezzo_3d);
             return controller.creaProiezione(proiezione);
         }
-        
         
         
     private Calendar parseData_ora(String stringaCalendario) {
