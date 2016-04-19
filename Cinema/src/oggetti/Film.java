@@ -48,6 +48,10 @@ public class Film {
     public int getDurata() {
         return durata;
     }
+
+    public void setId_film(int id_film) {
+        this.id_film = id_film;
+    }
     
     
     
