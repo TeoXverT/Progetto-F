@@ -12,11 +12,12 @@ public class Controller_Dati_Gestore {
     ArrayList<Film> listaFilm = new ArrayList<>();
 
     public Controller_Dati_Gestore() {
-        this.input = new Input();
-        this.output= new Output();
+        this.input = new Input("file_db/config.txt","file_db/film.txt","file_db/sala.txt","file_db/proiezione.txt","file_db/prenotazione.txt");    
+        this.output= new Output("file_db/config.txt","file_db/film.txt","file_db/sala.txt","file_db/proiezione.txt","file_db/prenotazione.txt");
     }
     
     public boolean creaProiezione(Proiezione proiezione){
+        
         
         
         
@@ -25,8 +26,7 @@ public class Controller_Dati_Gestore {
     }
 
     void controllerFilm(Film newFilm) throws IOException{
-         Input i = new Input();
-         listaFilm = i.scaricaFilm("file_db/film.txt");
+         listaFilm = input.scaricaFilm();
          newFilm.setId_film(listaFilm.size() + 1);
          listaFilm.add(newFilm);
          System.out.println(newFilm);
