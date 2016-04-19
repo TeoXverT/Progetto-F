@@ -1,6 +1,7 @@
 package Gestore;
 
 import input_output.*;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
@@ -45,7 +46,13 @@ public class Gestore {
         return fine;
     }
         
-    public void aggiungiFilm(String titolo_film, String genere, int durata, String descrizione, String link_trailer){
+    public boolean aggiungiFilm(String titolo_film, String genere, int durata, String descrizione, String link_trailer) throws IOException{
         Film newFilm = new Film(0, titolo_film, genere, durata, descrizione, link_trailer);
+        boolean adding = controller.controllerFilm(newFilm);
+        if (adding == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

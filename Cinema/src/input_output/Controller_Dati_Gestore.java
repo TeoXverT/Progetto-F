@@ -24,12 +24,19 @@ public class Controller_Dati_Gestore {
      return false;
     }
 
-    void controllerFilm(Film newFilm) throws IOException{
+    public boolean controllerFilm(Film newFilm) throws IOException{
          Input i = new Input();
-         listaFilm = i.scaricaFilm("file_db/film.txt");
-         newFilm.setId_film(listaFilm.size() + 1);
-         listaFilm.add(newFilm);
-         System.out.println(newFilm);
+         Output o = new Output();
+        if (newFilm.getDurata()<300) {
+            listaFilm = i.scaricaFilm("file_db/film.txt");
+            newFilm.setId_film(listaFilm.size() + 1);
+            listaFilm.add(newFilm);
+            o.caricaFilm(listaFilm, "ff");
+            System.out.println(newFilm);
+            return true;
+        } else {
+            return false;
+        }
     }
     
 

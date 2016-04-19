@@ -1,5 +1,6 @@
 
 import Cliente.Cliente;
+import Gestore.Gestore;
 import input_output.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +81,8 @@ public class main {
             
         }
         
-        
+        Gestore gest = new Gestore();
+        boolean addmovie = gest.aggiungiFilm("Fight Club", "Action", 120, "once upon a time...", "www.fight");
         
     }
     
