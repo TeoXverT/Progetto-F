@@ -21,16 +21,11 @@ public class Controller_Dati_Gestore {
     }
 
     public boolean controllerFilm(Film newFilm) throws IOException {
-
-        if (newFilm.getDurata() < 300) {
             listaFilm = input.scaricaFilm();
-            newFilm.setId_film(listaFilm.size());
+            newFilm.setId_film(listaFilm.size());   //indice
             listaFilm.add(newFilm);
             output.caricaFilm(listaFilm);
             System.out.println(newFilm);
-            return true;
-        } else {
-            return false;
-        }
+            return true;        
     }
 }

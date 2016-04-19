@@ -48,7 +48,11 @@ public class Gestore {
         
     public boolean aggiungiFilm(String titolo_film, String genere, int durata, String descrizione, String link_trailer) throws IOException{
         Film newFilm = new Film(0, titolo_film, genere, durata, descrizione, link_trailer);
-        boolean adding = controller.controllerFilm(newFilm);
-        return adding;
+        if (newFilm.getDurata() < 300) {
+            boolean adding = controller.controllerFilm(newFilm);
+            return adding;
+        } else {
+            return false;
+        }
     }
 }
