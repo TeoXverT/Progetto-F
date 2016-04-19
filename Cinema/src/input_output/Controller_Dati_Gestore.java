@@ -27,18 +27,22 @@ public class Controller_Dati_Gestore {
         
         return false;
     }
+   
+    public boolean modifica_config(Config config) throws IOException{
+        if(config.getPrezzo_poltrona_vip() == 0 || config.getPrezzo_poltrona_vip() >= 50){
+            System.out.println("prezzo_vip errato!!");
+            return false;
+        } else output.caricaConfig(config);
+        
+        return true;
+    }
 
     public boolean controllerFilm(Film newFilm) throws IOException {
-
-        if (newFilm.getDurata() < 300) {
             listaFilm = input.scaricaFilm();
             newFilm.setId_film(listaFilm.get(listaFilm.size()).getId_film()+1);
             listaFilm.add(newFilm);
             output.caricaFilm(listaFilm);
             System.out.println(newFilm);
-            return true;
-        } else {
-            return false;
-        }
+            return true;        
     }
 }
