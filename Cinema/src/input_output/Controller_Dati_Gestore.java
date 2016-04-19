@@ -20,6 +20,16 @@ public class Controller_Dati_Gestore {
         return false;
     }
 
+    
+    public boolean modifica_config(Config config) throws IOException{
+        if(config.getPrezzo_poltrona_vip() == 0 || config.getPrezzo_poltrona_vip() >= 50){
+            System.out.println("prezzo_vip errato!!");
+            return false;
+        } else output.caricaConfig(config);
+        
+        return true;
+    }
+
     public boolean controllerFilm(Film newFilm) throws IOException {
             listaFilm = input.scaricaFilm();
             newFilm.setId_film(listaFilm.size());   //indice

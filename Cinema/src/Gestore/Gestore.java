@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 import oggetti.*;
 
-
 /**
  *
  * @author Yatin
@@ -22,8 +21,20 @@ public class Gestore {
             Proiezione proiezione = new Proiezione(0, parseData_ora(data_ora),id_film, id_sala, tipo_proiezione, prezzo_normale, prezzo_3d);
             return controller.creaProiezione(proiezione);
         }
+
+        public boolean modifica_config(double prezzo_vip, double sconto){
+            try {
+            Config config1 = new Config(prezzo_vip, sconto);
+            controller.modifica_config(config1);
+            }
+            catch(IOException e){
+                    System.out.println("Errore!!!");
+                    return false;
+                    }
+            return true;            
+        }
         
-        
+
         
     private Calendar parseData_ora(String stringaCalendario) {
         int anno, mese, giorno, ora, min, sec;
