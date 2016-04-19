@@ -1,5 +1,7 @@
+ELEMENTI CONTRASSEGNATI DA '#' SONO GIA STATI IMPLEMENTATI.
+
 clienti:
-visualizzaProiezioni   proiezioni future
+#visualizzaProiezioni   proiezioni future
 visualizzaProiezioni filtrate
 scletaProiezione
 sceltaPosto

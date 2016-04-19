@@ -18,12 +18,18 @@ import java.util.Locale;
 
 public class Input {
 
-    public Input() {
+    String nomeFileConfig, nomeFileFilm, nomeFileSala, nomeFileProiezione, nomeFilePrenotazione;
 
+    public Input(String nomeFileConfig, String nomeFileFilm, String nomeFileSala, String nomeFileProiezione, String nomeFilePrenotazione) {
+        this.nomeFileConfig = nomeFileConfig;
+        this.nomeFileFilm = nomeFileFilm;
+        this.nomeFileSala = nomeFileSala;
+        this.nomeFileProiezione = nomeFileProiezione;
+        this.nomeFilePrenotazione = nomeFilePrenotazione;
     }
 
-    public Config scaricaConfig(String nomeFile) throws FileNotFoundException, IOException {
-        FileReader input = new FileReader(nomeFile);
+    public Config scaricaConfig( ) throws FileNotFoundException, IOException {
+        FileReader input = new FileReader(nomeFileConfig);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2;
@@ -37,10 +43,10 @@ public class Input {
         return new Config(Double.parseDouble(parte1), Double.parseDouble(parte2));
     }
 
-    public ArrayList<Film> scaricaFilm(String nomeFile) throws FileNotFoundException, IOException {
+    public ArrayList<Film> scaricaFilm( ) throws FileNotFoundException, IOException {
         ArrayList<Film> listaFilm = new ArrayList<>();
 
-        FileReader input = new FileReader(nomeFile);
+        FileReader input = new FileReader(nomeFileFilm);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4, parte5, parte6;
@@ -58,10 +64,10 @@ public class Input {
         return listaFilm;
     }
 
-    public ArrayList<Sala> scaricaSala(String nomeFile) throws FileNotFoundException, IOException {
+    public ArrayList<Sala> scaricaSala( ) throws FileNotFoundException, IOException {
         ArrayList<Sala> listaSala = new ArrayList<>();
 
-        FileReader input = new FileReader(nomeFile);
+        FileReader input = new FileReader(nomeFileSala);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4;
@@ -77,10 +83,10 @@ public class Input {
         return listaSala;
     }
 
-    public ArrayList<Proiezione> scaricaProiezione(String nomeFile) throws FileNotFoundException, IOException {
+    public ArrayList<Proiezione> scaricaProiezione( ) throws FileNotFoundException, IOException {
         ArrayList<Proiezione> listaProiezione = new ArrayList<>();
 
-        FileReader input = new FileReader(nomeFile);
+        FileReader input = new FileReader(nomeFileProiezione);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4, parte5, parte6, parte7;
@@ -99,10 +105,10 @@ public class Input {
         return listaProiezione;
     }
 
-    public ArrayList<Prenotazione> scaricaPrenotazione(String nomeFile) throws FileNotFoundException, IOException {
+    public ArrayList<Prenotazione> scaricaPrenotazione( ) throws FileNotFoundException, IOException {
         ArrayList<Prenotazione> listaPrenotazione = new ArrayList<>();
 
-        FileReader input = new FileReader(nomeFile);
+        FileReader input = new FileReader(nomeFilePrenotazione);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
         String parte1, parte2, parte3, parte4, parte5;
