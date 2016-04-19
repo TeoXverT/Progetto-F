@@ -1,4 +1,5 @@
 
+import Gestore.Gestore;
 import input_output.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,9 +42,14 @@ public class main {
         System.out.println( output.caricaSala(listaSala,"file_db/sala_copy.txt") );
         System.out.println( output.caricaProiezione(listaProiezione,"file_db/proiezione_copy.txt") );
         System.out.println( output.caricaPrenotazione(listaPrenotazione,"file_db/prenotazione_copy.txt") );
-
-         
-
+        
+        // prova gestore metodo -> modifica_config!!!!
+        
+         Gestore g = new Gestore();
+         System.out.println(g.modifica_config(5, 10));
+//         Output o = new Output();
+//         Config config1 = new Config(10, 20);
+//         o.caricaConfig(config1, "config.txt");
     }
     
     
