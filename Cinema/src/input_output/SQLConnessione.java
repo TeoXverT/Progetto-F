@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package input_output;
 
 import java.sql.*;
@@ -15,7 +10,7 @@ public class SQLConnessione {
     private Statement stmt;
 
     private final String url = "sql8.freemysqlhosting.net";
-    private final String nomeDatabase = "sql8115909";
+    private final String nomeDatabase = "sql8115909A";
     private final String user = "sql8115909";
     private final String pass = "ifYmYwRJJS";
 
