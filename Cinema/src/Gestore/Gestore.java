@@ -13,7 +13,7 @@ import oggetti.*;
  */
 public class Gestore {
     
-    private Controller_Dati_Gestore controller = new Controller_Dati_Gestore();
+    private final Controller_Dati_Gestore controller = new Controller_Dati_Gestore();
     
     public Gestore() {}
         

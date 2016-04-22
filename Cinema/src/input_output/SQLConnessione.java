@@ -11,18 +11,19 @@ public class SQLConnessione {
 
     private final String url = "sql8.freemysqlhosting.net";
     private final String nomeDatabase = "sql8115909";
-    private final String user = "sql8115909A";
-    private final String pass = "ifYmYwRJJS";
+    private final String user = "sql8115909"; 
+    private final String pass = "ifYmYwRJJSA";
+    //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnessione() {
 
     }
 
-    ResultSet eseguiQuery(String SQL) throws SQLException { //Necessita di stetmet try chatch esterno
+   public ResultSet eseguiQuery(String SQL) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display)
         return stmt.executeQuery(SQL);
     }
 
-    boolean creaConnessione() {
+    public boolean creaConnessione() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection("jdbc:mysql://" + url + ":3306/" + nomeDatabase + "?user=" + user + "&password=" + pass);
@@ -41,7 +42,7 @@ public class SQLConnessione {
         }
     }
 
-    boolean chiudiConnessione() {
+    public boolean chiudiConnessione() {
         try {
             stmt.close();
             conn.close();
@@ -50,5 +51,23 @@ public class SQLConnessione {
             Logger.getLogger(SQLConnessione.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public void esempioEsecuzioneQuery() {
+        SQLConnessione SQL = new SQLConnessione();
+        SQL.creaConnessione();
+
+        try {
+            ResultSet rsa = SQL.eseguiQuery("SELECT * from Film where Film.titolo = 'The Termin'");
+            while (rsa.next()) {
+                System.out.println(rsa.getString("id_film") + " " + rsa.getString("titolo") + " " + rsa.getString("genere"));
+            }
+            rsa.close();
+        } catch (SQLException ex) {
+            System.out.println("Errore Di Lettura Dal Server.");
+        }
+
+        SQL.chiudiConnessione();
+        // NOTABENE IL APRI E CHIUDI CONNESSIONE SONO DA FARE SOLO UNA VOLTA (ALL APERTURA DEL PROGRAMMA E ALLA CHIUSURA DEL SUDETO)
     }
 }
