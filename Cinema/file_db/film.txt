@@ -19,3 +19,4 @@ id_film	titolo_film	genere	durata	descizione	link_trailer
 19	Fight Club	Action	120	once upon a time...	www.fight
 20	Fight Club	Action	120	once upon a time...	www.fight
 21	Fight Club	Action	120	once upon a time...	www.fight
+22	Fight Club	Action	120	once upon a time...	www.fight
