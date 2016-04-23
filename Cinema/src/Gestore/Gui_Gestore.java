@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -154,6 +155,16 @@ public class Gui_Gestore extends JFrame {
         visualizzaFilm = new JPanel(new BorderLayout());
         JLabel provaVisualizzazioneFilm = new JLabel("provaVisualizzazioneDinamicaFilm", SwingConstants.CENTER);
         visualizzaFilm.add(provaVisualizzazioneFilm, BorderLayout.CENTER);
+        try {            
+            ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
+            immagine = new ImageIcon(immagine.getImage().getScaledInstance(600, 500, java.awt.Image.SCALE_SMOOTH));
+            JLabel immagineInternet = new JLabel(immagine);
+            visualizzaFilm.add(immagineInternet, BorderLayout.SOUTH);
+
+        } catch (IOException ex) {
+            Component frame = null;
+            JOptionPane.showMessageDialog(frame, "Errore caricamento copertina", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+        }
         visualizzaFilm.setVisible(false);
         pannello.add(visualizzaFilm);
 
