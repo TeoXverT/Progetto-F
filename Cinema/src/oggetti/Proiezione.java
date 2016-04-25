@@ -19,23 +19,24 @@ public class Proiezione {
     private int id_sala;
     
     private String tipo_proiezione;
-    private int prezzo_normale;
-    private int prezzo_3d;
+    private double prezzo;
+   
 
-    public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, int prezzo_normale, int prezzo_3d) {
+    public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, double prezzo) {
         this.id_proiezione = id_proiezione;
         this.data_ora = data_ora;
         this.id_film = id_film;
         this.id_sala = id_sala;
         this.tipo_proiezione = tipo_proiezione;
-        this.prezzo_normale = prezzo_normale;
-        this.prezzo_3d = prezzo_3d;
+        this.prezzo = prezzo;
     }
 
     @Override
     public String toString() {
-        return "Proiezione{" + "id_protezione=" + id_proiezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo_normale=" + prezzo_normale + ", prezzo_3d=" + prezzo_3d + '}';
+        return "Proiezione{" + "id_proiezione=" + id_proiezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo=" + prezzo + '}';
     }
+
+   
 
     public int getId_proiezione() {
         return id_proiezione;
@@ -57,16 +58,8 @@ public class Proiezione {
         return tipo_proiezione;
     }
 
-    public int getPrezzo_normale() {
-        return prezzo_normale;
+    public double getPrezzo() {
+        return prezzo;
     }
-
-    public int getPrezzo_3d() {
-        return prezzo_3d;
-    }
-    
-    
  
-   
-    
 }

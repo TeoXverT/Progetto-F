@@ -74,7 +74,7 @@ public class Output {
         try (PrintWriter writer = new PrintWriter(nomeFileProiezione, "UTF-8")) {
             writer.println("id_proiezione\tdata_ora\tid_film\tid_sala\ttipo_proiezione\tprezzo_normale\tprezzo_3d");
             for (Proiezione p : listaProiezione) {
-                writer.println(p.getId_proiezione() + "\t" + deparseData_ora(p.getData_ora()) + "\t" + p.getId_film() + "\t" + p.getId_sala() + "\t" + p.getTipo_proiezione() + "\t" + p.getPrezzo_normale() + "\t" + p.getPrezzo_3d());
+                writer.println(p.getId_proiezione() + "\t" + deparseData_ora(p.getData_ora()) + "\t" + p.getId_film() + "\t" + p.getId_sala() + "\t" + p.getTipo_proiezione() + "\t" + p.getPrezzo());
             }
             sucesso = true;
         }

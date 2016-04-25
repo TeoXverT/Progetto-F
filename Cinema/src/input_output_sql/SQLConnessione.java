@@ -1,4 +1,4 @@
-package input_output;
+package input_output_sql;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -12,7 +12,7 @@ public class SQLConnessione {
     private final String url = "sql8.freemysqlhosting.net";
     private final String nomeDatabase = "sql8115909";
     private final String user = "sql8115909"; 
-    private final String pass = "ifYmYwRJJSA";
+    private final String pass = "ifYmYwRJJS";
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnessione() {
@@ -20,7 +20,7 @@ public class SQLConnessione {
     }
 
    public ResultSet eseguiQuery(String SQL) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
-        return stmt.executeQuery(SQL);
+       return stmt.executeQuery(SQL);
     }
 
     public boolean creaConnessione() {

@@ -100,7 +100,7 @@ public class Input {
             parte5 = st.nextToken();
             parte6 = st.nextToken();
             parte7 = st.nextToken();
-            listaProiezione.add(new Proiezione(Integer.parseInt(parte1), this.parseData_ora(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), parte5, Integer.parseInt(parte6), Integer.parseInt(parte7)));
+            listaProiezione.add(new Proiezione(Integer.parseInt(parte1), this.parseData_ora(parte2), Integer.parseInt(parte3), Integer.parseInt(parte4), parte5, Double.parseDouble(parte6)));
         }
         return listaProiezione;
     }

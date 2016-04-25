@@ -9,14 +9,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.io.IOException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import oggetti.*;
 
 /**
  *
@@ -26,19 +27,22 @@ public class Gui_Gestore extends JFrame {
 
     private final Gestore gestore;
 
-    private JLabel outputGrafico;
+    private JPanel display;
+    private JLabel outputGrafico; //Scritte in basso
 
-    private JPanel visualizzaSale;
-    private JPanel visualizzaFilm;
-    private JLabel schermataDefault;
+    private final JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+    private Component frameErrore = null;
 
     public Gui_Gestore() {
         gestore = new Gestore();
+        display = new JPanel(new BorderLayout());
         creaGui();
     }
 
     private void creaGui() {
-        JPanel nord = creaSchermate();
+        this.setJMenuBar(creaMenuBar());  //Costruttore del menu a tendina
+
+        display = defaultSchermata();     //Visualizzo logo in splash 
 
         JPanel sud = new JPanel(new BorderLayout());
         outputGrafico = new JLabel("Output del risultato", SwingConstants.CENTER);
@@ -46,21 +50,14 @@ public class Gui_Gestore extends JFrame {
 
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setJMenuBar(creaMenuBar());
-        this.add(nord, BorderLayout.NORTH);
+        this.add(display, BorderLayout.CENTER);
         this.add(sud, BorderLayout.SOUTH);
         this.setTitle("Pannello Gestore");
         this.setBounds(100, 100, 700, 700);
-        this.setResizable(false);
+//        this.setResizable(false);
 
-        try {
-            ImageIcon immagine = new ImageIcon(ImageIO.read(new File("immagini/logo_trasparente.png")));
-            setIconImage(immagine.getImage());
-
-        } catch (IOException ex) {
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Errore caricamento icona", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-        }
+        ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
+        setIconImage(icona.getImage());
 
     }
 
@@ -77,23 +74,20 @@ public class Gui_Gestore extends JFrame {
         menuBar.add(menu);
 
         menuItem = new JMenuItem("Stato Sale", KeyEvent.VK_S);
-        //menuItem.setMnemonic(KeyEvent.VK_T); //used constructor instead
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         menuItem.addActionListener(visualizzaSale());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Film", KeyEvent.VK_F);
-        //menuItem.setMnemonic(KeyEvent.VK_T); 
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         menuItem.addActionListener(visualizzaFilm());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Prenotazioni");
-        //menuItem.setMnemonic(KeyEvent.VK_B);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
-        menuItem.addActionListener(azione4("Visualizzatore Prenotazioni"));
+        menuItem.addActionListener(visualizzaPrenotazioni());
         menu.add(menuItem);
 
         menu.addSeparator();
@@ -101,11 +95,11 @@ public class Gui_Gestore extends JFrame {
         submenu.setMnemonic(KeyEvent.VK_P);
 
         menuItem = new JMenuItem("Odierne");
-        menuItem.addActionListener(azione4("Visualizzazione Stato Proiezioni Odierne"));
+        menuItem.addActionListener(visualizzaProiezioni(0));
         submenu.add(menuItem);
 
         menuItem = new JMenuItem("Future");
-        menuItem.addActionListener(azione4("Visualizzazione Stato Proiezioni Future"));
+        menuItem.addActionListener(visualizzaProiezioni(1));
         submenu.add(menuItem);
         menu.add(submenu);
 
@@ -132,86 +126,19 @@ public class Gui_Gestore extends JFrame {
         return menuBar;
     }
 
-    private void nascondiTutto() {
-        visualizzaSale.setVisible(false);
-        visualizzaFilm.setVisible(false);
-        schermataDefault.setVisible(false);
-    }
-
-    //////////////////////////////////////////////////////// PANNELLI SCHERMATE ///////////////////////////////////////////////////////
-    private JPanel creaSchermate() {
+    private JPanel defaultSchermata() {
         JPanel pannello = new JPanel();
-
-        try {
-            ImageIcon immagine = new ImageIcon(ImageIO.read(new File("immagini/logo.png")));
-            immagine = new ImageIcon(immagine.getImage().getScaledInstance(700, 700, java.awt.Image.SCALE_SMOOTH));
-            schermataDefault = new JLabel(immagine);
-            pannello.add(schermataDefault);
-        } catch (IOException ex) {
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Errore caricamento logo", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-        }
-
-        visualizzaFilm = new JPanel(new BorderLayout());
-        JLabel provaVisualizzazioneFilm = new JLabel("provaVisualizzazioneDinamicaFilm", SwingConstants.CENTER);
-        visualizzaFilm.add(provaVisualizzazioneFilm, BorderLayout.CENTER);
-        try {            
-            ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
-            immagine = new ImageIcon(immagine.getImage().getScaledInstance(600, 500, java.awt.Image.SCALE_SMOOTH));
-            JLabel immagineInternet = new JLabel(immagine);
-            visualizzaFilm.add(immagineInternet, BorderLayout.SOUTH);
-
-        } catch (IOException ex) {
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Errore caricamento copertina", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-        }
-        visualizzaFilm.setVisible(false);
-        pannello.add(visualizzaFilm);
-
-        visualizzaSale = new JPanel(new BorderLayout());
-        JLabel provaVisualizzazioneSale = new JLabel("provaVisualizzazioneDinamicaSale", SwingConstants.CENTER);
-        visualizzaSale.add(provaVisualizzazioneSale, BorderLayout.CENTER);
-        visualizzaSale.setVisible(false);
-        pannello.add(visualizzaSale);
-
+        ImageIcon immagine = new ImageIcon("immagini/logo_trasparente.png");
+        pannello.add(new JLabel(scalaImmagine(immagine, 640, 433)));
         return pannello;
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
-    private ActionListener azione1() {
+    private ActionListener provaActionListener(final String frase) {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                outputGrafico.setText("Azione1");
-            }
-        };
-        return evento;
-    }
-
-    private ActionListener azione2() {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                outputGrafico.setText("Azione2");
-            }
-        };
-        return evento;
-    }
-
-    private ActionListener azione3() {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                outputGrafico.setText("Azione3");
-            }
-        };
-        return evento;
-    }
-
-    private ActionListener azione4(final String frase) {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+                display.removeAll();
                 outputGrafico.setText(frase);
             }
         };
@@ -222,9 +149,61 @@ public class Gui_Gestore extends JFrame {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                nascondiTutto();
-                visualizzaSale.setVisible(true);
+                display.removeAll();
+
+                display.add(imagineCaricamento);
+
+                threadSale().start();
+
                 outputGrafico.setText("Visualizzazione Sale in Corso");
+            }
+        };
+        return evento;
+    }
+
+    private Thread threadSale() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+
+                try {
+                    JPanel visualizzaSale = new JPanel();
+
+                    //Qua creo la grid delle copertine dei film
+                    ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
+                    visualizzaSale.add(new JLabel(scalaImmagine(immagine, 600, 500)));
+
+//                  display.add(visualizzaFilm, BorderLayout.SOUTH); //NON FUNGE... DA SPIEGARE A TUTTI IL PERCHE
+                    aggiornaGUI(visualizzaSale);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frameErrore, "Errore scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        );
+        return t;
+    }
+
+    private ActionListener visualizzaProiezioni(final int tipo) {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                display.removeAll();
+
+                try {
+                    ArrayList<Proiezione> Proiezioni = gestore.visualizzaPrenotazione(tipo);
+
+                    JPanel visualizzaProiezioni = new JPanel(new GridLayout(0, 1));
+                    for (Proiezione p : Proiezioni) {
+                        visualizzaProiezioni.add(new JLabel(p.toString()));
+                    }
+
+                    display.add(visualizzaProiezioni);
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frameErrore, "Errore Esecuzione Query", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                }
+
+                outputGrafico.setText("Visualzatore Proiezioni, val tipo: " + tipo);
             }
         };
         return evento;
@@ -234,12 +213,64 @@ public class Gui_Gestore extends JFrame {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                nascondiTutto();
-                visualizzaFilm.setVisible(true);
+                display.removeAll();
+
                 outputGrafico.setText("Visualizzazione FIlm in Corso");
             }
         };
         return evento;
     }
 
+    private Thread threadFilm() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+
+                try {
+                    JPanel visualizzaSale = new JPanel();
+
+                    //Qua creo la grid delle copertine dei film
+                    ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
+                    visualizzaSale.add(new JLabel(scalaImmagine(immagine, 600, 500)));
+
+//                  display.add(visualizzaFilm, BorderLayout.SOUTH); //NON FUNGE... DA SPIEGARE A TUTTI IL PERCHE
+                    aggiornaGUI(visualizzaSale);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frameErrore, "Errore scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        );
+        return t;
+    }
+
+    private ActionListener visualizzaPrenotazioni() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                display.removeAll();
+
+                JLabel provaVisualizzazionePrenotazioni = new JLabel("provaVisualizzazioneDinamicaPrenotazioni", SwingConstants.CENTER);
+                display.add(provaVisualizzazionePrenotazioni, BorderLayout.CENTER);
+
+                outputGrafico.setText("Visualizzazione Prenotazioni in Corso");
+            }
+        };
+        return evento;
+    }
+///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
+
+    private void aggiornaGUI(final JPanel displayPanel) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                display.removeAll();
+                display.add(displayPanel, BorderLayout.CENTER);
+                display.revalidate();
+                display.repaint();
+            }
+        });
+    }
+
+    ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+        return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
+    }
 }

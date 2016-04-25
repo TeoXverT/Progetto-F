@@ -5,7 +5,7 @@
  */
 package Cliente;
 
-import input_output.Output;
+import input_output.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +40,7 @@ public class Cliente {
           
           if(listaProiezione.get(i).getData_ora().after(giornoAttuale)) {
               
-              proiezioneProva = new Proiezione(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getId_film(), listaProiezione.get(i).getId_sala(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo_normale(), listaProiezione.get(i).getPrezzo_3d());
+              proiezioneProva = new Proiezione(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getId_film(), listaProiezione.get(i).getId_sala(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
               
               listaProiezioniFuture.add(proiezioneProva);
               
