@@ -165,8 +165,8 @@ public class Gui_Gestore extends JFrame {
                 JLabel copertinaText = new JLabel("Copertina: ");
                 JTextField titoloField = new JTextField("inserisci qui il titolo del cazzo");
                 JTextField genereField = new JTextField("ciao", 30);
-                JTextField durataField = new JTextField("90");
-                JTextField descrizioneField = new JTextField();
+                final JTextField durataField = new JTextField("90");
+                JTextArea descrizioneArea = new JTextArea(1, 1);
                 JTextField linkField = new JTextField();
                 JTextField copertinaField = new JTextField();
                 JButton plus = new JButton("+"); //incrementa durata
@@ -186,15 +186,27 @@ public class Gui_Gestore extends JFrame {
                 aggiungiFilm.add(durata);
 
                 aggiungiFilm.add(descrizioneText);
-                aggiungiFilm.add(descrizioneField);
+                aggiungiFilm.add(descrizioneArea);
 
                 aggiungiFilm.add(linkText);
                 aggiungiFilm.add(linkField);
-
-                aggiungiFilm.add(copertinaText);
-                aggiungiFilm.add(copertinaField);
-                display.add(aggiungiFilm, "push, align center");
+                display.add(aggiungiFilm);
                 outputGrafico.setText("Aggiunta Film in Corso");
+                
+                plus.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                       int durataInt = Integer.parseInt(durataField.getText()) + 1;                      
+                        durataField.setText("" + durataInt);
+                    }
+                });
+                
+                 less.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                       int durataInt = Integer.parseInt(durataField.getText()) -1;                      
+                        durataField.setText("" + durataInt);
+                    }
+                });
+                
             }
         };
         return evento;
