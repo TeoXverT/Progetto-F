@@ -49,7 +49,7 @@ public class Input {
         FileReader input = new FileReader(nomeFileFilm);
         BufferedReader inputBufferizzato = new BufferedReader(input);
         String riga;
-        String parte1, parte2, parte3, parte4, parte5, parte6;
+        String parte1, parte2, parte3, parte4, parte5, parte6, parte7;
         inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
         while ((riga = inputBufferizzato.readLine()) != null) {
             StringTokenizer st = new StringTokenizer(riga, "\t");
@@ -59,7 +59,8 @@ public class Input {
             parte4 = st.nextToken();
             parte5 = st.nextToken();
             parte6 = st.nextToken();
-            listaFilm.add(new Film(Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6));
+            parte7 = st.nextToken();
+            listaFilm.add(new Film(Integer.parseInt(parte1), parte2, parte3, Integer.parseInt(parte4), parte5, parte6, parte7));
         }
         return listaFilm;
     }
