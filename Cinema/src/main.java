@@ -9,7 +9,7 @@ public class main {
       
         Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
-
+        
     }
 
 }
