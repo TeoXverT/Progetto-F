@@ -107,6 +107,12 @@ public class Gui_Gestore extends JFrame {
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
+        
+        menuItem = new JMenuItem("Aggiungi Film", KeyEvent.VK_A);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+        menuItem.addActionListener(visualizzaSale()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
 
         menu = new JMenu("Gestione Fatturati");
         menu.setMnemonic(KeyEvent.VK_F);
