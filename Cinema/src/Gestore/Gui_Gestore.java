@@ -156,7 +156,15 @@ public class Gui_Gestore extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 display.removeAll();
-                JPanel aggiungiFilm = new JPanel(new GridLayout(0, 2, 1, 50));
+                display.add(creaPanelAggiungiFilm());
+                outputGrafico.setText("Aggiunta Film in Corso");   
+            }
+        };
+        return evento;
+    }
+
+    private JPanel creaPanelAggiungiFilm(){
+        JPanel aggiungiFilm = new JPanel(new GridLayout(0, 2, 1, 50));
                 JLabel titoloText = new JLabel("Titolo: ");
                 JLabel genereText = new JLabel("Genere: ");
                 JLabel durataText = new JLabel("Durata: ");
@@ -178,22 +186,15 @@ public class Gui_Gestore extends JFrame {
                 //--------------------------------------------------------------
                 aggiungiFilm.add(titoloText);
                 aggiungiFilm.add(titoloField);
-
                 aggiungiFilm.add(genereText);
                 aggiungiFilm.add(genereField);
-
                 aggiungiFilm.add(durataText);
                 aggiungiFilm.add(durata);
-
                 aggiungiFilm.add(descrizioneText);
                 aggiungiFilm.add(descrizioneArea);
-
                 aggiungiFilm.add(linkText);
                 aggiungiFilm.add(linkField);
-                display.add(aggiungiFilm);
-                outputGrafico.setText("Aggiunta Film in Corso");
-                
-                plus.addActionListener(new ActionListener() {
+                 plus.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                        int durataInt = Integer.parseInt(durataField.getText()) + 1;                      
@@ -208,12 +209,9 @@ public class Gui_Gestore extends JFrame {
                         durataField.setText("" + durataInt);
                     }
                 });
-                
-            }
-        };
-        return evento;
+                return aggiungiFilm;
     }
-
+    
     private ActionListener visualizzaSale() {
         ActionListener evento = new ActionListener() {
             @Override
