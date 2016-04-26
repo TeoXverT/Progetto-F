@@ -87,25 +87,25 @@ public class Gui_Cliente extends JFrame{
         
         
         
-        tab.add(pannello1, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello1, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
         
-        tab.add(pannello2, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello2, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
 
-        tab.add(pannello3,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello3,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
        
-        tab.add(pannello4,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello4,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
            dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
        
-        tab.add(pannello5,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello5,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
         
-        tab.add(pannello6,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello6,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
        
-        tab.add(pannello7,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +"/" + dataAttuale.get(Calendar.MONTH) );
+        tab.add(pannello7,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         
         
         
@@ -157,7 +157,52 @@ public class Gui_Cliente extends JFrame{
     }
     
     
-    
+    private String elaboraMese(int mese) {
+        
+        if(mese==0){
+            return "Gennaio";
+        }
+        if(mese==1){
+            return "Febbraio";
+        }
+        if(mese==2){
+            return "Marzo";
+        }
+        if(mese==3){
+            return "Aprile";
+        }
+        if(mese==4){
+            return "Maggio";
+        }
+        if(mese==5){
+            return "Giugno";
+        }
+        if(mese==6){
+            return "Luglio";
+        }
+        if(mese==7){
+            return "Agosto";
+        }
+        if(mese==8){
+            return "Settembre";
+        }
+        if(mese==9){
+            return "Ottobre";
+        }
+        if(mese==10){
+            return "Novembre";
+        }
+        if(mese==11){
+            return "Dicembre";
+        }
+        else{
+            return "numero inserito sbagliato";
+        }
+        
+        
+        
+        
+    }
     
     
     
