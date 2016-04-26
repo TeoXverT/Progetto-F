@@ -12,7 +12,7 @@ public class SQLConnessione {
     private final String url = "sql8.freemysqlhosting.net";
     private final String nomeDatabase = "sql8115909";
     private final String user = "sql8115909"; 
-    private final String pass = "ifYmYwRJJSA";
+    private final String pass = "ifYmYwRJJS";
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnessione() {
