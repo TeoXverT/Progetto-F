@@ -4,12 +4,12 @@ package oggetti;
  * @author cri
  */
 public class Film {
-
-    private String titolo_film, genere, descrizione, link;
+    
+    private String titolo_film, genere, descrizione, link, copertina;
     private int id_film, durata;
 
     //DURATA IN MINUTI
-    public Film(int id_film, String titolo_film, String genere, int durata, String descrizione, String link) {
+    public Film(int id_film, String titolo_film, String genere, int durata, String descrizione, String link, String copertina) {
 
         this.id_film = id_film;
         this.titolo_film = titolo_film;
@@ -17,7 +17,7 @@ public class Film {
         this.durata = durata;
         this.descrizione = descrizione;
         this.link = link;
-
+        this.copertina = copertina;
     }
 
     @Override
