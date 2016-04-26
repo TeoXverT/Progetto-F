@@ -194,6 +194,7 @@ public class Gui_Gestore extends JFrame {
                 outputGrafico.setText("Aggiunta Film in Corso");
                 
                 plus.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                        int durataInt = Integer.parseInt(durataField.getText()) + 1;                      
                         durataField.setText("" + durataInt);
@@ -201,6 +202,7 @@ public class Gui_Gestore extends JFrame {
                 });
                 
                  less.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                        int durataInt = Integer.parseInt(durataField.getText()) -1;                      
                         durataField.setText("" + durataInt);
