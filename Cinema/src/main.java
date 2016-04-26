@@ -13,9 +13,9 @@ public class main {
 
     public static void main(String[] args) throws IOException {
       
-      /*  Gui_Gestore gestore = new Gui_Gestore();
+        Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
-        */
+        
         Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
         
