@@ -156,42 +156,60 @@ public class Gui_Gestore extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 display.removeAll();
-                JPanel aggiungiFilm = new JPanel(new GridLayout(0, 2, 1, 50));
+                display.add(creaPanelAggiungiFilm());
+                outputGrafico.setText("Aggiunta Film in Corso");   
+            }
+        };
+        return evento;
+    }
+
+    private JPanel creaPanelAggiungiFilm(){
+        JPanel aggiungiFilm = new JPanel(new GridLayout(0, 2, 1, 50));
                 JLabel titoloText = new JLabel("Titolo: ");
                 JLabel genereText = new JLabel("Genere: ");
                 JLabel durataText = new JLabel("Durata: ");
                 JLabel descrizioneText = new JLabel("Descrione: ");
                 JLabel linkText = new JLabel("Link: ");
-                JLabel copertinaText= new JLabel("Copertina: ");
-                JTextField titoloArea = new JTextField("inserisci qui il titolo del cazzo");
-                JTextArea genereArea = new JTextArea();
-                JTextArea durataArea = new JTextArea();
-                JTextArea descrizioneArea = new JTextArea();
-                JTextArea linkArea = new JTextArea();
-                JTextArea copertinaArea = new JTextArea();
+                JLabel copertinaText = new JLabel("Copertina: ");
+                JTextField titoloField = new JTextField("inserisci qui il titolo del cazzo");
+                JTextField genereField = new JTextField("ciao", 30);
+                final JTextField durataField = new JTextField("90");
+                JTextArea descrizioneArea = new JTextArea(1, 1);
+                JTextField linkField = new JTextField();
+                JTextField copertinaField = new JTextField();
+                JButton plus = new JButton("+"); //incrementa durata
+                JButton less = new JButton("-"); //decrementa durata
+                JPanel durata = new JPanel(new GridLayout(0, 3));
+                durata.add(plus);
+                durata.add(durataField);
+                durata.add(less);
                 //--------------------------------------------------------------
                 aggiungiFilm.add(titoloText);
-                aggiungiFilm.add(titoloArea);
-                
+                aggiungiFilm.add(titoloField);
                 aggiungiFilm.add(genereText);
-                aggiungiFilm.add(genereArea);
-                
+                aggiungiFilm.add(genereField);
                 aggiungiFilm.add(durataText);
-                aggiungiFilm.add(durataArea);
-                
+                aggiungiFilm.add(durata);
                 aggiungiFilm.add(descrizioneText);
                 aggiungiFilm.add(descrizioneArea);
-                
                 aggiungiFilm.add(linkText);
-                aggiungiFilm.add(linkArea);
-
-                aggiungiFilm.add(copertinaText);
-                aggiungiFilm.add(copertinaArea);
-                display.add(aggiungiFilm);
-                outputGrafico.setText("Aggiunta Film in Corso");
-            }
-        };
-        return evento;
+                aggiungiFilm.add(linkField);
+                 plus.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                       int durataInt = Integer.parseInt(durataField.getText()) + 1;                      
+                        durataField.setText("" + durataInt);
+                    }
+                });
+                
+                 less.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                       int durataInt = Integer.parseInt(durataField.getText()) -1;                      
+                        durataField.setText("" + durataInt);
+                    }
+                });
+                return aggiungiFilm;
     }
     
     private ActionListener visualizzaSale() {

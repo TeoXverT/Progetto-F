@@ -80,4 +80,6 @@ public class Gestore {
         ArrayList<Proiezione> Proiezione =controller.visualizzaPrenotazione(tipo);
         return Proiezione;
     }  
+    
+    
 }
