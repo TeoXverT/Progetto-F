@@ -6,7 +6,9 @@
 package Cliente;
 
 import static com.sun.org.apache.xml.internal.serialize.LineSeparator.Windows;
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JFrame;
@@ -58,35 +60,22 @@ public class Gui_Cliente extends JFrame{
         |ISTANZIAZIONE PANNELLI GIORNI SETTIMANA |
         |________________________________________|
         */
-        pannello1 = new JPanel();
-        pannello2  = new JPanel();
-        pannello3 = new JPanel();
-        pannello4  = new JPanel();
-        pannello5 = new JPanel();
-        pannello6  = new JPanel();
-        pannello7 = new JPanel();
+        pannello1 = new JPanel(new GridLayout( 100, 3));
+        pannello2  = new JPanel(new GridLayout( 100, 3));
+        pannello3 = new JPanel(new GridLayout( 100, 3));
+        pannello4  = new JPanel(new GridLayout( 100, 3));
+        pannello5 = new JPanel(new GridLayout( 100, 3));
+        pannello6  = new JPanel(new GridLayout( 100, 3));
+        pannello7 = new JPanel(new GridLayout( 100, 3));
         
-        //AGGIUNTA AL TABBEDPANE DEI PANNELLI
-        
-        
-        
-        
-       
-        
-        
+        /*____________________________________
+        |                                    |
+        |AGGIUNTA AL TABBEDPANE DEI PANNELLI |
+        |____________________________________|
+        */
+
         Calendar dataAttuale = Calendar.getInstance();
           
-          
-          
-        
-          
-        
-            
-        
-      
-        
-        
-        
         tab.add(pannello1, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
         
