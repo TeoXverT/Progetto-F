@@ -107,11 +107,16 @@ public class Gui_Gestore extends JFrame {
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
-        
+
         menuItem = new JMenuItem("Aggiungi Film", KeyEvent.VK_A);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         menuItem.addActionListener(visualizzaSale()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Crea Proiezione");
+        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+        menuItem.addActionListener(creaProiezione());
         menu.add(menuItem);
 
         menu = new JMenu("Gestione Fatturati");
@@ -146,6 +151,19 @@ public class Gui_Gestore extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 display.removeAll();
                 outputGrafico.setText(frase);
+            }
+        };
+        return evento;
+    }
+
+    private ActionListener creaProiezione() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                display.removeAll();
+                JPanel formCreaProiezione = new JPanel();
+
+                outputGrafico.setText("Crea proiezione");
             }
         };
         return evento;
