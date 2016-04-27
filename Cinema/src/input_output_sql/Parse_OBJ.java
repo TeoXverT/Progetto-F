@@ -35,6 +35,18 @@ public class Parse_OBJ {
         return Proiezioni;
     }
 
+    public ArrayList<Film> Film(ResultSet risultato_query) throws SQLException {
+        ArrayList<Film> Films = new ArrayList<>();
+
+        while (risultato_query.next()) {
+//          System.out.println(risultato_query.getString("id_proiezione") + " " + risultato_query.getString("data_ora") + " ppp " + risultato_query.getString("id_film") + " " + risultato_query.getString("id_sala") + " " + risultato_query.getString("tipo") + " " + risultato_query.getString("prezzo"));
+            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"),risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina")));
+        }
+        risultato_query.close();
+
+        return Films;
+    }
+
     ////////////////////////////////////////////////// METODI DI USO COMUNE ///////////////////////////////////
     private Calendar parseData_ora(Timestamp timestamp) {
 

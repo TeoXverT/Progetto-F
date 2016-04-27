@@ -16,13 +16,13 @@ public class main {
 
     public static void main(String[] args) throws IOException, SQLException {
       
-       /* Gui_Gestore gestore = new Gui_Gestore();
+        Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
         
         Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
         
-        
+     /*   
         
         //TEST METODO PROIZIONIFILTRATE IN CLIENTE
         
@@ -59,18 +59,18 @@ public class main {
 
 
 */
-    ArrayList<Proiezione> lista = new ArrayList<>();
-       
-    Calendar dataAttuale = Calendar.getInstance();
-       
-    Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
-    lista = controller.visualizzaProiezioniFiltrate(dataAttuale);
-    
-    for(int i = 0; i < lista.size(); i++) {
-        
-        System.out.println(lista.get(i).getId_proiezione());
-        
-    }
+//    ArrayList<Proiezione> lista = new ArrayList<>();
+//       
+//    Calendar dataAttuale = Calendar.getInstance();
+//       
+//    Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
+//    lista = controller.visualizzaProiezioniFiltrate(dataAttuale);
+//    
+//    for(int i = 0; i < lista.size(); i++) {
+//        
+//        System.out.println(lista.get(i).getId_proiezione());
+//        
+//    }
     
     }
     
