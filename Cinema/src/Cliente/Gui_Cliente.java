@@ -5,17 +5,11 @@
  */
 package Cliente;
 
-import static com.sun.org.apache.xml.internal.serialize.LineSeparator.Windows;
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.WindowConstants;
 
 /**
