@@ -20,6 +20,7 @@ public class SQLConnessione {
     }
 
    public ResultSet eseguiQuery(String SQL) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
+       System.out.println(SQL);
        return stmt.executeQuery(SQL);
     }
 

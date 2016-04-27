@@ -81,5 +81,10 @@ public class Gestore {
         return Proiezione;
     }  
     
+        public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException{
+        //quantita_max_da_visualizzare = 0 //NO LIMIT
+        ArrayList<Film> Films =controller.visualizzaFilm(quantita_max_da_visualizzare);
+        return Films;
+    }  
     
 }

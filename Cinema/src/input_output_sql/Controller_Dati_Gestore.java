@@ -46,6 +46,31 @@ public class Controller_Dati_Gestore {
         return Proiezioni;
     }
 
+    public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
+        //TIPO = 0 //Odierne
+        //TIPO = 1 //Future
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Film> Films;
+
+        if (quantita_max_da_visualizzare == 0) {
+            query = "SELECT * FROM  `Film`ORDER BY Film.data_ora DESC LIMIT 0 , 30";
+
+            risultato_query = SQL.eseguiQuery(query);
+        } else {
+
+            query = "SELECT * FROM `Film` ORDER BY Film.data_ora desc";
+
+//            query = "SELECT * FROM `Film` ORDER BY data_ora desc LIMIT"+ quantita_max_da_visualizzare;
+            risultato_query = SQL.eseguiQuery(query);
+        }
+
+        Films = parser.Film(risultato_query);
+        risultato_query.close();
+
+        return Films;
+    }
+
     public void spegni() {
         SQL.chiudiConnessione();
     }
