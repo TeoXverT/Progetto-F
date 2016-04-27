@@ -53,7 +53,7 @@ public class Gui_Gestore extends JFrame {
         this.add(display, BorderLayout.CENTER);
         this.add(sud, BorderLayout.SOUTH);
         this.setTitle("Pannello Gestore");
-        this.setBounds(100, 100, 700, 700);
+        this.setBounds(900, 100, 700, 700);
 //        this.setResizable(false);
 
         ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
@@ -114,7 +114,7 @@ public class Gui_Gestore extends JFrame {
         menuItem.addActionListener(aggiungiFilm()); // cosa deve fare una volta premuto
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Crea Proiezione");
+        menuItem = new JMenuItem("Aggiungi Proiezione");
         menuItem.addActionListener(aggiungiProiezione()); // cosa deve fare una volta premuto
         menu.add(menuItem);
 
@@ -231,26 +231,19 @@ public class Gui_Gestore extends JFrame {
     }
 
     private JPanel disegnaPanelAggiungiProiezione() {
-        JPanel pannelloProiezione = new JPanel(new GridLayout(0, 2, 50, 50));
+        JPanel pannelloProiezione = new JPanel(new GridLayout(0, 1, 0, 0));
         try {
 
-            JList list;
-            final DefaultListModel model;
-            final int counter = 15;
-
-            setLayout(new BorderLayout());
-            model = new DefaultListModel();
-            list = new JList(model);
+            pannelloProiezione.add(new JLabel("Film: "));
+            
+            final DefaultListModel model = new DefaultListModel();
+            JList list = new JList(model);
             JScrollPane pane = new JScrollPane(list);
 
             ArrayList<Film> Films = gestore.visualizzaFilm(0);
             for (Film f : Films) {
-//                visualizzaProiezioni.add(new JLabel(p.toString()));
                 model.addElement(f.getTitolo_film());
-
             }
-
-//            display.add(visualizzaProiezioni);
             pannelloProiezione.add(pane, BorderLayout.NORTH);
 
         } catch (SQLException ex) {
@@ -305,7 +298,7 @@ public class Gui_Gestore extends JFrame {
                 display.removeAll();
 
                 try {
-                    ArrayList<Proiezione> Proiezioni = gestore.visualizzaPrenotazione(tipo);
+                    ArrayList<Proiezione> Proiezioni = gestore.visualizzaProiezione(tipo);
 
                     JPanel visualizzaProiezioni = new JPanel(new GridLayout(0, 1));
                     for (Proiezione p : Proiezioni) {
