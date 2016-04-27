@@ -2,20 +2,23 @@
 import Cliente.Cliente;
 import Cliente.Gui_Cliente;
 import Gestore.*;
+
 import input_output.Input;
+import input_output_sql.Controller_Dati_Cliente;
 import input_output_sql.SQLConnessione;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import oggetti.Proiezione;
 
 public class main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
       
-      /*  Gui_Gestore gestore = new Gui_Gestore();
+       /* Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
-        */
+        
         Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
         
@@ -52,7 +55,25 @@ public class main {
           umeer.add(Calendar.DAY_OF_MONTH, 6);
                  
         System.out.println(umeer);
+    
+
+
+*/
+    ArrayList<Proiezione> lista = new ArrayList<>();
+       
+    Calendar dataAttuale = Calendar.getInstance();
+       
+    Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
+    lista = controller.visualizzaProiezioniFiltrate(dataAttuale);
+    
+    for(int i = 0; i < lista.size(); i++) {
+        
+        System.out.println(lista.get(i).getId_proiezione());
+        
     }
+    
+    }
+    
 
    
     
