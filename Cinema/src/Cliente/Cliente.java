@@ -17,7 +17,10 @@ import oggetti.Proiezione;
  * @author Yoga
  */
 public class Cliente {
+    
     ArrayList<Proiezione> listaProiezioniFuture;
+    ArrayList<Proiezione> listaProiezioniFiltrate;
+    
     
     public Cliente() {
         
@@ -50,7 +53,49 @@ public class Cliente {
       
       return listaProiezioniFuture;
   }
+  
+  
+  
+  public ArrayList<Proiezione> listaProiezioniFiltrate(ArrayList<Proiezione> listaProiezione, int GiornoSettimana) {
+      
+       int i;
+      Calendar giornoAttuale;
+      
+      
+      TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
+      Proiezione proiezioneProva;
+      
+      listaProiezioniFiltrate = new ArrayList<>();
+      
+      giornoAttuale = Calendar.getInstance(timezone);
+      
+      
+              
+      
+      
+      
+      
+      for(i = 0; i < listaProiezione.size(); i++) {
+          System.out.println(listaProiezione.get(i).getData_ora().get(Calendar.DAY_OF_WEEK));
+          if(listaProiezione.get(i).getData_ora().after(giornoAttuale) && (listaProiezione.get(i).getData_ora().get(Calendar.DAY_OF_WEEK)) == GiornoSettimana ) {
+              
+              proiezioneProva = new Proiezione(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getId_film(), listaProiezione.get(i).getId_sala(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
+              
+              listaProiezioniFiltrate.add(proiezioneProva);
+              
+              
+          }
+      
+      
+      
+      
+      
+  }
+  
+  
     
-    
-    
+   
+     return listaProiezioniFiltrate;
+}
+  
 }
