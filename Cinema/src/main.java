@@ -23,7 +23,6 @@ public class main {
         gui.setVisible(true);
         
      /*   
-        
         //TEST METODO PROIZIONIFILTRATE IN CLIENTE
         
         ArrayList<Proiezione> listaFilm = new ArrayList<>();

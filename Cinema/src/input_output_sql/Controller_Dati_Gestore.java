@@ -25,7 +25,7 @@ public class Controller_Dati_Gestore {
         parser = new Parse_OBJ();
     }
 
-    public ArrayList<Proiezione> visualizzaPrenotazione(int tipo) throws SQLException {
+    public ArrayList<Proiezione> visualizzaProiezione(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
         String query;
@@ -46,9 +46,21 @@ public class Controller_Dati_Gestore {
         return Proiezioni;
     }
 
+    public ArrayList<Sala> visualizzaSale() throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Sala> Sale;
+
+        query = "SELECT * FROM `Sala`";
+        risultato_query = SQL.eseguiQuery(query);
+
+        Sale = parser.Sala(risultato_query);
+        risultato_query.close();
+
+        return Sale;
+    }
+
     public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
-        //TIPO = 0 //Odierne
-        //TIPO = 1 //Future
         String query;
         ResultSet risultato_query;
         ArrayList<Film> Films;

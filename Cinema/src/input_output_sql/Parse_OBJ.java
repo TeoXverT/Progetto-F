@@ -23,6 +23,16 @@ public class Parse_OBJ {
     public Parse_OBJ() {
     }
 
+    public ArrayList<Sala> Sala(ResultSet risultato_query) throws SQLException {
+        ArrayList<Sala> Sale = new ArrayList<>();
+        while (risultato_query.next()) {
+            Sale.add(new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("posti_x"), risultato_query.getInt("posti_y"), parsePosti(risultato_query.getString("posti_vip"))));
+        }
+        risultato_query.close();
+
+        return Sale;
+    }
+
     public ArrayList<Proiezione> Proiezione(ResultSet risultato_query) throws SQLException {
         ArrayList<Proiezione> Proiezioni = new ArrayList<>();
 
@@ -40,7 +50,7 @@ public class Parse_OBJ {
 
         while (risultato_query.next()) {
 //          System.out.println(risultato_query.getString("id_proiezione") + " " + risultato_query.getString("data_ora") + " ppp " + risultato_query.getString("id_film") + " " + risultato_query.getString("id_sala") + " " + risultato_query.getString("tipo") + " " + risultato_query.getString("prezzo"));
-            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"),risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina")));
+            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"), risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina")));
         }
         risultato_query.close();
 
@@ -57,6 +67,21 @@ public class Parse_OBJ {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
+    }
+
+    private ArrayList<Posto> parsePosti(String stringPosti) {
+        ArrayList<Posto> posti = new ArrayList<>();
+
+        if (!stringPosti.equals("0")) {
+            StringTokenizer st = new StringTokenizer(stringPosti, ",");
+            StringTokenizer rt;
+            while (st.hasMoreTokens()) {
+                rt = new StringTokenizer(st.nextToken(), ":");
+                posti.add(new Posto(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
+            }
+        }
+
+        return posti;
     }
 
 }

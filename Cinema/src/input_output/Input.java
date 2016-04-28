@@ -150,15 +150,15 @@ public class Input {
         return fine;
     }
 
-    private ArrayList<Posti> parseMatrice(String postiVip) {
-        ArrayList<Posti> posti = new ArrayList<>();
+    private ArrayList<Posto> parseMatrice(String postiVip) {
+        ArrayList<Posto> posti = new ArrayList<>();
 
         if (!postiVip.equals("0")) {
             StringTokenizer st = new StringTokenizer(postiVip, ",");
             StringTokenizer rt;
             while (st.hasMoreTokens()) {
                 rt = new StringTokenizer(st.nextToken(), ":");
-                posti.add(new Posti(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
+                posti.add(new Posto(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
             }
         }
 

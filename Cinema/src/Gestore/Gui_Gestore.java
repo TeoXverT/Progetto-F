@@ -14,11 +14,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import oggetti.*;
 
+//import LGoodDatePicker-master.*;
+//
+//import LGoodDatePicker-master.com.github.lgooddatepicker.datepicker.DatePickerSettings;
+//import com.github.lgooddatepicker.timepicker.TimePicker;
+//import com.github.lgooddatepicker.zinternaltools.InternalUtilities;
 /**
  *
  * @author Yoga
@@ -35,7 +42,7 @@ public class Gui_Gestore extends JFrame {
 
     public Gui_Gestore() {
         gestore = new Gestore();
-        display = new JPanel(new BorderLayout());
+        display = new JPanel();
         creaGui();
     }
 
@@ -231,20 +238,94 @@ public class Gui_Gestore extends JFrame {
     }
 
     private JPanel disegnaPanelAggiungiProiezione() {
-        JPanel pannelloProiezione = new JPanel(new GridLayout(0, 1, 0, 0));
-        try {
+//        
+//            private int id_proiezione;
+//    private Calendar data_ora;
+//    private int id_film;
+//    private int id_sala;
+//    
+//    private String tipo_proiezione;
+//    private double prezzo;
 
-            pannelloProiezione.add(new JLabel("Film: "));
-            
+        JPanel pannelloProiezione = new JPanel(new BorderLayout(10, 30));
+        try {
+            JPanel pannelloNord = new JPanel(new GridLayout(0, 2, 20, 20));
+            JPanel pannello = new JPanel(new BorderLayout());
+
+            pannello.add(new JLabel("Film: "), BorderLayout.NORTH);
+
             final DefaultListModel model = new DefaultListModel();
-            JList list = new JList(model);
-            JScrollPane pane = new JScrollPane(list);
+            JList listaFilm = new JList(model);
+            JScrollPane pane = new JScrollPane(listaFilm);
 
             ArrayList<Film> Films = gestore.visualizzaFilm(0);
             for (Film f : Films) {
                 model.addElement(f.getTitolo_film());
             }
-            pannelloProiezione.add(pane, BorderLayout.NORTH);
+            pannello.add(pane, BorderLayout.CENTER);
+            pannelloNord.add(pannello);
+
+            pannello = new JPanel(new BorderLayout());
+            pannello.add(new JLabel("Sale: "), BorderLayout.NORTH);
+
+            final DefaultListModel model1 = new DefaultListModel();
+            JList listaSale = new JList(model1);
+            JScrollPane pane1 = new JScrollPane(listaSale);
+
+            ArrayList<Sala> Sale = gestore.visualizzaSale();
+            for (Sala s : Sale) {
+                model1.addElement(s.getId_sala());
+                System.out.println(s.toString());
+            }
+            pannello.add(pane1, BorderLayout.CENTER);
+            pannelloNord.add(pannello);
+            pannelloProiezione.add(pannelloNord, BorderLayout.NORTH);
+
+            pannello = new JPanel(new BorderLayout());
+
+            Date today = new Date();
+
+            pannello.add(new JLabel("Data Ora: "), BorderLayout.WEST);
+
+            JSpinner selettoreGiorno = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
+            JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreGiorno, "dd-MM-yyyy (EEEE)");
+            selettoreGiorno.setEditor(selettoreGiornoGui);
+            pannello.add(selettoreGiorno, BorderLayout.CENTER);
+
+            JSpinner selettoreOra = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.HOUR_OF_DAY));
+            JSpinner.DateEditor selettoreOraGui = new JSpinner.DateEditor(selettoreOra, "HH:mm");
+            selettoreOra.setEditor(selettoreOraGui);
+            pannello.add(selettoreOra, BorderLayout.EAST);
+            pannelloProiezione.add(pannello, BorderLayout.CENTER);
+
+            pannello = new JPanel(new GridLayout(0, 4));
+
+            pannelloNord = new JPanel(new GridLayout(0, 1, 10, 50));
+
+            pannello.add(new JLabel("Tipo: "));
+            String[] stringaLista = {"Normale", "3D", "IMAX 3D", "Spettacolo"};
+            JComboBox tipoLista = new JComboBox(stringaLista);
+            tipoLista.setSelectedIndex(1);
+            pannello.add(tipoLista);
+
+            pannello.add(new JLabel("Prezzo: "));
+
+            JSpinner spinnerPrezzo = new JSpinner(new SpinnerNumberModel(6, 3, 20, 0.5));
+            pannello.add(spinnerPrezzo);
+
+            pannelloNord.add(pannello);
+            JButton aggiungiProiezione = new JButton("Registra");
+            pannelloNord.add(aggiungiProiezione);
+
+            aggiungiProiezione.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(listaFilm.getSelectedValue() + " " + listaSale.getSelectedValue() + " " + selettoreGiorno.getValue() + " " + selettoreOra.getValue() + " " + tipoLista.getSelectedItem() + " " + spinnerPrezzo.getValue());
+
+                }
+            });
+
+            pannelloProiezione.add(pannelloNord, BorderLayout.SOUTH);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(frameErrore, "Errore Esecuzione Query", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
@@ -252,7 +333,7 @@ public class Gui_Gestore extends JFrame {
 
         return pannelloProiezione;
     }
-    
+
     private ActionListener visualizzaSale() {
         ActionListener evento = new ActionListener() {
             @Override
@@ -380,5 +461,12 @@ public class Gui_Gestore extends JFrame {
 
     ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
+    }
+
+    private Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }
