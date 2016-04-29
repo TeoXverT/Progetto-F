@@ -35,8 +35,11 @@ public class Controller_Dati_Gestore {
         if (tipo == 0) {
             query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) )";
             risultato_query = SQL.eseguiQuery(query);
-        } else {
+        } else if (tipo == 1) {
             query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) )";
+            risultato_query = SQL.eseguiQuery(query);
+        } else {
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) )";
             risultato_query = SQL.eseguiQuery(query);
         }
 

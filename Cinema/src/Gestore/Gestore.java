@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 import oggetti.*;
 
 /**
@@ -68,7 +69,6 @@ public class Gestore {
 //            return false;
 //        }
 //    }
-
     public ArrayList<Sala> visualizzaSale() throws SQLException {
         ArrayList<Sala> Sale = controller.visualizzaSale();
         return Sale;
@@ -77,14 +77,28 @@ public class Gestore {
     public ArrayList<Proiezione> visualizzaProiezione(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
-        ArrayList<Proiezione> Proiezione = controller.visualizzaProiezione(tipo);
-        return Proiezione;
+        //TIPO = 2  //Odierne e Future
+        ArrayList<Proiezione> Proiezioni = controller.visualizzaProiezione(tipo);
+        return Proiezioni;
     }
 
     public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
         //quantita_max_da_visualizzare = 0 //NO LIMIT
         ArrayList<Film> Films = controller.visualizzaFilm(quantita_max_da_visualizzare);
         return Films;
+    }
+
+    public boolean contolloDisponibilitaProiezione(Proiezione proiezione) throws SQLException {
+        ArrayList<Proiezione> Proiezioni = visualizzaProiezione(2);
+//        System.out.println("CAlcolo in corso");
+        for (Proiezione p : Proiezioni) {
+            System.out.println( TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime()-proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS));
+            if (TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS) < 200) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -287,15 +289,15 @@ public class Gui_Gestore extends JFrame {
 
             pannello.add(new JLabel("Data Ora: "), BorderLayout.WEST);
 
-            JSpinner selettoreGiorno = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
-            JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreGiorno, "dd-MM-yyyy (EEEE)");
-            selettoreGiorno.setEditor(selettoreGiornoGui);
-            pannello.add(selettoreGiorno, BorderLayout.CENTER);
+            JSpinner selettoreDataOra = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
+            JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreDataOra, "dd-MM-yyyy (EEEE) HH:mm");
+            selettoreDataOra.setEditor(selettoreGiornoGui);
+            pannello.add(selettoreDataOra, BorderLayout.CENTER);
 
-            JSpinner selettoreOra = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.HOUR_OF_DAY));
-            JSpinner.DateEditor selettoreOraGui = new JSpinner.DateEditor(selettoreOra, "HH:mm");
-            selettoreOra.setEditor(selettoreOraGui);
-            pannello.add(selettoreOra, BorderLayout.EAST);
+//            JSpinner selettoreOra = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.HOUR_OF_DAY));
+//            JSpinner.DateEditor selettoreOraGui = new JSpinner.DateEditor(selettoreOra, "HH:mm");
+//            selettoreOra.setEditor(selettoreOraGui);
+//            pannello.add(selettoreOra, BorderLayout.EAST);
             pannelloProiezione.add(pannello, BorderLayout.CENTER);
 
             pannello = new JPanel(new GridLayout(0, 4));
@@ -305,7 +307,7 @@ public class Gui_Gestore extends JFrame {
             pannello.add(new JLabel("Tipo: "));
             String[] stringaLista = {"Normale", "3D", "IMAX 3D", "Spettacolo"};
             JComboBox tipoLista = new JComboBox(stringaLista);
-            tipoLista.setSelectedIndex(1);
+            tipoLista.setSelectedIndex(0);
             pannello.add(tipoLista);
 
             pannello.add(new JLabel("Prezzo: "));
@@ -320,8 +322,32 @@ public class Gui_Gestore extends JFrame {
             aggiungiProiezione.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(listaFilm.getSelectedValue() + " " + listaSale.getSelectedValue() + " " + selettoreGiorno.getValue() + " " + selettoreOra.getValue() + " " + tipoLista.getSelectedItem() + " " + spinnerPrezzo.getValue());
+//                    System.out.println(listaFilm.getSelectedValue() + " " + listaSale.getSelectedValue() + " " + (Date) selettoreDataOra.getValue() + " " + tipoLista.getSelectedItem() + " " + spinnerPrezzo.getValue());
+                    if (listaFilm.getSelectedValue() == null || listaSale.getSelectedValue() == null) {
+                        outputGrafico.setText("Riempire tutti i campi");
+                    } else {
 
+                            //Crea oggetto
+                        //Cerco id associato al nome
+                        int id_film = 0;
+                        for (Film f : Films) {
+                            if (f.getTitolo_film().equals(listaFilm.getSelectedValue())) {
+                                id_film = f.getId_film();
+                            }
+                        }
+                        Proiezione proiezione = new Proiezione(0, dateToCalendar((Date) selettoreDataOra.getValue()), id_film, (int) listaSale.getSelectedValue(), (String) tipoLista.getSelectedItem(), (double) spinnerPrezzo.getValue());
+//                        System.out.println(proiezione.toString());
+                        try {
+                            if (gestore.contolloDisponibilitaProiezione(proiezione)) {
+                                //Scrivi oggetto
+                            } else {
+                                outputGrafico.setText("La sala già occupata, cambiare l'orario.");
+                            }
+                        } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frameErrore, "Errore collegamento con il server.", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    }
                 }
             });
 
@@ -468,5 +494,11 @@ public class Gui_Gestore extends JFrame {
         cal.setTime(date);
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
+    }
+
+    private Calendar dateToCalendar(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
     }
 }
