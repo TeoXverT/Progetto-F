@@ -5,6 +5,7 @@
  */
 package Cliente;
 
+import input_output_sql.Controller_Dati_Cliente;
 import java.awt.GridLayout;
 import java.util.Calendar;
 import javax.swing.JFrame;
@@ -21,7 +22,7 @@ public class Gui_Cliente extends JFrame{
     private final Cliente cliente;
     private JPanel pannello;
     private JPanel pannello1, pannello2, pannello3, pannello4, pannello5, pannello6, pannello7;
-    
+    Controller_Dati_Cliente controller  = new Controller_Dati_Cliente();
     
     
     public Gui_Cliente() {
@@ -188,8 +189,13 @@ public class Gui_Cliente extends JFrame{
     }
     
     
-    
-    
+                //IN COSTRUZIONE( DON'T TOUCH THIS)
+    private void scaricaListaFilmFiltrati(JPanel pannello, Calendar dataInizio, Calendar dataFine) {
+        
+        
+        
+        
+    }
     
     
     

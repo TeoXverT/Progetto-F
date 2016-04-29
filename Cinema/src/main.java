@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import oggetti.Film;
 import oggetti.Proiezione;
 
 public class main {
@@ -71,17 +72,17 @@ public class main {
         System.out.println(lista.get(i).getId_proiezione());
       
     */
-    ArrayList<Proiezione> lista ;
+    ArrayList<Film> lista ;
     Calendar dataOra = Calendar.getInstance();
     Calendar dataFine = Calendar.getInstance();
-    dataFine.add(Calendar.DAY_OF_MONTH, 1);
+    dataFine.add(Calendar.DAY_OF_MONTH, 6);
     
     Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
     lista = controller.visualizzaProiezioniFiltrate(dataOra, dataFine);
     
     for(int i = 0; i < lista.size(); i++) {
         
-        System.out.println(lista.get(i).getId_proiezione());
+        System.out.println(lista.get(i).getId_film());
     }
 
     
