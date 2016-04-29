@@ -36,7 +36,7 @@ public class Controller_Dati_Cliente {
         
         ArrayList<Proiezione> listaProiezioni;
         ResultSet risultatoQuery;
-        String query = "SELECT * FROM  Proiezione  WHERE ( DATE( Proiezione.data_ora ) > DATE("+Data_ora_inizio+" ) AND DATE( Proiezione.data_ora ) < DATE( "+Data_ora_fine+ ", INTERVAL 1 DAY)))";
+        String query = "SELECT * FROM  Proiezione  WHERE ( DATE( Proiezione.data_ora ) > DATE("+Data_ora_inizio+" ) AND DATE( Proiezione.data_ora ) < DATE( "+Data_ora_fine+ "))";
         
         
         
