@@ -65,7 +65,7 @@ public class main {
     Calendar dataAttuale = Calendar.getInstance();
        
     Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
-    lista = controller.visualizzaProiezioniFiltrate(dataAttuale);
+    lista = controller.visualizzaFilmFiltratiRispettoOraEData(dataAttuale);
     
     for(int i = 0; i < lista.size(); i++) {
         
@@ -78,7 +78,7 @@ public class main {
     dataFine.add(Calendar.DAY_OF_MONTH, 6);
     
     Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
-    lista = controller.visualizzaProiezioniFiltrate(dataOra, dataFine);
+    lista = controller.visualizzaFilmFiltratiRispettoOraEData(dataOra, dataFine);
     
     for(int i = 0; i < lista.size(); i++) {
         

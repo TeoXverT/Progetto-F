@@ -189,7 +189,9 @@ public class Gui_Cliente extends JFrame{
     }
     
     
-                //IN COSTRUZIONE( DON'T TOUCH THIS)
+                //IN COSTRUZIONE( DON'T TOUCH THIS) 
+    //MEMO: gli passo un pannello, la data inizio e la data fine. Poi richiamo la funzione in COntrollerDaticliente visualizzaFilmFiltratiRispettoOraEData e istanzio i bottoni con immagine il link della copertina
+    // RICORDARSI DI USARE I THREAD
     private void scaricaListaFilmFiltrati(JPanel pannello, Calendar dataInizio, Calendar dataFine) {
         
         

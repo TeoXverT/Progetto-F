@@ -36,7 +36,7 @@ public class Controller_Dati_Cliente {
     //ANCORA IN COSTRUZIONE(PER RICCARDO, LA QUERY SU PHPMYADMIN FUNZIONA, CREDO CHE IL PROBLEMA PRINCIPALE                |
     //SIA IL PASSAGGIO DEL VALORE, VEDI TU SE RIESCI A RISOLVERE I PROBLEMI CHE DA)                                        |
     //_____________________________________________________________________________________________________________________|
-    public ArrayList<Film> visualizzaProiezioniFiltrate(Calendar Data_ora_inizio, Calendar Data_ora_fine) throws SQLException {
+    public ArrayList<Film> visualizzaFilmFiltratiRispettoOraEData(Calendar Data_ora_inizio, Calendar Data_ora_fine) throws SQLException {
         
         ArrayList<Film> listaFilmFiltrati;
         ResultSet risultatoQuery;
