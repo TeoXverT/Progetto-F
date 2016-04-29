@@ -1,6 +1,5 @@
 package Gestore;
 
-
 import input_output_sql.Controller_Dati_Gestore;
 import java.sql.SQLException;
 
@@ -15,16 +14,13 @@ import oggetti.*;
  * @author Yatin
  */
 public class Gestore {
-    
-    private final Controller_Dati_Gestore controller= new Controller_Dati_Gestore();
 
-    
+    private final Controller_Dati_Gestore controller = new Controller_Dati_Gestore();
+
     public Gestore() {
 
-    
-    
     }
-        
+
 //        public boolean creaProiezione( String data_ora,int id_film, int id_sala, String  tipo_proiezione, int prezzo_normale, int prezzo_3d){ 
 //            Proiezione proiezione = new Proiezione(0, parseData_ora(data_ora),id_film, id_sala, tipo_proiezione, prezzo_normale, prezzo_3d);
 //            return controller.creaProiezione(proiezione);
@@ -42,7 +38,6 @@ public class Gestore {
 //            return true;            
 //        }
 //        
-  
 //    private Calendar parseData_ora(String stringaCalendario) {
 //        int anno, mese, giorno, ora, min, sec;
 //
@@ -73,13 +68,23 @@ public class Gestore {
 //            return false;
 //        }
 //    }
-    
-    public ArrayList<Proiezione> visualizzaPrenotazione(int tipo) throws SQLException{
+
+    public ArrayList<Sala> visualizzaSale() throws SQLException {
+        ArrayList<Sala> Sale = controller.visualizzaSale();
+        return Sale;
+    }
+
+    public ArrayList<Proiezione> visualizzaProiezione(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
-        ArrayList<Proiezione> Proiezione =controller.visualizzaPrenotazione(tipo);
+        ArrayList<Proiezione> Proiezione = controller.visualizzaProiezione(tipo);
         return Proiezione;
-    }  
-    
-    
+    }
+
+    public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
+        //quantita_max_da_visualizzare = 0 //NO LIMIT
+        ArrayList<Film> Films = controller.visualizzaFilm(quantita_max_da_visualizzare);
+        return Films;
+    }
+
 }

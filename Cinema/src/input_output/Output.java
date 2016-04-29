@@ -95,12 +95,12 @@ public class Output {
         return sucesso;
     }
 
-    private String deparseMatrice(ArrayList<Posti> posti) {
+    private String deparseMatrice(ArrayList<Posto> posti) {
         String linea_decodificata = "";
         if (posti.size() == 0) {
             linea_decodificata = "0";
         } else {
-            for (Posti p : posti) {
+            for (Posto p : posti) {
                 linea_decodificata = linea_decodificata + p.getX() + ":" + p.getY() + ",";
             }
         }
