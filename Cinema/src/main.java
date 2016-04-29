@@ -3,7 +3,6 @@ import Cliente.Cliente;
 import Cliente.Gui_Cliente;
 import Gestore.*;
 
-import input_output.Input;
 import input_output_sql.Controller_Dati_Cliente;
 import input_output_sql.SQLConnessione;
 import java.io.IOException;
