@@ -69,8 +69,8 @@ public class main {
     for(int i = 0; i < lista.size(); i++) {
         
         System.out.println(lista.get(i).getId_proiezione());
-      */
-    
+      
+    */
     ArrayList<Proiezione> lista ;
     Calendar dataOra = Calendar.getInstance();
     Calendar dataFine = Calendar.getInstance();
@@ -84,6 +84,8 @@ public class main {
         System.out.println(lista.get(i).getId_proiezione());
     }
 
+    
+    
     
     }
     
