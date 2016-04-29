@@ -45,12 +45,15 @@ public class Controller_Dati_Cliente {
         String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
         
         String query = "SELECT * FROM  Proiezione  WHERE ( DATE( Proiezione.data_ora ) > DATE( '"+strDate2+"' ) AND DATE( Proiezione.data_ora ) < DATE('"+strDate1+ "'))";
-       // String query = "SELECT * FROM  Proiezione  WHERE ( DATE( Proiezione.data_ora ) > DATE(";
-        //query = query.concat(Data_ora_inizio.getTime().toString());
-       // query = query.concat(") AND DATE( Proiezione.data_ora ) < DATE(");
-       // query = query.concat(Data_ora_fine.getTime().toString());
-       // query = query.concat("))");
-        
+       /*
+        __________________________________________________________________________________________________________________________________
+        |
+        |è LA QUERY DA USARE PER  AVERE TUTTE LE INFORMAZIONI (FUNZIONA)
+        |
+        |SELECT * FROM  Proiezione INNER JOIN Film ON Proiezione.id_film = Film.id_film  WHERE ( DATE( Proiezione.data_ora ) > DATE( '2016-04-29 14:00:00' ) AND DATE( Proiezione.data_ora ) < DATE( '2016-05-30 14:00:00' ))
+        |
+        |___________________________________________________________________________________________________________________________
+        */
          
          
          
