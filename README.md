@@ -25,8 +25,11 @@ Il **Progetto F** è un ambiente completo per la gestione di un cinema multisala
 **Alcuni Screenshot**
 
 ![Logo](http://s32.postimg.org/lc2z2e8r9/screen1.jpg)
+
 ![Logo](http://s32.postimg.org/xrihuz40l/screen_cliente_1.jpg)
+
 ![Logo](http://s32.postimg.org/5j046hf6d/screen_cliente_2.jpg)
+
 ![Logo](http://s32.postimg.org/s38zcgp3p/screen_cliente_3.jpg)
 
 
