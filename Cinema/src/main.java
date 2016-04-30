@@ -9,19 +9,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import oggetti.Film;
 import oggetti.Proiezione;
 
 public class main {
 
     public static void main(String[] args) throws IOException, SQLException {
       
-        Gui_Gestore gestore = new Gui_Gestore();
+       Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
         
         Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
         
-    /*    
+        /* 
         
         //TEST METODO PROIZIONIFILTRATE IN CLIENTE
         
@@ -63,24 +64,24 @@ public class main {
     Calendar dataAttuale = Calendar.getInstance();
        
     Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
-    lista = controller.visualizzaProiezioniFiltrate(dataAttuale);
+    lista = controller.visualizzaFilmFiltratiRispettoOraEData(dataAttuale);
     
     for(int i = 0; i < lista.size(); i++) {
         
         System.out.println(lista.get(i).getId_proiezione());
       
     */
-    ArrayList<Proiezione> lista ;
+    ArrayList<Film> lista ;
     Calendar dataOra = Calendar.getInstance();
     Calendar dataFine = Calendar.getInstance();
-    dataFine.add(Calendar.DAY_OF_MONTH, 1);
+    dataFine.add(Calendar.DAY_OF_MONTH, 6);
     
     Controller_Dati_Cliente controller = new Controller_Dati_Cliente();
-    lista = controller.visualizzaProiezioniFiltrate(dataOra, dataFine);
+    lista = controller.visualizzaFilmFiltratiRispettoOraEData(dataOra, dataFine);
     
     for(int i = 0; i < lista.size(); i++) {
         
-        System.out.println(lista.get(i).getId_proiezione());
+        System.out.println(lista.get(i).getId_film());
     }
 
     
