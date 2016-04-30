@@ -28,20 +28,20 @@ public class Input {
         this.nomeFilePrenotazione = nomeFilePrenotazione;
     }
 
-    public Config scaricaConfig( ) throws FileNotFoundException, IOException {
-        FileReader input = new FileReader(nomeFileConfig);
-        BufferedReader inputBufferizzato = new BufferedReader(input);
-        String riga;
-        String parte1, parte2;
-
-        inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
-
-        riga = inputBufferizzato.readLine();
-        StringTokenizer st = new StringTokenizer(riga, "\t");
-        parte1 = st.nextToken();
-        parte2 = st.nextToken();
-        return new Config(Double.parseDouble(parte1), Double.parseDouble(parte2));
-    }
+//    public Config scaricaConfig( ) throws FileNotFoundException, IOException {
+//        FileReader input = new FileReader(nomeFileConfig);
+//        BufferedReader inputBufferizzato = new BufferedReader(input);
+//        String riga;
+//        String parte1, parte2;
+//
+//        inputBufferizzato.readLine(); //PER SALTARE UNA RIGA COSÌ UMEER NON ROMPE
+//
+//        riga = inputBufferizzato.readLine();
+//        StringTokenizer st = new StringTokenizer(riga, "\t");
+//        parte1 = st.nextToken();
+//        parte2 = st.nextToken();
+//        return new Config(Double.parseDouble(parte1), Double.parseDouble(parte2));
+//    }
 
     public ArrayList<Film> scaricaFilm( ) throws FileNotFoundException, IOException {
         ArrayList<Film> listaFilm = new ArrayList<>();

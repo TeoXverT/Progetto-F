@@ -22,7 +22,10 @@ public class SQLConnessione {
    public ResultSet eseguiQuery(String SQL) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
        return stmt.executeQuery(SQL);
     }
-
+   
+    public void updateQuery(String query) throws SQLException {
+        stmt.executeUpdate(query);
+    }
     public boolean creaConnessione() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();

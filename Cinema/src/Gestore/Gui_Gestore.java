@@ -5,6 +5,7 @@
  */
 package Gestore;
 
+import input_output_sql.SQLConnessione;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +15,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.naming.directory.ModificationItem;
 import javax.swing.*;
 import oggetti.*;
 
@@ -107,7 +111,7 @@ public class Gui_Gestore extends JFrame {
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
-        
+
         menuItem = new JMenuItem("Aggiungi Film", KeyEvent.VK_A);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
@@ -120,9 +124,14 @@ public class Gui_Gestore extends JFrame {
         menuBar.add(menu);
 
         menu = new JMenu("Impostazioni");
-        menu.setMnemonic(KeyEvent.VK_I);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
+
+        menuItem = new JMenuItem("Aggiungi Film", KeyEvent.VK_I);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
+        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+        menuItem.addActionListener(modificaImpostazioni()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
 
         menu = new JMenu("Help");
         menu.setMnemonic(KeyEvent.VK_I);
@@ -261,10 +270,114 @@ public class Gui_Gestore extends JFrame {
                 outputGrafico.setText("Visualizzazione Prenotazioni in Corso");
             }
         };
+
         return evento;
     }
-///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
 
+    private ActionListener modificaImpostazioni() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                display.removeAll();
+                final ArrayList<Config> c = new ArrayList<>();
+                c.clear();
+                try {
+                    c.add(gestore.aggiornaConfig());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Gestore.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JPanel impostazioni = new JPanel(new GridLayout(0, 2));
+                JLabel p_vip = new JLabel("Prezzo VIP:");
+                JLabel sconto = new JLabel("Sconto:");
+                JLabel popcorn_s = new JLabel("Popcorn Piccolo:");
+                JLabel popcorn_m = new JLabel("Popcorn Medio:");
+                JLabel popcorn_l = new JLabel("Popcorn Jumbo:");
+                JLabel bibita_s = new JLabel("Bibita Piccola:");
+                JLabel bibita_m = new JLabel("Bibita Media:");
+                JLabel bibita_l = new JLabel("Bibita Grande:");
+                JButton refresh = new JButton("Refresh");
+                JButton submit = new JButton("Submit");
+                final JTextField[] text = new JTextField[8];
+                for (int i = 0; i < 8; i++) {
+                    text[i] = new JTextField();
+                }
+                text[0].setText(String.valueOf(c.get(0).getPrezzo_vip()));
+                text[1].setText(String.valueOf(c.get(0).getSconto()));
+                text[2].setText(String.valueOf(c.get(0).getPopcorn_s()));
+                text[3].setText(String.valueOf(c.get(0).getPopcorn_m()));
+                text[4].setText(String.valueOf(c.get(0).getPopcorn_l()));
+                text[5].setText(String.valueOf(c.get(0).getBibita_s()));
+                text[6].setText(String.valueOf(c.get(0).getBibita_m()));
+                text[7].setText(String.valueOf(c.get(0).getBibita_l()));
+
+                impostazioni.add(p_vip);
+                impostazioni.add(text[0]);
+                impostazioni.add(sconto);
+                impostazioni.add(text[1]);
+                impostazioni.add(popcorn_s);
+                impostazioni.add(text[2]);
+                impostazioni.add(popcorn_m);
+                impostazioni.add(text[3]);
+                impostazioni.add(popcorn_l);
+                impostazioni.add(text[4]);
+                impostazioni.add(bibita_s);
+                impostazioni.add(text[5]);
+                impostazioni.add(bibita_m);
+                impostazioni.add(text[6]);
+                impostazioni.add(bibita_l);
+                impostazioni.add(text[7]);
+                impostazioni.add(submit);
+                impostazioni.add(refresh);
+
+                refresh.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        c.clear();
+                        try {
+                            c.add(gestore.aggiornaConfig());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Gui_Gestore.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        text[0].setText(String.valueOf(c.get(0).getPrezzo_vip()));
+                        text[1].setText(String.valueOf(c.get(0).getSconto()));
+                        text[2].setText(String.valueOf(c.get(0).getPopcorn_s()));
+                        text[3].setText(String.valueOf(c.get(0).getPopcorn_m()));
+                        text[4].setText(String.valueOf(c.get(0).getPopcorn_l()));
+                        text[5].setText(String.valueOf(c.get(0).getBibita_s()));
+                        text[6].setText(String.valueOf(c.get(0).getBibita_m()));
+                        text[7].setText(String.valueOf(c.get(0).getBibita_l()));
+
+                    }
+                });
+
+                submit.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        String qry = "INSERT INTO Config(prezzo_vip,sconto,popcorn_s,popcorn_m,popcorn_l,bibita_s,bibita_m,bibita_l) VALUES("
+                                + "'" + text[0].getText() + "','" + text[1].getText() + "','"
+                                + text[2].getText() + "','" + text[3].getText() + "','" + text[4].getText() + "','"
+                                + text[5].getText() + "','" + text[6].getText() + "','" + text[7].getText() + "')";
+                        SQLConnessione db = new SQLConnessione();
+                        db.creaConnessione();
+                        try {
+                            db.updateQuery(qry);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Gui_Gestore.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        db.chiudiConnessione();
+
+                    }
+                });
+
+                display.add(impostazioni);
+
+                outputGrafico.setText("Visualizzazione Impostazioni in Corso");
+            }
+        };
+        return evento;
+    }
+
+///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
     private void aggiornaGUI(final JPanel displayPanel) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

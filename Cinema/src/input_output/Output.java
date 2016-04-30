@@ -27,17 +27,17 @@ public class Output {
     }
 
 
-    public boolean caricaConfig(Config config ) throws FileNotFoundException, IOException {
-
-        boolean sucesso = false;
-
-        try (PrintWriter writer = new PrintWriter(nomeFileConfig, "UTF-8")) {
-            writer.println("prezzo_poltrone_vip_cadauno\tsconto_prenotazioni_maggiori_di_3_in_%_applicato_al_totale_ad_esempio");
-            writer.println(config.getPrezzo_poltrona_vip() + "\t" + config.getSconto_acquisti_maggiori_3());
-            sucesso = true;
-        }
-        return sucesso;
-    }
+//    public boolean caricaConfig(Config config ) throws FileNotFoundException, IOException {
+//
+//        boolean sucesso = false;
+//
+//        try (PrintWriter writer = new PrintWriter(nomeFileConfig, "UTF-8")) {
+//            writer.println("prezzo_poltrone_vip_cadauno\tsconto_prenotazioni_maggiori_di_3_in_%_applicato_al_totale_ad_esempio");
+//            writer.println(config.getPrezzo_poltrona_vip() + "\t" + config.getSconto_acquisti_maggiori_3());
+//            sucesso = true;
+//        }
+//        return sucesso;
+//    }
 
     public boolean caricaFilm(ArrayList<Film> listaFilm ) throws FileNotFoundException, IOException {
 

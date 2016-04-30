@@ -7,29 +7,58 @@ package oggetti;
 
 /**
  *
- * @author Yoga
+ * @author YatinBhutnai
  */
 public class Config {
-    
-    private double prezzo_poltrona_vip, sconto_acquisti_maggiori_3;
 
-    public Config(double prezzo_poltrona_vip, double sconto_acquisti_maggiori_3) {
-        this.prezzo_poltrona_vip = prezzo_poltrona_vip;
-        this.sconto_acquisti_maggiori_3 = sconto_acquisti_maggiori_3;
+    public double getPrezzo_vip() {
+        return prezzo_vip;
+    }
+
+    public double getSconto() {
+        return sconto;
+    }
+
+    public double getPopcorn_s() {
+        return popcorn_s;
+    }
+
+    public double getPopcorn_m() {
+        return popcorn_m;
+    }
+
+    public double getPopcorn_l() {
+        return popcorn_l;
+    }
+
+    public double getBibita_s() {
+        return bibita_s;
+    }
+
+    public double getBibita_m() {
+        return bibita_m;
+    }
+
+    public double getBibita_l() {
+        return bibita_l;
+    }
+    
+    private double prezzo_vip, sconto, popcorn_s, popcorn_m, popcorn_l, bibita_s, bibita_m, bibita_l;
+
+    public Config(double prezzo_vip, double sconto, double popcorn_s, double popcorn_m, double popcorn_l, double bibita_s, double bibita_m, double bibita_l) {
+        this.prezzo_vip = prezzo_vip;
+        this.sconto = sconto;
+        this.popcorn_s = popcorn_s;
+        this.popcorn_m = popcorn_m;
+        this.popcorn_l = popcorn_l;
+        this.bibita_s = bibita_s;
+        this.bibita_m = bibita_m;
+        this.bibita_l = bibita_l;
     }
 
     @Override
     public String toString() {
-        return "Config{" + "prezzo_poltrona_vip=" + prezzo_poltrona_vip + ", sconto_acquisti_maggiori_3=" + sconto_acquisti_maggiori_3 + '}';
+        return "Config{" + "prezzo_poltrona_vip=" + prezzo_vip + ", sconto_acquisti_maggiori_3=" + sconto + '}';
     }
 
-    public double getPrezzo_poltrona_vip() {
-        return prezzo_poltrona_vip;
-    }
-
-    public double getSconto_acquisti_maggiori_3() {
-        return sconto_acquisti_maggiori_3;
-    }
-    
-    
 }
