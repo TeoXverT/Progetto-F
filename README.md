@@ -13,10 +13,11 @@ Il **Progetto F** è un ambiente completo per la gestione di un cinema multisala
 **Caratteristiche principali:**
 * Infinita possibilità di espandibilità del proprio cinema
 * Ampia configurabilità di sale multiple e tipi di proiezioni
-* Disponibile in più lingue (in corso)
+* Disponibile in più lingue (in lavorazione)
 * GUI user-friendly con la possibilità di riproduzione trailer dei film 
 * Possibilità di acquisto multiplo di biglietti
 * Sistema di pre-acquisto pop-corn/bibite (salta la fila)
+* Possibilità di gestire per ogni sala i posti per disabili (in lavorazione)
 * Rendiconto mensile/annuale automatico
 * Molto altro ancora...
 
