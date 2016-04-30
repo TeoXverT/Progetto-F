@@ -77,15 +77,15 @@ public class Parse_OBJ {
         return calendar;
     }
 
-    private ArrayList<Posti> parsePosti(String stringPosti) {
-        ArrayList<Posti> posti = new ArrayList<>();
+    private ArrayList<Posto> parsePosti(String stringPosti) {
+        ArrayList<Posto> posti = new ArrayList<>();
 
         if (!stringPosti.equals("0")) {
             StringTokenizer st = new StringTokenizer(stringPosti, ",");
             StringTokenizer rt;
             while (st.hasMoreTokens()) {
                 rt = new StringTokenizer(st.nextToken(), ":");
-                posti.add(new Posti(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
+                posti.add(new Posto(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
             }
         }
 

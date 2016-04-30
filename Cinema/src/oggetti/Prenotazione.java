@@ -17,9 +17,9 @@ public class Prenotazione {
     private int id_prenotazione, id_proiezione;
     private Calendar data_ora;
     private double prezzo;
-    private ArrayList<Posti> posti_prenotati = new ArrayList<>();
+    private ArrayList<Posto> posti_prenotati = new ArrayList<>();
 
-    public Prenotazione(int id_prenotazione, int id_proiezione, ArrayList<Posti> posti_prenotati, Calendar data_ora, double prezzo) {
+    public Prenotazione(int id_prenotazione, int id_proiezione, ArrayList<Posto> posti_prenotati, Calendar data_ora, double prezzo) {
         this.id_prenotazione = id_prenotazione;
         this.id_proiezione = id_proiezione;
         this.posti_prenotati = posti_prenotati;
@@ -48,7 +48,7 @@ public class Prenotazione {
         return prezzo;
     }
 
-    public ArrayList<Posti> getPosti_prenotati() {
+    public ArrayList<Posto> getPosti_prenotati() {
         return posti_prenotati;
     }
     
