@@ -1,4 +1,4 @@
-package input_output_sql;
+package input_output;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -19,11 +19,14 @@ public class SQLConnessione {
 
     }
 
-   public ResultSet eseguiQuery(String SQL) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
-       System.out.println(SQL);
-       return stmt.executeQuery(SQL);
+   public ResultSet eseguiQueryLettura(String query) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
+//       System.out.println(query);
+       return stmt.executeQuery(query);
     }
-
+   
+    public void eseguiQueryScrittura(String query) throws SQLException {  //Questo metodo lo di deve utilizzare ogni qual volta si fa una scittura su db
+        stmt.executeUpdate(query);
+    }
     public boolean creaConnessione() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -59,7 +62,7 @@ public class SQLConnessione {
         SQL.creaConnessione();
 
         try {
-            ResultSet rsa = SQL.eseguiQuery("SELECT * from Film where Film.titolo = 'The Termin'");
+            ResultSet rsa = SQL.eseguiQueryLettura("SELECT * from Film where Film.titolo = 'The Termin'");
             while (rsa.next()) {
                 System.out.println(rsa.getString("id_film") + " " + rsa.getString("titolo") + " " + rsa.getString("genere"));
             }

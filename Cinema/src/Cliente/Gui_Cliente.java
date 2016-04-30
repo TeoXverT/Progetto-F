@@ -5,9 +5,11 @@
  */
 package Cliente;
 
-import input_output_sql.Controller_Dati_Cliente;
+import input_output.Adapter_SQL;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.Calendar;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -19,15 +21,15 @@ import javax.swing.WindowConstants;
  */
 public class Gui_Cliente extends JFrame{
     
-    private final Cliente cliente;
+    private final Controller_Cliente cliente;
     private JPanel pannello;
     private JPanel pannello1, pannello2, pannello3, pannello4, pannello5, pannello6, pannello7;
-    Controller_Dati_Cliente controller  = new Controller_Dati_Cliente();
+    Adapter_SQL adapter  = new Adapter_SQL();
     
     
     public Gui_Cliente() {
         
-        cliente = new Cliente();
+        cliente = new Controller_Cliente();
         
         pannello = new JPanel();
         
@@ -42,12 +44,18 @@ public class Gui_Cliente extends JFrame{
     
     public void creaGui() {
         
+       
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
+        this.setTitle("Pannello Cliente");
+        this.setBounds(100, 100, 880, 700);
+//        this.setResizable(false);
+
+        ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
+        setIconImage(icona.getImage());
+
         
         JTabbedPane tab = new JTabbedPane();
         
-        this.setSize(700, 300);
         
         this.add(tab);
         /*_______________________________________

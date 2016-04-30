@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class Sala {
 
     private int id_sala, posti_x, posti_y;
-    private ArrayList<Posto> posti_vip = new ArrayList<>();
+    private ArrayList<Posti> posti_vip = new ArrayList<>();
 
     //X E Y CORRISPONDONO AL MASSIMO NUMERO DI RIGHE E COLONNE CHE CI SONO IN UNA SALA
     //il posto più alto a sinistra del proiettore è la riga zero e colonna zero
-    public Sala(int id_sala, int posti_x, int posti_y, ArrayList<Posto> posti_vip) {
+    public Sala(int id_sala, int posti_x, int posti_y, ArrayList<Posti> posti_vip) {
         this.id_sala = id_sala;
         this.posti_x = posti_x;
         this.posti_y = posti_y;
@@ -27,7 +27,7 @@ public class Sala {
 
     @Override
     public String toString() {
-        return "Sala{" + "id_sala=" + id_sala + ", posti_x=" + posti_x + ", posti_y=" + posti_y + ", posti=" + posti_vip + '}';
+        return id_sala+"";
     }
 
     public int getId_sala() {
@@ -42,7 +42,7 @@ public class Sala {
         return posti_y;
     }
 
-    public ArrayList<Posto> getPosti() {
+    public ArrayList<Posti> getPosti() {
         return posti_vip;
     }
 

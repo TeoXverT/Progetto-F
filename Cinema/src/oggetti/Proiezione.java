@@ -1,5 +1,6 @@
 package oggetti;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /*
@@ -7,20 +8,19 @@ import java.util.Calendar;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Yoga
  */
 public class Proiezione {
+
     private int id_proiezione;
     private Calendar data_ora;
     private int id_film;
     private int id_sala;
-    
+
     private String tipo_proiezione;
     private double prezzo;
-   
 
     public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, double prezzo) {
         this.id_proiezione = id_proiezione;
@@ -36,15 +36,20 @@ public class Proiezione {
         return "Proiezione{" + "id_proiezione=" + id_proiezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo=" + prezzo + '}';
     }
 
-   
-
     public int getId_proiezione() {
         return id_proiezione;
+    }
+
+    public String getData_ora_sql() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(data_ora.getTime());
     }
 
     public Calendar getData_ora() {
         return data_ora;
     }
+    
+    
 
     public int getId_film() {
         return id_film;
@@ -61,5 +66,5 @@ public class Proiezione {
     public double getPrezzo() {
         return prezzo;
     }
- 
+
 }

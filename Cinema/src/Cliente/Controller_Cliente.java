@@ -16,13 +16,13 @@ import oggetti.Proiezione;
  *
  * @author Yoga
  */
-public class Cliente {
+public class Controller_Cliente {
     
     ArrayList<Proiezione> listaProiezioniFuture;
     ArrayList<Proiezione> listaProiezioniFiltrate;
     
     
-    public Cliente() {
+    public Controller_Cliente() {
         
         
         

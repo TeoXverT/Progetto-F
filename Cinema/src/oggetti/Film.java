@@ -22,7 +22,7 @@ public class Film {
 
     @Override
     public String toString() {
-        return "Film{" + "titolo_film=" + titolo_film + ", genere=" + genere + ", descrizione=" + descrizione + ", link_youtube=" + link_youtube + ", id_film=" + id_film + ", durata=" + durata + '}';
+        return titolo_film +"";
     }
 
     public String getTitolo_film() {

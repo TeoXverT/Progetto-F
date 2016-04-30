@@ -23,29 +23,30 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import oggetti.*;
 
-//import LGoodDatePicker-master.*;
-//
-//import LGoodDatePicker-master.com.github.lgooddatepicker.datepicker.DatePickerSettings;
-//import com.github.lgooddatepicker.timepicker.TimePicker;
-//import com.github.lgooddatepicker.zinternaltools.InternalUtilities;
 /**
  *
  * @author Yoga
  */
 public class Gui_Gestore extends JFrame {
 
-    private final Gestore gestore;
+    private final Controller_Gestore controller;
 
     private JPanel display;
     private JLabel outputGrafico; //Scritte in basso
 
-    private final JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+    private JLabel imagineCaricamento;
+    private JPanel pannelloCaricamento;
+
     private Component frameErrore = null;
 
     public Gui_Gestore() {
-        gestore = new Gestore();
+        controller = new Controller_Gestore();
         display = new JPanel();
         creaGui();
+        imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+        pannelloCaricamento = new JPanel();
+        pannelloCaricamento.add(imagineCaricamento);
+
     }
 
     private void creaGui() {
@@ -133,13 +134,14 @@ public class Gui_Gestore extends JFrame {
         menuBar.add(menu);
 
         menu = new JMenu("Impostazioni");
-        menu.setMnemonic(KeyEvent.VK_I);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
 
+        menuItem = new JMenuItem("Visualizza/Modifica Impostazioni");
+        menuItem.addActionListener(modificaImpostazioni()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
+
         menu = new JMenu("Help");
-        menu.setMnemonic(KeyEvent.VK_I);
-        menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
 
         return menuBar;
@@ -153,213 +155,7 @@ public class Gui_Gestore extends JFrame {
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
-    private ActionListener provaActionListener(final String frase) {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                display.removeAll();
-                outputGrafico.setText(frase);
-            }
-        };
-        return evento;
-    }
-
-    private ActionListener aggiungiFilm() {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                display.removeAll();
-                display.add(creaPanelAggiungiFilm());
-                outputGrafico.setText("Aggiunta Film in Corso");
-            }
-        };
-        return evento;
-    }
-
-    private JPanel creaPanelAggiungiFilm() {
-        JPanel aggiungiFilm = new JPanel(new GridLayout(0, 2, 1, 50));
-        JLabel titoloText = new JLabel("Titolo: ");
-        JLabel genereText = new JLabel("Genere: ");
-        JLabel durataText = new JLabel("Durata: ");
-        JLabel descrizioneText = new JLabel("Descrione: ");
-        JLabel linkText = new JLabel("Link: ");
-        JLabel copertinaText = new JLabel("Copertina: ");
-        JTextField titoloField = new JTextField("inserisci qui il titolo del cazzo");
-        JTextField genereField = new JTextField("ciao", 30);
-        final JTextField durataField = new JTextField("90");
-        JTextArea descrizioneArea = new JTextArea(1, 1);
-        JTextField linkField = new JTextField();
-        JTextField copertinaField = new JTextField();
-        JButton plus = new JButton("+"); //incrementa durata
-        JButton less = new JButton("-"); //decrementa durata
-        JPanel durata = new JPanel(new GridLayout(0, 3));
-        durata.add(plus);
-        durata.add(durataField);
-        durata.add(less);
-        //--------------------------------------------------------------
-        aggiungiFilm.add(titoloText);
-        aggiungiFilm.add(titoloField);
-        aggiungiFilm.add(genereText);
-        aggiungiFilm.add(genereField);
-        aggiungiFilm.add(durataText);
-        aggiungiFilm.add(durata);
-        aggiungiFilm.add(descrizioneText);
-        aggiungiFilm.add(descrizioneArea);
-        aggiungiFilm.add(linkText);
-        aggiungiFilm.add(linkField);
-        plus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int durataInt = Integer.parseInt(durataField.getText()) + 1;
-                durataField.setText("" + durataInt);
-            }
-        });
-
-        less.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int durataInt = Integer.parseInt(durataField.getText()) - 1;
-                durataField.setText("" + durataInt);
-            }
-        });
-        return aggiungiFilm;
-    }
-
-    private ActionListener aggiungiProiezione() {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                display.removeAll();
-
-                display.add(disegnaPanelAggiungiProiezione());
-
-                outputGrafico.setText("Aggiunta Proiezione in Corso");
-            }
-        };
-        return evento;
-    }
-
-    private JPanel disegnaPanelAggiungiProiezione() {
-//        
-//            private int id_proiezione;
-//    private Calendar data_ora;
-//    private int id_film;
-//    private int id_sala;
-//    
-//    private String tipo_proiezione;
-//    private double prezzo;
-
-        JPanel pannelloProiezione = new JPanel(new BorderLayout(10, 30));
-        try {
-            JPanel pannelloNord = new JPanel(new GridLayout(0, 2, 20, 20));
-            JPanel pannello = new JPanel(new BorderLayout());
-
-            pannello.add(new JLabel("Film: "), BorderLayout.NORTH);
-
-            final DefaultListModel model = new DefaultListModel();
-            JList listaFilm = new JList(model);
-            JScrollPane pane = new JScrollPane(listaFilm);
-
-            ArrayList<Film> Films = gestore.visualizzaFilm(0);
-            for (Film f : Films) {
-                model.addElement(f.getTitolo_film());
-            }
-            pannello.add(pane, BorderLayout.CENTER);
-            pannelloNord.add(pannello);
-
-            pannello = new JPanel(new BorderLayout());
-            pannello.add(new JLabel("Sale: "), BorderLayout.NORTH);
-
-            final DefaultListModel model1 = new DefaultListModel();
-            JList listaSale = new JList(model1);
-            JScrollPane pane1 = new JScrollPane(listaSale);
-
-            ArrayList<Sala> Sale = gestore.visualizzaSale();
-            for (Sala s : Sale) {
-                model1.addElement(s.getId_sala());
-                System.out.println(s.toString());
-            }
-            pannello.add(pane1, BorderLayout.CENTER);
-            pannelloNord.add(pannello);
-            pannelloProiezione.add(pannelloNord, BorderLayout.NORTH);
-
-            pannello = new JPanel(new BorderLayout());
-
-            Date today = new Date();
-
-            pannello.add(new JLabel("Data Ora: "), BorderLayout.WEST);
-
-            JSpinner selettoreDataOra = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
-            JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreDataOra, "dd-MM-yyyy (EEEE) HH:mm");
-            selettoreDataOra.setEditor(selettoreGiornoGui);
-            pannello.add(selettoreDataOra, BorderLayout.CENTER);
-
-//            JSpinner selettoreOra = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.HOUR_OF_DAY));
-//            JSpinner.DateEditor selettoreOraGui = new JSpinner.DateEditor(selettoreOra, "HH:mm");
-//            selettoreOra.setEditor(selettoreOraGui);
-//            pannello.add(selettoreOra, BorderLayout.EAST);
-            pannelloProiezione.add(pannello, BorderLayout.CENTER);
-
-            pannello = new JPanel(new GridLayout(0, 4));
-
-            pannelloNord = new JPanel(new GridLayout(0, 1, 10, 50));
-
-            pannello.add(new JLabel("Tipo: "));
-            String[] stringaLista = {"Normale", "3D", "IMAX 3D", "Spettacolo"};
-            JComboBox tipoLista = new JComboBox(stringaLista);
-            tipoLista.setSelectedIndex(0);
-            pannello.add(tipoLista);
-
-            pannello.add(new JLabel("Prezzo: "));
-
-            JSpinner spinnerPrezzo = new JSpinner(new SpinnerNumberModel(6, 3, 20, 0.5));
-            pannello.add(spinnerPrezzo);
-
-            pannelloNord.add(pannello);
-            JButton aggiungiProiezione = new JButton("Registra");
-            pannelloNord.add(aggiungiProiezione);
-
-            aggiungiProiezione.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-//                    System.out.println(listaFilm.getSelectedValue() + " " + listaSale.getSelectedValue() + " " + (Date) selettoreDataOra.getValue() + " " + tipoLista.getSelectedItem() + " " + spinnerPrezzo.getValue());
-                    if (listaFilm.getSelectedValue() == null || listaSale.getSelectedValue() == null) {
-                        outputGrafico.setText("Riempire tutti i campi");
-                    } else {
-
-                            //Crea oggetto
-                        //Cerco id associato al nome
-                        int id_film = 0;
-                        for (Film f : Films) {
-                            if (f.getTitolo_film().equals(listaFilm.getSelectedValue())) {
-                                id_film = f.getId_film();
-                            }
-                        }
-                        Proiezione proiezione = new Proiezione(0, dateToCalendar((Date) selettoreDataOra.getValue()), id_film, (int) listaSale.getSelectedValue(), (String) tipoLista.getSelectedItem(), (double) spinnerPrezzo.getValue());
-//                        System.out.println(proiezione.toString());
-                        try {
-                            if (gestore.contolloDisponibilitaProiezione(proiezione)) {
-                                //Scrivi oggetto
-                            } else {
-                                outputGrafico.setText("La sala già occupata, cambiare l'orario.");
-                            }
-                        } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(frameErrore, "Errore collegamento con il server.", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-                        }
-
-                    }
-                }
-            });
-
-            pannelloProiezione.add(pannelloNord, BorderLayout.SOUTH);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(frameErrore, "Errore Esecuzione Query", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-        }
-
-        return pannelloProiezione;
-    }
-
+    
     private ActionListener visualizzaSale() {
         ActionListener evento = new ActionListener() {
             @Override
@@ -405,7 +201,7 @@ public class Gui_Gestore extends JFrame {
                 display.removeAll();
 
                 try {
-                    ArrayList<Proiezione> Proiezioni = gestore.visualizzaProiezione(tipo);
+                    ArrayList<Proiezione> Proiezioni = controller.visualizzaProiezione(tipo);
 
                     JPanel visualizzaProiezioni = new JPanel(new GridLayout(0, 1));
                     for (Proiezione p : Proiezioni) {
@@ -415,10 +211,19 @@ public class Gui_Gestore extends JFrame {
                     display.add(visualizzaProiezioni);
 
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(frameErrore, "Errore Esecuzione Query", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                    serverError();
                 }
-
                 outputGrafico.setText("Visualzatore Proiezioni, val tipo: " + tipo);
+            }
+        };
+        return evento;
+    }
+        private ActionListener aggiungiProiezione() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelAddProiezione(controller, outputGrafico));
             }
         };
         return evento;
@@ -435,27 +240,15 @@ public class Gui_Gestore extends JFrame {
         };
         return evento;
     }
-
-    private Thread threadFilm() {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-
-                try {
-                    JPanel visualizzaSale = new JPanel();
-
-                    //Qua creo la grid delle copertine dei film
-                    ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
-                    visualizzaSale.add(new JLabel(scalaImmagine(immagine, 600, 500)));
-
-//                  display.add(visualizzaFilm, BorderLayout.SOUTH); //NON FUNGE... DA SPIEGARE A TUTTI IL PERCHE
-                    aggiornaGUI(visualizzaSale);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frameErrore, "Errore scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-                }
+        private ActionListener aggiungiFilm() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelAddFilm(controller, outputGrafico));
             }
-        }
-        );
-        return t;
+        };
+        return evento;
     }
 
     private ActionListener visualizzaPrenotazioni() {
@@ -470,10 +263,24 @@ public class Gui_Gestore extends JFrame {
                 outputGrafico.setText("Visualizzazione Prenotazioni in Corso");
             }
         };
+
         return evento;
     }
-///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
 
+    private ActionListener modificaImpostazioni() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelImpostazioni(controller, outputGrafico));
+            }
+        };
+        return evento;
+    }
+
+
+    
+///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
     private void aggiornaGUI(final JPanel displayPanel) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -501,4 +308,9 @@ public class Gui_Gestore extends JFrame {
         cal.setTime(date);
         return cal;
     }
+
+    void serverError() {
+        outputGrafico.setText("Errore collegamento con il server.");
+    }
+
 }
