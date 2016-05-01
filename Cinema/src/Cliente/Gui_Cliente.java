@@ -46,6 +46,12 @@ public class Gui_Cliente extends JFrame{
     
     //variabile temporanea per il settaggio del inizio e fine giorno
     Calendar temporaneo;
+    Calendar temporaneo1;
+    Calendar temporaneo2;
+    Calendar temporaneo3;
+    Calendar temporaneo4;
+    Calendar temporaneo5;
+    Calendar temporaneo6;
     //i nomi si commentano da soli, qui li definisco
     Calendar inizioPrimoGiorno;
     Calendar finePrimoGiorno;
@@ -88,28 +94,42 @@ public class Gui_Cliente extends JFrame{
         finePrimoGiorno = temporaneo;
         
         //VARIABILI PER IL SECONDO GIORNO
-        temporaneo.add(Calendar.DAY_OF_MONTH,1);
-        fineSecondoGiorno = temporaneo;
+        temporaneo1 = Calendar.getInstance();
+        temporaneo1.add(Calendar.DAY_OF_MONTH,2);
+        temporaneo1.set(temporaneo1.get(Calendar.YEAR), temporaneo1.get(Calendar.MONTH), temporaneo1.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+        
+        fineSecondoGiorno = temporaneo1;
         
         //VARIABILI PER IL TERZO GIORNO
-        temporaneo.add(Calendar.DAY_OF_MONTH,1);
-        fineTerzoGiorno = temporaneo;
+        temporaneo2 = Calendar.getInstance();
+        temporaneo2.add(Calendar.DAY_OF_MONTH,3);
+        temporaneo2.set(temporaneo2.get(Calendar.YEAR), temporaneo2.get(Calendar.MONTH), temporaneo2.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+        
+        fineTerzoGiorno = temporaneo2;
         
         //VARIABILI PER IL QUARTO GIORNO
-        temporaneo.add(Calendar.DAY_OF_MONTH,1);
-        fineQuartoGiorno = temporaneo;
+        temporaneo3 = Calendar.getInstance();
+        temporaneo3.set(temporaneo3.get(Calendar.YEAR), temporaneo3.get(Calendar.MONTH), temporaneo3.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+        temporaneo3.add(Calendar.DAY_OF_MONTH,4);
+        fineQuartoGiorno = temporaneo3;
         
         //VARIABILI PER IL QUINTO GIORNO
-        temporaneo.add(Calendar.DAY_OF_MONTH,1);
-        fineQuintoGiorno = temporaneo;
+        temporaneo4 = Calendar.getInstance();
+        temporaneo4.set(temporaneo4.get(Calendar.YEAR), temporaneo4.get(Calendar.MONTH), temporaneo4.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+        temporaneo4.add(Calendar.DAY_OF_MONTH,5);
+        fineQuintoGiorno = temporaneo4;
         
         //VARIABILI PER SESTO GIORNO
-        temporaneo.add(Calendar.DAY_OF_MONTH,1);
-        fineSestoGiorno = temporaneo;
+        temporaneo5 = Calendar.getInstance();
+        temporaneo5.set(temporaneo5.get(Calendar.YEAR), temporaneo5.get(Calendar.MONTH), temporaneo5.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+        temporaneo5.add(Calendar.DAY_OF_MONTH,6);
+        fineSestoGiorno = temporaneo5;
         
         //VARIABILI PER SETTIMO GIORNO
-        temporaneo.add(Calendar.DAY_OF_MONTH,1);
-        fineSettimoGiorno = temporaneo;
+        temporaneo6 = Calendar.getInstance();
+        temporaneo6.set(temporaneo6.get(Calendar.YEAR), temporaneo6.get(Calendar.MONTH), temporaneo6.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+        temporaneo6.add(Calendar.DAY_OF_MONTH,7);
+        fineSettimoGiorno = temporaneo6;
         
         
     }
@@ -333,10 +353,11 @@ public class Gui_Cliente extends JFrame{
                     
                     
                     
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3));
-                    
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10,3 ));
+                   
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(inizioPrimoGiorno, finePrimoGiorno);
-                    
+                                        System.out.println("finePrimoGiorno: " + inizioPrimoGiorno.getTime()+"\nfinesecondogiorno: " + finePrimoGiorno.getTime());
+
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
@@ -377,8 +398,9 @@ public class Gui_Cliente extends JFrame{
                     
                   
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
-                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(finePrimoGiorno, fineSecondoGiorno );
                     
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(finePrimoGiorno, fineSecondoGiorno );
+                    System.out.println("finePrimoGiorno: " + finePrimoGiorno.getTime()+"\nfinesecondogiorno: " + fineSecondoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
@@ -419,7 +441,8 @@ public class Gui_Cliente extends JFrame{
                   
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSecondoGiorno, fineTerzoGiorno );
-                    
+                    System.out.println("finePrimoGiorno: " + fineSecondoGiorno.getTime()+"\nfinesecondogiorno: " + fineTerzoGiorno.getTime());
+
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
