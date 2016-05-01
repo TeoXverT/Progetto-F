@@ -44,10 +44,29 @@ public class Gui_Cliente extends JFrame{
     ArrayList<Film> listaFilmFiltratiGiornalmente; //qui dichiaro l'arrayList che conterrà la futura lista filtrata
     JPanel visualizzazioneGiornaliera;
     
-    
-    Calendar inizioPrimoGiorno;
+    //variabile temporanea per il settaggio del inizio e fine giorno
     Calendar temporaneo;
+    //i nomi si commentano da soli, qui li definisco
+    Calendar inizioPrimoGiorno;
     Calendar finePrimoGiorno;
+    
+    
+    Calendar fineSecondoGiorno;
+    
+    
+    Calendar fineTerzoGiorno;
+    
+    
+    Calendar fineQuartoGiorno;
+    
+   
+    Calendar fineQuintoGiorno;
+    
+    
+    Calendar fineSestoGiorno;
+    
+    
+    Calendar fineSettimoGiorno;
     
     public Gui_Cliente() {
         
@@ -55,15 +74,43 @@ public class Gui_Cliente extends JFrame{
         
         pannello = new JPanel();
         
+        
+        
         creaGui();
         
         
-        //VARIABILI FINALI PER IL  THREAD
-    
+        //VARIABILI PER IL PRIMO GIORNO
+        
         inizioPrimoGiorno = Calendar.getInstance();
         temporaneo = Calendar.getInstance();
         temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        temporaneo.set(temporaneo.get(Calendar.YEAR), temporaneo.get(Calendar.MONTH), temporaneo.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
         finePrimoGiorno = temporaneo;
+        
+        //VARIABILI PER IL SECONDO GIORNO
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        fineSecondoGiorno = temporaneo;
+        
+        //VARIABILI PER IL TERZO GIORNO
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        fineTerzoGiorno = temporaneo;
+        
+        //VARIABILI PER IL QUARTO GIORNO
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        fineQuartoGiorno = temporaneo;
+        
+        //VARIABILI PER IL QUINTO GIORNO
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        fineQuintoGiorno = temporaneo;
+        
+        //VARIABILI PER SESTO GIORNO
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        fineSestoGiorno = temporaneo;
+        
+        //VARIABILI PER SETTIMO GIORNO
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        fineSettimoGiorno = temporaneo;
+        
         
     }
     
@@ -92,17 +139,17 @@ public class Gui_Cliente extends JFrame{
         */
         pannello1 = new JPanel();
         pannello1.setName("pannello1");
-        pannello2  = new JPanel(new GridLayout( 100, 3));
+        pannello2  = new JPanel();
         pannello2.setName("pannello2");
-        pannello3 = new JPanel(new GridLayout( 100, 3));
+        pannello3 = new JPanel();
         pannello3.setName("pannello3");
-        pannello4  = new JPanel(new GridLayout( 100, 3));
+        pannello4  = new JPanel();
         pannello4.setName("pannello4");
-        pannello5 = new JPanel(new GridLayout( 100, 3));
+        pannello5 = new JPanel();
         pannello5.setName("pannello5");
-        pannello6  = new JPanel(new GridLayout( 100, 3));
+        pannello6  = new JPanel();
         pannello6.setName("pannello6");
-        pannello7 = new JPanel(new GridLayout( 100, 3));
+        pannello7 = new JPanel();
         pannello7.setName("pannello7");
         
         /*____________________________________
@@ -134,6 +181,12 @@ public class Gui_Cliente extends JFrame{
         tab.add(pannello7,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
         
         
+        /*_________________________________________________________
+        |                                                         |
+        |QUI CREO IL CHANGELISTENER PER GESTIRE IL CAMBIO DEI TAB |
+        |NEL JTABBEDPANE E FAR PARTIRE I RELATIVI THREAD          |
+        |_________________________________________________________|     */
+                
         tab.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
@@ -141,8 +194,25 @@ public class Gui_Cliente extends JFrame{
                 Component c = tab.getSelectedComponent();
                 System.out.println(c.getName());
                 if(c.getName().equals("pannello1")) {
-                    System.out.println("ciclo if funziona");
-                    ThreadFilmPerGiorno().start();
+                    ThreadFilmPrimoTab().start();
+                }
+                if(c.getName().equals("pannello2")) {
+                    ThreadFilmSecondoTab().start();
+                }
+                if(c.getName().equals("pannello3")) {
+                    ThreadFilmTerzoTab().start();
+                }
+                if(c.getName().equals("pannello4")) {
+                    ThreadFilmQuartoTab().start();
+                }
+                if(c.getName().equals("pannello5")) {
+                    ThreadFilmQuintoTab().start();
+                }
+                if(c.getName().equals("pannello6")) {
+                    ThreadFilmSestoTab().start();
+                }
+                if(c.getName().equals("pannello7")) {
+                    ThreadFilmSettimoTab().start();
                 }
             }
         });
@@ -155,6 +225,7 @@ public class Gui_Cliente extends JFrame{
     }
     
     
+    //METODO PER CAMBIARE IL METODO DI IDENTIFICAZIONE DEI GIORNI DA NUMERO(INT) A NOME(STRING)
     
     private String giornoDellaSettimana(int numero) {
         
@@ -195,6 +266,8 @@ public class Gui_Cliente extends JFrame{
     }
     
     
+    
+    //METODO PER CAMBIARE IL METODO DI IDENTIFICAZIONE DEI MESI DA NUMERO(INT) A NOME(STRING)
     private String elaboraMese(int mese) {
         
         if(mese==0){
@@ -242,58 +315,43 @@ public class Gui_Cliente extends JFrame{
         
     }
     
-    private ActionListener tabPrimoGiorno() {
-        
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               
-                ThreadFilmPerGiorno().start();
-               
-            }
-        };
-        return evento;
-        
-    }
-               
     
-    //IL PROBLEMA è CHE NEL MAIN QUANDO RICHIAMO LA FUNZIONE 'visualizzaFilmFiltratiRispettoOraEData' MI FUNZIONA
-    //MENTRE INVECE QUI MI RESTITUISCE UN ARRAY VUOTO E NON CAPISCO PERCHè
+    /*_______________________________________           
+    |                                       |
+    |QUI CREO I THREAD PER OGNI SCHEDA      |
+    |_______________________________________|
+    */
     
-    private Thread ThreadFilmPerGiorno() {
+    
+    private Thread ThreadFilmPrimoTab() {
         
         Thread t  = new Thread(new Runnable () {
             
             public void run() {
                 
                 try{
-                    System.out.println("linea 265 del thread");    //TEST
-                  
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(100, 3)); //creo il pannello che andrò ad aggiungere nel JPanel lunedì
                     
                     
-                    System.out.println(inizioPrimoGiorno.getTime()); //TEST
-                    System.out.println(finePrimoGiorno.getTime());  //TEST
                     
-                    //QUI UTILIZZO LA FUNZIONE CHE NEL MAIN FUNZIONA PASSANDOGLI LE DUE DATE CHE HO DICHIARATO ALL'INIZIO DEL FILE
-                    //N.B. AL MOMENTO DEL TEST DELLA FUNZIONE NEL DB ERA PRESENTE ALMENO UN FILM CONTENUTO TRA LE DUE DATE
-                    //dopo vari test a quanto pare l'arraylist mi rimane vuoto, nonostante il metodo nel main funzioni, HELP
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3));
+                    
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(inizioPrimoGiorno, finePrimoGiorno);
                     
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
-                        System.out.println("ciclo for riga 285");
+                        System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        System.out.println(listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 400, 300)));
-                        
+                          
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                      
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(1, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
                     }
                     
                     
                 } catch(IOException ex) {
-                    System.out.println("errore");
+                    System.out.println("errore nello scaricamento immagini");
                 } catch (SQLException ex) {
                     Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -307,6 +365,259 @@ public class Gui_Cliente extends JFrame{
         return t;
         
     }
+    
+    
+    private Thread ThreadFilmSecondoTab() {
+        
+        Thread t  = new Thread(new Runnable () {
+            
+            public void run() {
+                
+                try{
+                    
+                  
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(finePrimoGiorno, fineSecondoGiorno );
+                    
+                    //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
+                    for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
+                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
+                        ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        
+                        //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
+                        aggiornaGuiGiornaliera(2, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
+                    }
+                    
+                    
+                } catch(IOException ex) {
+                    System.out.println("errore nello scaricamento immagini");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+        }
+        
+        );
+        
+        return t;
+        
+    }
+    
+    
+    private Thread ThreadFilmTerzoTab() {
+        
+        Thread t  = new Thread(new Runnable () {
+            
+            public void run() {
+                
+                try{
+                    
+                  
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSecondoGiorno, fineTerzoGiorno );
+                    
+                    //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
+                    for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
+                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
+                        ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        
+                        //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
+                        aggiornaGuiGiornaliera(3, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
+                    }
+                    
+                    
+                } catch(IOException ex) {
+                    System.out.println("errore nello scaricamento immagini");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+        }
+        
+        );
+        
+        return t;
+        
+    }
+    
+    private Thread ThreadFilmQuartoTab() {
+        
+        Thread t  = new Thread(new Runnable () {
+            
+            public void run() {
+                
+                try{
+                    
+                  
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineTerzoGiorno, fineQuartoGiorno );
+                    
+                    //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
+                    for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
+                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
+                        ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        
+                        //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
+                        aggiornaGuiGiornaliera(4, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
+                    }
+                    
+                    
+                } catch(IOException ex) {
+                    System.out.println("errore nello scaricamento immagini");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+        }
+        
+        );
+        
+        return t;
+        
+    }
+    
+    private Thread ThreadFilmQuintoTab() {
+        
+        Thread t  = new Thread(new Runnable () {
+            
+            public void run() {
+                
+                try{
+                    
+                  
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3));
+                    
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineQuartoGiorno, fineQuintoGiorno );
+                    
+                    //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
+                    for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
+                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
+                        ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        
+                        //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
+                        aggiornaGuiGiornaliera(5, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
+                    }
+                    
+                    
+                } catch(IOException ex) {
+                    System.out.println("errore nello scaricamento immagini");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+        }
+        
+        );
+        
+        return t;
+        
+    }
+    
+    private Thread ThreadFilmSestoTab() {
+        
+        Thread t  = new Thread(new Runnable () {
+            
+            public void run() {
+                
+                try{
+                    
+                  
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                  
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineQuintoGiorno, fineSestoGiorno );
+                    
+                    //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
+                    for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
+                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
+                        ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        
+                        //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
+                        aggiornaGuiGiornaliera(6, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
+                    }
+                    
+                    
+                } catch(IOException ex) {
+                    System.out.println("errore nello scaricamento immagini");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+        }
+        
+        );
+        
+        return t;
+        
+    }
+    
+    private Thread ThreadFilmSettimoTab() {
+        
+        Thread t  = new Thread(new Runnable () {
+            
+            public void run() {
+                
+                try{
+                    
+                  
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSestoGiorno, fineSettimoGiorno );
+                    
+                    //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
+                    for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
+                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
+                        ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        
+                        //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
+                        aggiornaGuiGiornaliera(7, visualizzazioneGiornaliera);
+                        System.out.println("finito caricamento immagini");
+                    }
+                    
+                    
+                } catch(IOException ex) {
+                    System.out.println("errore nello scaricamento immagini");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Gui_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+        }
+        
+        );
+        
+        return t;
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));

@@ -49,8 +49,8 @@ public class main {
         
          */
 
-        Gui_Gestore gestore = new Gui_Gestore();
-        gestore.setVisible(true);
+     //   Gui_Gestore gestore = new Gui_Gestore();
+     //   gestore.setVisible(true);
 
         Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
@@ -103,19 +103,33 @@ public class main {
         
          System.out.println(lista.get(i).getId_proiezione());
       
-         */
+        
         ArrayList<Film> lista;
         Calendar dataOra = Calendar.getInstance();
         Calendar dataFine = Calendar.getInstance();
-        dataFine.add(Calendar.DAY_OF_MONTH, 6);
+        dataFine.add(Calendar.DAY_OF_MONTH, 1);
 
         Adapter_SQL controller = new Adapter_SQL();
         lista = controller.visualizzaFilmFiltratiRispettoOraEData(dataOra, dataFine);
 
         for (int i = 0; i < lista.size(); i++) {
 
-            System.out.println(lista.get(i).getLink_copertina());
+            System.out.println("link copertina: "+lista.get(i).getLink_copertina()+"id_film: " + lista.get(i).getId_film());
+            
             System.out.println("prova \n");
         }
-    }
+        
+     
+
+    
+    Calendar inizioPrimoGiorno = Calendar.getInstance();
+       Calendar temporaneo = Calendar.getInstance();
+        temporaneo.add(Calendar.DAY_OF_MONTH,1);
+        temporaneo.set(temporaneo.get(Calendar.YEAR), temporaneo.get(Calendar.MONTH), temporaneo.get(Calendar.DAY_OF_MONTH), 00, 00, 00);
+    
+        System.out.println(temporaneo.getTime());
+*/
 }
+
+}
+
