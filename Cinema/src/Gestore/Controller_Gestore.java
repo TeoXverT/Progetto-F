@@ -85,28 +85,28 @@ public class Controller_Gestore {
     }
 
     public boolean scriviProiezione(Proiezione proiezione) throws SQLException {
-        if (true) { //Eventuale controllo sul valore dei campi di config
+        if (contolloDisponibilitaProiezione(proiezione)) { //Eventuale controllo sul valore dei campi di config
             return adapter.scriviProiezione(proiezione);
         } else {
             return false;
         }
     }
 
-    public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
-        //quantita_max_da_visualizzare = 0 //NO LIMIT
-        ArrayList<Film> Films = adapter.visualizzaFilm(quantita_max_da_visualizzare);
-        return Films;
-    }
-
     public boolean contolloDisponibilitaProiezione(Proiezione proiezione) throws SQLException {
         ArrayList<Proiezione> Proiezioni = visualizzaProiezione(2);
         for (Proiezione p : Proiezioni) {
             if (p.getId_sala() == proiezione.getId_sala() && TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS) < 200) {
-                System.out.println("Distanza in minuti dalla occupazione della stessa sala più vicina: "+TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS));
+                System.out.println("Distanza in minuti dalla occupazione della stessa sala più vicina: " + TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS)+" min");
                 return false;
             }
         }
         return true;
+    }
+
+    public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
+        //quantita_max_da_visualizzare = 0 //NO LIMIT
+        ArrayList<Film> Films = adapter.visualizzaFilm(quantita_max_da_visualizzare);
+        return Films;
     }
 
     public Config aggiornaConfig() throws SQLException { //Temporaneo

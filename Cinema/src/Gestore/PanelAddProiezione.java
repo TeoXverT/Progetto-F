@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -97,33 +99,24 @@ public class PanelAddProiezione extends JPanel {
             aggiungiProiezione.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                    System.out.println(listaFilm.getSelectedValue() + " " + listaSale.getSelectedValue() + " " + (Date) selettoreDataOra.getValue() + " " + tipoLista.getSelectedItem() + " " + spinnerPrezzo.getValue());
                     if (listaFilm.getSelectedValue() == null || listaSale.getSelectedValue() == null) {
                         outputGrafico.setText("Riempire tutti i campi");
                     } else {
-                        //Crea oggetto
+                        //Creazione oggetto
                         Proiezione proiezione = new Proiezione(0, dateToCalendar((Date) selettoreDataOra.getValue()), listaFilm.getSelectedValue().getId_film(), (int) listaSale.getSelectedValue().getId_sala(), (String) tipoLista.getSelectedItem(), (double) spinnerPrezzo.getValue());
                         try {
-                            if (controller.contolloDisponibilitaProiezione(proiezione)) {
-                                //Scrivi oggetto
-
-                                if (controller.scriviProiezione(proiezione)) {
-                                    outputGrafico.setText("Nuova proiezione aggiunta con successo.");
-                                } else {
-                                    outputGrafico.setText("Errore collegamento con il server.");
-                                }
+                            if (controller.scriviProiezione(proiezione)) {
+                                outputGrafico.setText("Nuova proiezione aggiunta con successo.");
                             } else {
                                 outputGrafico.setText("La sala già occupata, cambiare l'orario.");
                             }
                         } catch (SQLException ex) {
-                            outputGrafico.setText("Errore collegamento con il server.");
+                            outputGrafico.setText("Errore con il server.");
                         }
                     }
                 }
             });
-
             this.add(pannelloNord, BorderLayout.SOUTH);
-
         } catch (SQLException ex) {
             outputGrafico.setText("Errore collegamento con il server.");
         }
