@@ -7,7 +7,7 @@
 
 ***
 
-Il **Progetto F** è un ambiente completo per la gestione di un cinema multisala, grazie alla interfaccia user-friendly in pochi click sarà possibile aprire e gestire un cinema multisala in ogni sua parte.(Finanziariamente permettendo)
+Il **Progetto F** è un ambiente completo per la gestione di un cinema multisala, grazie alla interfaccia user-friendly in pochi click ti sarà possibile aprire e gestire un cinema multisala in ogni sua parte.(Finanziariamente permettendo)
 
 ***
 **Caratteristiche principali:**
