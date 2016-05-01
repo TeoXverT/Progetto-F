@@ -41,6 +41,8 @@ public class Gui_Cliente extends JFrame{
     Adapter_SQL adapter  = new Adapter_SQL();
      //viene usato nel thread  
     
+    ArrayList<Film> listaFilmFiltratiGiornalmente; //qui dichiaro l'arrayList che conterrà la futura lista filtrata
+    JPanel visualizzazioneGiornaliera;
     
     
     Calendar inizioPrimoGiorno;
@@ -265,10 +267,9 @@ public class Gui_Cliente extends JFrame{
             public void run() {
                 
                 try{
-                    ArrayList<Film> listaFilmFiltratiGiornalmente; //qui dichiaro l'arrayList che conterrà la futura lista filtrata
                     System.out.println("linea 265 del thread");    //TEST
                   
-                    JPanel visualizzazioneGiornaliera = new JPanel(new  GridLayout(100, 3)); //creo il pannello che andrò ad aggiungere nel JPanel lunedì
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(100, 3)); //creo il pannello che andrò ad aggiungere nel JPanel lunedì
                     
                     
                     System.out.println(inizioPrimoGiorno.getTime()); //TEST
@@ -276,12 +277,12 @@ public class Gui_Cliente extends JFrame{
                     
                     //QUI UTILIZZO LA FUNZIONE CHE NEL MAIN FUNZIONA PASSANDOGLI LE DUE DATE CHE HO DICHIARATO ALL'INIZIO DEL FILE
                     //N.B. AL MOMENTO DEL TEST DELLA FUNZIONE NEL DB ERA PRESENTE ALMENO UN FILM CONTENUTO TRA LE DUE DATE
+                    //dopo vari test a quanto pare l'arraylist mi rimane vuoto, nonostante il metodo nel main funzioni, HELP
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(inizioPrimoGiorno, finePrimoGiorno);
-                    
                     
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
-                        
+                        System.out.println("ciclo for riga 285");
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
                         System.out.println(listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 400, 300)));
