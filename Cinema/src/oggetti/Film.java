@@ -20,6 +20,14 @@ public class Film {
         this.link_copertina = link_copertina;
     }
 
+    public String getLink_youtube() {
+        return link_youtube;
+    }
+
+    public String getLink_copertina() {
+        return link_copertina;
+    }
+
     @Override
     public String toString() {
         return titolo_film +"";

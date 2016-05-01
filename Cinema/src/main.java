@@ -114,7 +114,8 @@ public class main {
 
         for (int i = 0; i < lista.size(); i++) {
 
-            System.out.println(lista.get(i).getId_film());
+            System.out.println(lista.get(i).getLink_copertina());
+            System.out.println("prova \n");
         }
     }
 }
