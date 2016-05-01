@@ -657,34 +657,35 @@ public class Gui_Cliente extends JFrame{
             SETTIMA TAB = 7
         */
         if(i == 1) {
-            
+            pannello1.removeAll();
             pannello1.add(pannelloGiornaliero);
             pannello1.revalidate();
             pannello1.repaint();
         }
         
         if(i == 2) {
+            pannello2.removeAll();
             pannello2.add(pannelloGiornaliero);
             pannello2.revalidate();
             pannello2.repaint();
         }
         
         if(i == 3) {
-            
+            pannello3.removeAll();
             pannello3.add(pannelloGiornaliero);
             pannello3.revalidate();
             pannello3.repaint();
         }
         
         if(i == 4) {
-            
+            pannello4.removeAll();
             pannello4.add(pannelloGiornaliero);
             pannello4.revalidate();
             pannello4.repaint();
         }
         
         if(i == 5) {
-            
+            pannello5.removeAll();
             pannello5.add(pannelloGiornaliero);
             pannello5.revalidate();
             pannello5.repaint();
@@ -692,14 +693,14 @@ public class Gui_Cliente extends JFrame{
         }
         
         if(i == 6) {
-            
+            pannello6.removeAll();
             pannello6.add(pannelloGiornaliero);
             pannello6.revalidate();
             pannello6.repaint();
         }
         
         if(i == 7) {
-            
+            pannello7.removeAll();
             pannello7.add(pannelloGiornaliero);
             pannello7.revalidate();
             pannello7.repaint();
