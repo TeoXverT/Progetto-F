@@ -356,7 +356,7 @@ public class Gui_Cliente extends JFrame{
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10,3 ));
                    
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(inizioPrimoGiorno, finePrimoGiorno);
-                                        System.out.println("finePrimoGiorno: " + inizioPrimoGiorno.getTime()+"\nfinesecondogiorno: " + finePrimoGiorno.getTime());
+                                        System.out.println("inizio giorno: " + inizioPrimoGiorno.getTime()+"\nsecondo giorno: " + finePrimoGiorno.getTime());
 
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
@@ -400,7 +400,7 @@ public class Gui_Cliente extends JFrame{
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
                     
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(finePrimoGiorno, fineSecondoGiorno );
-                    System.out.println("finePrimoGiorno: " + finePrimoGiorno.getTime()+"\nfinesecondogiorno: " + fineSecondoGiorno.getTime());
+                    System.out.println("inizio giorno: " + finePrimoGiorno.getTime()+"\nfine giorno: " + fineSecondoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
@@ -441,7 +441,7 @@ public class Gui_Cliente extends JFrame{
                   
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSecondoGiorno, fineTerzoGiorno );
-                    System.out.println("finePrimoGiorno: " + fineSecondoGiorno.getTime()+"\nfinesecondogiorno: " + fineTerzoGiorno.getTime());
+                    System.out.println("inizio giorno: " + fineSecondoGiorno.getTime()+"\nfine giorno: " + fineTerzoGiorno.getTime());
 
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
@@ -483,7 +483,7 @@ public class Gui_Cliente extends JFrame{
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
                     
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineTerzoGiorno, fineQuartoGiorno );
-                    
+                    System.out.println("inizio giorno: " + fineTerzoGiorno.getTime()+"\nfine giorno: " + fineQuartoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
@@ -524,7 +524,7 @@ public class Gui_Cliente extends JFrame{
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3));
                     
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineQuartoGiorno, fineQuintoGiorno );
-                    
+                    System.out.println("inizio giorno: " + fineQuartoGiorno.getTime()+"\nfine giorno: " + fineQuintoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
@@ -565,7 +565,7 @@ public class Gui_Cliente extends JFrame{
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
                   
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineQuintoGiorno, fineSestoGiorno );
-                    
+                    System.out.println("inizio giorno: " + fineQuintoGiorno.getTime()+"\nfine giorno: " + fineSestoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
@@ -605,7 +605,7 @@ public class Gui_Cliente extends JFrame{
                   
                     visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSestoGiorno, fineSettimoGiorno );
-                    
+                    System.out.println("inizio giorno: " + fineSestoGiorno.getTime()+"\nfine giorno: " + fineSettimoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
