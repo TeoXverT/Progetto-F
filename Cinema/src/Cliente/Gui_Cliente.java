@@ -74,6 +74,12 @@ public class Gui_Cliente extends JFrame{
     
     Calendar fineSettimoGiorno;
     
+    
+    
+    
+    
+    
+    
     public Gui_Cliente() {
         
         cliente = new Controller_Cliente();
@@ -180,7 +186,7 @@ public class Gui_Cliente extends JFrame{
 
         Calendar dataAttuale = Calendar.getInstance();
           
-        tab.add(pannello1, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
+        tab.add(pannello1, "Oggi");
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
         
         tab.add(pannello2, giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
@@ -239,7 +245,7 @@ public class Gui_Cliente extends JFrame{
         
         
         
-        
+        ThreadFilmPrimoTab().start();
         
         
     }
@@ -363,7 +369,7 @@ public class Gui_Cliente extends JFrame{
                         System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
                           
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                       
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(1, visualizzazioneGiornaliera);
@@ -405,7 +411,7 @@ public class Gui_Cliente extends JFrame{
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                         
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(2, visualizzazioneGiornaliera);
@@ -447,7 +453,7 @@ public class Gui_Cliente extends JFrame{
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                         
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(3, visualizzazioneGiornaliera);
@@ -488,7 +494,7 @@ public class Gui_Cliente extends JFrame{
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                         
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(4, visualizzazioneGiornaliera);
@@ -529,7 +535,7 @@ public class Gui_Cliente extends JFrame{
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                         
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(5, visualizzazioneGiornaliera);
@@ -570,7 +576,7 @@ public class Gui_Cliente extends JFrame{
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                         
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(6, visualizzazioneGiornaliera);
@@ -610,7 +616,7 @@ public class Gui_Cliente extends JFrame{
                     for(int i = 0; i < listaFilmFiltratiGiornalmente.size(); i++) {
                          System.out.println("In Download immagine URL: " + listaFilmFiltratiGiornalmente.get(i).getLink_copertina());
                         ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(listaFilmFiltratiGiornalmente.get(i).getLink_copertina())));
-                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 100, 100)));
+                        visualizzazioneGiornaliera.add(new JLabel (scalaImmagine(immagine, 200, 300)));
                         
                         //METODO PER IMPOSTAZIONE IL JPANEL (GLI PASSO IL NUMERO 1 PERCHè VOGLIO CREARE QUELLO DELLA PRIMA TAB)
                         aggiornaGuiGiornaliera(7, visualizzazioneGiornaliera);

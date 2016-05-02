@@ -49,8 +49,8 @@ public class main {
         
          */
 
-     //   Gui_Gestore gestore = new Gui_Gestore();
-     //   gestore.setVisible(true);
+        Gui_Gestore gestore = new Gui_Gestore();
+        gestore.setVisible(true);
 
         Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
