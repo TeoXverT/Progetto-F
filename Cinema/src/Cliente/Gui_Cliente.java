@@ -157,7 +157,7 @@ public class Gui_Cliente extends JFrame{
         JTabbedPane tab = new JTabbedPane();
         
         
-        this.add(tab);
+        this.add( tab);
         /*_______________________________________
         |                                        |
         |ISTANZIAZIONE PANNELLI GIORNI SETTIMANA |
@@ -205,7 +205,9 @@ public class Gui_Cliente extends JFrame{
         dataAttuale.add(Calendar.DAY_OF_MONTH , 1);
        
         tab.add(pannello7,giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + " "+ dataAttuale.get(Calendar.DAY_OF_MONTH) +" " + elaboraMese(dataAttuale.get(Calendar.MONTH)) );
-        
+         
+        tab.add(pannello7,"helo");
+
         
         /*_________________________________________________________
         |                                                         |
@@ -218,6 +220,7 @@ public class Gui_Cliente extends JFrame{
             public void stateChanged(ChangeEvent ce) {
          
                 Component c = tab.getSelectedComponent();
+                System.out.println(tab.getSelectedIndex());
                 System.out.println(c.getName());
                 if(c.getName().equals("pannello1")) {
                     ThreadFilmPrimoTab().start();
