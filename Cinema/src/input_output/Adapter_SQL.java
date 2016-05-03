@@ -147,6 +147,22 @@ public class Adapter_SQL {
         }
 
     }
+    
+    public boolean scriviFilm(Film film) {
+
+        String query = "INSERT INTO Film(titolo,genere,durata,descrizione,link_youtube,link_copertina) VALUES("
+                + "'" + film.getTitolo_film() + "','" + film.getGenere() + "','"
+                + film.getDurata() + "','" + film.getDescrizione() + "','" + film.getLink_youtube() + "','"
+                + film.getLink_copertina() + "')";
+
+        try {
+            SQL.eseguiQueryScrittura(query);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+
+    }  
 
     
     public ArrayList<Film> visualizzaInformazioniFilm(int id_film)throws SQLException {

@@ -23,13 +23,13 @@ import oggetti.Config;
  */
 public class PanelImpostazioni extends JPanel {
 
-    public PanelImpostazioni(Controller_Gestore controller, JLabel outputGrafico) {
+    public PanelImpostazioni(final Controller_Gestore controller, final JLabel outputGrafico) {
 
                 //final ArrayList<Config> c = new ArrayList<>();
         //c.clear();
         this.setLayout(new GridLayout(0, 2));
 
-        JTextField[] text = new JTextField[8];
+        final JTextField[] text = new JTextField[8];
         for (int i = 0; i < 8; i++) {
             text[i] = new JTextField();
         }
@@ -76,7 +76,6 @@ public class PanelImpostazioni extends JPanel {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-
                 if (controller.scriviConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()), Double.parseDouble(text[2].getText()), Double.parseDouble(text[3].getText()), Double.parseDouble(text[4].getText()), Double.parseDouble(text[5].getText()), Double.parseDouble(text[6].getText()), Double.parseDouble(text[7].getText())))) {
                     outputGrafico.setText("Modifica registrata con successo.");
                 } else {

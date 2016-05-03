@@ -137,4 +137,11 @@ public class Controller_Gestore {
         return config;
     }
 
+     boolean scriviFilm(Film film) {
+        if (true) { //Eventuale controllo sul valore dei campi di config
+            return adapter.scriviFilm(film);
+        } else {
+            return false;
+        }
+    }
 }
