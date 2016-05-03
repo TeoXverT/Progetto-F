@@ -359,7 +359,7 @@ public class Gui_Cliente extends JFrame{
                     
                     
                     
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10,3 ));
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0,3,30, 30 ));
                    
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(inizioPrimoGiorno, finePrimoGiorno);
                                         System.out.println("inizio giorno: " + inizioPrimoGiorno.getTime()+"\nsecondo giorno: " + finePrimoGiorno.getTime());
@@ -403,7 +403,7 @@ public class Gui_Cliente extends JFrame{
                 try{
                     
                   
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0, 3, 30, 30)); 
                     
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(finePrimoGiorno, fineSecondoGiorno );
                     System.out.println("inizio giorno: " + finePrimoGiorno.getTime()+"\nfine giorno: " + fineSecondoGiorno.getTime());
@@ -445,7 +445,7 @@ public class Gui_Cliente extends JFrame{
                 try{
                     
                   
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0, 3, 30, 30)); 
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSecondoGiorno, fineTerzoGiorno );
                     System.out.println("inizio giorno: " + fineSecondoGiorno.getTime()+"\nfine giorno: " + fineTerzoGiorno.getTime());
 
@@ -486,7 +486,7 @@ public class Gui_Cliente extends JFrame{
                 try{
                     
                   
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0, 3, 30, 30)); 
                     
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineTerzoGiorno, fineQuartoGiorno );
                     System.out.println("inizio giorno: " + fineTerzoGiorno.getTime()+"\nfine giorno: " + fineQuartoGiorno.getTime());
@@ -527,7 +527,7 @@ public class Gui_Cliente extends JFrame{
                 try{
                     
                   
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3));
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0, 3, 30, 30));
                     
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineQuartoGiorno, fineQuintoGiorno );
                     System.out.println("inizio giorno: " + fineQuartoGiorno.getTime()+"\nfine giorno: " + fineQuintoGiorno.getTime());
@@ -568,7 +568,7 @@ public class Gui_Cliente extends JFrame{
                 try{
                     
                   
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0, 3, 30, 30)); 
                   
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineQuintoGiorno, fineSestoGiorno );
                     System.out.println("inizio giorno: " + fineQuintoGiorno.getTime()+"\nfine giorno: " + fineSestoGiorno.getTime());
@@ -609,7 +609,7 @@ public class Gui_Cliente extends JFrame{
                 try{
                     
                   
-                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(10, 3)); 
+                    visualizzazioneGiornaliera = new JPanel(new  GridLayout(0, 3, 30, 30)); 
                     listaFilmFiltratiGiornalmente = adapter.visualizzaFilmFiltratiRispettoOraEData(fineSestoGiorno, fineSettimoGiorno );
                     System.out.println("inizio giorno: " + fineSestoGiorno.getTime()+"\nfine giorno: " + fineSettimoGiorno.getTime());
                     //CICLO CHE PRINTA E AGGIUNGE LA COPERTINA AL JPANEL
