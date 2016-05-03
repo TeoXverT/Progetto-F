@@ -143,7 +143,7 @@ public class PageOne extends JPanel {
 
     public void OpenPageTwo(Film film, int deltaData) {
         this.removeAll();
-        this.add(new PageTwo(film, deltaData));
+        this.add(new PageTwo(film, deltaData,controller));
         this.revalidate();
         this.repaint();
     }

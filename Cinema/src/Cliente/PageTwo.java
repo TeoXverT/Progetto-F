@@ -17,13 +17,13 @@ import oggetti.Film;
  */
 public class PageTwo extends JPanel {
 
-    public PageTwo(Film film, int deltaData) {
-//        controller = new Controller_Cliente();
-        this.setLayout(new GridLayout(0,2));
+    Controller_Cliente controller;
+
+    public PageTwo(Film film, int deltaData, Controller_Cliente controller) {
+        this.controller = controller;
+        this.setLayout(new GridLayout(0, 2));
         this.add(new JLabel(film.toString()));
-        this.add(new JLabel( " "+ deltaData));
-        
-        
+        this.add(new JLabel(" " + deltaData));
 
     }
 
