@@ -5,10 +5,18 @@
  */
 package Cliente;
 
+import Gestore.PanelAddHall;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import oggetti.Film;
 
 /**
  *
@@ -16,9 +24,17 @@ import javax.swing.WindowConstants;
  */
 public class Gui_Cliente extends JFrame {
 
+    JPanel display = new JPanel(new BorderLayout());
     Controller_Cliente controller = new Controller_Cliente();
-    
+
+    private JPanel pannelloCaricamento;
+    private JLabel imagineCaricamento;
+
     public Gui_Cliente() {
+        imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+        pannelloCaricamento = new JPanel();
+        pannelloCaricamento.add(imagineCaricamento);
+
         Create_Gui();
 
     }
@@ -26,12 +42,35 @@ public class Gui_Cliente extends JFrame {
     public void Create_Gui() {
 
         this.setTitle("Pannello Cliente");
-        this.setLayout(new GridLayout(0, 1, 0, 3));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setBounds(100, 100, 795, 700);
+        this.setBounds(100, 100, 810, 700);
         ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
         setIconImage(icona.getImage());
 //        this.setResizable(false);
-        this.add(new PageOne(controller));
-    } 
+        this.add(display);
+        display.add(new PageOne(controller));
+    }
+//
+//    private ActionListener OpenFilm(final Film film) {
+//        ActionListener evento = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                aggiornaGUI(pannelloCaricamento);
+//                aggiornaGUI(new Page2(film, controller));
+//                System.out.println(film.toString());
+//            }
+//        };
+//        return evento;
+//    }
+
+    private void aggiornaGUI(final JPanel displayPanel) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                display.removeAll();
+                display.add(displayPanel, BorderLayout.CENTER);
+                display.revalidate();
+                display.repaint();
+            }
+        });
+    }
 }
