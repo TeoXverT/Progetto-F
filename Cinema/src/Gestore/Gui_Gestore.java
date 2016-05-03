@@ -101,7 +101,7 @@ public class Gui_Gestore extends JFrame {
         menu.add(menuItem);
 
         menu.addSeparator();
-        submenu = new JMenu("Proiezioni");
+        submenu = new JMenu("Show");
         submenu.setMnemonic(KeyEvent.VK_P);
 
         menuItem = new JMenuItem("Odierne");
@@ -126,6 +126,10 @@ public class Gui_Gestore extends JFrame {
 
         menuItem = new JMenuItem("Aggiungi Proiezione");
         menuItem.addActionListener(aggiungiProiezione()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
+        
+        menuItem = new JMenuItem("Add Hall");
+        menuItem.addActionListener(addHall()); // cosa deve fare una volta premuto
         menu.add(menuItem);
 
         menu = new JMenu("Gestione Fatturati");
@@ -266,7 +270,18 @@ public class Gui_Gestore extends JFrame {
 
         return evento;
     }
-
+    
+    private ActionListener addHall() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelAddHall(controller, outputGrafico));
+            }
+        };
+        return evento;
+    }
+    
     private ActionListener modificaImpostazioni() {
         ActionListener evento = new ActionListener() {
             @Override

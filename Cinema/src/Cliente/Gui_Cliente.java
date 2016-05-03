@@ -33,5 +33,5 @@ public class Gui_Cliente extends JFrame {
         setIconImage(icona.getImage());
 //        this.setResizable(false);
         this.add(new PageOne(controller));
-    }
+    } 
 }

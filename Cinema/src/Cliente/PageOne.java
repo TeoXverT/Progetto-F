@@ -76,7 +76,7 @@ public class PageOne extends JPanel {
         }
     }
 
-    private Thread ThreadScaricaFilm(int deltaData) {
+    private Thread ThreadScaricaFilm(final int deltaData) {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
