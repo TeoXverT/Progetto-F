@@ -154,7 +154,7 @@ public class Gui_Cliente extends JFrame{
         setIconImage(icona.getImage());
 
         
-        JTabbedPane tab = new JTabbedPane();
+        final JTabbedPane tab = new JTabbedPane();
         
         
         this.add(tab);
