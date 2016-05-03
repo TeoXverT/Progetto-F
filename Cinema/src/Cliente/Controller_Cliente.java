@@ -6,10 +6,12 @@
 package Cliente;
 
 import input_output.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import oggetti.Film;
 import oggetti.Proiezione;
 
 /**
@@ -20,6 +22,7 @@ public class Controller_Cliente {
 
     ArrayList<Proiezione> listaProiezioniFuture;
     ArrayList<Proiezione> listaProiezioniFiltrate;
+    Adapter_SQL adapter = new Adapter_SQL();
 
     public Controller_Cliente() {
 
@@ -75,6 +78,13 @@ public class Controller_Cliente {
         }
 
         return listaProiezioniFiltrate;
+    }
+
+    public ArrayList<Film>  FilmFuturo(int deltaData) throws SQLException {
+
+        return adapter.FilmFuturo(deltaData);
+    
+    
     }
 
 }
