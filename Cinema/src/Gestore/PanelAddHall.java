@@ -17,11 +17,12 @@ public class PanelAddHall extends JPanel {
     
     public PanelAddHall(Controller_Gestore controller, JLabel outputGrafico) {
         this.setLayout(new BorderLayout());
+        JPanel nord = new JPanel();
         JPanel sud = new JPanel();
         JPanel seats_layout = new JPanel();
-        JLabel ciao = new JLabel("ciao!");
+        
         sud.add(seats_layout, BorderLayout.CENTER);
-        seats_layout.add(ciao);
+        
         this.add(sud);
     }
 }
