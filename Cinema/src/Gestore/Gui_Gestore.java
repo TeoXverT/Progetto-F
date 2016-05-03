@@ -144,6 +144,10 @@ public class Gui_Gestore extends JFrame {
         menu = new JMenu("Help");
         menuBar.add(menu);
 
+        menuItem = new JMenuItem("About");
+        menuItem.addActionListener(About()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
+        
         return menuBar;
     }
 
@@ -278,6 +282,16 @@ public class Gui_Gestore extends JFrame {
         return evento;
     }
 
+    private ActionListener About() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelAbout(controller, outputGrafico));
+            }
+        };
+        return evento;
+    }
 
     
 ///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
