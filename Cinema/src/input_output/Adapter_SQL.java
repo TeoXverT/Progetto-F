@@ -53,7 +53,7 @@ public class Adapter_SQL {
     }
 
     public boolean scriviProiezione(Proiezione proiezione) {
-        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, tipo, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";       
+        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, tipo, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -98,7 +98,7 @@ public class Adapter_SQL {
     }
 
     public ArrayList<Film> visualizzaFilmFiltratiRispettoOraEData(Calendar Data_ora_inizio, Calendar Data_ora_fine) throws SQLException {
-        
+
         ArrayList<Film> listaFilmFiltrati;
         ResultSet risultatoQuery;
 
@@ -106,16 +106,37 @@ public class Adapter_SQL {
         String strDate1 = sdfDate.format(Data_ora_fine.getTime());
         String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
 
-        
         //TEMPORANEO TEST
         //String query = "SELECT Film.id_film, Film.titolo, Film.genere, Film.durata, Film.descrizione, Film.link_youtube, Film.link_copertina FROM  Proiezione LEFT JOIN Film ON Proiezione.id_film = Film.id_film  WHERE ( DATE( Proiezione.data_ora ) > DATE( '" + strDate2 + "' ) AND DATE( Proiezione.data_ora ) < DATE( '" + strDate1 + "' ))";
         String query = "SELECT DISTINCT f.id_film, f.titolo, f.genere, f.durata, f.descrizione, f.link_youtube, f.link_copertina FROM  Proiezione p LEFT JOIN Film f ON p.id_film = f.id_film  WHERE (  p.data_ora  > '" + strDate2 + "'  AND p.data_ora  < '" + strDate1 + "' )";
-
 
         risultatoQuery = SQL.eseguiQueryLettura(query);
         listaFilmFiltrati = parser.Film(risultatoQuery);
 
         return listaFilmFiltrati;
+    }
+
+    public ArrayList<Film> FilmFuturo(int deltaData) throws SQLException {
+
+        ArrayList<Film> Films;
+        ResultSet risultatoQuery;
+
+//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
+//        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
+
+        String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
+                + "     FROM Film, Proiezione "
+                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 2 HOUR)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
+                + "     ";
+        /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
+        /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
+
+        risultatoQuery = SQL.eseguiQueryLettura(query);
+        Films   = parser.Film(risultatoQuery);
+
+        return Films;
+        
     }
 
     public Config visualizzaConfig() throws SQLException {
@@ -164,6 +185,23 @@ public class Adapter_SQL {
 
     }  
 
+    
+    public ArrayList<Film> visualizzaInformazioniFilm(int id_film)throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Film> film;
+
+        query = "SELECT DISTINCT Film.titolo,Film.link_youtube,Film.link_copertina,Film.descrizione,Proiezione.id_sala,Proiezione.tipo,Proiezione.data_ora FROM Film,Proiezione WHERE Film.id_film=id_film and Proiezione.id_film=id_film";
+        risultato_query = SQL.eseguiQueryLettura(query);
+
+        film = parser.Film(risultato_query);
+        risultato_query.close();
+
+        return film;
+    }
+        
+        
+    
     public void spegni() {
         SQL.chiudiConnessione();
     }
