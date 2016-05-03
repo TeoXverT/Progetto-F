@@ -5,7 +5,6 @@
  */
 package Cliente;
 
-
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,7 +16,15 @@ import javax.swing.WindowConstants;
  */
 public class Gui_Cliente extends JFrame {
 
+    Controller_Cliente controller = new Controller_Cliente();
+    
     public Gui_Cliente() {
+        Create_Gui();
+
+    }
+
+    public void Create_Gui() {
+
         this.setTitle("Pannello Cliente");
         this.setLayout(new GridLayout(0, 1, 0, 3));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -25,7 +32,6 @@ public class Gui_Cliente extends JFrame {
         ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
         setIconImage(icona.getImage());
 //        this.setResizable(false);
-        this.add(new PageOne());
-
+        this.add(new PageOne(controller));
     }
 }
