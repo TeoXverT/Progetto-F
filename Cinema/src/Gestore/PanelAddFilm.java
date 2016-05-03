@@ -5,6 +5,7 @@
  */
 package Gestore;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import oggetti.Film;
 
 /**
  *
@@ -20,39 +22,46 @@ import javax.swing.JTextField;
  */
 public class PanelAddFilm extends JPanel {
 
-    public PanelAddFilm(Controller_Gestore controller, JLabel outputGrafico) {
-        this.setLayout(new GridLayout(0, 2, 1, 50));
+    public PanelAddFilm(final Controller_Gestore controller, final JLabel outputGrafico) {
+        JPanel Center = new JPanel();
+        Center.setLayout(new GridLayout(0, 2, 1, 50));
 
         JLabel titoloText = new JLabel("Titolo: ");
         JLabel genereText = new JLabel("Genere: ");
         JLabel durataText = new JLabel("Durata: ");
         JLabel descrizioneText = new JLabel("Descrione: ");
-        JLabel linkText = new JLabel("Link: ");
-        JLabel copertinaText = new JLabel("Copertina: ");
-        JTextField titoloField = new JTextField("inserisci qui il titolo del cazzo");
-        JTextField genereField = new JTextField("ciao", 30);
+        JLabel linkText = new JLabel("Link Trailer: ");
+        JLabel copertinaText = new JLabel("Immagine Copertina: ");
+        final JTextField titoloField = new JTextField("inserisci qui il titolo del cazzo");
+        final JTextField genereField = new JTextField("ciao", 30);
         final JTextField durataField = new JTextField("90");
-        JTextArea descrizioneArea = new JTextArea(1, 1);
-        JTextField linkField = new JTextField();
-        JTextField copertinaField = new JTextField();
+        final JTextArea descrizioneArea = new JTextArea(1, 1);
+        final JTextField linkField = new JTextField();
+        final JTextField copertinaField = new JTextField();
+        JButton addMovie = new JButton("ADD MOVIE");
+        //-durata+
         JButton plus = new JButton("+"); //incrementa durata
         JButton less = new JButton("-"); //decrementa durata
         JPanel durata = new JPanel(new GridLayout(0, 3));
-        durata.add(plus);
-        durata.add(durataField);
         durata.add(less);
+        durata.add(durataField);
+        durata.add(plus);
         //--------------------------------------------------------------
-        this.add(titoloText);
-        this.add(titoloField);
-        this.add(genereText);
-        this.add(genereField);
-        this.add(durataText);
-        this.add(durata);
-        this.add(descrizioneText);
-        this.add(descrizioneArea);
-        this.add(linkText);
-        this.add(linkField);
-
+        Center.add(copertinaText);
+        Center.add(copertinaField);
+        Center.add(titoloText);
+        Center.add(titoloField);
+        Center.add(genereText);
+        Center.add(genereField);
+        Center.add(durataText);
+        Center.add(durata);
+        Center.add(descrizioneText);
+        Center.add(descrizioneArea);
+        Center.add(linkText);
+        Center.add(linkField);
+        Center.add(addMovie);
+        this.add(Center);
+//**************************************************************ACTION PERFORMED
         plus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,7 +77,17 @@ public class PanelAddFilm extends JPanel {
                 durataField.setText("" + durataInt);
             }
         });
-
+        
+        addMovie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (controller.scriviFilm(new Film(0, titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), linkField.getText(), copertinaField.getText()))) {
+                    outputGrafico.setText("Modifica registrata con successo.");
+                } else {
+                    outputGrafico.setText("Errore durante il caricamento dei dati.");
+                }
+            }
+        });
     }
 
 }

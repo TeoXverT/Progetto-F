@@ -28,7 +28,7 @@ import oggetti.Sala;
 
 public class PanelAddProiezione extends JPanel {
 
-    public PanelAddProiezione(Controller_Gestore controller, JLabel outputGrafico) {
+    public PanelAddProiezione(final Controller_Gestore controller, final JLabel outputGrafico) {
 
         this.setLayout(new BorderLayout(10, 30));
 
@@ -39,7 +39,7 @@ public class PanelAddProiezione extends JPanel {
             pannello.add(new JLabel("Film: "), BorderLayout.NORTH);
 
             final DefaultListModel model = new DefaultListModel();
-            JList<Film> listaFilm = new JList(model);
+            final JList<Film> listaFilm = new JList(model);
             JScrollPane pane = new JScrollPane(listaFilm);
 
             ArrayList<Film> Films = controller.visualizzaFilm(10);
@@ -53,7 +53,7 @@ public class PanelAddProiezione extends JPanel {
             pannello.add(new JLabel("Sale: "), BorderLayout.NORTH);
 
             final DefaultListModel model1 = new DefaultListModel();
-            JList<Sala> listaSale = new JList(model1);
+            final JList<Sala> listaSale = new JList(model1);
             JScrollPane pane1 = new JScrollPane(listaSale);
 
             ArrayList<Sala> Sale = controller.visualizzaSale();
@@ -70,7 +70,7 @@ public class PanelAddProiezione extends JPanel {
 
             pannello.add(new JLabel("Data Ora: "), BorderLayout.WEST);
 
-            JSpinner selettoreDataOra = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
+            final JSpinner selettoreDataOra = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
             JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreDataOra, "dd-MM-yyyy (EEEE) HH:mm");
             selettoreDataOra.setEditor(selettoreGiornoGui);
             pannello.add(selettoreDataOra, BorderLayout.CENTER);
@@ -83,13 +83,13 @@ public class PanelAddProiezione extends JPanel {
 
             pannello.add(new JLabel("Tipo: "));
             String[] stringaLista = {"Normale", "3D", "IMAX 3D", "Spettacolo"};
-            JComboBox tipoLista = new JComboBox(stringaLista);
+            final JComboBox tipoLista = new JComboBox(stringaLista);
             tipoLista.setSelectedIndex(0);
             pannello.add(tipoLista);
 
             pannello.add(new JLabel("Prezzo: "));
 
-            JSpinner spinnerPrezzo = new JSpinner(new SpinnerNumberModel(6, 3, 20, 0.5));
+            final JSpinner spinnerPrezzo = new JSpinner(new SpinnerNumberModel(6, 3, 20, 0.5));
             pannello.add(spinnerPrezzo);
 
             pannelloNord.add(pannello);
