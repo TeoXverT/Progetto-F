@@ -5,7 +5,9 @@
  */
 package Cliente;
 
+import input_output.Adapter_SQL;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 import javax.swing.JPanel;
 
 /**
@@ -17,11 +19,11 @@ public class Page2 extends JPanel {
     
     
     
-    public Page2(int id_film,Controller_Cliente controller ){
+    public Page2(Controller_Cliente controller, Adapter_SQL adapter, int id_film) throws SQLException{
         controller = new Controller_Cliente();
-        id_film=id_film;
+        adapter=new Adapter_SQL();
+        adapter.visualizzaInformazioniFilm(id_film);
         this.setLayout(new GridLayout(0, 2, 1, 50));
-     
         
        }
     
