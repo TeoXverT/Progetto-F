@@ -148,6 +148,23 @@ public class Adapter_SQL {
 
     }
 
+    
+    public ArrayList<Film> visualizzaInformazioniFilm(int id_film)throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Film> film;
+
+        query = "SELECT DISTINCT Film.titolo,Film.link_youtube,Film.link_copertina,Film.descrizione,Proiezione.id_sala,Proiezione.tipo,Proiezione.data_ora FROM Film,Proiezione WHERE Film.id_film=id_film and Proiezione.id_film=id_film";
+        risultato_query = SQL.eseguiQueryLettura(query);
+
+        film = parser.Film(risultato_query);
+        risultato_query.close();
+
+        return film;
+    }
+        
+        
+    
     public void spegni() {
         SQL.chiudiConnessione();
     }
