@@ -5,15 +5,28 @@
  */
 package oggetti;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Yoga
  */
-public class Seat {
+public class Seat extends JLabel{
     private int x;
     private int y;
+    private boolean vip;
+    private boolean handicap;
+    private boolean occupato;
+    
 
-    public Seat(int x, int y) {
+    public Seat(int x, int y, ImageIcon img) {
+        this.x = x;
+        this.y = y;
+        this.setIcon(img);
+    }
+    
+    public Seat(int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
         this.x = x;
         this.y = y;
     }
@@ -25,6 +38,4 @@ public class Seat {
     public int getY() {
         return y;
     }
-    
-    
 }
