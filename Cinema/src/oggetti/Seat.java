@@ -9,11 +9,11 @@ package oggetti;
  *
  * @author Yoga
  */
-public class Posto {
+public class Seat {
     private int x;
     private int y;
 
-    public Posto(int x, int y) {
+    public Seat(int x, int y) {
         this.x = x;
         this.y = y;
     }
