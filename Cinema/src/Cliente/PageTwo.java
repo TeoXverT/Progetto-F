@@ -27,7 +27,8 @@ public class PageTwo extends JPanel {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
         //deltaData è temporaneo in attesa dello slider  laterale di selezione del orario        
-        //film è proprio il film che viene clickato
+        //film è proprio il film che viene clickato con tutti i dati del caso, guarda i suoi metodi
+        //Tè dovrai eseguire una query per scoprire in quali orari viene proiettatto questo film il giorno oggi+deltaData 
         this.controller = controller;
         this.film = film;
         this.deltaData = deltaData;
