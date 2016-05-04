@@ -102,8 +102,7 @@ public class PageOne extends JPanel {
     }
 
     private Thread ThreadScaricaFilm(final int deltaData) {
-        Thread t;
-        t = new Thread(new Runnable() {
+        Thread t= new Thread(new Runnable() {
             public void run() {
                 try {
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 20, 30));
@@ -112,7 +111,6 @@ public class PageOne extends JPanel {
                     for (final Film f : Films) {
                         System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
-//                        cover.addActionListener(OpenFilm);
                         cover.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 OpenPageTwo(f, deltaData);
