@@ -34,7 +34,7 @@ public class PanelAbout extends JPanel {
         //infos.setPreferredSize(new java.awt.Dimension(384, 129));
         infos.setWrapStyleWord(true); //dovrebbe settare a capo automatico
         infos.setText(info);
-        infos.enable(false);
+        infos.setEnabled(false);
         panel.add(new JLabel(scalaImmagine(immagine, 640 / 2, 433 / 2)));
         panel.add(infos);
         this.add(panel);

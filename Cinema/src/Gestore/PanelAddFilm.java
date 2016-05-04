@@ -24,44 +24,46 @@ public class PanelAddFilm extends JPanel {
 
     public PanelAddFilm(final Controller_Gestore controller, final JLabel outputGrafico) {
         JPanel Center = new JPanel();
+        JPanel North = new JPanel();
+        
         Center.setLayout(new GridLayout(0, 2, 1, 50));
-
-        JLabel titoloText = new JLabel("Titolo: ");
-        JLabel genereText = new JLabel("Genere: ");
-        JLabel durataText = new JLabel("Durata: ");
-        JLabel descrizioneText = new JLabel("Descrione: ");
-        JLabel linkText = new JLabel("Link Trailer: ");
-        JLabel copertinaText = new JLabel("Immagine Copertina: ");
-        final JTextField titoloField = new JTextField("inserisci qui il titolo del cazzo");
-        final JTextField genereField = new JTextField("ciao", 30);
+        North.setLayout(new GridLayout(0, 2, 1, 50));
+        
+        final JTextField titoloField = new JTextField("", 30);
+        final JTextField genereField = new JTextField("", 30);
         final JTextField durataField = new JTextField("90");
         final JTextArea descrizioneArea = new JTextArea(1, 1);
         final JTextField linkField = new JTextField();
         final JTextField copertinaField = new JTextField();
         JButton addMovie = new JButton("ADD MOVIE");
-        //-durata+
+
+        //Building -durata+
         JButton plus = new JButton("+"); //incrementa durata
         JButton less = new JButton("-"); //decrementa durata
         JPanel durata = new JPanel(new GridLayout(0, 3));
         durata.add(less);
         durata.add(durataField);
         durata.add(plus);
-        //--------------------------------------------------------------
-        Center.add(copertinaText);
+        
+        //-----Building Panel Center
+        Center.add(new JLabel("Immagine Copertina: "));
         Center.add(copertinaField);
-        Center.add(titoloText);
+        Center.add(new JLabel("Titolo: "));
         Center.add(titoloField);
-        Center.add(genereText);
+        Center.add(new JLabel("Genere: "));
         Center.add(genereField);
-        Center.add(durataText);
+        Center.add(new JLabel("Durata: "));
         Center.add(durata);
-        Center.add(descrizioneText);
+        Center.add(new JLabel("Descrione: "));
         Center.add(descrizioneArea);
-        Center.add(linkText);
+        Center.add(new JLabel("Link Trailer: "));
         Center.add(linkField);
         Center.add(addMovie);
+        
+        //------Building this
         this.add(Center);
-//**************************************************************ACTION PERFORMED
+        
+        //******ACTION PERFORMED
         plus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
