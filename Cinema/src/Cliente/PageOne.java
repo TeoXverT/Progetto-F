@@ -49,6 +49,8 @@ public class PageOne extends JPanel {
             }
         });
     }
+    
+    
 
     private String giornoDellaSettimana(int numero) {
         switch (numero) {

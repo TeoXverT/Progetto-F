@@ -27,6 +27,7 @@ public class PanelAddFilm extends JPanel {
     //Parti da: https://www.youtube.com/watch?v=yqN7nHM1YTA e devi ottenere: https://www.youtube.com/v/yqN7nHM1YTA?autoplay=1
     //come puoi notare il codice associato al video di youtube è yqN7nHM1YTA
     
+    //Metti un filtro che blocca il caricamento dei film vuoti, visualizzando il risultato su outputGrafico
     
     //Come ti ho detto anche a voce, fai un una classe tipo enum di tutti i generi,
     // e poi modifica il codice con enum ovunque ci sia il genere, miracomando anche il parser

@@ -27,7 +27,7 @@ public class Gui_Cliente extends JFrame {
     public void Create_Gui() {
 
         this.setTitle("Pannello Cliente");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 830, 700);
         ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
         setIconImage(icona.getImage());
