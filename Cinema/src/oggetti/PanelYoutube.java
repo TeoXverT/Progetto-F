@@ -8,18 +8,19 @@ import javax.swing.JPanel;
 
 public class PanelYoutube extends JPanel {
 
-    public PanelYoutube(String youtube_link) {
+    public PanelYoutube(String youtube_link, int lunghezza, int altezza) {
+        //Dimensioni del pannello restituito, molti borderLayout tendono a strechiare le dimensioni nonostante siano  definite
         this.setLayout(new BorderLayout());
         NativeInterface.open();
 
-        createPlayer(youtube_link);
+        createPlayer(youtube_link, lunghezza, altezza);
     }
 
-    private void createPlayer(String youtube_link) {
+    private void createPlayer(String youtube_link, int lunghezza, int altezza) {
         JWebBrowser webBrowser = new JWebBrowser();
         webBrowser.setBarsVisible(false);
         webBrowser.navigate(youtube_link);
-        webBrowser.setMaximumSize(new Dimension(200, 200));
+        webBrowser.setMaximumSize(new Dimension(lunghezza, altezza));
         this.add(webBrowser, BorderLayout.CENTER);
     }
 }

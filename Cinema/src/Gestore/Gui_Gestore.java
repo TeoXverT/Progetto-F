@@ -127,7 +127,7 @@ public class Gui_Gestore extends JFrame {
         menuItem = new JMenuItem("Aggiungi Proiezione");
         menuItem.addActionListener(aggiungiProiezione()); // cosa deve fare una volta premuto
         menu.add(menuItem);
-        
+
         menuItem = new JMenuItem("Add Hall");
         menuItem.addActionListener(addHall()); // cosa deve fare una volta premuto
         menu.add(menuItem);
@@ -151,7 +151,7 @@ public class Gui_Gestore extends JFrame {
         menuItem = new JMenuItem("About");
         menuItem.addActionListener(About()); // cosa deve fare una volta premuto
         menu.add(menuItem);
-        
+
         return menuBar;
     }
 
@@ -163,7 +163,6 @@ public class Gui_Gestore extends JFrame {
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
-    
     private ActionListener visualizzaSale() {
         ActionListener evento = new ActionListener() {
             @Override
@@ -190,7 +189,6 @@ public class Gui_Gestore extends JFrame {
                     //Qua creo la grid delle copertine dei film
                     ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
                     visualizzaSale.add(new JLabel(scalaImmagine(immagine, 600, 500)));
-
 //                  display.add(visualizzaFilm, BorderLayout.SOUTH); //NON FUNGE... DA SPIEGARE A TUTTI IL PERCHE
                     aggiornaGUI(visualizzaSale);
                 } catch (IOException ex) {
@@ -226,7 +224,8 @@ public class Gui_Gestore extends JFrame {
         };
         return evento;
     }
-        private ActionListener aggiungiProiezione() {
+
+    private ActionListener aggiungiProiezione() {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -241,14 +240,14 @@ public class Gui_Gestore extends JFrame {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.removeAll();
-
-                outputGrafico.setText("Visualizzazione FIlm in Corso");
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelViewFilm(controller, outputGrafico));
             }
         };
         return evento;
     }
-        private ActionListener aggiungiFilm() {
+
+    private ActionListener aggiungiFilm() {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -274,7 +273,7 @@ public class Gui_Gestore extends JFrame {
 
         return evento;
     }
-    
+
     private ActionListener addHall() {
         ActionListener evento = new ActionListener() {
             @Override
@@ -285,7 +284,7 @@ public class Gui_Gestore extends JFrame {
         };
         return evento;
     }
-    
+
     private ActionListener modificaImpostazioni() {
         ActionListener evento = new ActionListener() {
             @Override
@@ -308,7 +307,6 @@ public class Gui_Gestore extends JFrame {
         return evento;
     }
 
-    
 ///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
     private void aggiornaGUI(final JPanel displayPanel) {
         SwingUtilities.invokeLater(new Runnable() {

@@ -1,5 +1,6 @@
 package Cliente;
 
+import oggetti.ButtonCover;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;

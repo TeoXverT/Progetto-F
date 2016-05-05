@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Gestore;
 
 import java.awt.GridLayout;
@@ -25,9 +20,9 @@ public class PanelImpostazioni extends JPanel {
 
     public PanelImpostazioni(final Controller_Gestore controller, final JLabel outputGrafico) {
 
-                //final ArrayList<Config> c = new ArrayList<>();
+        //final ArrayList<Config> c = new ArrayList<>();
         //c.clear();
-        this.setLayout(new GridLayout(0, 2));
+        this.setLayout(new GridLayout(0, 2, 60, 20));
 
         final JTextField[] text = new JTextField[8];
         for (int i = 0; i < 8; i++) {
