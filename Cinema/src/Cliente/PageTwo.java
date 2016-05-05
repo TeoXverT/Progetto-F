@@ -42,20 +42,12 @@ public class PageTwo extends JPanel {
         JButton cover = new JButton("Indietro");
         this.add(cover, BorderLayout.NORTH);
         cover.addActionListener(goBackEvent());
-        
+
         this.add(new JLabel(" Titolo film: " + film.toString(), SwingConstants.CENTER), BorderLayout.WEST);
         this.add(new JLabel(" Numero di GIorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
-        this.add(new PanelYoutube(film.getLink_youtube()), BorderLayout.CENTER); 
+        this.add(new PanelYoutube(film.getLink_youtube(), 200, 200), BorderLayout.CENTER);
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     private void goBack() {
         this.removeAll();
         this.setLayout(new BorderLayout());
