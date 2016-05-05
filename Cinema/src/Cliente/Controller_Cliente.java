@@ -86,7 +86,7 @@ public class Controller_Cliente {
     
     
     }
-   public ArrayList<Film> InformazioniFilm(int id_film) throws SQLException{
-       return adapter.visualizzaInformazioniFilm(id_film);
+   public ArrayList<Proiezione> showByFilm(int id_film, int deltaData, String ora) throws SQLException{
+       return adapter.getShowByFilm(id_film,deltaData,ora);
    }
 }

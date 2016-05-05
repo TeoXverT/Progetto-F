@@ -186,18 +186,21 @@ public class Adapter_SQL {
     }  
 
     
-    public ArrayList<Film> visualizzaInformazioniFilm(int id_film)throws SQLException {
+    public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, String ora)throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Film> film;
+        ArrayList<Proiezione> proiezione;
 
-        query = "SELECT DISTINCT Film.titolo,Film.link_youtube,Film.link_copertina,Film.descrizione,Proiezione.id_sala,Proiezione.tipo,Proiezione.data_ora FROM Film,Proiezione WHERE Film.id_film=id_film and Proiezione.id_film=id_film";
+        query = "select Proiezione.*" +
+                "from Proiezione" +
+"Where (Proiezione.id_film="+id_film+") and (concat(date(now()"+deltaData+"), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) " +
+"and (Proiezione.data_ora>concat(date(now()"+ deltaData+"), '"+ora+"'))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
-        film = parser.Film(risultato_query);
+        proiezione = parser.Proiezione(risultato_query);
         risultato_query.close();
 
-        return film;
+        return proiezione;
     }
         
         
