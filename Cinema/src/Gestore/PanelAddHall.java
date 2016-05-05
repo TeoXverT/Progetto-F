@@ -29,8 +29,8 @@ public class PanelAddHall extends JPanel {
 
     private int x;
     private int y;
-    private ArrayList<Seat> seats;
-    public PanelAddHall(Controller_Gestore controller, JLabel outputGrafico) { 
+    private ArrayList<Seat> seats = null;
+    public PanelAddHall(Controller_Gestore controller, final JLabel outputGrafico) { 
         this.setLayout(new GridLayout(0,2));
         JLabel row_num = new JLabel("Number of rows:");
         JLabel column_num = new JLabel("Number of col:");
@@ -46,40 +46,39 @@ public class PanelAddHall extends JPanel {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                x = Integer.getInteger(row.getText());
-                y = Integer.getInteger(column.getText());
-                System.out.println(x +" "+ y);
-//                creaLayoutPosti();
-               // creaPosti();
+                outputGrafico.setText("Visualizzazione Layout in Corso..");
+                x = Integer.parseInt(row.getText());
+                y = Integer.parseInt(column.getText());
+                creaLayoutPosti();
             }
-      });
-
+        });
     }
+    
     public void creaLayoutPosti() {
+        
         this.removeAll();
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridLayout(x,y));
         JPanel nord = new JPanel();
         JPanel sud = new JPanel();
-        JPanel seats_layout = new JPanel(new GridLayout(5, 10));
+        JPanel seats_layout = new JPanel(new GridLayout(x , y));
+//        JLabel prova = new JLabel("CIAOOOOOOOO");
+        //this.add(sud);
         
         seats = new ArrayList<>();
         ImageIcon s = new ImageIcon("immagini/poltrone/seat_disponibile.png");
         
         for (int i = 0; i < x; i++) {
-            for(int j = 0; j<y; j++) {
-                Seat seat = new Seat(x,y,s);
-                seats.add(seat);
+            for(int j = 0; j < y; j++) {
+               seats.add(new Seat(i,j,s));
             }   
         }
+        this.add(seats.get(0));
+        this.add(seats.get(1));
+//        for (int i = 0; i < x*y; i++) {   
+//            this.add(seats.get(i));
+//        }        
 
-        for (int i = 0; i < x; i++) {     
-            seats_layout.add(seats.get(i));
-        }
-
-
-        sud.add(seats_layout, BorderLayout.CENTER);
-        this.add(sud);
-        
+        //sud.add(seats_layout);
     }
 
     public void creaPosti() {

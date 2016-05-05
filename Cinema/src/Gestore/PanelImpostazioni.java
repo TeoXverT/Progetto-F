@@ -19,7 +19,7 @@ import oggetti.Config;
 
 /**
  *
- * @author Yoga
+ * @author Yatin
  */
 public class PanelImpostazioni extends JPanel {
 
@@ -30,6 +30,7 @@ public class PanelImpostazioni extends JPanel {
         this.setLayout(new GridLayout(0, 2));
 
         final JTextField[] text = new JTextField[8];
+        
         for (int i = 0; i < 8; i++) {
             text[i] = new JTextField();
         }
