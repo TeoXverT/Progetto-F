@@ -1,5 +1,6 @@
 package Cliente;
 
+import Gestore.PanelAddProiezione;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 import chrriis.dj.nativeswing.swtimpl.components.JWebBrowser;
 import java.awt.BorderLayout;
@@ -12,17 +13,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import oggetti.Film;
+import oggetti.PanelYoutube;
 
 /**
  *
  * @author Riccardo
  */
 public class PageTwo extends JPanel {
-    
+
     private Controller_Cliente controller;
     private Film film;
     private int deltaData;
-    
+
     public PageTwo(Film film, int deltaData, Controller_Cliente controller) {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
@@ -35,25 +37,24 @@ public class PageTwo extends JPanel {
         this.setLayout(new BorderLayout());
         crea_gui();
     }
-    
-    private void crea_gui() {
-        this.add(new JLabel(" Titolo film: "+film.toString(), SwingConstants.CENTER), BorderLayout.WEST);
-        this.add(new JLabel(" Numero di GIorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
 
-        //Il native interface deve perforza essere chiuso prima di chiudere il programma, altrimenti crasha tutto
+    private void crea_gui() {
         JButton cover = new JButton("Indietro");
         this.add(cover, BorderLayout.NORTH);
-        cover.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                NativeInterface.close();
-                goBack();
-            }
-        });
+        cover.addActionListener(goBackEvent());
         
-        this.add(JVideo(film.getLink_youtube()), BorderLayout.CENTER);
-        this.revalidate();
-        this.repaint();
+        this.add(new JLabel(" Titolo film: " + film.toString(), SwingConstants.CENTER), BorderLayout.WEST);
+        this.add(new JLabel(" Numero di GIorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
+        this.add(new PanelYoutube(film.getLink_youtube()), BorderLayout.CENTER); 
     }
+
+    
+    
+    
+    
+    
+    
+    
     
     private void goBack() {
         this.removeAll();
@@ -62,24 +63,14 @@ public class PageTwo extends JPanel {
         this.revalidate();
         this.repaint();
     }
-    
-    private JPanel JVideo(String link) {
-        System.out.println(link);
-        NativeInterface.open();
-        
-        JPanel webBrowserPanel = new JPanel(new BorderLayout());
-        JWebBrowser webBrowser = new JWebBrowser();
-        webBrowserPanel.add(webBrowser, BorderLayout.CENTER);
-        webBrowser.setBarsVisible(false);
-        webBrowser.navigate(link);
-        webBrowser.setMaximumSize(new Dimension(200, 200));
-        
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+
+    private ActionListener goBackEvent() {
+        ActionListener evento = new ActionListener() {
             @Override
-            public void run() {
-                NativeInterface.close();
+            public void actionPerformed(ActionEvent e) {
+                goBack();
             }
-        }));
-        return (webBrowserPanel);
+        };
+        return evento;
     }
 }
