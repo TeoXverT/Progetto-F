@@ -2,6 +2,7 @@
 import Cliente.Controller_Cliente;
 import Cliente.Gui_Cliente;
 import Gestore.*;
+import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 import chrriis.dj.nativeswing.swtimpl.components.JWebBrowser;
 
 import input_output.Adapter_SQL;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import oggetti.Film;
 import oggetti.Proiezione;
@@ -55,8 +57,16 @@ public class main {
         Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
 
-        Gui_Cliente gui = new Gui_Cliente();
+        final Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
+
+        gui.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                NativeInterface.close();
+                System.exit(0);
+            }
+        });
 
     }
 
@@ -68,5 +78,5 @@ public class main {
         webBrowser.navigate("https://www.youtube.com/v/b-Cr0EWwaTk?fs=1");
         return webBrowserPanel;
     }
-
+    
 }

@@ -35,4 +35,12 @@ public class Gui_Cliente extends JFrame {
         this.add(display);
         display.add(new PageOne(controller));
     }
+    
+    
+    
+    
+    
+    
+    
+    
 }
