@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -121,7 +122,7 @@ public class PanelAddFilm extends JPanel {
         addMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (controller.scriviFilm(new Film(0, titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), linkField.getText(), copertinaField.getText(),null))) {
+                if (controller.scriviFilm(new Film(0, titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), linkField.getText(), copertinaField.getText()))) {
                     outputGrafico.setText("Modifica registrata con successo.");
                 } else {
                     outputGrafico.setText("Errore durante il caricamento dei dati.");

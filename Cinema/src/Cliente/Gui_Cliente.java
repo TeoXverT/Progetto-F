@@ -21,6 +21,7 @@ public class Gui_Cliente extends JFrame {
     Controller_Cliente controller = new Controller_Cliente();
 
     public Gui_Cliente() {
+        
         Create_Gui();
     }
 
@@ -34,13 +35,7 @@ public class Gui_Cliente extends JFrame {
 //        this.setResizable(false);
         this.add(display);
         display.add(new PageOne(controller));
+        
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

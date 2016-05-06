@@ -42,7 +42,7 @@ public class PanelAddProiezione extends JPanel {
             final JList<Film> listaFilm = new JList(model);
             JScrollPane pane = new JScrollPane(listaFilm);
 
-            ArrayList<Film> Films = controller.visualizzaFilm(10);
+            ArrayList<Film> Films = controller.visualizzaFilm(0);
             for (Film f : Films) {
                 model.addElement(f);
             }
