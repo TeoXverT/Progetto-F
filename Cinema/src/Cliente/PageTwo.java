@@ -6,10 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import oggetti.Film;
+import oggetti.PanelYoutube;
 import oggetti.Proiezione;
 
 
@@ -46,30 +44,31 @@ public class PageTwo extends JPanel {
 
     private void crea_gui() {
         JButton cover = new JButton("Indietro");
-     
-        this.add(cover, BorderLayout.SOUTH);
         
-        cover.addActionListener(goBackEvent());
-        
-        this.add(new JLabel(" Titolo film: " + film.toString(), SwingConstants.CENTER), BorderLayout.NORTH);
-        this.add(new JLabel(" Numero di Giorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
-        this.add(new JLabel(film.getDescrizione()), BorderLayout.WEST);
-        
+        JPanel panel=new JPanel();
+         this.add(panel,BorderLayout.WEST);
         Image image = null;
-try {
+        try {
     URL url = new URL(film.getLink_copertina());
     image = ImageIO.read(url);
 } catch (IOException e) {
 }
-this.add(new JLabel (new ImageIcon(image)), BorderLayout.NORTH);        
-        String ora = null; //ora sarà passata dallo slider in page 1
-        try {        
-         //           this.add(new PanelYoutube(film.getLink_youtube(), 200, 200), BorderLayout.CENTER);  da errore
-         proiezione=controller.showByFilm(film.getId_film(), deltaData, ora);
-        } catch (SQLException ex) {
-            Logger.getLogger(PageTwo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-  /*  for(int i = 0; i < proiezione.size(); i++){
+   ImageIcon ii=new ImageIcon(image);
+   JLabel label1=new JLabel(scalaImmagine(ii,250,350));
+   panel.add(label1);
+   this.add(cover, BorderLayout.SOUTH);
+    cover.addActionListener(goBackEvent());    
+    this.add(new JLabel(" Titolo film: " + film.toString(), SwingConstants.CENTER), BorderLayout.NORTH);
+    this.add(new JLabel(" Numero di Giorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
+    JLabel label2=new JLabel(film.getDescrizione());
+    label2.setVerticalAlignment(JLabel.TOP);
+    this.add(label2, BorderLayout.EAST);    
+    //this.add(new PanelYoutube(film.getLink_youtube(), 200, 200), BorderLayout.SOUTH);    
+  
+
+      /*  String ora = null; //ora sarà passata dallo slider in page 1
+        
+    for(int i = 0; i < proiezione.size(); i++){
 
      this.add(new JLabel(proiezione.get(i).getTipo_proiezione()), BorderLayout.SOUTH);
      this.add(new JLabel((Icon) proiezione.get(i).getData_ora()), BorderLayout.SOUTH);
@@ -79,8 +78,9 @@ this.add(new JLabel (new ImageIcon(image)), BorderLayout.NORTH);
   
     }
   
-
-      
+private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+        return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
+    }
     
 
     private void goBack() {
@@ -98,5 +98,8 @@ this.add(new JLabel (new ImageIcon(image)), BorderLayout.NORTH);
                 goBack();
             }
         };
-        return evento;}}
+        return evento;}
+
+    
+}
     
