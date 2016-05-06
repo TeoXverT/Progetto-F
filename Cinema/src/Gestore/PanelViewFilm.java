@@ -124,19 +124,19 @@ public class PanelViewFilm extends JPanel {
         nord.add(new PanelYoutube(film.getLink_youtube(), 100, 100));
 
         JPanel centro = new JPanel();
-        centro.setLayout(new GridLayout(0, 2, 2, 2));
-        centro.add(new JLabel("ID:", SwingConstants.CENTER));
-        centro.add(new JLabel("" + film.getId_film(), SwingConstants.CENTER));
-        centro.add(new JLabel("Titolo:", SwingConstants.CENTER));
-        centro.add(new JLabel(film.getTitolo_film(), SwingConstants.CENTER));
-        centro.add(new JLabel("Genere:", SwingConstants.CENTER));
-        centro.add(new JLabel(film.getGenere(), SwingConstants.CENTER));
-        centro.add(new JLabel("Durata:", SwingConstants.CENTER));
-        centro.add(new JLabel("" + film.getDurata() + " Min.", SwingConstants.CENTER));
-        centro.add(new JLabel("Data Caricamento:", SwingConstants.CENTER));
-        centro.add(new JLabel("" + film.getData_ora().getTime(), SwingConstants.CENTER));
+        centro.setLayout(new GridLayout(0, 2, 22, 22));
+        centro.add(new JLabel("ID:", SwingConstants.RIGHT));
+        centro.add(new JLabel("" + film.getId_film(), SwingConstants.LEFT));
+        centro.add(new JLabel("Titolo:", SwingConstants.RIGHT));
+        centro.add(new JLabel(film.getTitolo_film(), SwingConstants.LEFT));
+        centro.add(new JLabel("Genere:", SwingConstants.RIGHT));
+        centro.add(new JLabel(film.getGenere(), SwingConstants.LEFT));
+        centro.add(new JLabel("Durata:", SwingConstants.RIGHT));
+        centro.add(new JLabel("" + film.getDurata() + " Min.", SwingConstants.LEFT));
+        centro.add(new JLabel("Data Caricamento:", SwingConstants.RIGHT));
+        centro.add(new JLabel("" + film.getData_ora().getTime(), SwingConstants.LEFT));
 
-        JPanel sud = new JPanel(new GridLayout(0, 1, 10, 10));
+        JPanel sud = new JPanel(new GridLayout(0, 1));
         sud.add(new JLabel("Descrizione:", SwingConstants.CENTER));
 
         JTextArea textArea = new JTextArea(film.getDescrizione(), 2, 2);
