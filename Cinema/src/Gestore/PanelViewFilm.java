@@ -28,8 +28,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import oggetti.ButtonCover;
 import oggetti.Film;
+import oggetti.PanelYoutube;
 
 /**
  *
@@ -37,11 +39,11 @@ import oggetti.Film;
  */
 public class PanelViewFilm extends JPanel {
 
-    Controller_Gestore controller;
-    JLabel outputGrafico;
-    JPanel listFilm = new JPanel();
-    Component frameErrore;
-    Boolean the = true;
+    private Controller_Gestore controller;
+    private JLabel outputGrafico;
+    private JPanel listFilm = new JPanel();
+    private Component frameErrore;
+    private Boolean threadSync = true;
 
     public PanelViewFilm(Controller_Gestore controller, JLabel outputGrafico) {
         this.controller = controller;
@@ -61,17 +63,18 @@ public class PanelViewFilm extends JPanel {
                     ArrayList<Film> Films = controller.visualizzaFilm(0);
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 15, 15));
                     for (final Film f : Films) {
-                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
+//                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
                         cover.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 drawDetail(f);
                             }
                         });
+                        if (threadSync == false) {
+                            break;
+                        }
                         pannello.add(cover);
-                        aggiornaGui(pannello);
-
-                        System.out.println("finito caricamento immagini");
+                        drawList(pannello);
                     }
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(frameErrore, "Errore con scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
@@ -84,30 +87,67 @@ public class PanelViewFilm extends JPanel {
         return t;
     }
 
-    public void aggiornaGui(JPanel pannello) {
-        if (the) {
-            this.removeAll();
-            this.setPreferredSize(new Dimension(800, 600));
+    private void drawList(JPanel pannello) {
 
-            JScrollPane scrollPane = new JScrollPane(pannello);
-
-            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-            this.add(scrollPane, BorderLayout.CENTER);
-            this.revalidate();
-            this.repaint();
-        }
-    }
-
-    void drawDetail(Film film) {
-        the = false;
-        System.out.println(film.toString());
         this.removeAll();
-        JLabel testo = new JLabel(film.toString());
-        this.add(testo);
+        this.setPreferredSize(new Dimension(800, 600));
+
+        JScrollPane scrollPane = new JScrollPane(pannello);
+
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        this.add(scrollPane, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
+
+    }
+
+    private void drawDetail(Film film) {
+        threadSync = false;
+
+        System.out.println(film.toString());
+        this.removeAll();
+        outputGrafico.setText("");
+        this.setLayout(new BorderLayout());
+
+        JPanel nord = new JPanel(new GridLayout(1, 2, 30, 30));
+        ImageIcon immagine = null;
+        try {
+            immagine = new ImageIcon(ImageIO.read(new URL(film.getLink_copertina())));
+        } catch (IOException ex) {
+            Logger.getLogger(PanelViewFilm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        nord.add(new JLabel(scalaImmagine(immagine, 230, 320)));
+        nord.add(new PanelYoutube(film.getLink_youtube(), 100, 100));
+
+        JPanel centro = new JPanel();
+        centro.setLayout(new GridLayout(0, 2, 2, 2));
+        centro.add(new JLabel("ID:", SwingConstants.CENTER));
+        centro.add(new JLabel("" + film.getId_film(), SwingConstants.CENTER));
+        centro.add(new JLabel("Titolo:", SwingConstants.CENTER));
+        centro.add(new JLabel(film.getTitolo_film(), SwingConstants.CENTER));
+        centro.add(new JLabel("Genere:", SwingConstants.CENTER));
+        centro.add(new JLabel(film.getGenere(), SwingConstants.CENTER));
+        centro.add(new JLabel("Durata:", SwingConstants.CENTER));
+        centro.add(new JLabel("" + film.getDurata() + " Min.", SwingConstants.CENTER));
+        centro.add(new JLabel("Data Caricamento:", SwingConstants.CENTER));
+        centro.add(new JLabel("" + film.getData_ora().getTime(), SwingConstants.CENTER));
+
+        JPanel sud = new JPanel(new GridLayout(0, 1, 10, 10));
+        sud.add(new JLabel("Descrizione:", SwingConstants.CENTER));
+        sud.add(new JLabel(film.getDescrizione(), SwingConstants.CENTER));
+
+        this.add(nord, BorderLayout.NORTH);
+        this.add(centro, BorderLayout.CENTER);
+        this.add(sud, BorderLayout.SOUTH);
+
+        this.revalidate();
+        this.repaint();
+    }
+
+    ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+        return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
 
 }

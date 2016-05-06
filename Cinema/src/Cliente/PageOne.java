@@ -112,7 +112,7 @@ public class PageOne extends JPanel {
                     ArrayList<Film> Films = controller.FilmFuturo(deltaData);
 
                     for (final Film f : Films) {
-                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
+//                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
                         cover.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
@@ -120,7 +120,7 @@ public class PageOne extends JPanel {
                             }
                         });
                         pannello.add(cover);
-                        System.out.println("finito caricamento immagini");
+//                        System.out.println("finito caricamento immagini");
                         aggiornaGui(deltaData, pannello);
                     }
                 } catch (IOException ex) {

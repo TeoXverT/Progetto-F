@@ -64,8 +64,8 @@ public class Gui_Gestore extends JFrame {
         this.add(sud, BorderLayout.SOUTH);
         this.setTitle("Pannello Gestore");
         this.setBounds(900, 100, 850, 700);
-//        this.setResizable(false);
 
+//        this.setResizable(false);
         ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
         setIconImage(icona.getImage());
 

@@ -56,6 +56,13 @@ public class main {
 
         Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
+        gestore.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                NativeInterface.close();
+                System.exit(0);
+            }
+        });
 
         final Gui_Cliente gui = new Gui_Cliente();
         gui.setVisible(true);
@@ -78,5 +85,5 @@ public class main {
         webBrowser.navigate("https://www.youtube.com/v/b-Cr0EWwaTk?fs=1");
         return webBrowserPanel;
     }
-    
+
 }

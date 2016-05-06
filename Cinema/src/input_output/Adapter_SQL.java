@@ -82,7 +82,7 @@ public class Adapter_SQL {
         ArrayList<Film> Films;
 
         if (quantita_max_da_visualizzare == 0) {
-            query = "SELECT * FROM  `Film`ORDER BY Film.data_ora DESC";
+            query = "SELECT * FROM  `Film` WHERE Film.titolo IS NOT NULL AND Film.titolo != '' ORDER BY Film.data_ora DESC";
 
             risultato_query = SQL.eseguiQueryLettura(query);
         } else {

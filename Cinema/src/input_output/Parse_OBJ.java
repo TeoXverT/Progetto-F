@@ -47,7 +47,7 @@ public class Parse_OBJ {
         ArrayList<Film> Films = new ArrayList<>();
 
         while (risultato_query.next()) {
-            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"), risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina")));
+            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"), risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina"),parseData_ora(risultato_query.getTimestamp("data_ora"))));
         }
         risultato_query.close();
 
