@@ -9,6 +9,7 @@ import com.sun.prism.paint.Color;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import oggetti.ButtonCover;
@@ -136,7 +138,15 @@ public class PanelViewFilm extends JPanel {
 
         JPanel sud = new JPanel(new GridLayout(0, 1, 10, 10));
         sud.add(new JLabel("Descrizione:", SwingConstants.CENTER));
-        sud.add(new JLabel(film.getDescrizione(), SwingConstants.CENTER));
+
+        JTextArea textArea = new JTextArea(film.getDescrizione(), 2, 2);
+        textArea.setFont(new Font("Serif", Font.ITALIC, 15));
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setOpaque(false);
+        textArea.setEditable(false);
+
+        sud.add(textArea);
 
         this.add(nord, BorderLayout.NORTH);
         this.add(centro, BorderLayout.CENTER);
