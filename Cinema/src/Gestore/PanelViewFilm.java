@@ -123,8 +123,9 @@ public class PanelViewFilm extends JPanel {
         nord.add(new JLabel(scalaImmagine(immagine, 230, 320)));
         nord.add(new PanelYoutube(film.getLink_youtube(), 100, 100));
 
+        
         JPanel centro = new JPanel();
-        centro.setLayout(new GridLayout(0, 2, 12, 12));
+        centro.setLayout(new GridLayout(0, 2, 12, 12)); 
         centro.add(new JLabel("ID:", SwingConstants.RIGHT));
         centro.add(new JLabel("" + film.getId_film(), SwingConstants.LEFT));
         centro.add(new JLabel("Titolo:", SwingConstants.RIGHT));
