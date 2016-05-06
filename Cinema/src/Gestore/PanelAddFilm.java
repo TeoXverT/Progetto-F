@@ -1,29 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Gestore;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import oggetti.Film;
 
 /**
  *
  * @author Yoga
  */
-public class PanelAddFilm extends JPanel {
 
-    //Mi serve che tu prenda il link di youtube, nel formato che si vede nel url di un comune brosware una volta aperto il video, 
+
+//Mi serve che tu prenda il link di youtube, nel formato che si vede nel url di un comune brosware una volta aperto il video, 
     //e che melo trasformi in un formato alternativo prima di scriverlo sul DB ti faccio un esempio :
     //Parti da: https://www.youtube.com/watch?v=yqN7nHM1YTA e devi ottenere: https://www.youtube.com/v/yqN7nHM1YTA?autoplay=1
     //come puoi notare il codice associato al video di youtube è yqN7nHM1YTA
@@ -60,49 +61,79 @@ public class PanelAddFilm extends JPanel {
 
 }
     */
+
+
+
+public class PanelAddFilm extends JPanel {
+    JPanel Center = new JPanel(new GridLayout(0, 2, 1, 1));
+    JPanel CenterFull = new JPanel(new BorderLayout());
+    JPanel BoxPanel = new JPanel(new BorderLayout(12,12));
+    JPanel North = new JPanel(new GridLayout(0, 3));
+    JPanel NorthImg = new JPanel();
+    JPanel Dispy = new JPanel(new GridLayout(0,1,1,1));
+    JPanel Nordico = new JPanel(new BorderLayout());
+    JPanel Descript = new JPanel(new GridLayout(0, 2, 1, 1));
     
+    JButton addMovie = new JButton("ADD MOVIE");
+    JLabel imgCopertina = new JLabel();
+    
+    JTextField copertinaField = new JTextField();
+            
     public PanelAddFilm(final Controller_Gestore controller, final JLabel outputGrafico) {
-        JPanel Center = new JPanel();
-        JPanel North = new JPanel();
-
-        Center.setLayout(new GridLayout(0, 2, 1, 50));
-        North.setLayout(new GridLayout(0, 2, 1, 50));
-
+        this.setLayout(new BorderLayout(10,10));         
+        
         final JTextField titoloField = new JTextField("", 30);
         final JTextField genereField = new JTextField("", 30);
         final JTextField durataField = new JTextField("90");
-        final JTextArea descrizioneArea = new JTextArea(1, 1);
+        final JTextArea descrizioneArea = new JTextArea(5,1);
         final JTextField linkField = new JTextField();
-        final JTextField copertinaField = new JTextField();
-        JButton addMovie = new JButton("ADD MOVIE");
+        descrizioneArea.setLineWrap(true);
+        copertinaField.setPreferredSize(new Dimension(1, 10));
+        JButton anteprima = new JButton("Anteprima");
 
-        //Building -durata+
+//-----     Building -durata+
         JButton plus = new JButton("+"); //incrementa durata
         JButton less = new JButton("-"); //decrementa durata
         JPanel durata = new JPanel(new GridLayout(0, 3));
+        durataField.setHorizontalAlignment(JTextField.CENTER);
         durata.add(less);
         durata.add(durataField);
         durata.add(plus);
 
-        //-----Building Panel Center
-        Center.add(new JLabel("Immagine Copertina: "));
-        Center.add(copertinaField);
+//-----     Building Panel Center
         Center.add(new JLabel("Titolo: "));
         Center.add(titoloField);
         Center.add(new JLabel("Genere: "));
         Center.add(genereField);
         Center.add(new JLabel("Durata: "));
         Center.add(durata);
-        Center.add(new JLabel("Descrione: "));
-        Center.add(descrizioneArea);
         Center.add(new JLabel("Link Trailer: "));
         Center.add(linkField);
-        Center.add(addMovie);
 
-        //------Building this
-        this.add(Center);
-
-        //******ACTION PERFORMED
+//-----     Building Panel North
+        North.add(new JLabel("Immagine Copertina: "));
+        North.add(copertinaField);
+        North.add(anteprima);
+        ImageIcon icona = new ImageIcon("immagini/prova_immagine_copertina.gif");
+        imgCopertina.setIcon(icona);
+        NorthImg.add(imgCopertina);
+        Nordico.add(North, BorderLayout.NORTH);
+        Nordico.add(NorthImg, BorderLayout.CENTER);
+        
+//------    Building descrizione
+        Descript.add(new JLabel("Descrizione: "));
+        Descript.add(descrizioneArea);
+        CenterFull.add(Center, BorderLayout.PAGE_START);
+        CenterFull.add(Descript, BorderLayout.PAGE_END);
+        
+//------    Building this
+        Dispy.add(Nordico);
+        Dispy.add(CenterFull);
+        BoxPanel.add(Dispy, BorderLayout.PAGE_START);
+        BoxPanel.add(addMovie, BorderLayout.PAGE_END);
+        this.add(BoxPanel);
+        
+//******    ACTION PERFORMED
         plus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,13 +153,78 @@ public class PanelAddFilm extends JPanel {
         addMovie.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (controller.scriviFilm(new Film(0, titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), linkField.getText(), copertinaField.getText()))) {
-                    outputGrafico.setText("Modifica registrata con successo.");
+                String link_normalizzato;
+                if (linkField.getText().contains("=")) {
+                    String[] tmp = linkField.getText().split("=");
+                    link_normalizzato = tmp[1];
+                    link_normalizzato = "https://www.youtube.com/v/" + link_normalizzato + "?autoplay=1";
+                    if (controller.scriviFilm(new Film(titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), link_normalizzato, copertinaField.getText()))) {
+                        outputGrafico.setText("Modifica registrata con successo.");
+                    } else {
+                        outputGrafico.setText("Errore durante il caricamento dei dati.");
+                    }
                 } else {
-                    outputGrafico.setText("Errore durante il caricamento dei dati.");
+                    JOptionPane.showMessageDialog(null, "Link youtube non valido. \n Esempio formato link corretto: https://www.youtube.com/watch?v=aT_CaVUKp00", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                
                 }
+                
+            }
+        });
+        
+        anteprima.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               threadAnteprima().start();
             }
         });
     }
 
+    private Thread threadAnteprima() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+
+                try {
+                    ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(copertinaField.getText())));
+                    //EVENTUALMENTE SCALARLA LEGGENDO PRIMA LE DIMENSIONI ORIGINALI
+                    imgCopertina.setIcon(scalaImmagine(immagine, 170, 200));
+                    Nordico.removeAll();
+                    NorthImg.add(imgCopertina);
+                    Nordico.add(North, BorderLayout.NORTH);
+                    Nordico.add(NorthImg, BorderLayout.CENTER);  
+                    aggiornaGUI(Nordico);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Errore caricamento anteprima. \n Assicurati che il link sia corretto e che il computer sia connesso a internet. ", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        );
+        return t;
+    }
+    
+    private void aggiornaGUI(final JPanel panel) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                //String tmp = copertinaField.getText();
+                //copertinaField.setText("");
+                CenterFull.removeAll();
+                BoxPanel.removeAll();
+                Dispy.removeAll();
+                CenterFull.add(Center, BorderLayout.PAGE_START);
+                CenterFull.add(Descript, BorderLayout.PAGE_END);
+                Dispy.add(panel);
+                Dispy.add(CenterFull);
+                BoxPanel.add(Dispy, BorderLayout.PAGE_START);
+                BoxPanel.add(addMovie, BorderLayout.PAGE_END);
+                BoxPanel.revalidate();
+                BoxPanel.repaint();
+                
+            }
+        });
+    }
+    
+    public ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+        return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
+    }
+    
+    
 }
