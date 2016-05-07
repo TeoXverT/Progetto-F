@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,15 +21,13 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import oggetti.Film;
+import oggetti.FilmGenere;
 
 /**
  *
  * @author Yoga
  */
 
-    
-    //Metti un filtro che blocca il caricamento dei film vuoti, visualizzando il risultato su outputGrafico
-    
     //Come ti ho detto anche a voce, fai un una classe tipo enum di tutti i generi,
     // e poi modifica il codice con enum ovunque ci sia il genere, miracomando anche il parser
     
@@ -80,7 +80,9 @@ public class PanelAddFilm extends JPanel {
         this.setLayout(new BorderLayout(10,10));         
         
         final JTextField titoloField = new JTextField("", 30);
-        final JTextField genereField = new JTextField("", 30);
+        //final JTextField genereField = new JTextField("", 30);
+        final JComboBox<FilmGenere> genereComboBox = new JComboBox<>();
+        genereComboBox.setModel(new DefaultComboBoxModel<>(FilmGenere.values()));
         final JTextField durataField = new JTextField("90");
         final JTextArea descrizioneArea = new JTextArea(5,1);
         final JTextField linkField = new JTextField();
@@ -103,7 +105,8 @@ public class PanelAddFilm extends JPanel {
         Center.add(new JLabel("Titolo: "));
         Center.add(titoloField);
         Center.add(new JLabel("Genere: "));
-        Center.add(genereField);
+        //Center.add(genereField);
+        Center.add(genereComboBox);
         Center.add(new JLabel("Durata: "));
         Center.add(durata);
         Center.add(new JLabel("Link Trailer: "));
@@ -154,10 +157,11 @@ public class PanelAddFilm extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String link_normalizzato;
                 if (linkField.getText().contains("=")) {
+                    String Genere =  String.valueOf(genereComboBox.getSelectedItem());
                     String[] tmp = linkField.getText().split("=");
                     link_normalizzato = tmp[1];
                     link_normalizzato = "https://www.youtube.com/v/" + link_normalizzato + "?autoplay=1";
-                    if (controller.scriviFilm(new Film(titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), link_normalizzato, copertinaField.getText()))) {
+                    if (controller.scriviFilm(new Film(titoloField.getText(), Genere, Integer.parseInt(durataField.getText()), descrizioneArea.getText(), link_normalizzato, copertinaField.getText()))) {
                         outputGrafico.setText("Modifica registrata con successo.");
                     } else {
                         outputGrafico.setText("Errore durante il caricamento dei dati. Assicurati che non ci siano campi vuoti");
