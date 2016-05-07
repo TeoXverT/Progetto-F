@@ -55,11 +55,11 @@ public class Seat extends JLabel{
         this.y = y;
     }
 
-    public int getX() {
+    public int getx() {                     
         return x;
     }
 
-    public int getY() {
+    public int gety() {
         return y;
     }
 }

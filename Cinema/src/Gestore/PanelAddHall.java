@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -64,42 +65,38 @@ public class PanelAddHall extends JPanel {
     }
 
     public void creaLayoutPosti() {
-
         this.removeAll();
-        this.setLayout(new BorderLayout(0, 20));
+        this.setLayout(new BorderLayout(20, 30));
         JPanel nord = new JPanel();
-        JPanel sud = new JPanel();
-        JPanel seats_layout = new JPanel(new GridLayout(0, 10));
-        
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("cinema/immagini/poltrone/screen.png"));
-        } catch (IOException e) {
-        }
-        JLabel screen = new JLabel();
-        screen.setIcon((Icon) img);
+        JPanel sud = new JPanel(new BorderLayout(10,20));
+        JPanel west = new JPanel();
+        JPanel seats_layout = new JPanel(new GridLayout(x,y,1,6));
+        ImageIcon seat_icon = new ImageIcon("immagini/poltrone/seat_disponibile.png");
+        ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
+        JLabel screen = new JLabel(screen_icon);
+
         nord.add(screen);
-        sud.setBackground(Color.BLACK);
-
+        
         seats = new ArrayList<>();
-        ImageIcon icon = new ImageIcon("immagini/poltrone/seat_disponibile.png");
-
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                seats.add(new Seat(i, j, icon));
+                seats.add(new Seat(i, j, seat_icon));
             }
         }
-
+        
         for (Seat s : seats) {
             seats_layout.add(s);
         }
-
-        sud.add(seats_layout);
+        
+        JButton crea_sala = new JButton("Crea Sala");
+        sud.add(seats_layout, BorderLayout.CENTER);
+        sud.add(crea_sala, BorderLayout.SOUTH);
+        String[] type_list = {"Disattivato", "Vip", "Disabili"};
+        JComboBox seat_type = new JComboBox(type_list);
+        west.add(seat_type);
+        
         this.add(nord, BorderLayout.NORTH);
         this.add(sud, BorderLayout.SOUTH);
-    }
-
-    public void creaPosti() {
-        this.removeAll();
+        this.add(west, BorderLayout.CENTER);
     }
 }
