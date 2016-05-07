@@ -13,8 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import oggetti.Film;
 
@@ -89,8 +91,10 @@ public class PanelAddFilm extends JPanel {
         final JTextField linkField = new JTextField();
         descrizioneArea.setLineWrap(true);
         copertinaField.setPreferredSize(new Dimension(1, 10));
-        JButton anteprima = new JButton("Anteprima");
-
+        JButton anteprima = new JButton("Anteprima"); 
+        JScrollPane scroll = new JScrollPane(descrizioneArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        
 //-----     Building -durata+
         JButton plus = new JButton("+"); //incrementa durata
         JButton less = new JButton("-"); //decrementa durata
@@ -122,7 +126,7 @@ public class PanelAddFilm extends JPanel {
         
 //------    Building descrizione
         Descript.add(new JLabel("Descrizione: "));
-        Descript.add(descrizioneArea);
+        Descript.add(scroll);
         CenterFull.add(Center, BorderLayout.PAGE_START);
         CenterFull.add(Descript, BorderLayout.PAGE_END);
         
