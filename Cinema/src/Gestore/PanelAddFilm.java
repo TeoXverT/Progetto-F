@@ -25,11 +25,6 @@ import oggetti.Film;
  * @author Yoga
  */
 
-
-//Mi serve che tu prenda il link di youtube, nel formato che si vede nel url di un comune brosware una volta aperto il video, 
-    //e che melo trasformi in un formato alternativo prima di scriverlo sul DB ti faccio un esempio :
-    //Parti da: https://www.youtube.com/watch?v=yqN7nHM1YTA e devi ottenere: https://www.youtube.com/v/yqN7nHM1YTA?autoplay=1
-    //come puoi notare il codice associato al video di youtube è yqN7nHM1YTA
     
     //Metti un filtro che blocca il caricamento dei film vuoti, visualizzando il risultato su outputGrafico
     
@@ -165,7 +160,7 @@ public class PanelAddFilm extends JPanel {
                     if (controller.scriviFilm(new Film(titoloField.getText(), genereField.getText(), Integer.parseInt(durataField.getText()), descrizioneArea.getText(), link_normalizzato, copertinaField.getText()))) {
                         outputGrafico.setText("Modifica registrata con successo.");
                     } else {
-                        outputGrafico.setText("Errore durante il caricamento dei dati.");
+                        outputGrafico.setText("Errore durante il caricamento dei dati. Assicurati che non ci siano campi vuoti");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Link youtube non valido. \n Esempio formato link corretto: https://www.youtube.com/watch?v=aT_CaVUKp00", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);

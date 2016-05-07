@@ -138,7 +138,7 @@ public class Controller_Gestore {
     }
 
      boolean scriviFilm(Film film) {
-        if (true) { //Eventuale controllo sul valore dei campi di config
+        if( (!"".equals(film.getTitolo_film())) && (!"".equals(film.getDescrizione())) && (!"".equals(film.getLink_copertina())) & (!"".equals(film.getGenere())) & (film.getDurata()>0)) {
             return adapter.scriviFilm(film);
         } else {
             return false;
