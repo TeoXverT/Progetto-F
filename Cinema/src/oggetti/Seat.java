@@ -13,6 +13,30 @@ import javax.swing.JLabel;
  * @author Yoga
  */
 public class Seat extends JLabel{
+
+    public boolean isVip() {
+        return vip;
+    }
+
+    public boolean isHandicap() {
+        return handicap;
+    }
+
+    public boolean isOccupato() {
+        return occupato;
+    }
+
+    public void setVip(boolean vip) {
+        this.vip = vip;
+    }
+
+    public void setHandicap(boolean handicap) {
+        this.handicap = handicap;
+    }
+
+    public void setOccupato(boolean occupato) {
+        this.occupato = occupato;
+    }
     private int x;
     private int y;
     private boolean vip;
