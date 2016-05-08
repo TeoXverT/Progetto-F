@@ -24,42 +24,10 @@ import oggetti.Film;
 import oggetti.FilmGenere;
 
 /**
- *
- * @author Yoga
+ *      BUG NOTI:
+ *      -Descrizione troppo lunga: return false dall'Adapter (non so se il database abbia
+ *       abbia limiti di lunghezza..)
  */
-
-    //Come ti ho detto anche a voce, fai un una classe tipo enum di tutti i generi,
-    // e poi modifica il codice con enum ovunque ci sia il genere, miracomando anche il parser
-    
-    /*
-    public enum Sale {
-
-    SALONE_MEDIEVALE, SALONE_RINASCIMENTALE, SALA_INQUISIZIONE, SALA_SCIENZE_MOTORIE, SALA_TECNOLOGIE_MODERNE;
-
-    public static Sale parserSale(String parola) {
-
-        if (parola.compareTo("SALA_INQUISIZIONE") == 0) {
-            return Sale.SALA_INQUISIZIONE;
-        }
-        if (parola.compareTo("SALONE_RINASCIMENTALE") == 0) {
-            return Sale.SALONE_RINASCIMENTALE;
-        }
-        if (parola.compareTo("SALONE_MEDIEVALE") == 0) {
-            return Sale.SALONE_MEDIEVALE;
-        }
-        if (parola.compareTo("SALA_SCIENZE_MOTORIE") == 0) {
-            return Sale.SALA_SCIENZE_MOTORIE;
-        }
-        if (parola.compareTo("SALA_TECNOLOGIE_MODERNE") == 0) {
-            return Sale.SALA_TECNOLOGIE_MODERNE;
-        }
-        return null;
-    }
-
-}
-    */
-
-
 
 public class PanelAddFilm extends JPanel {
     JPanel Center = new JPanel(new GridLayout(0, 2, 1, 1));
@@ -75,7 +43,8 @@ public class PanelAddFilm extends JPanel {
     JLabel imgCopertina = new JLabel();
     
     JTextField copertinaField = new JTextField();
-            
+    ImageIcon icona = new ImageIcon("immagini/prova_immagine_copertina.gif");
+    
     public PanelAddFilm(final Controller_Gestore controller, final JLabel outputGrafico) {
         this.setLayout(new BorderLayout(10,10));         
         
@@ -84,7 +53,7 @@ public class PanelAddFilm extends JPanel {
         final JComboBox<FilmGenere> genereComboBox = new JComboBox<>();
         genereComboBox.setModel(new DefaultComboBoxModel<>(FilmGenere.values()));
         final JTextField durataField = new JTextField("90");
-        final JTextArea descrizioneArea = new JTextArea(5,1);
+        final JTextArea descrizioneArea = new JTextArea("Non troppo lunga perchè il database non la prende",5,1);
         final JTextField linkField = new JTextField();
         descrizioneArea.setLineWrap(true);
         copertinaField.setPreferredSize(new Dimension(1, 10));
@@ -116,7 +85,6 @@ public class PanelAddFilm extends JPanel {
         North.add(new JLabel("Immagine Copertina: "));
         North.add(copertinaField);
         North.add(anteprima);
-        ImageIcon icona = new ImageIcon("immagini/prova_immagine_copertina.gif");
         imgCopertina.setIcon(icona);
         NorthImg.add(imgCopertina);
         Nordico.add(North, BorderLayout.NORTH);
@@ -196,7 +164,13 @@ public class PanelAddFilm extends JPanel {
                     Nordico.add(NorthImg, BorderLayout.CENTER);  
                     aggiornaGUI(Nordico);
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Errore caricamento anteprima. \n Assicurati che il link sia corretto e che il computer sia connesso a internet. ", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                    imgCopertina.setIcon(icona);
+                    Nordico.removeAll();
+                    NorthImg.add(imgCopertina);
+                    Nordico.add(North, BorderLayout.NORTH);
+                    Nordico.add(NorthImg, BorderLayout.CENTER);  
+                    aggiornaGUI(Nordico);
+                    JOptionPane.showMessageDialog(null, "Errore caricamento anteprima. \n Assicurati che il link sia corretto e che il computer sia connesso a internet. ", "Attenzione!!!", JOptionPane.WARNING_MESSAGE); 
                 }
             }
         }
