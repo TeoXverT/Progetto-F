@@ -108,7 +108,7 @@ public class PanelViewFilm extends JPanel {
     private void drawDetail(Film film) {
         threadSync = false;
 
-        System.out.println(film.toString());
+//        System.out.println(film.toString());
         this.removeAll();
         outputGrafico.setText("");
         this.setLayout(new BorderLayout());
