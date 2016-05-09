@@ -3,6 +3,7 @@ package Cliente;
 import oggetti.ButtonCover;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,11 +12,14 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -26,13 +30,37 @@ public class PageOne extends JPanel {
     JTabbedPane tab = new JTabbedPane();
     Controller_Cliente controller;
     Component frameErrore;
+    
+    JSlider slider;
+    Calendar ora = Calendar.getInstance();
+    
+    static final int oraInizioSlider = 0;
+    static final int oraFineSlider = 23;
+    static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
+    JPanel pannelloSlider;
+    
+    
     public PageOne(Controller_Cliente controller) {
         this.controller = controller;
-
+        
         this.setLayout(new BorderLayout());
         this.add(tab, BorderLayout.CENTER);
-
+        
+        //istanziazione aggiunta slider a sinistra del frame
+        pannelloSlider = new JPanel( new BorderLayout());
+        
+        this.add(pannelloSlider, BorderLayout.WEST);
+       
+        slider = new JSlider(JSlider.VERTICAL, oraInizioSlider, oraFineSlider, oraStart);
+        
+        pannelloSlider.add(slider, BorderLayout.CENTER);
+        
+        slider.setMajorTickSpacing(1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        
+        
         Calendar dataAttuale = Calendar.getInstance();
         tab.add(new JPanel(), "Oggi");
 
@@ -110,13 +138,17 @@ public class PageOne extends JPanel {
                 try {
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 20, 30));
                     ArrayList<Film> Films = controller.FilmFuturo(deltaData);
-
+                    final int SliderValue = slider.getValue();
                     for (final Film f : Films) {
 //                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
                         cover.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
-                                OpenPageTwo(f, deltaData);
+                                try {
+                                    OpenPageTwo(f, deltaData, SliderValue);
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         });
                         pannello.add(cover);
@@ -142,9 +174,9 @@ public class PageOne extends JPanel {
         Pannello.repaint();
     }
 
-    public void OpenPageTwo(Film film, int deltaData) {
+    public void OpenPageTwo(Film film, int deltaData, int valueSlider) throws SQLException {
         this.removeAll();
-        this.add(new PageTwo(film, deltaData,controller));
+        this.add(new PageTwo(film, deltaData,controller, valueSlider));
         this.revalidate();
         this.repaint();
     }

@@ -186,15 +186,14 @@ public class Adapter_SQL {
     }  
 
     
-    public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, String ora)throws SQLException {
+    public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, int ora)throws SQLException {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
 
-        query = "select Proiezione.*" +
-                "from Proiezione" +
-"Where (Proiezione.id_film="+id_film+") and (concat(date(now()"+deltaData+"), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) " +
-"and (Proiezione.data_ora>concat(date(now()"+ deltaData+"), '"+ora+"'))";
+        query = "SELECT Proiezione.* "+  
+        "FROM Proiezione "+ 
+        "WHERE (Proiezione.id_film="+id_film+") AND (concat(date(now()+ INTERVAL "+deltaData+" DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL "+deltaData+" DAY), ' "+ora+":00:00' ))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
         proiezione = parser.Proiezione(risultato_query);

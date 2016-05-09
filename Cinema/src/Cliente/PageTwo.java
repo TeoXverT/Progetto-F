@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,7 +32,9 @@ public class PageTwo extends JPanel {
     private Film film;
     private int deltaData;
     private ArrayList<Proiezione> proiezione;
-    public PageTwo(Film film, int deltaData, Controller_Cliente controller) {
+    private int deltaTime;
+    
+    public PageTwo(Film film, int deltaData, Controller_Cliente controller, int deltaTime) throws SQLException {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
         //deltaData è temporaneo in attesa dello slider  laterale di selezione del orario        
@@ -38,11 +43,12 @@ public class PageTwo extends JPanel {
         this.controller = controller;
         this.film = film;
         this.deltaData = deltaData;
+        this.deltaTime = deltaTime;
         this.setLayout(new BorderLayout());
         crea_gui();
     }
 
-    private void crea_gui() {
+    private void crea_gui() throws SQLException {
         JButton cover = new JButton("Indietro");
         
         JPanel panel=new JPanel();
@@ -56,14 +62,27 @@ public class PageTwo extends JPanel {
    ImageIcon ii=new ImageIcon(image);
    JLabel label1=new JLabel(scalaImmagine(ii,250,350));
    panel.add(label1);
-   this.add(cover, BorderLayout.SOUTH);
+  // this.add(cover, BorderLayout.SOUTH);
     cover.addActionListener(goBackEvent());    
     this.add(new JLabel(" Titolo film: " + film.toString(), SwingConstants.CENTER), BorderLayout.NORTH);
     this.add(new JLabel(" Numero di Giorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
     JLabel label2=new JLabel(film.getDescrizione());
     label2.setVerticalAlignment(JLabel.TOP);
     this.add(label2, BorderLayout.EAST);    
-    //this.add(new PanelYoutube(film.getLink_youtube(), 200, 200), BorderLayout.SOUTH);    
+    
+
+    proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
+    SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
+    for(int i = 0; i < proiezione.size(); i++) {
+        
+        this.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
+        
+        
+        
+        
+    }
+
+//this.add(new PanelYoutube(film.getLink_youtube(), 200, 200), BorderLayout.SOUTH);    
   
 
       /*  String ora = null; //ora sarà passata dallo slider in page 1
