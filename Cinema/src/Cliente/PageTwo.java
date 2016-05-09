@@ -1,21 +1,25 @@
 package Cliente;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import oggetti.Film;
 import oggetti.PanelYoutube;
@@ -34,7 +38,7 @@ public class PageTwo extends JPanel {
     private ArrayList<Proiezione> proiezione;
     private int deltaTime;
     
-    public PageTwo(Film film, int deltaData, Controller_Cliente controller, int deltaTime) throws SQLException {
+    public PageTwo(Film film, int deltaData, Controller_Cliente controller, int deltaTime) throws SQLException, IOException {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
         //deltaData è temporaneo in attesa dello slider  laterale di selezione del orario        
@@ -44,15 +48,15 @@ public class PageTwo extends JPanel {
         this.film = film;
         this.deltaData = deltaData;
         this.deltaTime = deltaTime;
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridLayout(2,2));
         crea_gui();
     }
 
-    private void crea_gui() throws SQLException {
+    private void crea_gui() throws SQLException, MalformedURLException, IOException {
         JButton cover = new JButton("Indietro");
         
-        JPanel panel=new JPanel();
-         this.add(panel,BorderLayout.WEST);
+        JPanel pannelloCopertina=new JPanel();
+         this.add(pannelloCopertina);
         Image image = null;
         try {
     URL url = new URL(film.getLink_copertina());
@@ -61,23 +65,39 @@ public class PageTwo extends JPanel {
 }
    ImageIcon ii=new ImageIcon(image);
    JLabel label1=new JLabel(scalaImmagine(ii,250,350));
-   panel.add(label1);
-  // this.add(cover, BorderLayout.SOUTH);
-    cover.addActionListener(goBackEvent());    
-    this.add(new JLabel(" Titolo film: " + film.toString(), SwingConstants.CENTER), BorderLayout.NORTH);
-    this.add(new JLabel(" Numero di Giorni dopo oggi: " + deltaData, SwingConstants.CENTER), BorderLayout.EAST);
-    JLabel label2=new JLabel(film.getDescrizione());
-    label2.setVerticalAlignment(JLabel.TOP);
-    this.add(label2, BorderLayout.EAST);    
+   pannelloCopertina.add(label1);
+  // this.add(cover, BorderLayout.SOUTH); DA AGGIUNGERE SUCCESSIVAMENTE AL PANNELLO CON GLI ORARI
+    cover.addActionListener(goBackEvent());  
     
-
+    JPanel pannelloTrama = new JPanel(new GridLayout(2, 1));
+    this.add(pannelloTrama);
+    pannelloTrama.add(new JLabel(" Titolo film: " + film.toString()));
+    
+        JTextArea label2=new JTextArea(film.getDescrizione());
+        label2.setLineWrap(true);
+        label2.setEditable(false);
+        
+    pannelloTrama.add(label2);    
+    
+    this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
+    
     proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
     SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
+   
+    JPanel pannelloOrari  = new JPanel(new GridLayout(proiezione.size(), 2));
+    this.add(pannelloOrari);
+        URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
+        Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
+        ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
+        JButton bottoneCarrello;
     for(int i = 0; i < proiezione.size(); i++) {
         
-        this.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
+        pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
+        bottoneCarrello = new JButton(iconaCarrelloBello);
         
+        bottoneCarrello.setSize(100,120);
         
+        pannelloOrari.add(bottoneCarrello);
         
         
     }
