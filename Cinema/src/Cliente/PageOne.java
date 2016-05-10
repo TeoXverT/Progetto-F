@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -30,6 +31,7 @@ public class PageOne extends JPanel {
     JTabbedPane tab = new JTabbedPane();
     Controller_Cliente controller;
     Component frameErrore;
+    
     
     JSlider slider;
     Calendar ora = Calendar.getInstance();
@@ -43,10 +45,11 @@ public class PageOne extends JPanel {
     
     public PageOne(Controller_Cliente controller) {
         this.controller = controller;
-        
+     
         this.setLayout(new BorderLayout());
         this.add(tab, BorderLayout.CENTER);
-        
+        JScrollPane scrollPane = new JScrollPane(tab,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add(scrollPane, BorderLayout.CENTER);    
         //istanziazione aggiunta slider a sinistra del frame
         pannelloSlider = new JPanel( new BorderLayout());
         

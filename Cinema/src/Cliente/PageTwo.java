@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import oggetti.ButtonCart;
 import oggetti.Film;
 import oggetti.PanelYoutube;
 import oggetti.Proiezione;
@@ -93,21 +95,21 @@ public class PageTwo extends JPanel {
     this.add(pannelloContenitoreBackOrari);
     JPanel pannelloOrari  = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
     pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
-        URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
-        Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
-        immagineCarrelloBello = immagineCarrelloBello.getScaledInstance(100, 100, 2 );
-        ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
+       // URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
+       // Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
+      //  immagineCarrelloBello = immagineCarrelloBello.getScaledInstance(100, 100, 2 );
+      //  ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
      
-        JButton bottoneCarrello;
+        ButtonCart bottoneCarrello;
     for(int i = 0; i < proiezione.size(); i++) {
         
         pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
-        bottoneCarrello = new JButton(iconaCarrelloBello);
+        bottoneCarrello = new ButtonCart(proiezione.get(i));
         bottoneCarrello.setPreferredSize(new Dimension(100,100));
         pannelloOrari.add(bottoneCarrello);
        
     }
-    cover.setPreferredSize(new Dimension(70,50));
+    
     
     pannelloContenitoreBackOrari.add(cover);
    

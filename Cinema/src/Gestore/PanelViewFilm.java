@@ -5,7 +5,7 @@
  */
 package Gestore;
 
-import com.sun.prism.paint.Color;
+//import com.sun.prism.paint.Color;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
