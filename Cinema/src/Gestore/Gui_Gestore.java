@@ -191,7 +191,7 @@ public class Gui_Gestore extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 aggiornaGUI(pannelloCaricamento);
-                aggiornaGUI(new PanelAddFilm(controller, outputGrafico));
+                aggiornaGUI(new PanelHallState(controller, outputGrafico));
             }
         };
         return evento;
