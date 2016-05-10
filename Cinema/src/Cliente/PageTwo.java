@@ -1,6 +1,7 @@
 package Cliente;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import oggetti.Film;
 import oggetti.PanelYoutube;
 import oggetti.Proiezione;
@@ -84,6 +86,8 @@ public class PageTwo extends JPanel {
     proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
     SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
    
+    
+    
     JPanel pannelloOrari  = new JPanel(new GridLayout(proiezione.size(), 2));
     this.add(pannelloOrari);
         URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
@@ -95,10 +99,9 @@ public class PageTwo extends JPanel {
         pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
         bottoneCarrello = new JButton(iconaCarrelloBello);
         
-        bottoneCarrello.setSize(100,120);
         
         pannelloOrari.add(bottoneCarrello);
-        
+       
         
     }
 

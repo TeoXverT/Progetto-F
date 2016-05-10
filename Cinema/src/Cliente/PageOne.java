@@ -148,6 +148,8 @@ public class PageOne extends JPanel {
                                     OpenPageTwo(f, deltaData, SliderValue);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             }
                         });
@@ -174,7 +176,7 @@ public class PageOne extends JPanel {
         Pannello.repaint();
     }
 
-    public void OpenPageTwo(Film film, int deltaData, int valueSlider) throws SQLException {
+    public void OpenPageTwo(Film film, int deltaData, int valueSlider) throws SQLException, IOException {
         this.removeAll();
         this.add(new PageTwo(film, deltaData,controller, valueSlider));
         this.revalidate();
