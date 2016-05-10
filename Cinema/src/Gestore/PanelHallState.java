@@ -5,10 +5,16 @@
  */
 package Gestore;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
  * @author cl421572
  */
-public class PanelHallState {
+public class PanelHallState extends JPanel{
     
+    public PanelHallState(final Controller_Gestore controller, final JLabel outputGrafico) {
+         
+    }
 }
