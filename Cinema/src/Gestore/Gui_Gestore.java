@@ -175,41 +175,26 @@ public class Gui_Gestore extends JFrame {
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
+    
     private ActionListener visualizzaSale() {
+//        ActionListener evento = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                display.removeAll();
+//                display.add(imagineCaricamento);
+//                threadSale().start();
+//                outputGrafico.setText("Visualizzazione Sale in Corso");
+//            }
+//        };
+//        return evento;
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.removeAll();
-
-                display.add(imagineCaricamento);
-
-                threadSale().start();
-
-                outputGrafico.setText("Visualizzazione Sale in Corso");
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelAddFilm(controller, outputGrafico));
             }
         };
         return evento;
-    }
-
-    private Thread threadSale() {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-
-                try {
-                    JPanel visualizzaSale = new JPanel();
-
-                    //Qua creo la grid delle copertine dei film
-                    ImageIcon immagine = new ImageIcon(ImageIO.read(new URL("https://s-media-cache-ak0.pinimg.com/736x/a8/f6/c5/a8f6c5f4440106e3e38b17935a7e6609.jpg")));
-                    visualizzaSale.add(new JLabel(scalaImmagine(immagine, 600, 500)));
-//                  display.add(visualizzaFilm, BorderLayout.SOUTH); //NON FUNGE... DA SPIEGARE A TUTTI IL PERCHE
-                    aggiornaGUI(visualizzaSale);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(frameErrore, "Errore scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        }
-        );
-        return t;
     }
 
     private ActionListener visualizzaProiezioni(final int tipo) {
