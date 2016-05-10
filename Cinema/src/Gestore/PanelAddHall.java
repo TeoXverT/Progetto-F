@@ -15,9 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import static java.time.Clock.system;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -39,6 +41,12 @@ public class PanelAddHall extends JPanel {
     private int x;
     private int y;
     private ArrayList<Seat> seats = null;
+    ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
+    ImageIcon seat_disable = new ImageIcon("immagini/poltrone/seat_diasable.png");
+    ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
+    ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
+    ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
+    JComboBox seat_type;
 
     public PanelAddHall(Controller_Gestore controller, final JLabel outputGrafico) {
         this.setLayout(new GridLayout(0, 2));
@@ -52,7 +60,7 @@ public class PanelAddHall extends JPanel {
         this.add(column_num);
         this.add(column);
         this.add(submit);
-
+        
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -70,9 +78,7 @@ public class PanelAddHall extends JPanel {
         JPanel nord = new JPanel();
         JPanel sud = new JPanel(new BorderLayout(10,20));
         JPanel west = new JPanel();
-        JPanel seats_layout = new JPanel(new GridLayout(x,y,1,6));
-        ImageIcon seat_icon = new ImageIcon("immagini/poltrone/seat_disponibile.png");
-        ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
+        JPanel seats_layout = new JPanel(new GridLayout(x,y,0,4));
         JLabel screen = new JLabel(screen_icon);
 
         nord.add(screen);
@@ -80,23 +86,45 @@ public class PanelAddHall extends JPanel {
         seats = new ArrayList<>();
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                seats.add(new Seat(i, j, seat_icon));
+                seats.add(new Seat(i, j, seat_free));
             }
         }
         
-        for (Seat s : seats) {
-            seats_layout.add(s);
+        for(int i=0; i<seats.size(); i++) {
+            seats.get(i).addActionListener(seatClick(i));
+            seats_layout.add(seats.get(i));
         }
         
         JButton crea_sala = new JButton("Crea Sala");
         sud.add(seats_layout, BorderLayout.CENTER);
         sud.add(crea_sala, BorderLayout.SOUTH);
-        String[] type_list = {"Disattivato", "Vip", "Disabili"};
-        JComboBox seat_type = new JComboBox(type_list);
+        String[] type_list = {"Disable", "Vip", "Handicap"};
+        seat_type = new JComboBox(type_list);
         west.add(seat_type);
-        
+ 
         this.add(nord, BorderLayout.NORTH);
         this.add(sud, BorderLayout.SOUTH);
         this.add(west, BorderLayout.CENTER);
+    }
+    
+    public ActionListener seatClick(final int i) {
+        ActionListener event = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch ((String)seat_type.getSelectedItem()) {
+                    case "Disable":
+                        seats.get(i).setIcon(seat_disable);
+                        break;
+                    case "Vip":
+                        seats.get(i).setIcon(seat_vip);
+                        break;
+                    case "Handicap":
+                        seats.get(i).setIcon(seat_handicap);
+                        break;
+                }
+                    
+            }
+        };
+       return event;
     }
 }

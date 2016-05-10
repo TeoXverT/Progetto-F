@@ -6,13 +6,14 @@
 package oggetti;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
  *
- * @author Yoga
+ * @author Yatin
  */
-public class Seat extends JLabel{
+public class Seat extends JButton{
 
     public boolean isVip() {
         return vip;
@@ -48,6 +49,9 @@ public class Seat extends JLabel{
         this.x = x;
         this.y = y;
         this.setIcon(img);
+        this.setBorderPainted(false);
+        this.setContentAreaFilled(false);
+        this.setSize(50, 50);
     }
     
     public Seat(int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
