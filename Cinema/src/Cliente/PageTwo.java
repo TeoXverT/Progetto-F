@@ -2,6 +2,7 @@ package Cliente;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -50,8 +51,9 @@ public class PageTwo extends JPanel {
         this.film = film;
         this.deltaData = deltaData;
         this.deltaTime = deltaTime;
-        this.setLayout(new GridLayout(2,2));
+        this.setLayout(new GridLayout(2,2, 20, 20));
         crea_gui();
+        
     }
 
     private void crea_gui() throws SQLException, MalformedURLException, IOException {
@@ -71,53 +73,44 @@ public class PageTwo extends JPanel {
   // this.add(cover, BorderLayout.SOUTH); DA AGGIUNGERE SUCCESSIVAMENTE AL PANNELLO CON GLI ORARI
     cover.addActionListener(goBackEvent());  
     
-    JPanel pannelloTrama = new JPanel(new GridLayout(2, 1));
+    JPanel pannelloTrama = new JPanel(new GridLayout(2, 1, 10, 10));
     this.add(pannelloTrama);
     pannelloTrama.add(new JLabel(" Titolo film: " + film.toString()));
     
-        JTextArea label2=new JTextArea(film.getDescrizione());
-        label2.setLineWrap(true);
-        label2.setEditable(false);
+        JTextArea Trama=new JTextArea(film.getDescrizione());
+        Trama.setLineWrap(true);
+        Trama.setEditable(false);
         
-    pannelloTrama.add(label2);    
+    pannelloTrama.add(Trama);    
     
     this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
     
     proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
     SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
    
-    
-    
-    JPanel pannelloOrari  = new JPanel(new GridLayout(proiezione.size(), 2));
-    this.add(pannelloOrari);
+    //ABBIAMO MODIFICAGTO QUI PRIMA ERA COSI new BorderLayout() DENTRO AL NEW JPANEL()
+    JPanel pannelloContenitoreBackOrari = new JPanel();
+    this.add(pannelloContenitoreBackOrari);
+    JPanel pannelloOrari  = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
+    pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
         URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
         Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
+        immagineCarrelloBello = immagineCarrelloBello.getScaledInstance(100, 100, 2 );
         ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
+     
         JButton bottoneCarrello;
     for(int i = 0; i < proiezione.size(); i++) {
         
         pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
         bottoneCarrello = new JButton(iconaCarrelloBello);
-        
-        
+        bottoneCarrello.setPreferredSize(new Dimension(100,100));
         pannelloOrari.add(bottoneCarrello);
        
-        
     }
-
-//this.add(new PanelYoutube(film.getLink_youtube(), 200, 200), BorderLayout.SOUTH);    
-  
-
-      /*  String ora = null; //ora sarà passata dallo slider in page 1
-        
-    for(int i = 0; i < proiezione.size(); i++){
-
-     this.add(new JLabel(proiezione.get(i).getTipo_proiezione()), BorderLayout.SOUTH);
-     this.add(new JLabel((Icon) proiezione.get(i).getData_ora()), BorderLayout.SOUTH);
-     this.add(new JLabel(proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
-     
-}*/
-  
+    cover.setPreferredSize(new Dimension(70,50));
+    
+    pannelloContenitoreBackOrari.add(cover);
+   
     }
   
 private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {

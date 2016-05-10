@@ -65,8 +65,10 @@ public class main {
         });
 
         final Gui_Cliente gui = new Gui_Cliente();
-        gui.setVisible(true);
+        
 
+        gui.setVisible(true);
+        
         gui.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
