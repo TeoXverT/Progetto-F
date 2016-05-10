@@ -51,14 +51,14 @@ public class PageOne extends JPanel {
         JScrollPane scrollPane = new JScrollPane(tab,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(scrollPane, BorderLayout.CENTER);    
         //istanziazione aggiunta slider a sinistra del frame
-        pannelloSlider = new JPanel( new BorderLayout());
+        pannelloSlider = new JPanel(); 
         
         this.add(pannelloSlider, BorderLayout.WEST);
        
         slider = new JSlider(JSlider.VERTICAL, oraInizioSlider, oraFineSlider, oraStart);
         
-        pannelloSlider.add(slider, BorderLayout.CENTER);
-        
+        pannelloSlider.add(slider);
+        slider.setPreferredSize(new Dimension(30,600));
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
