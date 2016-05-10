@@ -5,7 +5,7 @@
  */
 package Gestore;
 
-import static com.sun.webkit.graphics.WCImage.getImage;
+//import static com.sun.webkit.graphics.WCImage.getImage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -19,7 +19,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import static java.time.Clock.system;
+//import static java.time.Clock.system;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
