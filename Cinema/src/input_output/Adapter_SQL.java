@@ -124,7 +124,6 @@ public class Adapter_SQL {
 //        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
 //        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-
         String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
                 + "     FROM Film, Proiezione "
                 + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 15 MINUTE)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
@@ -133,10 +132,10 @@ public class Adapter_SQL {
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
 
         risultatoQuery = SQL.eseguiQueryLettura(query);
-        Films   = parser.Film(risultatoQuery);
+        Films = parser.Film(risultatoQuery);
 
         return Films;
-        
+
     }
 
     public Config visualizzaConfig() throws SQLException {
@@ -168,7 +167,7 @@ public class Adapter_SQL {
         }
 
     }
-    
+
     public boolean scriviFilm(Film film) {
 
         String query = "INSERT INTO Film(titolo,genere,durata,descrizione,link_youtube,link_copertina) VALUES("
@@ -183,17 +182,42 @@ public class Adapter_SQL {
             return false;
         }
 
-    }  
+    }
 
-    
-    public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, int ora)throws SQLException {
+    public boolean writeHall(Sala sala) {
+        String query = "INSERT INTO Sala(rows,columns) VALUES("
+                + "'" + sala.getRows() + "','" + sala.getColumns() + "')";
+        try {
+            SQL.eseguiQueryScrittura(query);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    public boolean writeSeats(Sala sala) {
+        try {
+            for (int i = 0; i < sala.getSeats().size(); i++) {
+                System.out.println(i);
+                String query = "INSERT INTO Seats(x,y,tipo) VALUES("
+                        + "'" + sala.getSeats().get(i).getx() + "','" + sala.getSeats().get(i).gety() + "','"
+                        + sala.getSeats().get(i).giveType() + "')";
+                SQL.eseguiQueryScrittura(query);
+            }
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, int ora) throws SQLException {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
 
-        query = "SELECT Proiezione.* "+  
-        "FROM Proiezione "+ 
-        "WHERE (Proiezione.id_film="+id_film+") AND (concat(date(now()+ INTERVAL "+deltaData+" DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL "+deltaData+" DAY), ' "+ora+":00:00' ))";
+        query = "SELECT Proiezione.* "
+                + "FROM Proiezione "
+                + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
         proiezione = parser.Proiezione(risultato_query);
@@ -201,9 +225,7 @@ public class Adapter_SQL {
 
         return proiezione;
     }
-        
-        
-    
+
     public void spegni() {
         SQL.chiudiConnessione();
     }

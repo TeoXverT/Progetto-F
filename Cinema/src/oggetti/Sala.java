@@ -9,46 +9,39 @@ import java.util.ArrayList;
  */
 /**
  *
- * @author cri
+ * @author Yatin
  */
 public class Sala {
 
-    private int id_sala, posti_x, posti_y;
-    private ArrayList<Seat> posti_vip = new ArrayList<>();
-
-    //X E Y CORRISPONDONO AL MASSIMO NUMERO DI RIGHE E COLONNE CHE CI SONO IN UNA SALA
-    //il posto più alto a sinistra del proiettore è la riga zero e colonna zero
-    public Sala(int id_sala, int posti_x, int posti_y, ArrayList<Seat> posti_vip) {
+    private int id_sala, rows,columns;
+    private ArrayList<Seat> seats = new ArrayList<>();
+    
+    public Sala(int id_sala, int rows, int columns, ArrayList<Seat> seats) {
         this.id_sala = id_sala;
-        this.posti_x = posti_x;
-        this.posti_y = posti_y;
-        this.posti_vip = posti_vip;
+        this.rows = rows;
+        this.columns = columns;
+        this.seats = seats;
     }
-
-    @Override
-    public String toString() {
-        return id_sala+"";
+    
+    public Sala(int rows, int columns, ArrayList<Seat> seats) {
+        this.rows = rows;
+        this.columns = columns;
+        this.seats = seats;
     }
 
     public int getId_sala() {
         return id_sala;
     }
 
-    public int getPosti_x() {
-        return posti_x;
+    public int getRows() {
+        return rows;
     }
 
-    public int getPosti_y() {
-        return posti_y;
+    public int getColumns() {
+        return columns;
     }
 
-    public ArrayList<Seat> getPosti() {
-        return posti_vip;
+    public ArrayList<Seat> getSeats() {
+        return seats;
     }
-
-    public boolean eUnPostoVip(int x, int y) {
-        //da finire
-        return false;
-    }
-
 }

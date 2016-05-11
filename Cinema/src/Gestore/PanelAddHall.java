@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import oggetti.Config;
+import oggetti.Sala;
 import oggetti.Seat;
 
 /**
@@ -40,6 +41,8 @@ public class PanelAddHall extends JPanel {
     private int x;
     private int y;
     private ArrayList<Seat> seats = null;
+    JLabel outputGrafico;
+    Controller_Gestore controller;
     ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
     ImageIcon seat_disable = new ImageIcon("immagini/poltrone/seat_diasable.png");
     ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
@@ -48,6 +51,8 @@ public class PanelAddHall extends JPanel {
     JComboBox seat_type;
 
     public PanelAddHall(Controller_Gestore controller, final JLabel outputGrafico) {
+        this.outputGrafico = outputGrafico;
+        this.controller = controller;
         this.setLayout(new GridLayout(0, 2));
         JLabel row_num = new JLabel("Number of rows:");
         JLabel column_num = new JLabel("Number of col:");
@@ -77,7 +82,7 @@ public class PanelAddHall extends JPanel {
         JPanel nord = new JPanel();
         JPanel sud = new JPanel(new BorderLayout(10,20));
         JPanel west = new JPanel();
-        JPanel seats_layout = new JPanel(new GridLayout(x,y,0,4));
+        JPanel seats_layout = new JPanel(new GridLayout(x, y, 1, 5));
         JLabel screen = new JLabel(screen_icon);
 
         nord.add(screen);
@@ -113,16 +118,24 @@ public class PanelAddHall extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 switch ((String)seat_type.getSelectedItem()) {
                     case "Disable":
+                        outputGrafico.setText("Select the seats to disable.");
+                        seats.get(i).setDisable(true);
                         seats.get(i).setIcon(seat_disable);
                         break;
                     case "Vip":
+                        outputGrafico.setText("Select the VIP seats.");
+                        seats.get(i).setVip(true);
                         seats.get(i).setIcon(seat_vip);
                         break;
                     case "Handicap":
+                        outputGrafico.setText("Select the handicap seats.");
+                        seats.get(i).setHandicap(true);
                         seats.get(i).setIcon(seat_handicap);
                         break;
                     case "Free":
+                        outputGrafico.setText("Select the free seats.");
                         seats.get(i).setIcon(seat_free);
+                        break;
                 }        
             }
         };
@@ -134,7 +147,8 @@ public class PanelAddHall extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                Sala sala = new Sala(x,y,seats);
+                controller.scriviHall(sala);
             }
         };
         return event; 

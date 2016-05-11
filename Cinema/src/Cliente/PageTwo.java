@@ -30,7 +30,6 @@ import oggetti.Film;
 import oggetti.PanelYoutube;
 import oggetti.Proiezione;
 
-
 /**
  *
  * @author Riccardo
@@ -42,7 +41,7 @@ public class PageTwo extends JPanel {
     private int deltaData;
     private ArrayList<Proiezione> proiezione;
     private int deltaTime;
-    
+
     public PageTwo(Film film, int deltaData, Controller_Cliente controller, int deltaTime) throws SQLException, IOException {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
@@ -53,72 +52,70 @@ public class PageTwo extends JPanel {
         this.film = film;
         this.deltaData = deltaData;
         this.deltaTime = deltaTime;
-        this.setLayout(new GridLayout(2,2, 20, 20));
+        this.setLayout(new GridLayout(2, 2, 20, 20));
         crea_gui();
-        
+
     }
 
     private void crea_gui() throws SQLException, MalformedURLException, IOException {
         JButton cover = new JButton("Indietro");
-        
-        JPanel pannelloCopertina=new JPanel();
-         this.add(pannelloCopertina);
+
+        JPanel pannelloCopertina = new JPanel();
+        this.add(pannelloCopertina);
         Image image = null;
         try {
-    URL url = new URL(film.getLink_copertina());
-    image = ImageIO.read(url);
-} catch (IOException e) {
-}
-   ImageIcon ii=new ImageIcon(image);
-   JLabel label1=new JLabel(scalaImmagine(ii,250,350));
-   pannelloCopertina.add(label1);
-  // this.add(cover, BorderLayout.SOUTH); DA AGGIUNGERE SUCCESSIVAMENTE AL PANNELLO CON GLI ORARI
-    cover.addActionListener(goBackEvent());  
-    
-    JPanel pannelloTrama = new JPanel(new GridLayout(2, 1, 10, 10));
-    this.add(pannelloTrama);
-    pannelloTrama.add(new JLabel(" Titolo film: " + film.toString()));
-    
-        JTextArea Trama=new JTextArea(film.getDescrizione());
+            URL url = new URL(film.getLink_copertina());
+            image = ImageIO.read(url);
+        } catch (IOException e) {
+        }
+        ImageIcon ii = new ImageIcon(image);
+        JLabel label1 = new JLabel(scalaImmagine(ii, 250, 350));
+        pannelloCopertina.add(label1);
+        // this.add(cover, BorderLayout.SOUTH); DA AGGIUNGERE SUCCESSIVAMENTE AL PANNELLO CON GLI ORARI
+        cover.addActionListener(goBackEvent());
+
+        JPanel pannelloTrama = new JPanel(new GridLayout(2, 1, 10, 10));
+        this.add(pannelloTrama);
+        pannelloTrama.add(new JLabel(" Titolo film: " + film.toString()));
+
+        JTextArea Trama = new JTextArea(film.getDescrizione());
         Trama.setLineWrap(true);
         Trama.setEditable(false);
-        
-    pannelloTrama.add(Trama);    
-    
-    this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
-    
-    proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
-    SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
-   
-    //ABBIAMO MODIFICAGTO QUI PRIMA ERA COSI new BorderLayout() DENTRO AL NEW JPANEL()
-    JPanel pannelloContenitoreBackOrari = new JPanel();
-    this.add(pannelloContenitoreBackOrari);
-    JPanel pannelloOrari  = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
-    pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
+
+        pannelloTrama.add(Trama);
+
+        this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
+
+        proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
+        SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
+
+        //ABBIAMO MODIFICAGTO QUI PRIMA ERA COSI new BorderLayout() DENTRO AL NEW JPANEL()
+        JPanel pannelloContenitoreBackOrari = new JPanel();
+        this.add(pannelloContenitoreBackOrari);
+        JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
+        pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
        // URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
-       // Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
-      //  immagineCarrelloBello = immagineCarrelloBello.getScaledInstance(100, 100, 2 );
-      //  ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
-     
+        // Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
+        //  immagineCarrelloBello = immagineCarrelloBello.getScaledInstance(100, 100, 2 );
+        //  ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
+
         ButtonCart bottoneCarrello;
-    for(int i = 0; i < proiezione.size(); i++) {
-        
-        pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
-        bottoneCarrello = new ButtonCart(proiezione.get(i));
-       bottoneCarrello.setPreferredSize(new Dimension(50,50));
-        pannelloOrari.add(bottoneCarrello);
-       
+        for (int i = 0; i < proiezione.size(); i++) {
+
+            pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
+            bottoneCarrello = new ButtonCart(proiezione.get(i));
+            bottoneCarrello.setPreferredSize(new Dimension(50, 50));
+            pannelloOrari.add(bottoneCarrello);
+
+        }
+
+        pannelloContenitoreBackOrari.add(cover);
+
     }
-    
-    
-    pannelloContenitoreBackOrari.add(cover);
-   
-    }
-  
-private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+
+    private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
-    
 
     private void goBack() {
         this.removeAll();
@@ -135,8 +132,7 @@ private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) 
                 goBack();
             }
         };
-        return evento;}
+        return evento;
+    }
 
-    
 }
-    

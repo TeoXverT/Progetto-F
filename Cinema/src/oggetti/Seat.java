@@ -26,6 +26,10 @@ public class Seat extends JButton{
     public boolean isOccupato() {
         return occupato;
     }
+    
+    public boolean isDisable() {
+        return disable;
+    }
 
     public void setVip(boolean vip) {
         this.vip = vip;
@@ -38,11 +42,16 @@ public class Seat extends JButton{
     public void setOccupato(boolean occupato) {
         this.occupato = occupato;
     }
+    
+    public void setDisable(boolean disable) {
+        this.occupato = disable;
+    }
     private int x;
     private int y;
     private boolean vip;
     private boolean handicap;
     private boolean occupato;
+    private boolean disable;
     
 
     public Seat(int x, int y, ImageIcon img) {
@@ -65,5 +74,18 @@ public class Seat extends JButton{
 
     public int gety() {
         return y;
+    }
+    
+    public int giveType() {
+        if(vip == true) {
+            return 2;
+        }
+        if(handicap = true){
+            return 3;
+        }
+        if(disable = true){
+            return 4;
+        }
+        else return 1;
     }
 }
