@@ -19,7 +19,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-//import static java.time.Clock.system;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -95,10 +94,11 @@ public class PanelAddHall extends JPanel {
             seats_layout.add(seats.get(i));
         }
         
-        JButton crea_sala = new JButton("Crea Sala");
+        JButton create_hall = new JButton("Create Hall");
+        create_hall.addActionListener(createHall());
         sud.add(seats_layout, BorderLayout.CENTER);
-        sud.add(crea_sala, BorderLayout.SOUTH);
-        String[] type_list = {"Disable", "Vip", "Handicap"};
+        sud.add(create_hall, BorderLayout.SOUTH);
+        String[] type_list = {"Disable", "Vip", "Handicap", "Free"};
         seat_type = new JComboBox(type_list);
         west.add(seat_type);
  
@@ -121,10 +121,22 @@ public class PanelAddHall extends JPanel {
                     case "Handicap":
                         seats.get(i).setIcon(seat_handicap);
                         break;
-                }
-                    
+                    case "Free":
+                        seats.get(i).setIcon(seat_free);
+                }        
             }
         };
        return event;
+    }
+    
+    public ActionListener createHall() {
+        ActionListener event = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        return event; 
     }
 }
