@@ -1,5 +1,6 @@
 package Cliente;
 
+
 import oggetti.ButtonCover;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -36,10 +37,10 @@ public class PageOne extends JPanel {
     JSlider slider;
     Calendar ora = Calendar.getInstance();
     
-    static final int oraInizioSlider = 0;
+    static final int oraInizioSlider = 15;
     static final int oraFineSlider = 23;
-    static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
+    static  int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    
     JPanel pannelloSlider;
     
     
@@ -54,7 +55,7 @@ public class PageOne extends JPanel {
         pannelloSlider = new JPanel(); 
         
         this.add(pannelloSlider, BorderLayout.WEST);
-       
+       if(oraStart<15){oraStart=15;}
         slider = new JSlider(JSlider.VERTICAL, oraInizioSlider, oraFineSlider, oraStart);
         
         pannelloSlider.add(slider);
