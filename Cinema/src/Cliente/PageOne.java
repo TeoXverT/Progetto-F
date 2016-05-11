@@ -37,8 +37,7 @@ public class PageOne extends JPanel {
     JSlider slider;
     Calendar ora = Calendar.getInstance();
     
-    static final int oraInizioSlider = 15;
-    static final int oraFineSlider = 23;
+    
     static  int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     
     JPanel pannelloSlider;
@@ -55,11 +54,15 @@ public class PageOne extends JPanel {
         pannelloSlider = new JPanel(); 
         pannelloSlider.setPreferredSize(new Dimension(75,100));
         this.add(pannelloSlider, BorderLayout.WEST);
-       if(oraStart<15){oraStart=15;}
-        slider = new JSlider(JSlider.VERTICAL, oraInizioSlider, oraFineSlider, oraStart);
+      if(oraStart < 15){
+           oraStart = 15;
+      }
+       
+        slider = new JSlider(JSlider.VERTICAL, 15, 23, oraStart);
+        
         
         pannelloSlider.add(slider);
-        slider.setPreferredSize(new Dimension(50,600));
+        slider.setPreferredSize(new Dimension(50,500));
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
