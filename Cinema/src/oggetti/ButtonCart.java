@@ -5,6 +5,7 @@
  */
 package oggetti;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ public class ButtonCart extends JButton{
     public ButtonCart(Proiezione proiezione) throws IOException {
         
         this.proiezione = proiezione;
-        this.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("http://www.ergonotec.it/images/carrello.gif"))), 200, 300));
+        this.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("http://www.ergonotec.it/images/carrello.gif"))), 50, 50));
         
         
     }

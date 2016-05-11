@@ -105,7 +105,7 @@ public class PageTwo extends JPanel {
         
         pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala() ), BorderLayout.SOUTH);
         bottoneCarrello = new ButtonCart(proiezione.get(i));
-        bottoneCarrello.setPreferredSize(new Dimension(100,100));
+       bottoneCarrello.setPreferredSize(new Dimension(50,50));
         pannelloOrari.add(bottoneCarrello);
        
     }
