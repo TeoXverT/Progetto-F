@@ -53,13 +53,13 @@ public class PageOne extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);    
         //istanziazione aggiunta slider a sinistra del frame
         pannelloSlider = new JPanel(); 
-        
+        pannelloSlider.setPreferredSize(new Dimension(75,100));
         this.add(pannelloSlider, BorderLayout.WEST);
        if(oraStart<15){oraStart=15;}
         slider = new JSlider(JSlider.VERTICAL, oraInizioSlider, oraFineSlider, oraStart);
         
         pannelloSlider.add(slider);
-        slider.setPreferredSize(new Dimension(30,600));
+        slider.setPreferredSize(new Dimension(50,600));
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
