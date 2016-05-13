@@ -55,7 +55,7 @@ public class PageTwo extends JPanel {
         this.film = film;
         this.deltaData = deltaData;
         this.deltaTime = deltaTime;
-        this.setLayout(new GridLayout(2, 2, 20, 20));
+        this.setLayout(new GridLayout(2, 2, 2, 2));
         crea_gui();
 
     }
@@ -64,6 +64,7 @@ public class PageTwo extends JPanel {
         JButton cover = new JButton("Indietro");
 
         JPanel pannelloCopertina = new JPanel();
+        pannelloCopertina.setBackground(java.awt.Color.LIGHT_GRAY);
         this.add(pannelloCopertina);
         Image image = null;
         try {
@@ -74,14 +75,14 @@ public class PageTwo extends JPanel {
         ImageIcon ii = new ImageIcon(image);
         JLabel label1 = new JLabel(scalaImmagine(ii, 250, 350));
         pannelloCopertina.add(label1);
-        // this.add(cover, BorderLayout.SOUTH); DA AGGIUNGERE SUCCESSIVAMENTE AL PANNELLO CON GLI ORARI
+       
         cover.addActionListener(goBackEvent());
 
         JPanel pannelloTrama = new JPanel(new GridBagLayout());
         pannelloTrama.setBackground(java.awt.Color.LIGHT_GRAY);
         GridBagConstraints c = new GridBagConstraints();
        
-        this.setBackground(java.awt.Color.DARK_GRAY);
+        this.setBackground(java.awt.Color.GRAY);
         this.add(pannelloTrama );
         
 
@@ -129,8 +130,10 @@ public class PageTwo extends JPanel {
 
         //ABBIAMO MODIFICAGTO QUI PRIMA ERA COSI new BorderLayout() DENTRO AL NEW JPANEL()
         JPanel pannelloContenitoreBackOrari = new JPanel();
+        pannelloContenitoreBackOrari.setBackground(java.awt.Color.LIGHT_GRAY);
         this.add(pannelloContenitoreBackOrari);
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
+        pannelloOrari.setBackground(java.awt.Color.LIGHT_GRAY);
         pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
       
 
