@@ -3,6 +3,8 @@ package Cliente;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
@@ -15,6 +17,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -74,15 +77,50 @@ public class PageTwo extends JPanel {
         // this.add(cover, BorderLayout.SOUTH); DA AGGIUNGERE SUCCESSIVAMENTE AL PANNELLO CON GLI ORARI
         cover.addActionListener(goBackEvent());
 
-        JPanel pannelloTrama = new JPanel(new GridLayout(2, 1, 10, 10));
-        this.add(pannelloTrama);
-        pannelloTrama.add(new JLabel(" Titolo film: " + film.toString()));
+        JPanel pannelloTrama = new JPanel(new GridBagLayout());
+        pannelloTrama.setBackground(java.awt.Color.LIGHT_GRAY);
+        GridBagConstraints c = new GridBagConstraints();
+       
+        this.setBackground(java.awt.Color.DARK_GRAY);
+        this.add(pannelloTrama );
+        
 
+        //prima riga terza colonna
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.FIRST_LINE_END;
+        c.gridx = 2;
+        c.gridy = 0;
+        c.weightx = 0.5;
+        
+        
+        pannelloTrama.add(cover, c);
+        
+        
+        //prima riga seconda colonna
+       c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.weightx = 0.5;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.PAGE_START;
+        pannelloTrama.add(new JLabel(film.toString()), c);
+        
+        
+        //trama
         JTextArea Trama = new JTextArea(film.getDescrizione());
         Trama.setLineWrap(true);
         Trama.setEditable(false);
-
-        pannelloTrama.add(Trama);
+        Trama.setBorder(null);
+        Trama.setBackground(java.awt.Color.LIGHT_GRAY);
+      
+        c.anchor = GridBagConstraints.CENTER;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.weightx = 0.0;
+        c.gridwidth = 3;
+        c.gridy = 1;
+        c.ipady = 30;
+        
+        pannelloTrama.add(Trama, c);
 
         this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
 
@@ -94,10 +132,7 @@ public class PageTwo extends JPanel {
         this.add(pannelloContenitoreBackOrari);
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
         pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
-       // URL urlCarrelloBello= new URL("http://www.ergonotec.it/images/carrello.gif");
-        // Image immagineCarrelloBello = ImageIO.read(urlCarrelloBello);
-        //  immagineCarrelloBello = immagineCarrelloBello.getScaledInstance(100, 100, 2 );
-        //  ImageIcon iconaCarrelloBello  =  new ImageIcon(immagineCarrelloBello);
+      
 
         ButtonCart bottoneCarrello;
         for (int i = 0; i < proiezione.size(); i++) {
@@ -109,7 +144,7 @@ public class PageTwo extends JPanel {
 
         }
 
-        pannelloContenitoreBackOrari.add(cover);
+       // pannelloContenitoreBackOrari.add(cover);
 
     }
 
