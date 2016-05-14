@@ -9,11 +9,13 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import oggetti.Proiezione;
 import oggetti.Sala;
 import oggetti.Seat;
 
@@ -23,7 +25,21 @@ import oggetti.Seat;
  */
 public class PageThree extends JPanel{
     ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
-    public PageThree(Sala sala) {
+    Controller_Cliente controller;
+    
+    public PageThree(Proiezione proiezione) throws SQLException {
+        
+        
+        //bisogna implementare il metodo che presa l'id sala dalla Proiezione del costruttore vada a confrontarla con gli id sala 
+        //presenti sul database e restituisca le caratteristiche della sala e le associ a una variabile "Sala sala"
+       
+        System.out.println("fin qui va, per cancellare riga 36 del PageThree");
+        controller = new Controller_Cliente();
+        Sala sala;
+        //in teoria restituisce la sala ma per adesso non funziona
+        sala = controller.salaByID(proiezione.getId_sala());
+        
+        
         this.removeAll();
         this.setLayout(new BorderLayout(20, 30));
         JPanel nord = new JPanel();

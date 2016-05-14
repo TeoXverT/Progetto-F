@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -45,6 +47,8 @@ public class PageTwo extends JPanel {
     private ArrayList<Proiezione> proiezione;
     private int deltaTime;
 
+    
+    Proiezione proiezione1;
     public PageTwo(Film film, int deltaData, Controller_Cliente controller, int deltaTime) throws SQLException, IOException {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
@@ -138,16 +142,30 @@ public class PageTwo extends JPanel {
       
 
         ButtonCart bottoneCarrello;
+        
         for (int i = 0; i < proiezione.size(); i++) {
 
             pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
             bottoneCarrello = new ButtonCart(proiezione.get(i));
             bottoneCarrello.setPreferredSize(new Dimension(50, 50));
+            
+            proiezione1 = proiezione.get(i);
+            
+            bottoneCarrello.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    try {
+                        openPageThree(proiezione1);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PageTwo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            
             pannelloOrari.add(bottoneCarrello);
 
         }
 
-       // pannelloContenitoreBackOrari.add(cover);
+      
 
     }
 
@@ -172,5 +190,19 @@ public class PageTwo extends JPanel {
         };
         return evento;
     }
+    
+    
+    private void openPageThree(Proiezione proiezione) throws SQLException {
+        this.removeAll();
+        this.add(new PageThree(proiezione));
+        this.revalidate();
+        this.repaint();
+        
+        
+    }
+    
+    
+    
+    
 
 }

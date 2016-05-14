@@ -31,7 +31,17 @@ public class Parse_OBJ {
 
         return Sale;
     }
-
+    
+    
+    public Sala getSalaById(ResultSet risultato_query) throws SQLException {
+        
+        Sala sala = new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("posti_x"), risultato_query.getInt("posti_y"), parsePosti(risultato_query.getString("posti_vip")));
+        
+        risultato_query.close();
+        return sala;
+    }
+    
+    
     public ArrayList<Proiezione> Proiezione(ResultSet risultato_query) throws SQLException {
         ArrayList<Proiezione> Proiezioni = new ArrayList<>();
 

@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import oggetti.Film;
 import oggetti.Proiezione;
+import oggetti.Sala;
 
 /**
  *
@@ -86,6 +87,11 @@ public class Controller_Cliente {
     
     
     }
+    
+    public Sala salaByID(int id_Sala) throws SQLException {
+       return  adapter.getSalaByIdSala(id_Sala);
+    }
+    
    public ArrayList<Proiezione> showByFilm(int id_film, int deltaData, int ora) throws SQLException{
        return adapter.getShowByFilm(id_film,deltaData,ora);
    }

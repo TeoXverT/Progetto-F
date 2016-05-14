@@ -225,7 +225,26 @@ public class Adapter_SQL {
 
         return proiezione;
     }
-
+    
+    public Sala getSalaByIdSala(int id_sala) throws SQLException {
+        
+        String query;
+        ResultSet risultato_query;
+        Sala sala;
+        //query sbagliata, bisogna modificarla 
+        query = "SELECT Sala.* "
+                + "FROM Sala INNER JOIN Seats ON (Sala.id_sala = Seats.id_sala) "
+                + "WHERE Sala.id_sala=" + id_sala +"";
+     
+        risultato_query = SQL.eseguiQueryLettura(query);
+        sala = parser.getSalaById(risultato_query);
+        risultato_query.close();
+        
+        return sala;
+    }
+    
+    
+    
     public void spegni() {
         SQL.chiudiConnessione();
     }
