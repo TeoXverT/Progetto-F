@@ -16,7 +16,7 @@ public class Sala {
     private int id_sala, rows,columns;
     private ArrayList<Seat> seats = new ArrayList<>();
     
-    public Sala(int id_sala, int rows, int columns, ArrayList<Seat> seats) {
+    public Sala(int id_sala, int rows, int columns) {
         this.id_sala = id_sala;
         this.rows = rows;
         this.columns = columns;
@@ -43,5 +43,9 @@ public class Sala {
 
     public ArrayList<Seat> getSeats() {
         return seats;
+    }
+    
+      public String toString() {
+        return id_sala + "";
     }
 }

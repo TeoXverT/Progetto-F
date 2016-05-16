@@ -46,6 +46,8 @@ public class PanelAddProiezione extends JPanel {
             for (Film f : Films) {
                 model.addElement(f);
             }
+            
+           
             pannello.add(pane, BorderLayout.CENTER);
             pannelloNord.add(pannello);
 

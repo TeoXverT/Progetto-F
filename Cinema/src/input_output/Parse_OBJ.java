@@ -25,7 +25,7 @@ public class Parse_OBJ {
     public ArrayList<Sala> Sala(ResultSet risultato_query) throws SQLException {
         ArrayList<Sala> Sale = new ArrayList<>();
         while (risultato_query.next()) {
-            Sale.add(new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("posti_x"), risultato_query.getInt("posti_y"), parsePosti(risultato_query.getString("posti_vip"))));
+            Sale.add(new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns")));
         }
         risultato_query.close();
 
@@ -35,7 +35,7 @@ public class Parse_OBJ {
     
     public Sala getSalaById(ResultSet risultato_query) throws SQLException {
         
-        Sala sala = new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("posti_x"), risultato_query.getInt("posti_y"), parsePosti(risultato_query.getString("posti_vip")));
+        Sala sala = new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns"));
         
         risultato_query.close();
         return sala;
@@ -46,6 +46,7 @@ public class Parse_OBJ {
         ArrayList<Proiezione> Proiezioni = new ArrayList<>();
 
         while (risultato_query.next()) {
+            
             Proiezioni.add(new Proiezione(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), risultato_query.getInt("id_film"), risultato_query.getInt("id_sala"), risultato_query.getString("tipo"), risultato_query.getDouble("prezzo")));
         }
         risultato_query.close();
@@ -60,7 +61,6 @@ public class Parse_OBJ {
             Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"), risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina"),parseData_ora(risultato_query.getTimestamp("data_ora"))));
         }
         risultato_query.close();
-
         return Films;
     }
 

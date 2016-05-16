@@ -93,6 +93,7 @@ public class Adapter_SQL {
 
         Films = parser.Film(risultato_query);
         risultato_query.close();
+        
 
         return Films;
     }
