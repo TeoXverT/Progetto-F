@@ -40,7 +40,7 @@ public class Gui_Gestore extends JFrame {
     private Component frameErrore = null;
 
     public Gui_Gestore() {
-        
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -51,7 +51,7 @@ public class Gui_Gestore extends JFrame {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        
+
         controller = new Controller_Gestore();
         display = new JPanel();
         creaGui();
@@ -125,7 +125,7 @@ public class Gui_Gestore extends JFrame {
         submenu.add(menuItem);
         menu.add(submenu);
 
-        menu = new JMenu("Crea / Modifica");
+        menu = new JMenu("Add / Remove");
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
@@ -142,6 +142,10 @@ public class Gui_Gestore extends JFrame {
 
         menuItem = new JMenuItem("Add Hall");
         menuItem.addActionListener(addHall()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Remover");
+        menuItem.addActionListener(Remover()); // cosa deve fare una volta premuto
         menu.add(menuItem);
 
         menu = new JMenu("Gestione Fatturati");
@@ -175,7 +179,6 @@ public class Gui_Gestore extends JFrame {
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
-    
     private ActionListener visualizzaSale() {
 //        ActionListener evento = new ActionListener() {
 //            @Override
@@ -250,6 +253,17 @@ public class Gui_Gestore extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 aggiornaGUI(pannelloCaricamento);
                 aggiornaGUI(new PanelAddFilm(controller, outputGrafico));
+            }
+        };
+        return evento;
+    }
+
+    private ActionListener Remover() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelRemover(controller, outputGrafico));
             }
         };
         return evento;
