@@ -87,6 +87,12 @@ public class Controller_Cliente {
     
     
     }
+        public ArrayList<Film>  FilmFuturoBySlider(int deltaData,int sliderValue) throws SQLException {
+
+        return adapter.FilmFuturoBySlider(deltaData, sliderValue);
+    
+    
+    }
     
     public Sala salaByID(int id_Sala) throws SQLException {
        return  adapter.getSalaByIdSala(id_Sala);
