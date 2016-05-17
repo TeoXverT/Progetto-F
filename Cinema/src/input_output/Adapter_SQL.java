@@ -314,18 +314,23 @@ public class Adapter_SQL {
         return sala;
     }
     
-    public ArrayList<Sala> visualizzaStatoSale() throws SQLException {
+    public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Sala> Sale;
+        ArrayList<Proiezione> proiezioni;
         //SISTEMARE LA QUERY
-        query = "SELECT Sala.* FROM  `Proiezione`,`Sala` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND (Proiezione.id_sala=Sala.id_sala)";
+        query = "SELECT Proiezione.*\n" 
+               + "FROM Proiezione, Film, Sala\n"
+               +"WHERE (Proiezione.id_film=Film.id_film)\n" 
+               +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)<0\n" 
+               +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)>-Film.durata\n" 
+               +"AND (Proiezione.id_sala=Sala.id_sala)";
         risultato_query = SQL.eseguiQueryLettura(query);
         //System.out.println("here");
-        Sale = parser.Sala(risultato_query); //da sistemare il database
+        proiezioni = parser.Proiezione(risultato_query); //da sistemare il database
         risultato_query.close();
         
-        return Sale;
+        return proiezioni;
     }
 
     public void spegni() {
