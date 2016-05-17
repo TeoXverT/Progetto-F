@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import oggetti.*;
 
 /**
@@ -208,13 +209,16 @@ public class Gui_Gestore extends JFrame {
 
                 try {
                     ArrayList<Proiezione> Proiezioni = controller.visualizzaProiezione(tipo);
-
-                    JPanel visualizzaProiezioni = new JPanel(new GridLayout(0, 1));
+                    String[] columnNames = {"ID", "Date&Time", "ID Movie", "ID Hall", "Type", "Price"};
+                    DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+                    JTable table = new JTable(tableModel);
+                    table.setFillsViewportHeight(true);
+                    JScrollPane scrollPane = new JScrollPane(table);
                     for (Proiezione p : Proiezioni) {
-                        visualizzaProiezioni.add(new JLabel(p.toString()));
+                        Object[] datas = {p.getId_proiezione(), p.getData_ora_friendly(), p.getId_film(), p.getId_sala(), p.getTipo_proiezione(), p.getPrezzo()};
+                        tableModel.addRow(datas);
                     }
-
-                    display.add(visualizzaProiezioni);
+                    display.add(scrollPane);
 
                 } catch (SQLException ex) {
                     serverError();
