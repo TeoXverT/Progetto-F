@@ -159,7 +159,7 @@ public class Adapter_SQL {
 //        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
         String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
                 + "     FROM Film, Proiezione "
-                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 15 MINUTE)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
+                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 120 MINUTE)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
                 + "     ";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
