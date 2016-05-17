@@ -38,13 +38,13 @@ public class Adapter_SQL {
         ArrayList<Proiezione> Proiezioni;
 
         if (tipo == 0) {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         } else if (tipo == 1) {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         } else {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         }
 
@@ -277,23 +277,15 @@ public class Adapter_SQL {
     }
 
     public boolean writeSeats(Sala sala) {
-
         ArrayList<Seat> posti = sala.getSeats();
         boolean complete = false;
-        System.out.println(sala.getId_sala());
-
         for (Seat s : posti) {
-            System.out.println(s.toString());
-
             try {
                 String query = "INSERT INTO Seats(id_sala,x,y,tipo) VALUES("
                         + "'" + sala.getId_sala() + "','" + s.getx() + "','" + s.gety() + "','"
                         + s.giveType() + "')";
-
-                System.out.println(query);
                 SQL.eseguiQueryScrittura(query);
                 complete = true;
-
             } catch (SQLException ex) {
                 complete = false;
             }
