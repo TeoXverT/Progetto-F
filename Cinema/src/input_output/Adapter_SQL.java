@@ -38,13 +38,13 @@ public class Adapter_SQL {
         ArrayList<Proiezione> Proiezioni;
 
         if (tipo == 0) {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         } else if (tipo == 1) {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         } else {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         }
 
@@ -159,8 +159,28 @@ public class Adapter_SQL {
 //        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
         String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
                 + "     FROM Film, Proiezione "
-                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 15 MINUTE)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
+                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 120 MINUTE)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
                 + "     ";
+        /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
+        /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
+
+        risultatoQuery = SQL.eseguiQueryLettura(query);
+        Films = parser.Film(risultatoQuery);
+
+        return Films;
+
+    }
+    public ArrayList<Film> FilmFuturoBySlider(int deltaData,int sliderValue) throws SQLException {
+
+        ArrayList<Film> Films;
+        ResultSet risultatoQuery;
+
+//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
+//        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
+        String query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
+        "FROM Proiezione p, Film f " +
+        "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
 
