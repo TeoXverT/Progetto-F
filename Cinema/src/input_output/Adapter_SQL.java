@@ -293,6 +293,20 @@ public class Adapter_SQL {
 
         return sala;
     }
+    
+    public ArrayList<Sala> visualizzaStatoSale() throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Sala> Sale;
+        //SISTEMARE LA QUERY
+        query = "SELECT Sala.* FROM  `Proiezione`,`Sala` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND (Proiezione.id_sala=Sala.id_sala)";
+        risultato_query = SQL.eseguiQueryLettura(query);
+        //System.out.println("here");
+        Sale = parser.Sala(risultato_query); //da sistemare il database
+        risultato_query.close();
+        
+        return Sale;
+    }
 
     public void spegni() {
         SQL.chiudiConnessione();

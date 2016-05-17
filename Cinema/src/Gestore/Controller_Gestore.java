@@ -165,4 +165,9 @@ public class Controller_Gestore {
     public boolean eliminaSale(int id_sala) {
         return adapter.eliminaSale(id_sala);
     }
+    
+    public ArrayList<Sala> visualizzaStatoSale() throws SQLException {
+        ArrayList<Sala> Sale = adapter.visualizzaStatoSale();
+        return Sale;
+    }
 }
