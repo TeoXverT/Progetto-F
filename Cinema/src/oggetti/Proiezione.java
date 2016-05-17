@@ -1,5 +1,6 @@
 package oggetti;
 
+import Gestore.Controller_Gestore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -33,7 +34,7 @@ public class Proiezione {
 
     @Override
     public String toString() {
-        return "Proiezione{" + "id_proiezione=" + id_proiezione + ", data_ora=" + data_ora.getTime() + ", id_film=" + id_film + ", id_sala=" + id_sala + ", tipo_proiezione=" + tipo_proiezione + ", prezzo=" + prezzo + '}';
+        return "Sala:" + id_sala + " Del:" + getData_ora_friendly();
     }
 
     public int getId_proiezione() {
@@ -45,11 +46,14 @@ public class Proiezione {
         return sdf.format(data_ora.getTime());
     }
 
+    public String getData_ora_friendly() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM HH:mm");
+        return sdf.format(data_ora.getTime());
+    }
+
     public Calendar getData_ora() {
         return data_ora;
     }
-    
-    
 
     public int getId_film() {
         return id_film;

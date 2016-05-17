@@ -6,19 +6,19 @@
 package Gestore;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import oggetti.Film;
+import javax.swing.SwingConstants;
+import oggetti.*;
 
 /**
  *
@@ -26,26 +26,146 @@ import oggetti.Film;
  */
 public class PanelRemover extends JPanel {
 
-    public PanelRemover(Controller_Gestore controller, JLabel outputGrafico) {
+    Controller_Gestore controller;
+    JLabel outputGrafico;
 
-        this.setLayout(new FlowLayout());
+    public PanelRemover(Controller_Gestore controller, JLabel outputGrafico) {
+        this.controller = controller;
+        this.outputGrafico = outputGrafico;
+
+        outputGrafico.setText("Sistema di cancellazione dati.");
+        this.setLayout(new BorderLayout());
+        this.add(drawGui(new JPanel(new GridLayout(1, 3, 70, 0))), BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+
+    private JPanel drawGui(JPanel pannelloDisplay) {
+
         try {
-            this.add(new JLabel("Film: "));
-            final DefaultListModel model = new DefaultListModel();
-            final JList<Film> listaFilm = new JList(model);
-            JScrollPane pane = new JScrollPane(listaFilm);
+            JPanel uno = new JPanel(new BorderLayout());
+
+            uno.add(new JLabel("Film: ", SwingConstants.CENTER), BorderLayout.NORTH);
+
+            final DefaultListModel modelFilm = new DefaultListModel();
+            final JList<Film> listaFilm = new JList(modelFilm);
+            JScrollPane paneFilm = new JScrollPane(listaFilm);
             ArrayList<Film> Films;
             Films = controller.visualizzaFilm(0);
             for (Film f : Films) {
-                model.addElement(f);
+                modelFilm.addElement(f);
             }
-            this.add(pane);
+
+            uno.add(paneFilm, BorderLayout.CENTER);
+
             JButton deleteFilm = new JButton("delete");
-            this.add(deleteFilm);
+
+            deleteFilm.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    if (listaFilm.getSelectedValue() == null) {
+                        outputGrafico.setText("Selezionare il film dalla lista prima di premere il tasto.");
+                    } else {
+                        //Creazione oggetto
+                        if (controller.eliminaFilm(listaFilm.getSelectedValue().getId_film())) {
+                            outputGrafico.setText("Film eliminato con successo.");
+                            reDrawGui();
+                        } else {
+                            outputGrafico.setText("Errore eliminazione, accertarsi che il film non sia in programmazione.");
+                        }
+                    }
+
+                }
+            });
+            uno.add(deleteFilm, BorderLayout.SOUTH);
+            pannelloDisplay.add(uno);
+
+            JPanel due = new JPanel(new BorderLayout());
+
+            due.add(new JLabel("Proiezioni: ", SwingConstants.CENTER), BorderLayout.NORTH);
+
+            final DefaultListModel modelPro = new DefaultListModel();
+            final JList<Proiezione> listaProiezioni = new JList(modelPro);
+            JScrollPane panePro = new JScrollPane(listaProiezioni);
+            ArrayList<Proiezione> Proiezioni;
+
+            Proiezioni = controller.visualizzaProiezione(2);
+            for (Proiezione p : Proiezioni) {
+                modelPro.addElement(p);
+            }
+
+            due.add(panePro, BorderLayout.CENTER);
+
+            JButton deletePro = new JButton("delete");
+            deletePro.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (listaProiezioni.getSelectedValue() == null) {
+                        outputGrafico.setText("Selezionare la proiezione dalla lista prima di premere il tasto.");
+                    } else {
+                        //Creazione oggetto
+                        if (controller.eliminaProiezione(listaProiezioni.getSelectedValue().getId_proiezione())) {
+                            outputGrafico.setText("Proiezione eliminata con successo.");
+                            reDrawGui();
+                        } else {
+                            outputGrafico.setText("Errore eliminazione, la proiezione risilta avere dei bigletti venduti.");
+                        }
+                    }
+                }
+            });
+            due.add(deletePro, BorderLayout.SOUTH);
+            pannelloDisplay.add(due);
+
+            JPanel tre = new JPanel(new BorderLayout());
+
+            tre.add(new JLabel("Sale: ", SwingConstants.CENTER), BorderLayout.NORTH);
+
+            final DefaultListModel modelSale = new DefaultListModel();
+            final JList<Sala> listaSale = new JList(modelSale);
+            JScrollPane paneSale = new JScrollPane(listaSale);
+            ArrayList<Sala> Sale;
+
+            Sale = controller.visualizzaSale();
+            for (Sala s : Sale) {
+                modelSale.addElement(s);
+            }
+
+            tre.add(paneSale, BorderLayout.CENTER);
+
+            JButton deleteSale = new JButton("delete");
+            deleteSale.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    if (listaSale.getSelectedValue() == null) {
+                        outputGrafico.setText("Selezionare la sala dalla lista prima di premere il tasto.");
+                    } else {
+                        //Creazione oggetto
+                        if (controller.eliminaSale(listaSale.getSelectedValue().getId_sala())) {
+                            outputGrafico.setText("Sala eliminata con successo.");
+                            reDrawGui();
+                        } else {
+                            outputGrafico.setText("Errore eliminazione, la sala è in uso da qualche proiezione.");
+                        }
+                    }
+
+                }
+            });
+            
+            tre.add(deleteSale, BorderLayout.SOUTH);
+            pannelloDisplay.add(tre);
 
         } catch (SQLException ex) {
             outputGrafico.setText("Errore con il server");
         }
+        return pannelloDisplay;
+    }
 
+    private void reDrawGui() {
+        this.removeAll();
+        this.add(drawGui(new JPanel(new GridLayout(1, 3, 70, 0))), BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
     }
 }

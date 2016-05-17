@@ -71,11 +71,6 @@ public class Controller_Gestore {
 //            return false;
 //        }
 //    }
-    public ArrayList<Sala> visualizzaSale() throws SQLException {
-        ArrayList<Sala> Sale = adapter.visualizzaSale();
-        return Sale;
-    }
-
     public ArrayList<Proiezione> visualizzaProiezione(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
@@ -90,6 +85,10 @@ public class Controller_Gestore {
         } else {
             return false;
         }
+    }
+
+    public boolean eliminaProiezione(int id_proiezione) {
+        return adapter.eliminaProiezione(id_proiezione);
     }
 
     public boolean contolloDisponibilitaProiezione(Proiezione proiezione) throws SQLException {
@@ -107,6 +106,18 @@ public class Controller_Gestore {
         //quantita_max_da_visualizzare = 0 //NO LIMIT
         ArrayList<Film> Films = adapter.visualizzaFilm(quantita_max_da_visualizzare);
         return Films;
+    }
+
+    public boolean scriviFilm(Film film) {
+        if ((!"".equals(film.getTitolo_film())) && (!"".equals(film.getDescrizione())) && (!"".equals(film.getLink_copertina())) & (!"".equals(film.getGenere())) & (film.getDurata() > 0)) {
+            return adapter.scriviFilm(film);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean eliminaFilm(int id_film) {
+        return adapter.eliminaFilm(id_film);
     }
 
     public Config aggiornaConfig() throws SQLException { //Temporaneo
@@ -137,20 +148,21 @@ public class Controller_Gestore {
         return config;
     }
 
-    boolean scriviFilm(Film film) {
-        if ((!"".equals(film.getTitolo_film())) && (!"".equals(film.getDescrizione())) && (!"".equals(film.getLink_copertina())) & (!"".equals(film.getGenere())) & (film.getDurata() > 0)) {
-            return adapter.scriviFilm(film);
-        } else {
-            return false;
-        }
+    public ArrayList<Sala> visualizzaSale() throws SQLException {
+        ArrayList<Sala> Sale = adapter.visualizzaSale();
+        return Sale;
     }
-    
-    boolean scriviHall(Sala sala) {
-        if(adapter.writeHall(sala) == true) {
-            if(adapter.writeSeats(sala) == true) {
+
+    public boolean scriviHall(Sala sala) {
+        if (adapter.writeHall(sala) == true) {
+            if (adapter.writeSeats(sala) == true) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean eliminaSale(int id_sala) {
+        return adapter.eliminaSale(id_sala);
     }
 }

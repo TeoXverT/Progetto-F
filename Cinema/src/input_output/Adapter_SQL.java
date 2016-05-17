@@ -36,13 +36,13 @@ public class Adapter_SQL {
         ArrayList<Proiezione> Proiezioni;
 
         if (tipo == 0) {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) )";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         } else if (tipo == 1) {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) )";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         } else {
-            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) )";
+            query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.id_proiezione DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         }
 
@@ -54,6 +54,16 @@ public class Adapter_SQL {
 
     public boolean scriviProiezione(Proiezione proiezione) {
         String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, tipo, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
+        try {
+            SQL.eseguiQueryScrittura(query);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    public boolean eliminaProiezione(int id_proiezione) {
+        String query = "DELETE FROM Proiezione WHERE Proiezione.id_proiezione =" + id_proiezione;
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -76,6 +86,17 @@ public class Adapter_SQL {
         return Sale;
     }
 
+    public boolean eliminaSale(int id_sale) {
+        String query = "DELETE FROM Sala WHERE Sala.id_sala =" + id_sale;
+        System.out.println(query);
+        try {
+            SQL.eseguiQueryScrittura(query);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
     public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
         String query;
         ResultSet risultato_query;
@@ -93,9 +114,18 @@ public class Adapter_SQL {
 
         Films = parser.Film(risultato_query);
         risultato_query.close();
-        
 
         return Films;
+    }
+
+    public boolean eliminaFilm(int id_film) {
+        String query = "DELETE FROM Film WHERE Film.id_film =" + id_film;
+        try {
+            SQL.eseguiQueryScrittura(query);
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 
     public ArrayList<Film> visualizzaFilmFiltratiRispettoOraEData(Calendar Data_ora_inizio, Calendar Data_ora_fine) throws SQLException {
@@ -166,7 +196,6 @@ public class Adapter_SQL {
         } catch (SQLException ex) {
             return false;
         }
-
     }
 
     public boolean scriviFilm(Film film) {
@@ -226,26 +255,24 @@ public class Adapter_SQL {
 
         return proiezione;
     }
-    
+
     public Sala getSalaByIdSala(int id_sala) throws SQLException {
-        
+
         String query;
         ResultSet risultato_query;
         Sala sala;
         //query sbagliata, bisogna modificarla 
         query = "SELECT Sala.* "
                 + "FROM Sala INNER JOIN Seats ON (Sala.id_sala = Seats.id_sala) "
-                + "WHERE Sala.id_sala=" + id_sala +"";
-     
+                + "WHERE Sala.id_sala=" + id_sala + "";
+
         risultato_query = SQL.eseguiQueryLettura(query);
         sala = parser.getSalaById(risultato_query);
         risultato_query.close();
-        
+
         return sala;
     }
-    
-    
-    
+
     public void spegni() {
         SQL.chiudiConnessione();
     }

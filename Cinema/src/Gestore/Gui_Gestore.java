@@ -53,7 +53,7 @@ public class Gui_Gestore extends JFrame {
         }
 
         controller = new Controller_Gestore();
-        display = new JPanel();
+        display = new JPanel( new BorderLayout());
         creaGui();
         imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
         pannelloCaricamento = new JPanel();
