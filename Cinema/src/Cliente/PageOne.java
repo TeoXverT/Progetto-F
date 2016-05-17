@@ -33,7 +33,7 @@ public class PageOne extends JPanel {
     Controller_Cliente controller;
     Component frameErrore;
     
-    
+    int SliderValue ;
     JSlider slider;
     Calendar ora = Calendar.getInstance();
     
@@ -59,7 +59,16 @@ public class PageOne extends JPanel {
       }
        
         slider = new JSlider(JSlider.VERTICAL, 15, 23, oraStart);
-        
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                if(!slider.getValueIsAdjusting()) {
+                    
+                    ThreadScaricaFilm(0).start();
+                    
+                }
+            }
+        });
         
         pannelloSlider.add(slider);
         slider.setPreferredSize(new Dimension(50,500));
@@ -139,13 +148,14 @@ public class PageOne extends JPanel {
         }
     }
 
-    private Thread ThreadScaricaFilm(final int deltaData) {
+    private Thread ThreadScaricaFilm(final int deltaData ) {
         Thread t= new Thread(new Runnable() {
             public void run() {
                 try {
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 20, 30));
-                    ArrayList<Film> Films = controller.FilmFuturo(deltaData);
-                    final int SliderValue = slider.getValue();
+                    SliderValue = slider.getValue();
+                    ArrayList<Film> Films = controller.FilmFuturoBySlider(deltaData, SliderValue);
+                    
                     for (final Film f : Films) {
 //                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
