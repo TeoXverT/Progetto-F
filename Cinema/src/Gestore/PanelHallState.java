@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import oggetti.Proiezione;
 import oggetti.Sala;
 
 /**
@@ -23,7 +24,7 @@ public class PanelHallState extends JPanel{
     public PanelHallState(final Controller_Gestore controller, final JLabel outputGrafico) {
         //molto beta...
         
-        String[] columnNames = {"ID Hall","Movie","Rows","Columns","# of free Seats"};
+        String[] columnNames = {"ID Hall", "Movie", "Date&Time"};
     
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
@@ -32,14 +33,12 @@ public class PanelHallState extends JPanel{
         this.add(scrollPane);
         
         try{
-        ArrayList<Sala> sale = controller.visualizzaStatoSale();
+        ArrayList<Proiezione> pro = controller.visualizzaStatoSale();
         
-        for (Sala p : sale) {      
+        for (Proiezione p : pro) {      
             int ID_Hall = p.getId_sala();
             String Movie = "";
-            int rows = p.getRows();
-            int column = p.getColumns();
-            Object[] datas = {ID_Hall, Movie, rows, column, "indefinito"}; 
+            Object[] datas = {ID_Hall, Movie, "indefinito"}; 
             tableModel.addRow(datas);
         }
         }catch(SQLException ex){
