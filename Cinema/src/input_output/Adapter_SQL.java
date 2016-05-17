@@ -224,11 +224,10 @@ public class Adapter_SQL {
         try {
             SQL.eseguiQueryScrittura(query);
             query = "SELECT Sala.id_sala FROM Sala ORDER BY Sala.id_sala DESC LIMIT 1";
-            SQL.eseguiQueryScrittura(query);
             risultato_query = SQL.eseguiQueryLettura(query);
-            sala.setId_sala(risultato_query.getInt("id_sala"));
-            System.out.print(risultato_query.getInt("id_sala"));
-            System.out.print("5");
+            while (risultato_query.next()) {
+                sala.setId_sala(risultato_query.getInt("id_sala"));
+            }
 
             return true;
         } catch (SQLException ex) {
@@ -241,13 +240,13 @@ public class Adapter_SQL {
         ArrayList<Seat> posti = sala.getSeats();
         boolean complete = false;
         System.out.println(sala.getId_sala());
-        
+
         for (Seat s : posti) {
             System.out.println(s.toString());
 
             try {
                 String query = "INSERT INTO Seats(id_sala,x,y,tipo) VALUES("
-                       + "'" + sala.getId_sala() + "','"  + "'" + s.getx() + "','" + s.gety() + "','"
+                        + "'" + sala.getId_sala() + "','" + s.getx() + "','" + s.gety() + "','"
                         + s.giveType() + "')";
 
                 System.out.println(query);
