@@ -236,23 +236,15 @@ public class Adapter_SQL {
     }
 
     public boolean writeSeats(Sala sala) {
-
         ArrayList<Seat> posti = sala.getSeats();
         boolean complete = false;
-        System.out.println(sala.getId_sala());
-
         for (Seat s : posti) {
-            System.out.println(s.toString());
-
             try {
                 String query = "INSERT INTO Seats(id_sala,x,y,tipo) VALUES("
                         + "'" + sala.getId_sala() + "','" + s.getx() + "','" + s.gety() + "','"
                         + s.giveType() + "')";
-
-                System.out.println(query);
                 SQL.eseguiQueryScrittura(query);
                 complete = true;
-
             } catch (SQLException ex) {
                 complete = false;
             }
