@@ -334,18 +334,15 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezioni;
-        //SISTEMARE LA QUERY
         query = "SELECT Proiezione.*\n" 
-               + "FROM Proiezione, Film, Sala\n"
+               + "FROM Proiezione, Film\n"
                +"WHERE (Proiezione.id_film=Film.id_film)\n" 
                +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)<0\n" 
                +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)>-Film.durata\n" 
-               +"AND (Proiezione.id_sala=Sala.id_sala)";
+               +"";
         risultato_query = SQL.eseguiQueryLettura(query);
-        //System.out.println("here");
-        proiezioni = parser.Proiezione(risultato_query); //da sistemare il database
+        proiezioni = parser.Proiezione(risultato_query);
         risultato_query.close();
-        
         return proiezioni;
     }
 

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import oggetti.Film;
 import oggetti.Proiezione;
 import oggetti.Sala;
 
@@ -34,11 +35,19 @@ public class PanelHallState extends JPanel{
         
         try{
         ArrayList<Proiezione> pro = controller.visualizzaStatoSale();
-        
+        ArrayList<Film> fil = controller.visualizzaFilm(0);
+        String Movie = "";
         for (Proiezione p : pro) {      
+              for(Film f : fil){
+                    if(f.getId_film() == p.getId_film()){
+                    Movie = f.getTitolo_film();
+                    continue;
+                    }
+               }
+
             int ID_Hall = p.getId_sala();
-            String Movie = "";
-            Object[] datas = {ID_Hall, Movie, "indefinito"}; 
+            String date_time = p.getData_ora_friendly();
+            Object[] datas = {ID_Hall, Movie, date_time}; 
             tableModel.addRow(datas);
         }
         }catch(SQLException ex){
