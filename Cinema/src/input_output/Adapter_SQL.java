@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oggetti.*;
 
 /**
@@ -215,10 +217,19 @@ public class Adapter_SQL {
     }
 
     public boolean writeHall(Sala sala) {
+        ResultSet risultato_query;
+
         String query = "INSERT INTO Sala(rows,columns) VALUES("
                 + "'" + sala.getRows() + "','" + sala.getColumns() + "')";
         try {
             SQL.eseguiQueryScrittura(query);
+            query = "SELECT Sala.id_sala FROM Sala ORDER BY Sala.id_sala DESC LIMIT 1";
+            SQL.eseguiQueryScrittura(query);
+            risultato_query = SQL.eseguiQueryLettura(query);
+            sala.setId_sala(risultato_query.getInt("id_sala"));
+            System.out.print(risultato_query.getInt("id_sala"));
+            System.out.print("5");
+
             return true;
         } catch (SQLException ex) {
             return false;
@@ -226,18 +237,29 @@ public class Adapter_SQL {
     }
 
     public boolean writeSeats(Sala sala) {
-        try {
-            for (int i = 0; i < sala.getSeats().size(); i++) {
-                System.out.println(i);
-                String query = "INSERT INTO Seats(x,y,tipo) VALUES("
-                        + "'" + sala.getSeats().get(i).getx() + "','" + sala.getSeats().get(i).gety() + "','"
-                        + sala.getSeats().get(i).giveType() + "')";
+
+        ArrayList<Seat> posti = sala.getSeats();
+        boolean complete = false;
+        System.out.println(sala.getId_sala());
+        
+        for (Seat s : posti) {
+            System.out.println(s.toString());
+
+            try {
+                String query = "INSERT INTO Seats(id_sala,x,y,tipo) VALUES("
+                       + "'" + sala.getId_sala() + "','"  + "'" + s.getx() + "','" + s.gety() + "','"
+                        + s.giveType() + "')";
+
+                System.out.println(query);
                 SQL.eseguiQueryScrittura(query);
+                complete = true;
+
+            } catch (SQLException ex) {
+                complete = false;
             }
-            return true;
-        } catch (SQLException ex) {
-            return false;
         }
+        return complete;
+
     }
 
     public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, int ora) throws SQLException {

@@ -44,7 +44,7 @@ public class Seat extends JButton{
     }
     
     public void setDisable(boolean disable) {
-        this.occupato = disable;
+        this.disable = disable;
     }
     private int x;
     private int y;
@@ -88,4 +88,11 @@ public class Seat extends JButton{
         }
         else return 1;
     }
+
+    @Override
+    public String toString() {
+        return "Seat{" + "x=" + x + ", y=" + y + ", vip=" + vip + ", handicap=" + handicap + ", occupato=" + occupato + ", disable=" + disable + '}';
+    }
+    
+    
 }
