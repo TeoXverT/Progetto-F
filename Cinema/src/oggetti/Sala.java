@@ -33,6 +33,10 @@ public class Sala {
         return id_sala;
     }
 
+    public void setId_sala(int id_sala) {
+        this.id_sala = id_sala;
+    }
+
     public int getRows() {
         return rows;
     }
