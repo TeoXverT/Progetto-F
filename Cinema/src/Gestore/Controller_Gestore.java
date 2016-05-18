@@ -4,12 +4,7 @@ import input_output.Adapter_SQL;
 import input_output.SQLConnessione;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
-import java.util.concurrent.TimeUnit;
 import oggetti.*;
 
 /**
