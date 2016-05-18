@@ -210,16 +210,37 @@ public class Adapter_SQL {
 
         ArrayList<Film> Films;
         ResultSet risultatoQuery;
-
+        String query;
 //        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
 //        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-        String query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
-        "FROM Proiezione p, Film f " +
-        "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
+    //    String query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
+    //    "FROM Proiezione p, Film f " +
+    //    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
 
+        
+        if((deltaData == 0) && (sliderValue <= Calendar.getInstance().get(Calendar.HOUR_OF_DAY))){
+            System.out.println("ciao");
+            query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
+                    "FROM Proiezione p, Film f " +
+                    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00')) AND p.data_ora > (NOW() +INTERVAL 135 MINUTE)";
+            
+            
+        }
+        
+        else{
+            query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
+                    "FROM Proiezione p, Film f " +
+                    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
+        }
+        
+        
+        
+        
+        
+        
         risultatoQuery = SQL.eseguiQueryLettura(query);
         Films = parser.Film(risultatoQuery);
 
@@ -292,23 +313,15 @@ public class Adapter_SQL {
     }
 
     public boolean writeSeats(Sala sala) {
-
         ArrayList<Seat> posti = sala.getSeats();
         boolean complete = false;
-        System.out.println(sala.getId_sala());
-
         for (Seat s : posti) {
-            System.out.println(s.toString());
-
             try {
                 String query = "INSERT INTO Seats(id_sala,x,y,tipo) VALUES("
                         + "'" + sala.getId_sala() + "','" + s.getx() + "','" + s.gety() + "','"
                         + s.giveType() + "')";
-
-                System.out.println(query);
                 SQL.eseguiQueryScrittura(query);
                 complete = true;
-
             } catch (SQLException ex) {
                 complete = false;
             }
@@ -321,10 +334,13 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
-
-        query = "SELECT Proiezione.* "
+        
+            query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
                 + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
+        
+        
+        
         risultato_query = SQL.eseguiQueryLettura(query);
 
         proiezione = parser.Proiezione(risultato_query);
@@ -350,18 +366,20 @@ public class Adapter_SQL {
         return sala;
     }
     
-    public ArrayList<Sala> visualizzaStatoSale() throws SQLException {
+    public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Sala> Sale;
-        //SISTEMARE LA QUERY
-        query = "SELECT Sala.* FROM  `Proiezione`,`Sala` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND (Proiezione.id_sala=Sala.id_sala)";
+        ArrayList<Proiezione> proiezioni;
+        query = "SELECT Proiezione.*\n" 
+               + "FROM Proiezione, Film\n"
+               +"WHERE (Proiezione.id_film=Film.id_film)\n" 
+               +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)<0\n" 
+               +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)>-Film.durata\n" 
+               +"";
         risultato_query = SQL.eseguiQueryLettura(query);
-        //System.out.println("here");
-        Sale = parser.Sala(risultato_query); //da sistemare il database
+        proiezioni = parser.Proiezione(risultato_query);
         risultato_query.close();
-        
-        return Sale;
+        return proiezioni;
     }
 
     public void spegni() {

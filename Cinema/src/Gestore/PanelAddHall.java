@@ -105,6 +105,25 @@ public class PanelAddHall extends JPanel {
         sud.add(create_hall, BorderLayout.SOUTH);
         String[] type_list = {"Disable", "Vip", "Handicap", "Free"};
         seat_type = new JComboBox(type_list);
+        seat_type.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch ((String)seat_type.getSelectedItem()) {
+                    case "Disable":
+                        outputGrafico.setText("Select the seats to disable.");
+                        break;
+                    case "Vip":
+                        outputGrafico.setText("Select the VIP seats.");
+                        break;
+                    case "Handicap":
+                        outputGrafico.setText("Select the handicap seats.");
+                        break;
+                    case "Free":
+                        outputGrafico.setText("Select the free seats.");
+                        break;
+                }        
+            }
+        });
         west.add(seat_type);
  
         this.add(nord, BorderLayout.NORTH);
@@ -118,22 +137,18 @@ public class PanelAddHall extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 switch ((String)seat_type.getSelectedItem()) {
                     case "Disable":
-                        outputGrafico.setText("Select the seats to disable.");
                         seats.get(i).setDisable(true);
                         seats.get(i).setIcon(seat_disable);
                         break;
                     case "Vip":
-                        outputGrafico.setText("Select the VIP seats.");
                         seats.get(i).setVip(true);
                         seats.get(i).setIcon(seat_vip);
                         break;
                     case "Handicap":
-                        outputGrafico.setText("Select the handicap seats.");
                         seats.get(i).setHandicap(true);
                         seats.get(i).setIcon(seat_handicap);
                         break;
                     case "Free":
-                        outputGrafico.setText("Select the free seats.");
                         seats.get(i).setIcon(seat_free);
                         break;
                 }        
@@ -152,5 +167,10 @@ public class PanelAddHall extends JPanel {
             }
         };
         return event; 
+    }
+    
+    public void aggiornaGui() {
+        this.removeAll();
+        outputGrafico.setText("Sala creata con successo.");
     }
 }

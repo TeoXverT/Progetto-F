@@ -64,7 +64,7 @@ public class PageOne extends JPanel {
             public void stateChanged(ChangeEvent ce) {
                 if(!slider.getValueIsAdjusting()) {
                     
-                    ThreadScaricaFilm(0).start();
+                    ThreadScaricaFilm(tab.getSelectedIndex()).start();
                     
                 }
             }

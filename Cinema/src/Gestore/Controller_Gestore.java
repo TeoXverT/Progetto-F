@@ -162,8 +162,8 @@ public class Controller_Gestore {
         return adapter.eliminaSale(id_sala);
     }
     
-    public ArrayList<Sala> visualizzaStatoSale() throws SQLException {
-        ArrayList<Sala> Sale = adapter.visualizzaStatoSale();
+    public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
+        ArrayList<Proiezione> Sale = adapter.visualizzaStatoSale();
         return Sale;
     }
 }
