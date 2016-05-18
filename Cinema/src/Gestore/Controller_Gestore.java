@@ -92,14 +92,15 @@ public class Controller_Gestore {
     }
 
     public boolean contolloDisponibilitaProiezione(Proiezione proiezione) throws SQLException {
-        ArrayList<Proiezione> Proiezioni = visualizzaProiezione(2);
-        for (Proiezione p : Proiezioni) {
-            if (p.getId_sala() == proiezione.getId_sala() && TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS) < 200) {
-                System.out.println("Distanza in minuti dalla occupazione della stessa sala più vicina: " + TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS) + " min");
-                return false;
-            }
-        }
-        return true;
+      return adapter.contolloProiezioni(proiezione);
+//        ArrayList<Proiezione> Proiezioni = visualizzaProiezione(2);
+//        for (Proiezione p : Proiezioni) {
+//            if (p.getId_sala() == proiezione.getId_sala() && TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS) < 200) {
+//                System.out.println("Distanza in minuti dalla occupazione della stessa sala più vicina: " + TimeUnit.MINUTES.convert(Math.abs(p.getData_ora().getTime().getTime() - proiezione.getData_ora().getTime().getTime()), TimeUnit.MILLISECONDS) + " min");
+//                return false;
+//            }
+//        }
+//        return true;
     }
 
     public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
