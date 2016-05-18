@@ -63,41 +63,45 @@ public class Adapter_SQL {
             return false;
         }
     }
-    
-    public boolean contolloProiezioni(Proiezione proiezione){
-        String query = "select *\n" +
-"from Proiezione, Film,\n" +
-"					(\n" +
-"					SELECT '"+proiezione.getData_ora_sql()+"' as time_min,    ('"+proiezione.getData_ora_sql()+"' + INTERVAL Film.durata MINUTE + INTERVAL last_config.offset_time MINUTE) AS time_max, last_config.offset_time as offset_time\n" +
-"					FROM\n" +
-"						Film,\n" +
-"						(SELECT \n" +
-"							*\n" +
-"						FROM\n" +
-"							sql8115909.Config\n" +
-"						ORDER BY Config.id_config DESC\n" +
-"						LIMIT 1) AS last_config\n" +
-"					WHERE  Film.id_film = '"+proiezione.getId_film()+"' \n" +
-"					) as time_interval\n" +
-"where Proiezione.id_sala='"+proiezione.getId_sala()+"' AND datediff(Proiezione.data_ora,now())=0 AND Proiezione.id_film=Film.id_film AND(\n" +
-"(\n" +
-"Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_min\n" +
-")  OR\n" +
-"(\n" +
-"Proiezione.data_ora<time_interval.time_max AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n" +
-")  OR\n" +
-"(\n" +
-"Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n" +
-")\n" +
-")";
-//        try {
-//            SQL.eseguiQueryScrittura(query);
-//            return true;
-//        } catch (SQLException ex) {
-//            return false;
-//        }    
-        System.out.println(query);
-        return true;
+
+    public boolean contolloProiezioni(Proiezione proiezione) {
+        ResultSet risultato_query;
+
+        String query = "select Film.nome\n"
+                + "from Proiezione, Film,\n"
+                + "					(\n"
+                + "					SELECT '" + proiezione.getData_ora_sql() + "' as time_min,    ('" + proiezione.getData_ora_sql() + "' + INTERVAL Film.durata MINUTE + INTERVAL last_config.offset_time MINUTE) AS time_max, last_config.offset_time as offset_time\n"
+                + "					FROM\n"
+                + "						Film,\n"
+                + "						(SELECT \n"
+                + "							*\n"
+                + "						FROM\n"
+                + "							sql8115909.Config\n"
+                + "						ORDER BY Config.id_config DESC\n"
+                + "						LIMIT 1) AS last_config\n"
+                + "					WHERE  Film.id_film = '" + proiezione.getId_film() + "' \n"
+                + "					) as time_interval\n"
+                + "where Proiezione.id_sala='" + proiezione.getId_sala() + "' AND datediff(Proiezione.data_ora,now())=0 AND Proiezione.id_film=Film.id_film AND(\n"
+                + "(\n"
+                + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_min\n"
+                + ")  OR\n"
+                + "(\n"
+                + "Proiezione.data_ora<time_interval.time_max AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n"
+                + ")  OR\n"
+                + "(\n"
+                + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n"
+                + ")\n"
+                + ")";
+        try {
+            risultato_query = SQL.eseguiQueryLettura(query);
+            while (risultato_query.next()) {
+                return false;
+            }
+            risultato_query.close();
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
     }
 
     public boolean eliminaProiezione(int id_proiezione) {
@@ -125,9 +129,11 @@ public class Adapter_SQL {
     }
 
     public boolean eliminaSale(int id_sale) {
-        String query = "DELETE FROM Sala WHERE Sala.id_sala =" + id_sale;
-        System.out.println(query);
+        String query = "DELETE FROM Seats WHERE Seats.id_sala =" + id_sale;
+
         try {
+            SQL.eseguiQueryScrittura(query);
+            query = "DELETE FROM Sala WHERE Sala.id_sala =" + id_sale;
             SQL.eseguiQueryScrittura(query);
             return true;
         } catch (SQLException ex) {
@@ -206,7 +212,8 @@ public class Adapter_SQL {
         return Films;
 
     }
-    public ArrayList<Film> FilmFuturoBySlider(int deltaData,int sliderValue) throws SQLException {
+
+    public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
 
         ArrayList<Film> Films;
         ResultSet risultatoQuery;
@@ -214,33 +221,24 @@ public class Adapter_SQL {
 //        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
 //        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-    //    String query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
-    //    "FROM Proiezione p, Film f " +
-    //    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
+        //    String query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
+        //    "FROM Proiezione p, Film f " +
+        //    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
 
-        
-        if((deltaData == 0) && (sliderValue <= Calendar.getInstance().get(Calendar.HOUR_OF_DAY))){
+        if ((deltaData == 0) && (sliderValue <= Calendar.getInstance().get(Calendar.HOUR_OF_DAY))) {
             System.out.println("ciao");
-            query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
-                    "FROM Proiezione p, Film f " +
-                    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00')) AND p.data_ora > (NOW() +INTERVAL 135 MINUTE)";
-            
-            
+            query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube "
+                    + "FROM Proiezione p, Film f "
+                    + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL 135 MINUTE), ' " + sliderValue + ":00:00')) AND p.data_ora > (NOW() +INTERVAL 135 MINUTE)";
+
+        } else {
+            query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube "
+                    + "FROM Proiezione p, Film f "
+                    + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL 135 MINUTE), ' " + sliderValue + ":00:00'))";
         }
-        
-        else{
-            query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
-                    "FROM Proiezione p, Film f " +
-                    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
-        }
-        
-        
-        
-        
-        
-        
+
         risultatoQuery = SQL.eseguiQueryLettura(query);
         Films = parser.Film(risultatoQuery);
 
@@ -334,13 +332,11 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
-        
-            query = "SELECT Proiezione.* "
+
+        query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
                 + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
-        
-        
-        
+
         risultato_query = SQL.eseguiQueryLettura(query);
 
         proiezione = parser.Proiezione(risultato_query);
@@ -365,17 +361,17 @@ public class Adapter_SQL {
 
         return sala;
     }
-    
+
     public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezioni;
-        query = "SELECT Proiezione.*\n" 
-               + "FROM Proiezione, Film\n"
-               +"WHERE (Proiezione.id_film=Film.id_film)\n" 
-               +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)<0\n" 
-               +"AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)>-Film.durata\n" 
-               +"";
+        query = "SELECT Proiezione.*\n"
+                + "FROM Proiezione, Film\n"
+                + "WHERE (Proiezione.id_film=Film.id_film)\n"
+                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)<0\n"
+                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)>-Film.durata\n"
+                + "";
         risultato_query = SQL.eseguiQueryLettura(query);
         proiezioni = parser.Proiezione(risultato_query);
         risultato_query.close();
