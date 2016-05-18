@@ -69,7 +69,7 @@ public class Parse_OBJ {
 
         while (risultato_query.next()) {//Lo farà una sola volta
             config = new Config(risultato_query.getDouble("prezzo_vip"), risultato_query.getDouble("sconto"), risultato_query.getDouble("popcorn_s"), risultato_query.getDouble("popcorn_m"),
-                    risultato_query.getDouble("popcorn_l"), risultato_query.getDouble("bibita_s"), risultato_query.getDouble("bibita_m"), risultato_query.getDouble("bibita_l"));
+                    risultato_query.getDouble("popcorn_l"), risultato_query.getDouble("bibita_s"), risultato_query.getDouble("bibita_m"), risultato_query.getDouble("bibita_l"),risultato_query.getInt("offset_time"));
         }
         risultato_query.close();
 

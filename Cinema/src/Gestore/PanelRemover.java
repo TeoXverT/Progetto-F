@@ -35,7 +35,9 @@ public class PanelRemover extends JPanel {
 
         outputGrafico.setText("Sistema di cancellazione dati.");
         this.setLayout(new BorderLayout());
+        this.add(new JLabel("<html><br><br><br><br><center><h2>Guida Al Utilizzo:</h2></center></br><h3>Per eliminare un elemento bisogna selezionarlo dalla lista e poi clikkare il relativo tasto cancella.</h3><br><br><br></html>", SwingConstants.CENTER), BorderLayout.NORTH);
         this.add(drawGui(new JPanel(new GridLayout(1, 3, 70, 0))), BorderLayout.CENTER);
+        this.add(new JLabel("<html><br><br><br><center>Attenzione:</center></br><i>*E' possibile eliminare un film solo se quest'ultimo non è presente in alcuna proiezione<br>*E' possibile eliminare una proiezione soltanto se non vi sono delle prenotazioni ad essa associate.<br>*E' possibile eliminare una sala solo se ad essa non sono associate proiezioni.</i></html>", SwingConstants.CENTER), BorderLayout.SOUTH);
         this.revalidate();
         this.repaint();
     }

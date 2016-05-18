@@ -42,10 +42,15 @@ public class Config {
     public double getBibita_l() {
         return bibita_l;
     }
+
+    public int getOffset_time() {
+        return offset_time;
+    }
     
     private double prezzo_vip, sconto, popcorn_s, popcorn_m, popcorn_l, bibita_s, bibita_m, bibita_l;
+    private int offset_time;
 
-    public Config(double prezzo_vip, double sconto, double popcorn_s, double popcorn_m, double popcorn_l, double bibita_s, double bibita_m, double bibita_l) {
+    public Config(double prezzo_vip, double sconto, double popcorn_s, double popcorn_m, double popcorn_l, double bibita_s, double bibita_m, double bibita_l, int offset_time) {
         this.prezzo_vip = prezzo_vip;
         this.sconto = sconto;
         this.popcorn_s = popcorn_s;
@@ -54,6 +59,7 @@ public class Config {
         this.bibita_s = bibita_s;
         this.bibita_m = bibita_m;
         this.bibita_l = bibita_l;
+        this.offset_time= offset_time;
     }
 
     @Override

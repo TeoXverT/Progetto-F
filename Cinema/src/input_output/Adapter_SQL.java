@@ -262,11 +262,10 @@ public class Adapter_SQL {
 
     public boolean scriviConfig(Config config) {
 
-        String query = "INSERT INTO Config(prezzo_vip,sconto,popcorn_s,popcorn_m,popcorn_l,bibita_s,bibita_m,bibita_l) VALUES("
+        String query = "INSERT INTO Config(prezzo_vip,sconto,popcorn_s,popcorn_m,popcorn_l,bibita_s,bibita_m,bibita_l,offset_time) VALUES("
                 + "'" + config.getPrezzo_vip() + "','" + config.getSconto() + "','"
                 + config.getPopcorn_s() + "','" + config.getPopcorn_m() + "','" + config.getPopcorn_l() + "','"
-                + config.getBibita_s() + "','" + config.getBibita_m() + "','" + config.getBibita_l() + "')";
-
+                + config.getBibita_s() + "','" + config.getBibita_m() + "','" + config.getBibita_l() + "','" + config.getOffset_time() +"')";
         try {
             SQL.eseguiQueryScrittura(query);
             return true;

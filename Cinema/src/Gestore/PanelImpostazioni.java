@@ -24,9 +24,9 @@ public class PanelImpostazioni extends JPanel {
         //c.clear();
         this.setLayout(new GridLayout(0, 2, 60, 20));
 
-        final JTextField[] text = new JTextField[8];
-        
-        for (int i = 0; i < 8; i++) {
+        final JTextField[] text = new JTextField[9];
+
+        for (int i = 0; i < 9; i++) {
             text[i] = new JTextField();
         }
 
@@ -45,6 +45,7 @@ public class PanelImpostazioni extends JPanel {
             text[5].setText(String.valueOf(c.getBibita_s()));
             text[6].setText(String.valueOf(c.getBibita_m()));
             text[7].setText(String.valueOf(c.getBibita_l()));
+            text[8].setText(String.valueOf(c.getOffset_time()));
 
             this.add(new JLabel("Prezzo VIP:"));
             this.add(text[0]);
@@ -62,6 +63,8 @@ public class PanelImpostazioni extends JPanel {
             this.add(text[6]);
             this.add(new JLabel("Bibita Grande:"));
             this.add(text[7]);
+            this.add(new JLabel("Tempo pulizia sala: (Min.)"));
+            this.add(text[8]);
             this.add(submit);
 //                    impostazioni.add(refresh);
 
@@ -72,7 +75,7 @@ public class PanelImpostazioni extends JPanel {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (controller.scriviConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()), Double.parseDouble(text[2].getText()), Double.parseDouble(text[3].getText()), Double.parseDouble(text[4].getText()), Double.parseDouble(text[5].getText()), Double.parseDouble(text[6].getText()), Double.parseDouble(text[7].getText())))) {
+                if (controller.scriviConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()), Double.parseDouble(text[2].getText()), Double.parseDouble(text[3].getText()), Double.parseDouble(text[4].getText()), Double.parseDouble(text[5].getText()), Double.parseDouble(text[6].getText()), Double.parseDouble(text[7].getText()), Integer.parseInt(text[8].getText())))) {
                     outputGrafico.setText("Modifica registrata con successo.");
                 } else {
                     outputGrafico.setText("Errore durante il caricamento dei dati.");

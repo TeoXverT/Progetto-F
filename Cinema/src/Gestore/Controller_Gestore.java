@@ -116,20 +116,20 @@ public class Controller_Gestore {
         return adapter.eliminaFilm(id_film);
     }
 
-    public Config aggiornaConfig() throws SQLException { //Temporaneo
-        SQLConnessione db = new SQLConnessione();
-        Config c = null;
-        db.creaConnessione();
-
-        String qry = "SELECT * FROM Config ORDER BY id_config DESC LIMIT 1";
-        ResultSet rs = db.eseguiQueryLettura(qry);
-        while (rs.next()) {
-            c = new Config(rs.getDouble("prezzo_vip"), rs.getDouble("sconto"), rs.getDouble("popcorn_s"), rs.getDouble("popcorn_m"),
-                    rs.getDouble("popcorn_l"), rs.getDouble("bibita_s"), rs.getDouble("bibita_m"), rs.getDouble("bibita_l"));
-        }
-        db.chiudiConnessione();
-        return c;
-    }
+//    public Config aggiornaConfig() throws SQLException { //Temporaneo
+//        SQLConnessione db = new SQLConnessione();
+//        Config c = null;
+//        db.creaConnessione();
+//
+//        String qry = "SELECT * FROM Config ORDER BY id_config DESC LIMIT 1";
+//        ResultSet rs = db.eseguiQueryLettura(qry);
+//        while (rs.next()) {
+//            c = new Config(rs.getDouble("prezzo_vip"), rs.getDouble("sconto"), rs.getDouble("popcorn_s"), rs.getDouble("popcorn_m"),
+//                    rs.getDouble("popcorn_l"), rs.getDouble("bibita_s"), rs.getDouble("bibita_m"), rs.getDouble("bibita_l"), rs.getInt("offset_time"));
+//        }
+//        db.chiudiConnessione();
+//        return c;
+//    }
 
     public boolean scriviConfig(Config config) {
         if (true) { //Eventuale controllo sul valore dei campi di config
