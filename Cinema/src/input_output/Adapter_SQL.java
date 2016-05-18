@@ -63,6 +63,42 @@ public class Adapter_SQL {
             return false;
         }
     }
+    
+    public boolean contolloProiezioni(Proiezione proiezione){
+        String query = "select *\n" +
+"from Proiezione, Film,\n" +
+"					(\n" +
+"					SELECT '"+proiezione.getData_ora_sql()+"' as time_min,    ('"+proiezione.getData_ora_sql()+"' + INTERVAL Film.durata MINUTE + INTERVAL last_config.offset_time MINUTE) AS time_max, last_config.offset_time as offset_time\n" +
+"					FROM\n" +
+"						Film,\n" +
+"						(SELECT \n" +
+"							*\n" +
+"						FROM\n" +
+"							sql8115909.Config\n" +
+"						ORDER BY Config.id_config DESC\n" +
+"						LIMIT 1) AS last_config\n" +
+"					WHERE  Film.id_film = '"+proiezione.getId_film()+"' \n" +
+"					) as time_interval\n" +
+"where Proiezione.id_sala='"+proiezione.getId_sala()+"' AND datediff(Proiezione.data_ora,now())=0 AND Proiezione.id_film=Film.id_film AND(\n" +
+"(\n" +
+"Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_min\n" +
+")  OR\n" +
+"(\n" +
+"Proiezione.data_ora<time_interval.time_max AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n" +
+")  OR\n" +
+"(\n" +
+"Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n" +
+")\n" +
+")";
+//        try {
+//            SQL.eseguiQueryScrittura(query);
+//            return true;
+//        } catch (SQLException ex) {
+//            return false;
+//        }    
+        System.out.println(query);
+        return true;
+    }
 
     public boolean eliminaProiezione(int id_proiezione) {
         String query = "DELETE FROM Proiezione WHERE Proiezione.id_proiezione =" + id_proiezione;
