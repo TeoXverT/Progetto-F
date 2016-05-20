@@ -1,8 +1,10 @@
+
 import Cliente.Gui_Cliente;
 import Gestore.*;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 import java.io.IOException;
 import java.sql.SQLException;
+import oggetti.EmailSender;
 
 public class main {
 

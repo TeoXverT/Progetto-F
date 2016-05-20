@@ -57,6 +57,7 @@ public class Adapter_SQL {
 
     public boolean scriviProiezione(Proiezione proiezione) {
         String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, tipo, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
+       System.out.println(query);
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -68,7 +69,7 @@ public class Adapter_SQL {
     public boolean contolloProiezioni(Proiezione proiezione) {
         ResultSet risultato_query;
 
-        String query = "select Film.nome\n"
+        String query = "select Film.titolo\n"
                 + "from Proiezione, Film,\n"
                 + "					(\n"
                 + "					SELECT '" + proiezione.getData_ora_sql() + "' as time_min,    ('" + proiezione.getData_ora_sql() + "' + INTERVAL Film.durata MINUTE + INTERVAL last_config.offset_time MINUTE) AS time_max, last_config.offset_time as offset_time\n"
@@ -82,7 +83,7 @@ public class Adapter_SQL {
                 + "						LIMIT 1) AS last_config\n"
                 + "					WHERE  Film.id_film = '" + proiezione.getId_film() + "' \n"
                 + "					) as time_interval\n"
-                + "where Proiezione.id_sala='" + proiezione.getId_sala() + "' AND datediff(Proiezione.data_ora,now())=0 AND Proiezione.id_film=Film.id_film AND(\n"
+                + "where Proiezione.id_sala='" + proiezione.getId_sala() + "' AND datediff(Proiezione.data_ora,'" + proiezione.getData_ora_sql() + "')=0 AND Proiezione.id_film=Film.id_film AND(\n"
                 + "(\n"
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_min\n"
                 + ")  OR\n"
@@ -91,8 +92,10 @@ public class Adapter_SQL {
                 + ")  OR\n"
                 + "(\n"
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n"
-                + ")\n"
+                + ")OR(Proiezione.data_ora=time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) =time_interval.time_max)\n"
                 + ")";
+               System.out.println(query);
+
         try {
             risultato_query = SQL.eseguiQueryLettura(query);
             while (risultato_query.next()) {
