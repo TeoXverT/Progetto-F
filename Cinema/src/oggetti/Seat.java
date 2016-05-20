@@ -15,6 +15,10 @@ import javax.swing.JLabel;
  */
 public class Seat extends JButton {
 
+    public void setId_seat(int id_seat) {
+        this.id_seat = id_seat;
+    }
+
     public boolean isVip() {
         return vip;
     }
@@ -64,12 +68,16 @@ public class Seat extends JButton {
         this.setIcon(img);
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);
-        this.setSize(50, 50);
+        this.setSize(30, 30);
     }
 
     public Seat(int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
         this.x = x;
         this.y = y;
+        this.setBorderPainted(false);
+        this.setContentAreaFilled(false);
+        this.setSize(40,40);
+        
     }
 
     public Seat(int id_seat,int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
