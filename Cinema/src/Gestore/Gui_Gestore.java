@@ -38,7 +38,7 @@ public class Gui_Gestore extends JFrame {
     private JLabel imagineCaricamento;
     private JPanel pannelloCaricamento;
 
-    private Component frameErrore = null;
+//    private Component frameErrore = null;
 
     public Gui_Gestore() {
 
