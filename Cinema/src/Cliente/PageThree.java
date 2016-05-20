@@ -40,6 +40,8 @@ public class PageThree extends JPanel {
     Sala sala;
     ArrayList<Seat> seats;
 
+    JLabel prezzo = new JLabel();
+
     public PageThree(Proiezione proiezione, Controller_Cliente controller) throws SQLException {
         this.controller = controller;
         this.proiezione = proiezione;
@@ -55,37 +57,37 @@ public class PageThree extends JPanel {
         this.removeAll();
         this.setLayout(new BorderLayout(20, 30));
         JPanel nord = new JPanel();
-        JPanel sud = new JPanel(new GridLayout(0,2));
+        JPanel sud = new JPanel(new GridLayout(0, 2));
         JPanel center = new JPanel(new BorderLayout());
-        
+
         JPanel seats_layout = new JPanel(new GridLayout(sala.getRows(), sala.getColumns(), 0, 1));
         JLabel screen = new JLabel(screen_icon);
 
         nord.add(screen);
-        
+
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i).isDisable() == false) {
                 seats.get(i).addActionListener(seatClick(i));
             }
             seats_layout.add(seats.get(i));
         }
-        
+
         center.add(seats_layout, BorderLayout.CENTER);
-        
+
         JLabel leggenda = new JLabel("LEGGENDA");
         JLabel totale = new JLabel("TOTALE: ");
-        JLabel prezzo = new JLabel(String.valueOf(totale_prezzo));
+
         JLabel offer = new JLabel("Scontoooooooooooooooooooo");
         JButton indietro = new JButton("indietro");
-        
-        JPanel total = new JPanel(new BorderLayout(5,5));
-        JPanel buttons = new JPanel(new GridLayout(0,2));
-        
+
+        JPanel total = new JPanel(new BorderLayout(5, 5));
+        JPanel buttons = new JPanel(new GridLayout(0, 2));
+
         total.add(totale, BorderLayout.WEST);
         total.add(prezzo, BorderLayout.EAST);
         buttons.add(indietro);
         buttons.add(prosegui);
-        
+
         indietro.addActionListener(new ActionListener() {
 
             @Override
@@ -93,7 +95,7 @@ public class PageThree extends JPanel {
                 goback();
             }
         });
-        
+
         prosegui.addActionListener(new ActionListener() {
 
             @Override
@@ -101,12 +103,12 @@ public class PageThree extends JPanel {
                 calculateTotal();
             }
         });
-        
+
         sud.add(leggenda);
         sud.add(total);
         sud.add(offer);
         sud.add(buttons);
-                
+
         this.add(nord, BorderLayout.NORTH);
         this.add(center, BorderLayout.CENTER);
         this.add(sud, BorderLayout.SOUTH);
@@ -123,28 +125,33 @@ public class PageThree extends JPanel {
                     if (seats.get(i).isVip()) {
                         seats.get(i).setIcon(seat_vip);
                         totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());                        // devo cambire i prezzi, devo scaricarli da 
+                        prezzo.setText(String.valueOf(totale_prezzo));
                     } else if (seats.get(i).isHandicap()) {
                         seats.get(i).setIcon(seat_handicap);
                         totale_prezzo -= proiezione.getPrezzo();
+                        prezzo.setText(String.valueOf(totale_prezzo));
                     } else {
                         seats.get(i).setIcon(seat_free);
                         totale_prezzo -= proiezione.getPrezzo();
+                        prezzo.setText(String.valueOf(totale_prezzo));
                     }
                 } else {
                     seats.get(i).setOccupato(true);
-                    
                     seats.get(i).setIcon(seat_taken);
                     if (seats.get(i).isVip()) {
                         totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());
-                    }else totale_prezzo += proiezione.getPrezzo();
-                    
-                    
+                        prezzo.setText(String.valueOf(totale_prezzo));
+                    } else {
+                        totale_prezzo += proiezione.getPrezzo();
+                        prezzo.setText(String.valueOf(totale_prezzo));
+                    }
+
                 }
             }
         };
         return event;
     }
-    
+
     private void goback() {
         this.removeAll();
         this.add(new PageOne(controller));
@@ -153,7 +160,7 @@ public class PageThree extends JPanel {
     }
 
     private void calculateTotal() {
-        
+
     }
 //    // questo thread mi serve per scaricare tutti i posti di una data sala e scaricarli mentre viene creata la gui.
 //    // perchè potrebbe volerci un po' se i posti sono tanti.
