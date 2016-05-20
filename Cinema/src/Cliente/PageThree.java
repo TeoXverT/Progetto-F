@@ -25,22 +25,23 @@ import oggetti.Seat;
  * @author Yatin
  */
 public class PageThree extends JPanel {
-
-    ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
-    ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
-    ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
-    ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
-    ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
     Controller_Cliente controller;
     Proiezione proiezione;
+    
+    private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
+    private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
+    private ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
+    private ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
+    private ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
+    
     private double totale_prezzo;
     private Config config;
-
-    JButton prosegui = new JButton("PROSEGUI");
-    Sala sala;
-    ArrayList<Seat> seats;
+    
+    private Sala sala;
+    private ArrayList<Seat> seats;
 
     JLabel prezzo = new JLabel();
+    JButton prosegui = new JButton("PROSEGUI");
 
     public PageThree(Proiezione proiezione, Controller_Cliente controller) throws SQLException {
         this.controller = controller;
@@ -50,7 +51,6 @@ public class PageThree extends JPanel {
         seats = controller.getSeats(proiezione.getId_sala());
         config = controller.getConfig();
         initGui();
-
     }
 
     public void initGui() {
@@ -61,8 +61,8 @@ public class PageThree extends JPanel {
         JPanel center = new JPanel(new BorderLayout());
 
         JPanel seats_layout = new JPanel(new GridLayout(sala.getRows(), sala.getColumns(), 0, 1));
+        
         JLabel screen = new JLabel(screen_icon);
-
         nord.add(screen);
 
         for (int i = 0; i < seats.size(); i++) {
@@ -71,7 +71,6 @@ public class PageThree extends JPanel {
             }
             seats_layout.add(seats.get(i));
         }
-
         center.add(seats_layout, BorderLayout.CENTER);
 
         JLabel leggenda = new JLabel("LEGGENDA");
@@ -100,7 +99,7 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                calculateTotal();
+                calculateTotal();                                       // per adesso non fa niente!
             }
         });
 
@@ -162,16 +161,5 @@ public class PageThree extends JPanel {
     private void calculateTotal() {
 
     }
-//    // questo thread mi serve per scaricare tutti i posti di una data sala e scaricarli mentre viene creata la gui.
-//    // perchè potrebbe volerci un po' se i posti sono tanti.
-//    private Thread Drawer() {
-//        Thread t = new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                seats = controller.getSeats(proiezione.getId_sala());
-//            }
-//        });
-//        return t;
-//    }
+    
 }
