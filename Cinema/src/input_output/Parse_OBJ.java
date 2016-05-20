@@ -34,9 +34,10 @@ public class Parse_OBJ {
     
     
     public Sala getSalaById(ResultSet risultato_query) throws SQLException {
-        
-        Sala sala = new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns"));
-        
+        Sala sala = null;
+        while (risultato_query.next()) {
+            sala = new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns"));
+        }
         risultato_query.close();
         return sala;
     }

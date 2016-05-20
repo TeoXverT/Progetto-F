@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import oggetti.*;
 
 /**
@@ -345,14 +346,11 @@ public class Adapter_SQL {
     }
 
     public Sala getSalaByIdSala(int id_sala) throws SQLException {
-
         String query;
         ResultSet risultato_query;
         Sala sala;
-        //query sbagliata, bisogna modificarla 
-        query = "SELECT Sala.* "
-                + "FROM Sala INNER JOIN Seats ON (Sala.id_sala = Seats.id_sala) "
-                + "WHERE Sala.id_sala=" + id_sala + "";
+
+        query = "SELECT * FROM Sala WHERE id_sala = '" + id_sala + "'";
 
         risultato_query = SQL.eseguiQueryLettura(query);
         sala = parser.getSalaById(risultato_query);
@@ -361,6 +359,49 @@ public class Adapter_SQL {
         return sala;
     }
 
+    public ArrayList<Seat> getSeats(int id_sala) {          // da finire...sono arrivato a leggere da DB ora devo parsare le cose..
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Seat> seats = new ArrayList<>();
+        ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
+        ImageIcon seat_disable = new ImageIcon("immagini/poltrone/seat_diasable.png");
+        ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
+        ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
+
+        query = "SELECT *  FROM Seats WHERE id_sala = '" + id_sala + "'";
+        try {
+            risultato_query = SQL.eseguiQueryLettura(query);
+            int i = 0;
+            while (risultato_query.next()) {
+                seats.add(new Seat(risultato_query.getInt("x"), risultato_query.getInt("y")));
+                switch (risultato_query.getInt("tipo")) {
+                    case 1:
+                        seats.get(i).setIcon(seat_free);
+                        break;
+                    case 2:
+                        seats.get(i).setIcon(seat_vip);
+                        seats.get(i).setVip(true);
+                        break;
+                    case 3:
+                        seats.get(i).setIcon(seat_handicap);
+                        seats.get(i).setHandicap(true);
+                        break;
+                    case 4:
+                        seats.get(i).setIcon(seat_disable);
+                        seats.get(i).setDisable(true);
+                        break;
+                }
+                seats.get(i).setId_seat(risultato_query.getInt("Id_seat"));
+                i++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Adapter_SQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return seats;
+
+    }
+    
     public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
