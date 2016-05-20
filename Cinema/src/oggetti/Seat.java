@@ -13,7 +13,7 @@ import javax.swing.JLabel;
  *
  * @author Yatin
  */
-public class Seat extends JButton{
+public class Seat extends JButton {
 
     public boolean isVip() {
         return vip;
@@ -26,7 +26,7 @@ public class Seat extends JButton{
     public boolean isOccupato() {
         return occupato;
     }
-    
+
     public boolean isDisable() {
         return disable;
     }
@@ -42,17 +42,21 @@ public class Seat extends JButton{
     public void setOccupato(boolean occupato) {
         this.occupato = occupato;
     }
-    
+
     public void setDisable(boolean disable) {
         this.disable = disable;
     }
+    private int id_seat;
     private int x;
     private int y;
     private boolean vip;
     private boolean handicap;
     private boolean occupato;
     private boolean disable;
-    
+
+    public int getId() {
+        return id_seat;
+    }
 
     public Seat(int x, int y, ImageIcon img) {
         this.x = x;
@@ -62,37 +66,43 @@ public class Seat extends JButton{
         this.setContentAreaFilled(false);
         this.setSize(50, 50);
     }
-    
+
     public Seat(int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
         this.x = x;
         this.y = y;
     }
 
-    public int getx() {                     
+    public Seat(int id_seat,int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
+        this.id_seat= id_seat;
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getx() {
         return x;
     }
 
     public int gety() {
         return y;
     }
-    
+
     public int giveType() {
-        if(vip == true) {
+        if (vip == true) {
             return 2;
         }
-        if(handicap = true){
+        if (handicap = true) {
             return 3;
         }
-        if(disable = true){
+        if (disable = true) {
             return 4;
+        } else {
+            return 1;
         }
-        else return 1;
     }
 
     @Override
     public String toString() {
         return "Seat{" + "x=" + x + ", y=" + y + ", vip=" + vip + ", handicap=" + handicap + ", occupato=" + occupato + ", disable=" + disable + '}';
     }
-    
-    
+
 }

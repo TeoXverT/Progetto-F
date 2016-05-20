@@ -51,6 +51,10 @@ public class Prenotazione {
     public ArrayList<Seat> getPosti_prenotati() {
         return posti_prenotati;
     }
+
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
+    }
     
     
     

@@ -51,6 +51,12 @@ public class Proiezione {
         return sdf.format(data_ora.getTime());
     }
 
+    public String getData_ora_friendly_2() {
+        SimpleDateFormat giorno = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat ora = new SimpleDateFormat("HH:mm");
+        return "Giorno: " + giorno.format(data_ora.getTime()) + " Alle Ore: " + ora.format(data_ora.getTime());
+    }
+
     public Calendar getData_ora() {
         return data_ora;
     }
