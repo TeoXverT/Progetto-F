@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oggetti.Config;
 import oggetti.Film;
 import oggetti.Proiezione;
 import oggetti.Sala;
@@ -108,4 +111,14 @@ public class Controller_Cliente {
         seat = adapter.getSeats(id_sala);
         return seat;
     }
+   
+   public Config getConfig() {
+       Config c = null;
+        try {
+            c = adapter.visualizzaConfig();
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
+   }
 }

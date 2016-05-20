@@ -164,6 +164,7 @@ public class PanelAddHall extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 Sala sala = new Sala(x,y,seats);
                 controller.scriviHall(sala);
+                aggiornaGui();
             }
         };
         return event; 
