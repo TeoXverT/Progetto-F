@@ -80,13 +80,19 @@ public class PageThree extends JPanel {
         }
         center.add(seats_layout, BorderLayout.CENTER);
 
-        JLabel leggenda = new JLabel("LEGGENDA");
+        JPanel leggenda = new JPanel(new GridLayout(0,2));
+        JLabel prezzo_normale = new JLabel("Prezzo: " + proiezione.getPrezzo() + "€");
+        JLabel prezzo_vip = new JLabel("Posti vip costo aggiuntivo di " + config.getPrezzo_vip() + "€");
+        leggenda.add(prezzo_normale);
+        leggenda.add(prezzo_vip);
+        
+        JPanel total = new JPanel(new BorderLayout(5, 5));
         JLabel totale = new JLabel("TOTALE: ");
 
         JLabel offer = new JLabel("Scontoooooooooooooooooooo");
         JButton indietro = new JButton("indietro");
 
-        JPanel total = new JPanel(new BorderLayout(5, 5));
+        
         JPanel buttons = new JPanel(new GridLayout(0, 2));
 
         total.add(totale, BorderLayout.WEST);
@@ -106,7 +112,6 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                calculateTotal();                                       // per adesso non fa niente!
 
                 ///------------  prova della page 4 di umeer
                 //Ipotetica prenotazione...
@@ -146,25 +151,25 @@ public class PageThree extends JPanel {
                     if (seats.get(i).isVip()) {
                         seats.get(i).setIcon(seat_vip);
                         totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());                        // devo cambire i prezzi, devo scaricarli da 
-                        prezzo.setText(String.valueOf(totale_prezzo));
+                        prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
                         seats.get(i).setIcon(seat_handicap);
                         totale_prezzo -= proiezione.getPrezzo();
-                        prezzo.setText(String.valueOf(totale_prezzo));
+                        prezzo.setText(String.valueOf(totale_prezzo)+ "€");
                     } else {
                         seats.get(i).setIcon(seat_free);
                         totale_prezzo -= proiezione.getPrezzo();
-                        prezzo.setText(String.valueOf(totale_prezzo));
+                        prezzo.setText(String.valueOf(totale_prezzo)+ "€");
                     }
                 } else {
                     seats.get(i).setOccupato(true);
                     seats.get(i).setIcon(seat_taken);
                     if (seats.get(i).isVip()) {
                         totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());
-                        prezzo.setText(String.valueOf(totale_prezzo));
+                        prezzo.setText(String.valueOf(totale_prezzo)+ "€");
                     } else {
                         totale_prezzo += proiezione.getPrezzo();
-                        prezzo.setText(String.valueOf(totale_prezzo));
+                        prezzo.setText(String.valueOf(totale_prezzo)+ "€");
                     }
 
                 }
@@ -178,10 +183,6 @@ public class PageThree extends JPanel {
         this.add(new PageOne(controller));
         this.revalidate();
         this.repaint();
-    }
-
-    private void calculateTotal() {
-
     }
 
     private void openPage(JPanel panel) throws SQLException {

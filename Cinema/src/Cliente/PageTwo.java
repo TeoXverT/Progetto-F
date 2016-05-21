@@ -191,7 +191,7 @@ public class PageTwo extends JPanel {
         this.removeAll();
         this.setLayout(new BorderLayout());
         
-        this.add(new PageThree(proiezione, controller),BorderLayout.CENTER);
+        this.add(new PageThree(film,proiezione, controller),BorderLayout.CENTER);
 
         ///------------  prova della page 4 di umeer
 //        ArrayList<Seat> posti_prenotati = new ArrayList<>();
