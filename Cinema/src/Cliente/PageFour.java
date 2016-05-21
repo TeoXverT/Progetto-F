@@ -32,7 +32,7 @@ public class PageFour extends JPanel {
     JLabel totalPrice = new JLabel();
     Glasses spinner;
 
-    public PageFour(Film film, Proiezione proiezione, Prenotazione prenotazione, Controller_Cliente controller, Config config) {
+    public PageFour(Film film, Proiezione proiezione, Prenotazione prenotazione, Config config, Controller_Cliente controller) {
         this.controller = controller;
         this.film = film;
         this.proiezione = proiezione;
@@ -59,7 +59,7 @@ public class PageFour extends JPanel {
 
         JPanel carrello = new JPanel(new GridLayout(0, 2));
         carrello.add(new JLabel("<html><font size=\"5\">Proiezione il " + proiezione.getData_ora_friendly_2() + "</font></html>"));
-        carrello.add(new JLabel("<html><font size=\"5\">Nella Sala " + proiezione.getId_sala() +" Tipo di Proiezione: "+proiezione.getType_String()+ "</font></html>"));
+        carrello.add(new JLabel("<html><font size=\"5\">Nella Sala " + proiezione.getId_sala() + " Tipo di Proiezione: " + proiezione.getType_String() + "</font></html>"));
 
         carrello.add(new JLabel("<html><b><font size=\"5\">Carrello:</font></b><html>"));
         carrello.add(new JLabel(""));
@@ -73,7 +73,6 @@ public class PageFour extends JPanel {
                 double price = proiezione.getPrezzo() + config.getDisabled_price() + config.getOver_price();
                 carrello.add(new JLabel(price + " €"));
             } else {
-                System.out.println("is normal");
                 double price = proiezione.getPrezzo() + config.getOver_price();
                 carrello.add(new JLabel(price + " €"));
             }
@@ -102,7 +101,7 @@ public class PageFour extends JPanel {
                 try {
                     if (proiezione.isType3D() || proiezione.isTypeIMAX3D()) {
                         prenotazione.setPrezzo(spinner.getTotalPrice() + prenotazione.getPrezzo());
-                       prenotazione.setNumber_of_glasses(spinner.getNumber_of_glasses());
+                        prenotazione.setNumber_of_glasses(spinner.getNumber_of_glasses());
                     }
 //                    openPage(new PageFive(prenotazione,controller));
                     openPage(new PageOne(controller));
@@ -142,7 +141,7 @@ public class PageFour extends JPanel {
     private void openPage(JPanel panel) throws SQLException {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(panel);
+        this.add(panel, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }
