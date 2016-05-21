@@ -9,17 +9,13 @@ import java.net.URL;
 
 public class EmailSender {
 
-    private final String NAME_SENDER; 
-    private final String EMAIL_SENDER;
+    public EmailSender() {
 
-    public EmailSender(String nome_mittente, String email_mittente) {
-        this.NAME_SENDER = nome_mittente;
-        this.EMAIL_SENDER = email_mittente;
     }
- 
-    public boolean SendEmail(String nome_destinatario, String email_destinatario, String oggetto, String messaggio) {
+
+    public boolean SendEmail(String email_destinatario, Film film, Proiezione proiezione, Prenotazione prenotazione) {
         try {
-            String URL = "http://xsacniopanzax.altervista.org/email_sender.php";
+            String URL = "http://xsacniopanzax.altervista.org/email_sender_cinema.php";
             URL obj = new URL(URL);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -27,7 +23,7 @@ public class EmailSender {
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + nome_destinatario + "&email_destinatario=" + email_destinatario + "&oggetto=" + oggetto + "&messaggio=" + messaggio;
+            String urlParameters = "email_destinatario=" + email_destinatario + "&acquisti=" + purchaseDescription(film, proiezione, prenotazione) + "&prezzo=" + Double.toString(prenotazione.getPrezzo()) + "&id_prenotazione=" + Integer.toString(prenotazione.getId_prenotazione());
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -36,7 +32,7 @@ public class EmailSender {
 
             wr.flush();
             wr.close();
-            
+
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
@@ -52,4 +48,41 @@ public class EmailSender {
         }
         return false;
     }
+
+    private String purchaseDescription(Film film, Proiezione proiezione, Prenotazione prenotazione) {
+        String messaggio;
+        messaggio = "<center>";
+        messaggio = messaggio + "<IMG SRC=\"        https://camo.githubusercontent.com/b98806da0d5c21996a009709acfe4f6256cd31c5/687474703a2f2f7333322e706f7374696d672e6f72672f686236796f3678736c2f6c6f676f5f74726173706172656e74655f6f6c645f30322e706e67\n"
+                + "\" ALT=\"some text\" WIDTH=600 HEIGHT=400><br><br>";
+
+        messaggio = messaggio + "<IMG SRC=\"" + film.getLink_copertina() + "\" ALT=\"some text\" WIDTH=400 HEIGHT=600><br><br>";
+        messaggio = messaggio + "<p><font size=\"4\">Codice Prenotazione :" + prenotazione.getId_prenotazione() + "</p></font><br><br>";
+        messaggio = messaggio + "<p>" + film.getTitolo_film() + " inizia il " + proiezione.getData_ora_friendly_2() + " nella Sala " + proiezione.getId_sala() + "</p><br>";
+        messaggio = messaggio + "Prenotati i seguenti posti:<br>";
+        for (Seat s : prenotazione.getPosti_prenotati()) {
+            messaggio = messaggio + "Fila " + s.getx() + " Colonna " + s.gety() + "<br>";
+        }
+        if (prenotazione.getNumber_of_glasses() != 0) {
+            messaggio = messaggio + "Hai in oltre comprato " + prenotazione.getNumber_of_glasses() + " occhiali 3D.<br><br>";
+        }
+        messaggio = messaggio + "Totale da pagare: " + prenotazione.getPrezzo() + " Euro<br><br><br>";
+        messaggio = messaggio + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Se si è chiuso il programma questo ricevuta non è più valdida, riperete la procedura.</i><br><br><br><br>";
+        messaggio = messaggio + "</center>";
+        return messaggio;
+    }
 }
+
+/* TeST....
+ 
+ Film film = new Film(1, "ZOOTROPOLIS", "Azione", 120, "Piter parcer è un super eroe", "youtube.it/werewr", "http://pad.mymovies.it/filmclub/2013/08/079/locandina.jpg",null);
+ Proiezione proiezione = new Proiezione(123, Calendar.getInstance(), 1, 2, 1, 6);
+        
+ ArrayList<Seat> posti_prenotati = new ArrayList<>();
+ posti_prenotati.add(new Seat(340, 12, 13));
+ posti_prenotati.add(new Seat(341, 14, 13));
+ Prenotazione prenotazione = new Prenotazione(13, 18, posti_prenotati, null, 12);
+
+ EmailSender email = new EmailSender();
+ email.SendEmail("umeermohammad@gmail.com", film, proiezione, prenotazione);
+
+ */

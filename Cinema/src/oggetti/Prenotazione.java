@@ -28,6 +28,10 @@ public class Prenotazione {
         this.prezzo = prezzo;
     }
 
+    public int getNumber_of_glasses() {
+        return number_of_glasses;
+    }
+
     @Override
     public String toString() {
         return "Prenotazione{" + "id_prenotazione=" + id_prenotazione + ", id_proiezione=" + id_proiezione + ", data_ora=" + data_ora + ", prezzo=" + prezzo + ", posti_prenotati=" + posti_prenotati + '}';

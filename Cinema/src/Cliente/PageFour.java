@@ -98,15 +98,14 @@ public class PageFour extends JPanel {
         JButton next = new JButton("Next");
         next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    if (proiezione.isType3D() || proiezione.isTypeIMAX3D()) {
-                        prenotazione.setPrezzo(spinner.getTotalPrice() + prenotazione.getPrezzo());
-                        prenotazione.setNumber_of_glasses(spinner.getNumber_of_glasses());
-                    }
-//                    openPage(new PageFive(prenotazione,controller));
-                    openPage(new PageOne(controller));
-                } catch (SQLException ex) {
+
+                if (proiezione.isType3D() || proiezione.isTypeIMAX3D()) {
+                    prenotazione.setPrezzo(spinner.getTotalPrice() + prenotazione.getPrezzo());
+                    prenotazione.setNumber_of_glasses(spinner.getNumber_of_glasses());
                 }
+//                    openPage(new PageFive(prenotazione,controller));
+                openPage(new PageOne(controller));
+
             }
         });
         this.add(next, BorderLayout.AFTER_LINE_ENDS);
@@ -114,10 +113,8 @@ public class PageFour extends JPanel {
         JButton back = new JButton("Back");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    openPage(new PageOne(controller));
-                } catch (SQLException ex) {
-                }
+                openPage(new PageOne(controller));
+
             }
         });
         this.add(back, BorderLayout.BEFORE_LINE_BEGINS);
@@ -138,7 +135,7 @@ public class PageFour extends JPanel {
         return evento;
     }
 
-    private void openPage(JPanel panel) throws SQLException {
+    private void openPage(JPanel panel) {
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(panel, BorderLayout.CENTER);

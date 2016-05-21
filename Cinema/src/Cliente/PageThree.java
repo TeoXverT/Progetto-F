@@ -114,14 +114,9 @@ public class PageThree extends JPanel {
                 posti_prenotati.add(new Seat(340, 12, 13));
                 posti_prenotati.add(new Seat(341, 14, 13));
                 Prenotazione prenotazione = new Prenotazione(0, 18, posti_prenotati, null, 12);
+                openPage(new PageFour(film, proiezione, prenotazione, config, controller));
 
-                try {
-                    openPage(new PageFour(film, proiezione, prenotazione, config, controller));
-                } catch (SQLException ex) {
-                    Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
-                }
                 ///------------  prova della page 4
-
             }
         });
 
@@ -184,7 +179,7 @@ public class PageThree extends JPanel {
 
     }
 
-    private void openPage(JPanel panel) throws SQLException {
+    private void openPage(JPanel panel) {
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(panel, BorderLayout.CENTER);
