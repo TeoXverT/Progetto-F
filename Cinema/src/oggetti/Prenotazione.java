@@ -18,6 +18,7 @@ public class Prenotazione {
     private Calendar data_ora;
     private double prezzo;
     private ArrayList<Seat> posti_prenotati = new ArrayList<>();
+    private int number_of_glasses = 0;
 
     public Prenotazione(int id_prenotazione, int id_proiezione, ArrayList<Seat> posti_prenotati, Calendar data_ora, double prezzo) {
         this.id_prenotazione = id_prenotazione;
@@ -55,8 +56,9 @@ public class Prenotazione {
     public void setPrezzo(double prezzo) {
         this.prezzo = prezzo;
     }
-    
-    
-    
+
+    public void setNumber_of_glasses(int number) {
+        this.number_of_glasses = number;
+    }
 
 }

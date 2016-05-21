@@ -8,23 +8,23 @@ package oggetti;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 
-public class ExtraElement extends JSpinner {
+public class Glasses extends JSpinner {
 
     String name;
     double price;
 
-    public ExtraElement(String name, double price, SpinnerModel model) {
+    public Glasses(String name, double price, SpinnerModel model) {
         super(model);
         this.name = name;
         this.price = price;
     }
 
     public double getTotalPrice() {
-        return Double.parseDouble(this.getValue().toString()) * price;
-        
-        
-        
-        
+        return Integer.parseInt(this.getValue().toString()) * price;
+    }
+
+    public int getNumber_of_glasses() {
+        return Integer.parseInt(this.getValue().toString());
     }
 
     public double getPrice() {

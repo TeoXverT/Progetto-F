@@ -53,6 +53,7 @@ public class Seat extends JButton {
     private int id_seat;
     private int x;
     private int y;
+
     private boolean vip;
     private boolean handicap;
     private boolean occupato;
@@ -76,12 +77,12 @@ public class Seat extends JButton {
         this.y = y;
         this.setBorderPainted(false);
         this.setContentAreaFilled(false);
-        this.setSize(40,40);
-        
+        this.setSize(40, 40);
+
     }
 
-    public Seat(int id_seat,int x, int y) {          // Ho creato due costruttori, altriment il ParseOBJ andava in conflitto
-        this.id_seat= id_seat;
+    public Seat(int id_seat, int x, int y) {          // Serve a Umeer
+        this.id_seat = id_seat;
         this.x = x;
         this.y = y;
     }

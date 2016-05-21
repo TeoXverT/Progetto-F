@@ -190,16 +190,18 @@ public class PageTwo extends JPanel {
     private void openPageThree(Film film, Proiezione proiezione, Controller_Cliente controller) throws SQLException {
         this.removeAll();
         this.setLayout(new BorderLayout());
+        
         this.add(new PageThree(proiezione, controller),BorderLayout.CENTER);
 
-        ///------------  prova della page 4
+        ///------------  prova della page 4 di umeer
 //        ArrayList<Seat> posti_prenotati = new ArrayList<>();
 //        posti_prenotati.add(new Seat(340, 12, 13));
 //        posti_prenotati.add(new Seat(341, 14, 13));
-//        Prenotazione prenotazione = new Prenotazione(0, 18, posti_prenotati, null, 20);
-//        this.add(new PageFour(film, proiezione, prenotazione, controller,new Config(1,2,3,4,5,6,7,8,9)),BorderLayout.CENTER);
+//        Prenotazione prenotazione = new Prenotazione(0, 18, posti_prenotati, null, 12);
+//        this.add(new PageFour(film, proiezione, prenotazione, controller,controller.getConfig()),BorderLayout.CENTER);
         ///------------  prova della page 4
         
+        //-Il seat quando lo scarichi deve sapere qual è il suo id_seat e dove si trova X/Y e sapere di che tipo è;
             
         this.revalidate();
         this.repaint();

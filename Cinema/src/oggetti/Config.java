@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package oggetti;
 
 /**
@@ -10,6 +5,18 @@ package oggetti;
  * @author YatinBhutnai
  */
 public class Config {
+
+    private double prezzo_vip, sconto, glasses_price, over_price, disabled_price;
+    private int offset_time;
+
+    public Config(double prezzo_vip, double sconto, double glasses_price, double over_price, double disabled_price, int offset_time) {
+        this.prezzo_vip = prezzo_vip;
+        this.sconto = sconto;
+        this.glasses_price = glasses_price;
+        this.over_price = over_price;
+        this.disabled_price = disabled_price;
+        this.offset_time = offset_time;
+    }
 
     public double getPrezzo_vip() {
         return prezzo_vip;
@@ -19,47 +26,20 @@ public class Config {
         return sconto;
     }
 
-    public double getPopcorn_s() {
-        return popcorn_s;
-    }
-
-    public double getPopcorn_m() {
-        return popcorn_m;
-    }
-
-    public double getPopcorn_l() {
-        return popcorn_l;
-    }
-
-    public double getBibita_s() {
-        return bibita_s;
-    }
-
-    public double getBibita_m() {
-        return bibita_m;
-    }
-
-    public double getBibita_l() {
-        return bibita_l;
-    }
-
     public int getOffset_time() {
         return offset_time;
     }
-    
-    private double prezzo_vip, sconto, popcorn_s, popcorn_m, popcorn_l, bibita_s, bibita_m, bibita_l;
-    private int offset_time;
 
-    public Config(double prezzo_vip, double sconto, double popcorn_s, double popcorn_m, double popcorn_l, double bibita_s, double bibita_m, double bibita_l, int offset_time) {
-        this.prezzo_vip = prezzo_vip;
-        this.sconto = sconto;
-        this.popcorn_s = popcorn_s;
-        this.popcorn_m = popcorn_m;
-        this.popcorn_l = popcorn_l;
-        this.bibita_s = bibita_s;
-        this.bibita_m = bibita_m;
-        this.bibita_l = bibita_l;
-        this.offset_time= offset_time;
+    public double getGlasses_price() {
+        return  glasses_price;
+    }
+
+    public double getOver_price() {
+        return over_price;
+    }
+
+    public double getDisabled_price() {
+        return disabled_price;
     }
 
     @Override

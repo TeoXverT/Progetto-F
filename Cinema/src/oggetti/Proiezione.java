@@ -19,11 +19,10 @@ public class Proiezione {
     private Calendar data_ora;
     private int id_film;
     private int id_sala;
-
-    private String tipo_proiezione;
+    private int tipo_proiezione; // 0- Normale 1- 3D 2-IMAX 3D 3- Live Event
     private double prezzo;
 
-    public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, String tipo_proiezione, double prezzo) {
+    public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, int tipo_proiezione, double prezzo) {
         this.id_proiezione = id_proiezione;
         this.data_ora = data_ora;
         this.id_film = id_film;
@@ -69,8 +68,39 @@ public class Proiezione {
         return id_sala;
     }
 
-    public String getTipo_proiezione() {
+    public int getTipo_proiezione() {
         return tipo_proiezione;
+    }
+
+    public boolean isTypeNormal() {
+        return tipo_proiezione == 0;
+    }
+
+    public boolean isType3D() {
+        return tipo_proiezione == 1;
+    }
+
+    public boolean isTypeIMAX3D() {
+        return tipo_proiezione == 2;
+    }
+
+    public boolean isTypeLiveEvent() {
+        return tipo_proiezione == 3;
+    }
+
+    public String getType_String() {
+        switch (tipo_proiezione) {
+            case 0:
+                return "Normal";
+            case 1:
+                return "3D";
+            case 2:
+                return "IMAX 3D";
+            case 3:
+                return "Live Show";
+            default:
+                return "Error";
+        }
     }
 
     public double getPrezzo() {

@@ -46,9 +46,8 @@ public class Parse_OBJ {
     public ArrayList<Proiezione> Proiezione(ResultSet risultato_query) throws SQLException {
         ArrayList<Proiezione> Proiezioni = new ArrayList<>();
 
-        while (risultato_query.next()) {
-            
-            Proiezioni.add(new Proiezione(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), risultato_query.getInt("id_film"), risultato_query.getInt("id_sala"), risultato_query.getString("tipo"), risultato_query.getDouble("prezzo")));
+        while (risultato_query.next()) {   
+            Proiezioni.add(new Proiezione(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), risultato_query.getInt("id_film"), risultato_query.getInt("id_sala"), risultato_query.getInt("projection_type"), risultato_query.getDouble("prezzo")));
         }
         risultato_query.close();
 
@@ -69,8 +68,8 @@ public class Parse_OBJ {
         Config config = null;
 
         while (risultato_query.next()) {//Lo farà una sola volta
-            config = new Config(risultato_query.getDouble("prezzo_vip"), risultato_query.getDouble("sconto"), risultato_query.getDouble("popcorn_s"), risultato_query.getDouble("popcorn_m"),
-                    risultato_query.getDouble("popcorn_l"), risultato_query.getDouble("bibita_s"), risultato_query.getDouble("bibita_m"), risultato_query.getDouble("bibita_l"),risultato_query.getInt("offset_time"));
+            config = new Config(risultato_query.getDouble("prezzo_vip"), risultato_query.getDouble("sconto"), risultato_query.getDouble("glasses_price"), risultato_query.getDouble("over_price"),
+                    risultato_query.getDouble("disabled_price"),risultato_query.getInt("offset_time"));
         }
         risultato_query.close();
 

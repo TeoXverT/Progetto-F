@@ -56,7 +56,7 @@ public class Adapter_SQL {
     }
 
     public boolean scriviProiezione(Proiezione proiezione) {
-        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, tipo, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
+        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
        System.out.println(query);
         try {
             SQL.eseguiQueryScrittura(query);
@@ -266,10 +266,10 @@ public class Adapter_SQL {
 
     public boolean scriviConfig(Config config) {
 
-        String query = "INSERT INTO Config(prezzo_vip,sconto,popcorn_s,popcorn_m,popcorn_l,bibita_s,bibita_m,bibita_l,offset_time) VALUES("
+        String query = "INSERT INTO Config(prezzo_vip,sconto,glasses_price,over_price,disabled_price,offset_time) VALUES("
                 + "'" + config.getPrezzo_vip() + "','" + config.getSconto() + "','"
-                + config.getPopcorn_s() + "','" + config.getPopcorn_m() + "','" + config.getPopcorn_l() + "','"
-                + config.getBibita_s() + "','" + config.getBibita_m() + "','" + config.getBibita_l() + "','" + config.getOffset_time() +"')";
+                + config.getGlasses_price()+ "','" + config.getOver_price() + "','" + config.getDisabled_price() + "','"
+                + config.getOffset_time() +"')";
         try {
             SQL.eseguiQueryScrittura(query);
             return true;

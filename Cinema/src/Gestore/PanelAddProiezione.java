@@ -84,7 +84,7 @@ public class PanelAddProiezione extends JPanel {
             pannelloNord = new JPanel(new GridLayout(0, 1, 10, 50));
 
             pannello.add(new JLabel("Tipo: "));
-            String[] stringaLista = {"Normale", "3D", "IMAX 3D", "Spettacolo"};
+            String[] stringaLista = {"Normal", "3D", "IMAX 3D", "Live Event"};
             final JComboBox tipoLista = new JComboBox(stringaLista);
             tipoLista.setSelectedIndex(0);
             pannello.add(tipoLista);
@@ -105,7 +105,7 @@ public class PanelAddProiezione extends JPanel {
                         outputGrafico.setText("Riempire tutti i campi");
                     } else {
                         //Creazione oggetto
-                        Proiezione proiezione = new Proiezione(0, dateToCalendar((Date) selettoreDataOra.getValue()), listaFilm.getSelectedValue().getId_film(), (int) listaSale.getSelectedValue().getId_sala(), (String) tipoLista.getSelectedItem(), (double) spinnerPrezzo.getValue());
+                        Proiezione proiezione = new Proiezione(0, dateToCalendar((Date) selettoreDataOra.getValue()), listaFilm.getSelectedValue().getId_film(), (int) listaSale.getSelectedValue().getId_sala(),tipoLista.getSelectedIndex(), (double) spinnerPrezzo.getValue());
                         try {
                             if (controller.scriviProiezione(proiezione)) {
                                 outputGrafico.setText("Nuova proiezione aggiunta con successo.");

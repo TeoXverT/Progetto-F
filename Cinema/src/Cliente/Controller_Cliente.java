@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import oggetti.Config;
 import oggetti.Film;
 import oggetti.Proiezione;
 import oggetti.Sala;
@@ -82,28 +83,32 @@ public class Controller_Cliente {
         return listaProiezioniFiltrate;
     }
 
-    public ArrayList<Film>  FilmFuturo(int deltaData) throws SQLException {
+    public ArrayList<Film> FilmFuturo(int deltaData) throws SQLException {
 
         return adapter.FilmFuturo(deltaData);
-    
-    
+
     }
-        public ArrayList<Film>  FilmFuturoBySlider(int deltaData,int sliderValue) throws SQLException {
+
+    public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
 
         return adapter.FilmFuturoBySlider(deltaData, sliderValue);
-    
-    
+
     }
-    
+
+    public Config getConfig() throws SQLException {
+        Config config = adapter.visualizzaConfig();
+        return config;
+    }
+
     public Sala salaByID(int id_Sala) throws SQLException {
-       return  adapter.getSalaByIdSala(id_Sala);
+        return adapter.getSalaByIdSala(id_Sala);
     }
-    
-   public ArrayList<Proiezione> showByFilm(int id_film, int deltaData, int ora) throws SQLException{
-       return adapter.getShowByFilm(id_film,deltaData,ora);
-   }
-   
-   public ArrayList<Seat> getSeats(int id_sala) {
+
+    public ArrayList<Proiezione> showByFilm(int id_film, int deltaData, int ora) throws SQLException {
+        return adapter.getShowByFilm(id_film, deltaData, ora);
+    }
+
+    public ArrayList<Seat> getSeats(int id_sala) {
         ArrayList<Seat> seat;
         seat = adapter.getSeats(id_sala);
         return seat;
