@@ -11,11 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import oggetti.Config;
+import oggetti.Film;
+import oggetti.Prenotazione;
 import oggetti.Proiezione;
 import oggetti.Sala;
 import oggetti.Seat;
@@ -25,26 +29,29 @@ import oggetti.Seat;
  * @author Yatin
  */
 public class PageThree extends JPanel {
+
     Controller_Cliente controller;
     Proiezione proiezione;
-    
+    Film film;
+
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
     private ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
     private ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
     private ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
-    
+
     private double totale_prezzo;
     private Config config;
-    
+
     private Sala sala;
     private ArrayList<Seat> seats;
 
     JLabel prezzo = new JLabel();
     JButton prosegui = new JButton("PROSEGUI");
 
-    public PageThree(Proiezione proiezione, Controller_Cliente controller) throws SQLException {
+    public PageThree(Film film, Proiezione proiezione, Controller_Cliente controller) throws SQLException {
         this.controller = controller;
+        this.film = film;
         this.proiezione = proiezione;
         this.sala = controller.salaByID(proiezione.getId_sala());
         seats = new ArrayList<>();
@@ -61,7 +68,7 @@ public class PageThree extends JPanel {
         JPanel center = new JPanel(new BorderLayout());
 
         JPanel seats_layout = new JPanel(new GridLayout(sala.getRows(), sala.getColumns(), 0, 1));
-        
+
         JLabel screen = new JLabel(screen_icon);
         nord.add(screen);
 
@@ -100,6 +107,21 @@ public class PageThree extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 calculateTotal();                                       // per adesso non fa niente!
+
+                ///------------  prova della page 4 di umeer
+                //Ipotetica prenotazione...
+                ArrayList<Seat> posti_prenotati = new ArrayList<>();
+                posti_prenotati.add(new Seat(340, 12, 13));
+                posti_prenotati.add(new Seat(341, 14, 13));
+                Prenotazione prenotazione = new Prenotazione(0, 18, posti_prenotati, null, 12);
+
+                try {
+                    openPage(new PageFour(film, proiezione, prenotazione, config, controller));
+                } catch (SQLException ex) {
+                    Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ///------------  prova della page 4
+
             }
         });
 
@@ -161,5 +183,13 @@ public class PageThree extends JPanel {
     private void calculateTotal() {
 
     }
-    
+
+    private void openPage(JPanel panel) throws SQLException {
+        this.removeAll();
+        this.setLayout(new BorderLayout());
+        this.add(panel, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+
 }
