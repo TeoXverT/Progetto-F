@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oggetti.Config;
 import oggetti.Film;
 import oggetti.Proiezione;
@@ -113,4 +115,5 @@ public class Controller_Cliente {
         seat = adapter.getSeats(id_sala);
         return seat;
     }
+
 }
