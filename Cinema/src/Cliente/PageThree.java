@@ -129,7 +129,7 @@ public class PageThree extends JPanel {
 
                 //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
 
-                booking = new Booking(proiezione.getId_proiezione(), totale_prezzo, booked_seats);  // DA RIVEDERE
+                booking = new Booking(proiezione.getId_proiezione(), totale_prezzo, booked_seats);  // DA RIVEDERE //Usa proiezione che già esiste
 
                 ///------------  prova della page 4 di umeer
                 //Ipotetica prenotazione...
