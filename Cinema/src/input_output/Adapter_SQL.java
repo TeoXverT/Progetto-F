@@ -370,6 +370,7 @@ public class Adapter_SQL {
         ImageIcon seat_disable = new ImageIcon("immagini/poltrone/seat_diasable.png");
         ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
         ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
+        ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
 
         query = "SELECT *  FROM Seats WHERE id_sala = '" + id_sala + "'";
         try {
@@ -392,6 +393,10 @@ public class Adapter_SQL {
                     case 4:
                         seats.get(i).setIcon(seat_disable);
                         seats.get(i).setDisable(true);
+                        break;
+                    case 5:
+                        seats.get(i).setIcon(seat_taken);
+                        seats.get(i).setOccupato(true);
                         break;
                 }
                 seats.get(i).setId_seat(risultato_query.getInt("Id_seat"));

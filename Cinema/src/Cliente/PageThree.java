@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import oggetti.Booking;
 import oggetti.Config;
 import oggetti.Film;
 import oggetti.Prenotazione;
@@ -34,6 +35,7 @@ public class PageThree extends JPanel {
     Controller_Cliente controller;
     Proiezione proiezione;
     Film film;
+    Booking booking;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -46,6 +48,7 @@ public class PageThree extends JPanel {
 
     private Sala sala;
     private ArrayList<Seat> seats;
+    private ArrayList<Seat> booked_seats;
 
     JLabel prezzo = new JLabel();
     JButton prosegui = new JButton("PROSEGUI");
@@ -60,6 +63,8 @@ public class PageThree extends JPanel {
 // TI devi gestire le eccezioni internamente non lanciarle al page precedente
 
         }
+
+        booked_seats = new ArrayList<>();
         seats = new ArrayList<>();
         seats = controller.getSeats(proiezione.getId_sala());
         try {
@@ -83,7 +88,7 @@ public class PageThree extends JPanel {
         nord.add(screen);
 
         for (int i = 0; i < seats.size(); i++) {
-            if (seats.get(i).isDisable() == false) {
+            if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
                 seats.get(i).addActionListener(seatClick(i));
             }
             seats_layout.add(seats.get(i));
@@ -99,7 +104,7 @@ public class PageThree extends JPanel {
         JPanel total = new JPanel(new BorderLayout(5, 5));
         JLabel totale = new JLabel("TOTALE: ");
 
-        JLabel offer = new JLabel("Scontoooooooooooooooooooo");
+        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto()+"%");
         JButton indietro = new JButton("indietro");
 
         JPanel buttons = new JPanel(new GridLayout(0, 2));
@@ -123,6 +128,9 @@ public class PageThree extends JPanel {
             public void actionPerformed(ActionEvent ae) {
 
                 //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
+
+                booking = new Booking(proiezione.getId_proiezione(), totale_prezzo, booked_seats);  // DA RIVEDERE
+
                 ///------------  prova della page 4 di umeer
                 //Ipotetica prenotazione...
 //                ArrayList<Seat> posti_prenotati1 = new ArrayList<>();
@@ -155,9 +163,10 @@ public class PageThree extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 if (seats.get(i).isOccupato()) {
                     seats.get(i).setOccupato(false);
+                    booked_seats.remove(booked_seats.size() - 1);
                     if (seats.get(i).isVip()) {
-                        seats.get(i).setIcon(seat_vip);
-                        totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());                        // devo cambire i prezzi, devo scaricarli da 
+                        seats.get(i).setIcon(seat_vip);   
+                        totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
                         seats.get(i).setIcon(seat_handicap);
@@ -171,14 +180,14 @@ public class PageThree extends JPanel {
                 } else {
                     seats.get(i).setOccupato(true);
                     seats.get(i).setIcon(seat_taken);
-                    if (seats.get(i).isVip()) {
+                    booked_seats.add(seats.get(i));
+                    if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
                         totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
                         totale_prezzo += proiezione.getPrezzo();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     }
-
                 }
             }
         };
