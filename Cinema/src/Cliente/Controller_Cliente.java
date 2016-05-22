@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import oggetti.Config;
 import oggetti.Film;
+import oggetti.Prenotazione;
 import oggetti.Proiezione;
 import oggetti.Sala;
 import oggetti.Seat;
@@ -116,4 +117,9 @@ public class Controller_Cliente {
         return seat;
     }
 
+    public int scriviPrenotazione(Prenotazione prenotazione) throws SQLException {
+        int numeroPrenotazione=0;
+        numeroPrenotazione = adapter.writeBookin(prenotazione);
+        return numeroPrenotazione;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
+    }
 }

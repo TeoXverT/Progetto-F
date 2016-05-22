@@ -1,5 +1,6 @@
 package oggetti;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -19,13 +20,29 @@ public class Prenotazione {
     private double prezzo;
     private ArrayList<Seat> posti_prenotati = new ArrayList<>();
     private int number_of_glasses = 0;
+    private int booking_status = 0;
 
-    public Prenotazione(int id_prenotazione, int id_proiezione, ArrayList<Seat> posti_prenotati, Calendar data_ora, double prezzo) {
+    public Prenotazione(int id_prenotazione, int id_proiezione, ArrayList<Seat> posti_prenotati, Calendar data_ora, int number_of_glasses, double prezzo, int booking_status) {
         this.id_prenotazione = id_prenotazione;
         this.id_proiezione = id_proiezione;
         this.posti_prenotati = posti_prenotati;
         this.data_ora = data_ora;
+        this.number_of_glasses = number_of_glasses;
         this.prezzo = prezzo;
+        this.booking_status = booking_status;
+    }
+
+    public int getBooking_status() {
+        return booking_status;
+    }
+
+    public String getData_ora_sql() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(data_ora.getTime());
+    }
+
+    public void setId_prenotazione(int id_prenotazione) {
+        this.id_prenotazione = id_prenotazione;
     }
 
     public int getNumber_of_glasses() {

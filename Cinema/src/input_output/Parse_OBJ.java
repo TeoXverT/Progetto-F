@@ -31,8 +31,7 @@ public class Parse_OBJ {
 
         return Sale;
     }
-    
-    
+
     public Sala getSalaById(ResultSet risultato_query) throws SQLException {
         Sala sala = null;
         while (risultato_query.next()) {
@@ -41,12 +40,11 @@ public class Parse_OBJ {
         risultato_query.close();
         return sala;
     }
-    
-    
+
     public ArrayList<Proiezione> Proiezione(ResultSet risultato_query) throws SQLException {
         ArrayList<Proiezione> Proiezioni = new ArrayList<>();
 
-        while (risultato_query.next()) {   
+        while (risultato_query.next()) {
             Proiezioni.add(new Proiezione(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), risultato_query.getInt("id_film"), risultato_query.getInt("id_sala"), risultato_query.getInt("projection_type"), risultato_query.getDouble("prezzo")));
         }
         risultato_query.close();
@@ -58,7 +56,7 @@ public class Parse_OBJ {
         ArrayList<Film> Films = new ArrayList<>();
 
         while (risultato_query.next()) {
-            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"), risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina"),parseData_ora(risultato_query.getTimestamp("data_ora"))));
+            Films.add(new Film(risultato_query.getInt("id_film"), risultato_query.getString("titolo"), risultato_query.getString("genere"), risultato_query.getInt("durata"), risultato_query.getString("descrizione"), risultato_query.getString("link_youtube"), risultato_query.getString("link_copertina"), parseData_ora(risultato_query.getTimestamp("data_ora"))));
         }
         risultato_query.close();
         return Films;
@@ -69,11 +67,23 @@ public class Parse_OBJ {
 
         while (risultato_query.next()) {//Lo farà una sola volta
             config = new Config(risultato_query.getDouble("prezzo_vip"), risultato_query.getDouble("sconto"), risultato_query.getDouble("glasses_price"), risultato_query.getDouble("over_price"),
-                    risultato_query.getDouble("disabled_price"),risultato_query.getInt("offset_time"));
+                    risultato_query.getDouble("disabled_price"), risultato_query.getInt("offset_time"));
         }
         risultato_query.close();
 
         return config;
+    }
+
+    public Prenotazione Prenotazione(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
+        Prenotazione prenotazione = null;
+
+        while (risultato_query.next()) {//Lo farà una sola volta
+            prenotazione = new Prenotazione(risultato_query.getInt("id_booking"), risultato_query.getInt("id_proiezione"), null, parseData_ora(risultato_query.getTimestamp("date_time")),
+                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price"), risultato_query.getInt("booking_status"));
+        }
+        risultato_query.close();
+
+        return prenotazione;
     }
 
     ////////////////////////////////////////////////// METODI DI USO COMUNE ///////////////////////////////////

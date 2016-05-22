@@ -151,11 +151,7 @@ public class PageTwo extends JPanel {
 
             bottoneCarrello.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
-                    try {
-                        openPageThree(film, proiezione1, controller);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(PageTwo.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    openPageThree(film, proiezione1, controller);
                 }
             });
 
@@ -187,7 +183,7 @@ public class PageTwo extends JPanel {
         return evento;
     }
 
-    private void openPageThree(Film film, Proiezione proiezione, Controller_Cliente controller) throws SQLException {
+    private void openPageThree(Film film, Proiezione proiezione, Controller_Cliente controller) {
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(new PageThree(film, proiezione, controller), BorderLayout.CENTER);

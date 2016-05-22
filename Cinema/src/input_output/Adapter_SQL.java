@@ -57,7 +57,7 @@ public class Adapter_SQL {
 
     public boolean scriviProiezione(Proiezione proiezione) {
         String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
-       System.out.println(query);
+        System.out.println(query);
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -94,7 +94,7 @@ public class Adapter_SQL {
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n"
                 + ")OR(Proiezione.data_ora=time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) =time_interval.time_max)\n"
                 + ")";
-               System.out.println(query);
+//        System.out.println(query);
 
         try {
             risultato_query = SQL.eseguiQueryLettura(query);
@@ -268,8 +268,8 @@ public class Adapter_SQL {
 
         String query = "INSERT INTO Config(prezzo_vip,sconto,glasses_price,over_price,disabled_price,offset_time) VALUES("
                 + "'" + config.getPrezzo_vip() + "','" + config.getSconto() + "','"
-                + config.getGlasses_price()+ "','" + config.getOver_price() + "','" + config.getDisabled_price() + "','"
-                + config.getOffset_time() +"')";
+                + config.getGlasses_price() + "','" + config.getOver_price() + "','" + config.getDisabled_price() + "','"
+                + config.getOffset_time() + "')";
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -404,7 +404,7 @@ public class Adapter_SQL {
         return seats;
 
     }
-    
+
     public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
@@ -419,6 +419,66 @@ public class Adapter_SQL {
         proiezioni = parser.Proiezione(risultato_query);
         risultato_query.close();
         return proiezioni;
+    }
+
+    public int getIdLastBooking() throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        Prenotazione prenotazione;
+
+        query = "SELECT * FROM Booking ORDER BY Booking.id_booking DESC LIMIT 1";
+
+        risultato_query = SQL.eseguiQueryLettura(query);
+        prenotazione = parser.Prenotazione(risultato_query);
+        risultato_query.close();
+
+        return prenotazione.getId_prenotazione();
+    }
+
+    public int writeBookin(Prenotazione prenotazione) throws SQLException {
+        prenotazione.setId_prenotazione(getIdLastBooking() + 1);
+        int completed = prenotazione.getId_prenotazione();
+        System.out.println("ID Prenotazione: " + prenotazione.getId_prenotazione());
+        System.out.println("ID Proiezione: " + prenotazione.getId_proiezione());
+
+        //Controllo disponibilià posti
+        if (checkBookedSeat(prenotazione.getId_proiezione(), prenotazione.getPosti_prenotati())) {
+            //Scrivo Prenotazione
+            String query = "INSERT INTO Booking(id_booking,id_proiezione,date_time,number_of_glasses,price,booking_status) VALUES("
+                    + "'" + prenotazione.getId_prenotazione() + "','" + prenotazione.getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
+                    + prenotazione.getNumber_of_glasses() + "','" + prenotazione.getPrezzo() + "','0')";
+            SQL.eseguiQueryScrittura(query);
+
+            //Scrivo prenotazione Posti
+            for (Seat s : prenotazione.getPosti_prenotati()) {
+                query = "INSERT INTO Booked_Seat(id_booking,id_seat) VALUES('" + prenotazione.getId_prenotazione() + "','" + s.getId() + "')";
+                SQL.eseguiQueryScrittura(query);
+            }
+
+        } else {
+            completed = 0;
+        }
+
+        return completed;
+    }
+
+    private String getData_ora_sql(Calendar data_ora) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(data_ora.getTime());
+    }
+
+    private boolean checkBookedSeat(int id_proiezione, ArrayList<Seat> posti) throws SQLException {
+
+        for (Seat s : posti) {
+            System.out.println("ID Posto Prenotato: " + s.getId());
+            String query = "SELECT * FROM Booking,Booked_Seat where Booking.id_proiezione=" + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND Booked_Seat.id_seat=" + s.getId();
+            ResultSet risultato_query = SQL.eseguiQueryLettura(query);
+            while (risultato_query.next()) { // Non ci entra se i posti sono ancora liberi
+                return false;
+            }
+            risultato_query.close();
+        }
+        return true;
     }
 
     public void spegni() {

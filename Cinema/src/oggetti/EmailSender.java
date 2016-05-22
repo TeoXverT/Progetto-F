@@ -9,22 +9,28 @@ import java.net.URL;
 
 public class EmailSender {
 
+    private String URL_SERVER = "http://xsacniopanzax.altervista.org/progettof/email_sender.php";
+    private String NAME_SENDER = "Cinema F";
+    private String EMAIL_SENDER = "umeer@outlook.it";
+    private String NAME_RECIVER = "Gentile Cliente";
+    private String OBJECT = "Richiesta di pagamento";
+
+    private String PAYMENT_RECIVER = "umeer@outlook.it";
+
     public EmailSender() {
 
     }
 
-    public boolean SendEmail(String email_destinatario, Film film, Proiezione proiezione, Prenotazione prenotazione) {
+    public boolean SendEmailRequest(String email_destinatario, Film film, Proiezione proiezione, Prenotazione prenotazione) {
         try {
-            String URL = "http://xsacniopanzax.altervista.org/email_sender_cinema.php";
-            URL obj = new URL(URL);
+            URL obj = new URL(URL_SERVER);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            String urlParameters = "email_destinatario=" + email_destinatario + "&acquisti=" + purchaseDescription(film, proiezione, prenotazione) + "&prezzo=" + Double.toString(prenotazione.getPrezzo()) + "&id_prenotazione=" + Integer.toString(prenotazione.getId_prenotazione());
-
+            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + email_destinatario + "&oggetto=" + OBJECT + "&messaggio=" + purchaseDescription(film, proiezione, prenotazione);
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 
@@ -51,8 +57,9 @@ public class EmailSender {
 
     private String purchaseDescription(Film film, Proiezione proiezione, Prenotazione prenotazione) {
         String messaggio;
-        messaggio = "<center>";
-        messaggio = messaggio + "<IMG SRC=\"        https://camo.githubusercontent.com/b98806da0d5c21996a009709acfe4f6256cd31c5/687474703a2f2f7333322e706f7374696d672e6f72672f686236796f3678736c2f6c6f676f5f74726173706172656e74655f6f6c645f30322e706e67\n"
+
+        messaggio = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"><title>Pagamento</title></head><body><center>";
+        messaggio = messaggio + "<IMG SRC=\" http://xsacniopanzax.altervista.org/progettof/logo.png \n"
                 + "\" ALT=\"some text\" WIDTH=600 HEIGHT=400><br><br>";
 
         messaggio = messaggio + "<IMG SRC=\"" + film.getLink_copertina() + "\" ALT=\"some text\" WIDTH=400 HEIGHT=600><br><br>";
@@ -68,21 +75,31 @@ public class EmailSender {
         messaggio = messaggio + "Totale da pagare: " + prenotazione.getPrezzo() + " Euro<br><br><br>";
         messaggio = messaggio + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Se si è chiuso il programma questo ricevuta non è più valdida, riperete la procedura.</i><br><br><br><br>";
         messaggio = messaggio + "</center>";
+
+        //ORA IN SANDBOX, per toglerlo usare https://www.paypal.com/cgi-bin/webscr\
+        messaggio = messaggio + "<center>\n"
+                + "   <form action=\"https://www.sandbox.paypal.com/cgi-bin/webscr\" method=\"post\">\n"
+                + "       <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">\n"
+                + "       <input type=\"hidden\" name=\"currency_code\" value=\"EUR\" />\n"
+                + "       <input type=\"hidden\" name=\"lc\" value=\"IT\" />\n"
+                + "	   \n"
+                + "       <input type=\"hidden\" name=\"item_name\" value=\"Prenotazione Cinema\" />\n"
+                + "       <input type=\"hidden\" name=\"amount\" value=\"" + prenotazione.getPrezzo() + "\" />\n"
+                + "	   <input type=\"hidden\" name=\"item_number\" value=\"" + prenotazione.getId_prenotazione() + "\">\n"
+                + "\n"
+                + "       <input type=\"hidden\" name=\"business\" value=\""+PAYMENT_RECIVER+"\" />\n"
+                + "       <input type=\"hidden\" name=\"notify_url\" value=\"http://xsacniopanzax.altervista.org/progettof/conferma_paypal.php\" />\n"
+                + "       <input type=\"hidden\" name=\"custom\" value=\""+prenotazione.getId_prenotazione()+"\" />\n"
+                + "	   	  \n"
+                + "	  <input type=\"image\" src=\"http://xsacniopanzax.altervista.org/progettof/pay_img.jpg\" border=\"0\" name=\"submit\" width=\"400\" height=\"150\" alt=\"Make payments with PayPal\">  \n"
+                + "   </form> \n"
+                + " </center>\n"
+                + "   \n"
+                + "<br>\n"
+                + "<br><br><br><br><br><br><br><br>\n"
+                + "   \n"
+                + "</body>\n"
+                + "</html>";
         return messaggio;
     }
 }
-
-/* TeST....
- 
- Film film = new Film(1, "ZOOTROPOLIS", "Azione", 120, "Piter parcer è un super eroe", "youtube.it/werewr", "http://pad.mymovies.it/filmclub/2013/08/079/locandina.jpg",null);
- Proiezione proiezione = new Proiezione(123, Calendar.getInstance(), 1, 2, 1, 6);
-        
- ArrayList<Seat> posti_prenotati = new ArrayList<>();
- posti_prenotati.add(new Seat(340, 12, 13));
- posti_prenotati.add(new Seat(341, 14, 13));
- Prenotazione prenotazione = new Prenotazione(13, 18, posti_prenotati, null, 12);
-
- EmailSender email = new EmailSender();
- email.SendEmail("umeermohammad@gmail.com", film, proiezione, prenotazione);
-
- */
