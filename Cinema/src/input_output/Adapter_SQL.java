@@ -485,6 +485,17 @@ public class Adapter_SQL {
         }
         return true;
     }
+    
+    public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        query = "SELECT Seats.*" +
+                "FROM Booking,Booked_Seat " +
+                "WHERE Booking.id_proiezione ="+ id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking" +
+                "AND Booked_Seat.id_seat = Seats.id_seat";
+        risultato_query = SQL.eseguiQueryLettura(query);
+        return parser.Seat(risultato_query);
+    }
 
     public void spegni() {
         SQL.chiudiConnessione();

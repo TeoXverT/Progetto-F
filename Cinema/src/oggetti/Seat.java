@@ -85,6 +85,18 @@ public class Seat extends JButton {
         this.id_seat = id_seat;
         this.x = x;
         this.y = y;
+        this.setBorderPainted(false);
+        this.setContentAreaFilled(false);
+        this.setSize(40, 40);
+    }
+    
+    public Seat(int id_seat, int x, int y, int tipo, int id_sala) {          // Serve a Umeer
+        this.id_seat = id_seat;
+        this.x = x;
+        this.y = y;
+        this.setBorderPainted(false);
+        this.setContentAreaFilled(false);
+        this.setSize(40, 40);
     }
 
     public int getx() {

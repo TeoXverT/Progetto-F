@@ -85,6 +85,17 @@ public class Parse_OBJ {
 
         return prenotazione;
     }
+    
+    public ArrayList<Seat> Seat(ResultSet risultato_query) throws SQLException {
+        ArrayList<Seat> seat = new ArrayList<>();
+        
+        while (risultato_query.next()) {
+            seat.add(new Seat(risultato_query.getInt("id_seat"), risultato_query.getInt("x"), risultato_query.getInt("y"), risultato_query.getInt("tipo"),risultato_query.getInt("id_sala")));
+            
+        }
+        risultato_query.close();
+        return seat;   
+    }
 
     ////////////////////////////////////////////////// METODI DI USO COMUNE ///////////////////////////////////
     private Calendar parseData_ora(Timestamp timestamp) {

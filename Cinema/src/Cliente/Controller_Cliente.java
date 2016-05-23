@@ -122,4 +122,9 @@ public class Controller_Cliente {
         numeroPrenotazione = adapter.writeBookin(prenotazione);
         return numeroPrenotazione;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
     }
+    
+    public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
+        return adapter.getTakenSeats(id_proiezione);
+    }
+            
 }

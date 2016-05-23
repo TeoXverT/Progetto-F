@@ -35,7 +35,6 @@ public class PageThree extends JPanel {
     Controller_Cliente controller;
     Proiezione proiezione;
     Film film;
-    Booking booking;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -86,7 +85,7 @@ public class PageThree extends JPanel {
 
         JLabel screen = new JLabel(screen_icon);
         nord.add(screen);
-
+        checkTakenSeats();
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
                 seats.get(i).addActionListener(seatClick(i));
@@ -129,7 +128,6 @@ public class PageThree extends JPanel {
 
                 //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
 
-                booking = new Booking(proiezione.getId_proiezione(), totale_prezzo, booked_seats);  // DA RIVEDERE //Usa proiezione che già esiste
 
                 ///------------  prova della page 4 di umeer
                 //Ipotetica prenotazione...
@@ -208,5 +206,12 @@ public class PageThree extends JPanel {
         this.revalidate();
         this.repaint();
     }
-
+    
+    private void checkTakenSeats() {
+        try {
+            controller.getTakenSeats(proiezione.getId_proiezione());
+        } catch (SQLException ex) {
+            Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
