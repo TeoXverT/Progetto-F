@@ -49,6 +49,7 @@ public class PageThree extends JPanel {
     private Sala sala;
     private ArrayList<Seat> seats;
     private ArrayList<Seat> booked_seats;
+    private ArrayList<Seat> Taken_seats = new ArrayList<>();
 
     JLabel prezzo = new JLabel();
     JButton prosegui = new JButton("PROSEGUI");
@@ -87,6 +88,17 @@ public class PageThree extends JPanel {
         JLabel screen = new JLabel(screen_icon);
         nord.add(screen);
         checkTakenSeats();
+        
+        for(int i = 0; i < booked_seats.size(); i++) {
+            for(int j = 0; j < seats.size(); j++) {
+                if(booked_seats.get(i).getId() == seats.get(j).getId()) {
+                    seats.get(j).setIcon(seat_taken);
+                    seats.get(j).setOccupato(true);
+                    System.out.println("ciao");
+                }
+            } 
+        }
+        
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
                 seats.get(i).addActionListener(seatClick(i));
@@ -126,7 +138,7 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),booked_seats,null,0,totale_prezzo,0);
+                prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),Taken_seats,null,0,totale_prezzo,0);
                 //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
                  
 
@@ -162,7 +174,7 @@ public class PageThree extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 if (seats.get(i).isOccupato()) {
                     seats.get(i).setOccupato(false);
-                    booked_seats.remove(booked_seats.size() - 1);
+                    Taken_seats.remove(Taken_seats.size() - 1);
                     if (seats.get(i).isVip()) {
                         seats.get(i).setIcon(seat_vip);   
                         totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());
@@ -179,7 +191,7 @@ public class PageThree extends JPanel {
                 } else {
                     seats.get(i).setOccupato(true);
                     seats.get(i).setIcon(seat_taken);
-                    booked_seats.add(seats.get(i));
+                    Taken_seats.add(seats.get(i));
                     if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
                         totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
@@ -210,7 +222,8 @@ public class PageThree extends JPanel {
     
     private void checkTakenSeats() {
         try {
-            controller.getTakenSeats(proiezione.getId_proiezione());
+            booked_seats.clear();
+            booked_seats = controller.getTakenSeats(proiezione.getId_proiezione());
         } catch (SQLException ex) {
             Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
         }
