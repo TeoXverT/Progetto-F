@@ -35,6 +35,7 @@ public class PageThree extends JPanel {
     Controller_Cliente controller;
     Proiezione proiezione;
     Film film;
+    Prenotazione prenotazione;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -125,9 +126,9 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-
+                prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),booked_seats,null,0,totale_prezzo,0);
                 //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
-
+                 
 
                 ///------------  prova della page 4 di umeer
                 //Ipotetica prenotazione...
@@ -136,7 +137,7 @@ public class PageThree extends JPanel {
 //                posti_prenotati1.add(new Seat(339, 14, 13));
 //               
 //                Prenotazione prenotazione1 = new Prenotazione(0, proiezione.getId_proiezione(), posti_prenotati1, null, 0, 12.0, 0);
-//                openPage(new PageFour(film, proiezione, prenotazione1, config, controller));
+                openPage(new PageFour(film, proiezione, prenotazione, config, controller));
 
                 ///------------  prova della page 4
                 
