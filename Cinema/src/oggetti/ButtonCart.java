@@ -23,7 +23,7 @@ public class ButtonCart extends JButton{
     public ButtonCart(Proiezione proiezione) throws IOException {
         
         this.proiezione = proiezione;
-        this.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("http://www.ergonotec.it/images/carrello.gif"))), 50, 50));
+        this.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("https://d30y9cdsu7xlg0.cloudfront.net/png/28468-200.png"))), 30, 30));
         
         
     }

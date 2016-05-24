@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import oggetti.ButtonCart;
 import oggetti.Config;
 import oggetti.Film;
@@ -64,14 +66,22 @@ public class PageTwo extends JPanel {
         this.deltaData = deltaData;
         this.deltaTime = deltaTime;
         this.setLayout(new GridLayout(2, 2, 10, 10));
+        this.setBorder(new EmptyBorder(10, 30, 10, 10));
         
         crea_gui();
 
     }
 
     private void crea_gui() throws SQLException, MalformedURLException, IOException {
-        JButton cover = new JButton("Indietro");
-
+        
+        
+        
+        
+        JButton cover = new JButton();
+        cover.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("https://cdn3.iconfinder.com/data/icons/web-and-internet-icons/512/Home-512.png"))), 30, 30));
+      
+        
+        
         JPanel pannelloCopertina = new JPanel();
         pannelloCopertina.setBackground(java.awt.Color.LIGHT_GRAY);
         this.add(pannelloCopertina);
@@ -101,7 +111,16 @@ public class PageTwo extends JPanel {
         pannelloTramaGridLayout.add(new JLabel());
         
        pannelloTramaGridLayout.add(new JLabel());
-       pannelloTramaGridLayout.add(cover);
+       
+       //PROVA CON PANNELLO
+        
+       JPanel pannelloHome = new JPanel();
+       pannelloTramaGridLayout.add(pannelloHome);
+       pannelloHome.add(cover);
+       pannelloHome.setSize(new Dimension(50,50));
+       
+       pannelloHome.setBackground(java.awt.Color.LIGHT_GRAY);
+    
        pannelloTramaGridLayout.add(new JLabel());
         pannelloTramaGridLayout.add(new JLabel(film.toString()));
         pannelloTramaGridLayout.add(new JLabel());
@@ -131,7 +150,7 @@ public class PageTwo extends JPanel {
         
 
         ButtonCart bottoneCarrello;
-        
+        JPanel pannelloCart;
         JScrollPane scrollpane = new JScrollPane(pannelloOrari, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pannelloContenitoreBackOrari.add(scrollpane, BorderLayout.CENTER);
         for (int i = 0; i < proiezione.size(); i++) {
@@ -139,7 +158,7 @@ public class PageTwo extends JPanel {
             pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "    tipo: " + proiezione.get(i).getType_String() + "    sala: " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
             bottoneCarrello = new ButtonCart(proiezione.get(i));
             bottoneCarrello.setPreferredSize(new Dimension(50, 50));
-
+           
             proiezione1 = proiezione.get(i);
 
             bottoneCarrello.addActionListener(new ActionListener() {
@@ -147,8 +166,11 @@ public class PageTwo extends JPanel {
                     openPageThree(film, proiezione1, controller);
                 }
             });
-
-            pannelloOrari.add(bottoneCarrello);
+            pannelloCart = new JPanel();
+            pannelloCart.setBackground(java.awt.Color.LIGHT_GRAY);
+            pannelloCart.add(bottoneCarrello);
+            pannelloCart.setSize(new Dimension(50,50));
+            pannelloOrari.add(pannelloCart);
 
         }
 
