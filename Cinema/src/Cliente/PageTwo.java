@@ -123,7 +123,10 @@ public class PageTwo extends JPanel {
        pannelloHome.setBackground(java.awt.Color.WHITE);
     
        pannelloTramaGridLayout.add(new JLabel());
-        pannelloTramaGridLayout.add(new JLabel(film.toString()));
+        JLabel labeln=new JLabel(film.toString()); 
+    
+        labeln.setFont(labeln.getFont().deriveFont(22.0f));
+            pannelloTramaGridLayout.add(labeln);
         pannelloTramaGridLayout.add(new JLabel());
         
         
