@@ -27,6 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -62,7 +63,8 @@ public class PageTwo extends JPanel {
         this.film = film;
         this.deltaData = deltaData;
         this.deltaTime = deltaTime;
-        this.setLayout(new GridLayout(2, 2, 2, 2));
+        this.setLayout(new GridLayout(2, 2, 10, 10));
+        
         crea_gui();
 
     }
@@ -85,46 +87,35 @@ public class PageTwo extends JPanel {
 
         cover.addActionListener(goBackEvent());
 
-        JPanel pannelloTrama = new JPanel(new GridBagLayout());
+        JPanel pannelloTrama = new JPanel(new BorderLayout(10,10));
         pannelloTrama.setBackground(java.awt.Color.LIGHT_GRAY);
-        GridBagConstraints c = new GridBagConstraints();
+        
 
-        this.setBackground(java.awt.Color.GRAY);
+        this.setBackground(java.awt.Color.LIGHT_GRAY);
         this.add(pannelloTrama);
 
-        //prima riga terza colonna
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.FIRST_LINE_END;
-        c.gridx = 2;
-        c.gridy = 0;
-        c.weightx = 0.5;
-
-        pannelloTrama.add(cover, c);
-
-        //prima riga seconda colonna
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 1;
-        c.weightx = 0.5;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.PAGE_START;
-        pannelloTrama.add(new JLabel(film.toString()), c);
-
-        //trama
+        JPanel pannelloTramaGridLayout = new JPanel(new GridLayout(2, 3));
+        pannelloTramaGridLayout.setBackground(java.awt.Color.LIGHT_GRAY);
+        pannelloTrama.add(pannelloTramaGridLayout, BorderLayout.NORTH);
+        
+        pannelloTramaGridLayout.add(new JLabel());
+        
+       pannelloTramaGridLayout.add(new JLabel());
+       pannelloTramaGridLayout.add(cover);
+       pannelloTramaGridLayout.add(new JLabel());
+        pannelloTramaGridLayout.add(new JLabel(film.toString()));
+        pannelloTramaGridLayout.add(new JLabel());
+        
+        
         JTextArea Trama = new JTextArea(film.getDescrizione());
         Trama.setLineWrap(true);
         Trama.setEditable(false);
         Trama.setBorder(null);
         Trama.setBackground(java.awt.Color.LIGHT_GRAY);
 
-        c.anchor = GridBagConstraints.CENTER;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.weightx = 0.0;
-        c.gridwidth = 3;
-        c.gridy = 1;
-        c.ipady = 30;
+       
 
-        pannelloTrama.add(Trama, c);
+        pannelloTrama.add(Trama, BorderLayout.CENTER);
 
         this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
 
@@ -137,13 +128,15 @@ public class PageTwo extends JPanel {
         this.add(pannelloContenitoreBackOrari);
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
         pannelloOrari.setBackground(java.awt.Color.LIGHT_GRAY);
-        pannelloContenitoreBackOrari.add(pannelloOrari, BorderLayout.CENTER);
+        
 
         ButtonCart bottoneCarrello;
-
+        
+        JScrollPane scrollpane = new JScrollPane(pannelloOrari, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pannelloContenitoreBackOrari.add(scrollpane, BorderLayout.CENTER);
         for (int i = 0; i < proiezione.size(); i++) {
 
-            pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "     " + proiezione.get(i).getTipo_proiezione() + "     " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
+            pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "    tipo: " + proiezione.get(i).getType_String() + "    sala: " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
             bottoneCarrello = new ButtonCart(proiezione.get(i));
             bottoneCarrello.setPreferredSize(new Dimension(50, 50));
 
