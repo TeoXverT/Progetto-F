@@ -79,11 +79,12 @@ public class PageTwo extends JPanel {
         
         JButton cover = new JButton();
         cover.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("https://cdn3.iconfinder.com/data/icons/web-and-internet-icons/512/Home-512.png"))), 30, 30));
-      
+        cover.setBorderPainted(true);
+        cover.setContentAreaFilled(false);
         
         
         JPanel pannelloCopertina = new JPanel();
-        pannelloCopertina.setBackground(java.awt.Color.LIGHT_GRAY);
+        pannelloCopertina.setBackground(java.awt.Color.WHITE);
         this.add(pannelloCopertina);
         Image image = null;
         try {
@@ -98,14 +99,14 @@ public class PageTwo extends JPanel {
         cover.addActionListener(goBackEvent());
 
         JPanel pannelloTrama = new JPanel(new BorderLayout(10,10));
-        pannelloTrama.setBackground(java.awt.Color.LIGHT_GRAY);
+        pannelloTrama.setBackground(java.awt.Color.WHITE);
         
 
-        this.setBackground(java.awt.Color.LIGHT_GRAY);
+        this.setBackground(java.awt.Color.WHITE);
         this.add(pannelloTrama);
 
         JPanel pannelloTramaGridLayout = new JPanel(new GridLayout(2, 3));
-        pannelloTramaGridLayout.setBackground(java.awt.Color.LIGHT_GRAY);
+        pannelloTramaGridLayout.setBackground(java.awt.Color.WHITE);
         pannelloTrama.add(pannelloTramaGridLayout, BorderLayout.NORTH);
         
         pannelloTramaGridLayout.add(new JLabel());
@@ -119,7 +120,7 @@ public class PageTwo extends JPanel {
        pannelloHome.add(cover);
        pannelloHome.setSize(new Dimension(50,50));
        
-       pannelloHome.setBackground(java.awt.Color.LIGHT_GRAY);
+       pannelloHome.setBackground(java.awt.Color.WHITE);
     
        pannelloTramaGridLayout.add(new JLabel());
         pannelloTramaGridLayout.add(new JLabel(film.toString()));
@@ -130,23 +131,24 @@ public class PageTwo extends JPanel {
         Trama.setLineWrap(true);
         Trama.setEditable(false);
         Trama.setBorder(null);
-        Trama.setBackground(java.awt.Color.LIGHT_GRAY);
+        Trama.setBackground(java.awt.Color.WHITE);
 
        
 
         pannelloTrama.add(Trama, BorderLayout.CENTER);
 
-        this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
+        
 
         proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
 
         //ABBIAMO MODIFICAGTO QUI PRIMA ERA COSI new BorderLayout() DENTRO AL NEW JPANEL()
         JPanel pannelloContenitoreBackOrari = new JPanel();
-        pannelloContenitoreBackOrari.setBackground(java.awt.Color.LIGHT_GRAY);
+        pannelloContenitoreBackOrari.setBackground(java.awt.Color.WHITE);
         this.add(pannelloContenitoreBackOrari);
+        this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
-        pannelloOrari.setBackground(java.awt.Color.LIGHT_GRAY);
+        pannelloOrari.setBackground(java.awt.Color.WHITE);
         
 
         ButtonCart bottoneCarrello;
@@ -157,6 +159,8 @@ public class PageTwo extends JPanel {
 
             pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "    tipo: " + proiezione.get(i).getType_String() + "    sala: " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
             bottoneCarrello = new ButtonCart(proiezione.get(i));
+            bottoneCarrello.setBorderPainted(false);
+            bottoneCarrello.setContentAreaFilled(false);
             bottoneCarrello.setPreferredSize(new Dimension(50, 50));
            
             proiezione1 = proiezione.get(i);
@@ -167,7 +171,7 @@ public class PageTwo extends JPanel {
                 }
             });
             pannelloCart = new JPanel();
-            pannelloCart.setBackground(java.awt.Color.LIGHT_GRAY);
+            pannelloCart.setBackground(java.awt.Color.WHITE);
             pannelloCart.add(bottoneCarrello);
             pannelloCart.setSize(new Dimension(50,50));
             pannelloOrari.add(pannelloCart);
