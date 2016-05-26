@@ -141,7 +141,7 @@ public class PageTwo extends JPanel {
         pannelloTrama.add(Trama, BorderLayout.CENTER);
 
         
-
+         
         proiezione = controller.showByFilm(film.getId_film(), deltaData, deltaTime);
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
 
@@ -153,11 +153,12 @@ public class PageTwo extends JPanel {
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
         pannelloOrari.setBackground(java.awt.Color.WHITE);
         
-
+        
         ButtonCart bottoneCarrello;
         JPanel pannelloCart;
         JScrollPane scrollpane = new JScrollPane(pannelloOrari, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pannelloContenitoreBackOrari.add(scrollpane, BorderLayout.CENTER);
+        scrollpane.setBorder(null);
         for (int i = 0; i < proiezione.size(); i++) {
 
             pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "    tipo: " + proiezione.get(i).getType_String() + "    sala: " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
