@@ -131,7 +131,7 @@ public class Gui_Gestore extends JFrame {
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
 
-        menuItem = new JMenuItem("Aggiungi Film", KeyEvent.VK_A);
+        menuItem = new JMenuItem("Add Movie", KeyEvent.VK_A);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         menuItem.addActionListener(aggiungiFilm()); // cosa deve fare una volta premuto
@@ -153,7 +153,11 @@ public class Gui_Gestore extends JFrame {
         menu.setMnemonic(KeyEvent.VK_F);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
-
+        
+        menuItem = new JMenuItem("Sales Volume");
+        menuItem.addActionListener(salesVolume()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
+        
         menu = new JMenu("Impostazioni");
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
@@ -316,6 +320,17 @@ public class Gui_Gestore extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 aggiornaGUI(pannelloCaricamento);
                 aggiornaGUI(new PanelAbout(controller, outputGrafico));
+            }
+        };
+        return evento;
+    }
+    
+    private ActionListener salesVolume() { //fatturato
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelSalesVolume(controller, outputGrafico));
             }
         };
         return evento;
