@@ -115,8 +115,10 @@ public class PanelAddFilm extends JPanel {
         less.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int durataInt = Integer.parseInt(durataField.getText()) - 1;
-                durataField.setText("" + durataInt);
+                if (Integer.parseInt(durataField.getText())>1){
+                    int durataInt = Integer.parseInt(durataField.getText()) - 1;
+                    durataField.setText("" + durataInt);
+                }
             }
         });
 
