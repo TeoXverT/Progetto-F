@@ -97,7 +97,7 @@ public class PanelSalesVolume extends JPanel {
     
     private JPanel Center(){
         JPanel center = new JPanel();
-        String[] columnNames = {"ID", "Date & Time"};
+        String[] columnNames = {"ID", "Date & Time", "Price"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
         TableColumn id = table.getColumnModel().getColumn(0);
