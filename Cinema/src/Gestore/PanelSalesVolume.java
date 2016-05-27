@@ -5,8 +5,6 @@
  */
 package Gestore;
 
-
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -15,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -45,7 +46,7 @@ public class PanelSalesVolume extends JPanel {
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JButton search = new JButton("Search");
         final Date today = new Date();
-        final JSpinner dateFrom = new JSpinner(new SpinnerDateModel(setDate(today, 24), null, today, Calendar.MONTH));
+        final JSpinner dateFrom = new JSpinner(new SpinnerDateModel(setDate(today, 1), null, today, Calendar.MONTH));
         final JSpinner dateTo = new JSpinner(new SpinnerDateModel(today, null, today, Calendar.MONTH));
         JSpinner.DateEditor formatFrom = new JSpinner.DateEditor(dateFrom, "dd-MM-yyyy");
         JSpinner.DateEditor formatTo = new JSpinner.DateEditor(dateTo, "dd-MM-yyyy");
@@ -110,14 +111,37 @@ public class PanelSalesVolume extends JPanel {
     private JPanel South(){
         JPanel south = new JPanel();
         JLabel tot = new JLabel("Tot: ");
-        final JTextField total = new JTextField("0");
-        total.setEditable(false);
+        final JTextField total = new JTextField("0", 10);
+        total.setEditable(false); 
+        JButton save = new JButton("Save");
+        save.setPreferredSize(new Dimension(120, 30));
+        
         south.add(tot);
         south.add(total);
+        south.add(save);
+        
+        //***************************** LISTENERS   
+         save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser c = new JFileChooser();
+                FileFilter filter = new FileNameExtensionFilter("TXT file", "txt");
+                c.addChoosableFileFilter(filter);
+                int rVal = c.showSaveDialog(null);
+                if (rVal == JFileChooser.APPROVE_OPTION) {
+//                    filename.setText(c.getSelectedFile().getName());
+//                    dir.setText(c.getCurrentDirectory().toString());
+                }
+                if (rVal == JFileChooser.CANCEL_OPTION) {
+//                    outputGrafico.setText("You pressed cancel");
+                }
+            }
+        });
+         
         return south;
     }
-//******************************************************************************
     
+//******************************************************************************
     private Date setDate(Date date, int month) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
