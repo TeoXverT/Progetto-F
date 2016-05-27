@@ -158,4 +158,5 @@ public class Controller_Gestore {
         ArrayList<Proiezione> Sale = adapter.visualizzaStatoSale();
         return Sale;
     }
+        
 }
