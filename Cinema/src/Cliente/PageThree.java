@@ -139,20 +139,7 @@ public class PageThree extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),Taken_seats,null,0,totale_prezzo,0);
-                //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
-                 
-
-                ///------------  prova della page 4 di umeer
-                //Ipotetica prenotazione...
-//                ArrayList<Seat> posti_prenotati1 = new ArrayList<>();
-//                posti_prenotati1.add(new Seat(338, 12, 13));
-//                posti_prenotati1.add(new Seat(339, 14, 13));
-//               
-//                Prenotazione prenotazione1 = new Prenotazione(0, proiezione.getId_proiezione(), posti_prenotati1, null, 0, 12.0, 0);
-                openPage(new PageFour(film, proiezione, prenotazione, config, controller));
-
-                ///------------  prova della page 4
-                
+                openPage(new PageFour(film, proiezione, prenotazione, config, controller));                
             }
         });
 
