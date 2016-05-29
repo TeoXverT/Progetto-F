@@ -95,12 +95,11 @@ public class Gui_Gestore extends JFrame {
         menu.setMnemonic(KeyEvent.VK_A);
         menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
         menuBar.add(menu);
-
-        menuItem = new JMenuItem("Stato Sale", KeyEvent.VK_S);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-        menuItem.addActionListener(visualizzaSale());
-        menu.add(menuItem);
+        
+        menu.addSeparator();
+        submenu = new JMenu("Hall Status");
+        
+        menu.add(CreateHallList(submenu));
 
         menuItem = new JMenuItem("Film", KeyEvent.VK_F);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
@@ -335,7 +334,25 @@ public class Gui_Gestore extends JFrame {
         };
         return evento;
     }
-
+    
+    private JMenu CreateHallList(JMenu submenu) {
+        JMenuItem menuItem;
+        ArrayList<Sala> sale= new ArrayList<>();
+        try {
+            sale = controller.visualizzaSale();
+        }catch (SQLException ex) {
+                System.out.println("Da Gestire l'eccezione!!!!");
+            }
+            
+            for(int i = 0; i < sale.size(); i++) {
+                menuItem = new JMenuItem("Sala "+ sale.get(i).getId_sala());
+                menuItem.addActionListener(visualizzaProiezioni(0));
+                submenu.add(menuItem);
+                
+                submenu.add(menuItem);
+            }
+            return submenu;
+    }
 ///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
     private void aggiornaGUI(final JPanel displayPanel) {
         SwingUtilities.invokeLater(new Runnable() {

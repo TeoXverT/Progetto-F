@@ -42,6 +42,7 @@ public class PageThree extends JPanel {
     private ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
     private ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
     private ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
+    private ImageIcon seat_selezione = new ImageIcon("immagini/poltrone/seat_selezione.png");
 
     private double totale_prezzo;
     private Config config;
@@ -177,7 +178,7 @@ public class PageThree extends JPanel {
                     }
                 } else {
                     seats.get(i).setOccupato(true);
-                    seats.get(i).setIcon(seat_taken);
+                    seats.get(i).setIcon(seat_selezione);
                     Taken_seats.add(seats.get(i));
                     if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
                         totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());
