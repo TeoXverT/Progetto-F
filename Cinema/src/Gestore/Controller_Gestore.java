@@ -158,5 +158,10 @@ public class Controller_Gestore {
         ArrayList<Proiezione> Sale = adapter.visualizzaStatoSale();
         return Sale;
     }
+    
+    public ArrayList<Proiezione> vieShows(int id_sala) throws SQLException {
+        ArrayList<Proiezione> Sale = adapter.viewShows(id_sala);
+        return Sale;
+    }
         
 }
