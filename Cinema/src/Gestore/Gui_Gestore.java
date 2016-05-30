@@ -42,21 +42,21 @@ public class Gui_Gestore extends JFrame {
 
     public Gui_Gestore() {
 
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
-        }
+//        try {
+//            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            // If Nimbus is not available, you can set the GUI to another look and feel.
+//        }
 
         controller = new Controller_Gestore();
         display = new JPanel( new BorderLayout());
         creaGui();
-        imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+        imagineCaricamento = new JLabel(new ImageIcon("immagini/logo_2.gif"));
         pannelloCaricamento = new JPanel();
         pannelloCaricamento.add(imagineCaricamento);
 
