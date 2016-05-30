@@ -39,7 +39,6 @@ public class Gui_Gestore extends JFrame {
     private JPanel pannelloCaricamento;
 
 //    private Component frameErrore = null;
-
     public Gui_Gestore() {
 
 //        try {
@@ -54,7 +53,7 @@ public class Gui_Gestore extends JFrame {
 //        }
 
         controller = new Controller_Gestore();
-        display = new JPanel( new BorderLayout());
+        display = new JPanel(new BorderLayout());
         creaGui();
         imagineCaricamento = new JLabel(new ImageIcon("immagini/logo_2.gif"));
         pannelloCaricamento = new JPanel();
@@ -96,11 +95,10 @@ public class Gui_Gestore extends JFrame {
         menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
         menuBar.add(menu);
 
-        menuItem = new JMenuItem("Stato Sale", KeyEvent.VK_S);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-        menuItem.addActionListener(visualizzaSale());
-        menu.add(menuItem);
+        menu.addSeparator();
+        submenu = new JMenu("Hall Status");
+
+        menu.add(CreateHallList(submenu));
 
         menuItem = new JMenuItem("Film", KeyEvent.VK_F);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
@@ -131,7 +129,7 @@ public class Gui_Gestore extends JFrame {
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
 
-        menuItem = new JMenuItem("Aggiungi Film", KeyEvent.VK_A);
+        menuItem = new JMenuItem("Add Movie", KeyEvent.VK_A);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
         menuItem.addActionListener(aggiungiFilm()); // cosa deve fare una volta premuto
@@ -153,6 +151,10 @@ public class Gui_Gestore extends JFrame {
         menu.setMnemonic(KeyEvent.VK_F);
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
+
+        menuItem = new JMenuItem("Sales Volume");
+        menuItem.addActionListener(salesVolume()); // cosa deve fare una volta premuto
+        menu.add(menuItem);
 
         menu = new JMenu("Impostazioni");
         menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
@@ -180,27 +182,6 @@ public class Gui_Gestore extends JFrame {
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
-    private ActionListener visualizzaSale() {
-//        ActionListener evento = new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                display.removeAll();
-//                display.add(imagineCaricamento);
-//                threadSale().start();
-//                outputGrafico.setText("Visualizzazione Sale in Corso");
-//            }
-//        };
-//        return evento;
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                aggiornaGUI(pannelloCaricamento);
-                aggiornaGUI(new PanelHallState(controller, outputGrafico));
-            }
-        };
-        return evento;
-    }
-
     private ActionListener visualizzaProiezioni(final int tipo) {
         ActionListener evento = new ActionListener() {
             @Override
@@ -321,7 +302,46 @@ public class Gui_Gestore extends JFrame {
         return evento;
     }
 
+    private ActionListener salesVolume() { //fatturato
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelSalesVolume(controller, outputGrafico));
+            }
+        };
+        return evento;
+    }
+
+    private JMenu CreateHallList(JMenu submenu) {
+        ArrayList<Sala> sale = new ArrayList<>();
+        ArrayList<JMenuItem> menuItem = new ArrayList<>();
+        try {
+            sale = controller.visualizzaSale();
+        } catch (SQLException ex) {
+            System.out.println("Da Gestire l'eccezione!!!!");
+        }
+
+        for (int i = 0; i < sale.size(); i++) {
+            menuItem.add(new JMenuItem("Sala " + sale.get(i).getId_sala()));
+            menuItem.get(i).addActionListener(hallStatus(sale.get(i).getId_sala()));
+            submenu.add(menuItem.get(i));
+        }
+        return submenu;
+    }
+
+    private ActionListener hallStatus(final int id_sala) {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aggiornaGUI(pannelloCaricamento);
+                aggiornaGUI(new PanelHallState(controller, outputGrafico, id_sala));
+            }
+        };
+        return evento;
+    }
 ///////////////////////////////////////////////////////   METODI DI USO COMUNE      ////////////////////////////////
+
     private void aggiornaGUI(final JPanel displayPanel) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

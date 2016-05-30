@@ -42,6 +42,7 @@ public class PageThree extends JPanel {
     private ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
     private ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
     private ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
+    private ImageIcon seat_selezione = new ImageIcon("immagini/poltrone/seat_selezione.png");
 
     private double totale_prezzo;
     private Config config;
@@ -139,20 +140,7 @@ public class PageThree extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),Taken_seats,null,0,totale_prezzo,0);
-                //Poi quando sei pronto mi dovrai passare i parametri che ora qui sotto simulo
-                 
-
-                ///------------  prova della page 4 di umeer
-                //Ipotetica prenotazione...
-//                ArrayList<Seat> posti_prenotati1 = new ArrayList<>();
-//                posti_prenotati1.add(new Seat(338, 12, 13));
-//                posti_prenotati1.add(new Seat(339, 14, 13));
-//               
-//                Prenotazione prenotazione1 = new Prenotazione(0, proiezione.getId_proiezione(), posti_prenotati1, null, 0, 12.0, 0);
-                openPage(new PageFour(film, proiezione, prenotazione, config, controller));
-
-                ///------------  prova della page 4
-                
+                openPage(new PageFour(film, proiezione, prenotazione, config, controller));                
             }
         });
 
@@ -190,7 +178,7 @@ public class PageThree extends JPanel {
                     }
                 } else {
                     seats.get(i).setOccupato(true);
-                    seats.get(i).setIcon(seat_taken);
+                    seats.get(i).setIcon(seat_selezione);
                     Taken_seats.add(seats.get(i));
                     if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
                         totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());

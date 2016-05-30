@@ -485,17 +485,30 @@ public class Adapter_SQL {
         }
         return true;
     }
-    
+
     public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
         String query;
         ResultSet risultato_query;
-        query = "SELECT Seats.* " +
-                "FROM Booking,Booked_Seat, Seats " +
-                "WHERE Booking.id_proiezione = " + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND" +
-                " Booked_Seat.id_seat = Seats.id_seat";
+        query = "SELECT Seats.* "
+                + "FROM Booking,Booked_Seat, Seats "
+                + "WHERE Booking.id_proiezione = " + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND"
+                + " Booked_Seat.id_seat = Seats.id_seat";
         System.out.println(query);
         risultato_query = SQL.eseguiQueryLettura(query);
         return parser.Seat(risultato_query);
+    }
+
+    public ArrayList<Proiezione> viewShows(int id_sala) throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Proiezione> Proiezioni;
+        query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala ="+ id_sala;
+        risultato_query = SQL.eseguiQueryLettura(query);
+
+        Proiezioni = parser.Proiezione(risultato_query);
+        risultato_query.close();
+
+        return Proiezioni;
     }
 
     public void spegni() {

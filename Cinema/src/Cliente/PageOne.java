@@ -5,6 +5,8 @@ import oggetti.ButtonCover;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,7 +54,14 @@ public class PageOne extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);    
         //istanziazione aggiunta slider a sinistra del frame
         pannelloSlider = new JPanel(); 
-        pannelloSlider.setPreferredSize(new Dimension(75,100));
+        pannelloSlider.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        
+                c.fill = GridBagConstraints.VERTICAL;
+                c.weightx = 0.5;
+                c.gridx = 0;
+                c.gridy = 0;
+       
         this.add(pannelloSlider, BorderLayout.WEST);
       if(oraStart < 15){
            oraStart = 15;
@@ -70,7 +79,7 @@ public class PageOne extends JPanel {
             }
         });
         
-        pannelloSlider.add(slider);
+        pannelloSlider.add(slider,c);
         slider.setPreferredSize(new Dimension(50,500));
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
