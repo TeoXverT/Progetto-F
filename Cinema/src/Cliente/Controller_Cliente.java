@@ -127,4 +127,7 @@ public class Controller_Cliente {
         return adapter.getTakenSeats(id_proiezione);
     }
             
+    public int checkPayment( ){
+        return adapter.checkPayment();
+    }
 }

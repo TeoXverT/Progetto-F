@@ -510,6 +510,15 @@ public class Adapter_SQL {
 
         return Proiezioni;
     }
+    
+     public int checkPayment( ){
+//passare dati per verificare pagamento prenotazione
+     int cp=0;
+       //controllo su db 1 se pagato due non pagato,cp=1 per test      
+        cp=1; 
+       return cp;
+    }
+    
 
     public void spegni() {
         SQL.chiudiConnessione();

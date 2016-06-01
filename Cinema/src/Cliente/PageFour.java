@@ -31,7 +31,7 @@ public class PageFour extends JPanel {
 
     Controller_Cliente controller;
     Film film;
-    ControlPayment cp;
+    
     Proiezione proiezione;
     Prenotazione prenotazione;
     Config config;
@@ -127,7 +127,7 @@ public class PageFour extends JPanel {
 
                             EmailSender emailSender = new EmailSender();
                             emailSender.SendEmailRequest(email.getText(), film, proiezione, prenotazione);
-                    openPage(new PageFive(prenotazione,controller,cp));
+                    openPage(new PageFive(prenotazione,controller));
                         }
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(popUpWindow,
