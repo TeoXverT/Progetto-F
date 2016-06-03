@@ -511,14 +511,29 @@ public class Adapter_SQL {
         return Proiezioni;
     }
     
-     public int checkPayment( ){
-//passare dati per verificare pagamento prenotazione
-     int cp=0;
-       //controllo su db 1 se pagato due non pagato,cp=1 per test      
-        cp=1; 
+     public int checkPayment(Prenotazione p) throws SQLException{
+         
+         String Query = "SELECT booking_status " +
+                        "FROM Booking " +
+                        "WHERE id_booking = " +p.getId_prenotazione() +"";
+         
+         ResultSet result = SQL.eseguiQueryLettura(Query);
+         
+         int cp = result.getInt("booking_status");
+         System.out.println(cp);
        return cp;
     }
     
+     
+     public void insertPaymentForced(Prenotazione p) throws SQLException {
+         
+         String Query = "UPDATE Booking " +
+                        "SET booking_status=1 " +
+                        "WHERE id_booking = "+p.getId_prenotazione()+"";
+         
+         SQL.eseguiQueryScrittura(Query);
+         
+     }
 
     public void spegni() {
         SQL.chiudiConnessione();

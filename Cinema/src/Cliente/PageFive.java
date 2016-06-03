@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Calendar;
 import javax.swing.JPanel;
 import oggetti.Prenotazione;
@@ -38,7 +39,7 @@ public class PageFive extends JPanel {
     
     JPanel pannelloContenitore;
     
-    public PageFive(Prenotazione prenotazione, Controller_Cliente controller) {
+    public PageFive(final Prenotazione prenotazione, final Controller_Cliente controller) {
         this.controller = controller;
         this.prenotazione = prenotazione;
         
@@ -61,11 +62,18 @@ public class PageFive extends JPanel {
         
         JButton confirmButton = new JButton("Conferma Prenotazione");
         confirmButton.addActionListener(new ActionListener() {
-            @Override
+            
+            
             public void actionPerformed(ActionEvent ae) {
-                
+                try {
+                    controller.getInsertPaymentForced(prenotazione);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
+        
+        pannelloContenitore.add(confirmButton);
         
         
          //CREARE UN CONTO ALLA ROVESCIA DI 5 MIN  E CONTROLLARE OGNI 5 SEC SE SUL DB IL PARAMETRO BOOKING.BOOKING_STATUS E DIVENTATO UNO IN TAL CASO 
@@ -154,12 +162,14 @@ public class PageFive extends JPanel {
             for(int i=0;i<60;i++){
                 try {
                     Thread.sleep(5000);
-                checkPayment = controller.checkPayment();
+                checkPayment = controller.checkPayment(prenotazione);
                if(checkPayment==1){i=60;}
                
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }   catch (SQLException ex) {
+                        Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
+                    }
             
            }
             if(checkPayment==1){System.out.println("pagamento effettuato");}else{System.out.println("sessione scaduta");}
