@@ -335,11 +335,11 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
-
+       // ora = ora + 2; //PER FUSO ORARIO DATABASE
         query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
-                + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
-
+             // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
+                + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL '" + deltaData + " 2' DAY_HOUR), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
         proiezione = parser.Proiezione(risultato_query);
