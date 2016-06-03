@@ -520,7 +520,6 @@ public class Adapter_SQL {
          ResultSet result = SQL.eseguiQueryLettura(Query);
          
          int cp = result.getInt("booking_status");
-         System.out.println(cp);
        return cp;
     }
     
