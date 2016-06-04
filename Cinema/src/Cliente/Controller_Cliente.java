@@ -126,5 +126,13 @@ public class Controller_Cliente {
     public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
         return adapter.getTakenSeats(id_proiezione);
     }
-            
+    
+    
+    public void getInsertPaymentForced(Prenotazione p) throws SQLException {
+        adapter.insertPaymentForced(p);
+    }
+    
+    public int checkPayment(Prenotazione p) throws SQLException{
+        return adapter.checkPayment(p);
+    }
 }
