@@ -8,6 +8,8 @@ package Cliente;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -21,7 +23,7 @@ public class Gui_Cliente extends JFrame {
     Controller_Cliente controller = new Controller_Cliente();
 
     public Gui_Cliente() {
-        
+
         Create_Gui();
     }
 
@@ -35,7 +37,6 @@ public class Gui_Cliente extends JFrame {
 //        this.setResizable(false);
         this.add(display);
         display.add(new PageOne(controller));
-        
     }
 
 }

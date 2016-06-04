@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -31,11 +32,12 @@ public class PageFour extends JPanel {
 
     Controller_Cliente controller;
     Film film;
-    
+
     Proiezione proiezione;
     Prenotazione prenotazione;
     Config config;
     JLabel totalPrice = new JLabel();
+    JTextField email;
     Glasses spinner;
 
     Component popUpWindow;
@@ -66,7 +68,7 @@ public class PageFour extends JPanel {
         JPanel centro = new JPanel(new GridLayout(0, 1));
 
         JPanel carrello = new JPanel(new GridLayout(0, 2));
-        carrello.add(new JLabel("<html><font size=\"5\">Timing: " + proiezione.getData_ora_friendly_2() + "</font></html>"));
+        carrello.add(new JLabel("<html><font size=\"5\">" + proiezione.getData_ora_friendly_2() + "</font></html>"));
         carrello.add(new JLabel("<html><font size=\"5\">Room: " + proiezione.getId_sala() + " Type of Projection: " + proiezione.getType_String() + "</font></html>"));
 
         carrello.add(new JLabel("<html><b><font size=\"5\">Cart:</font></b><html>"));
@@ -100,7 +102,7 @@ public class PageFour extends JPanel {
         totalPrice.setText("<html><font size=\"6\">" + prenotazione.getPrezzo() + " €</font></html>");
         carrello.add(totalPrice);
         carrello.add(new JLabel("<html><font size=\"5\"><i>Email for Payment:</font></html>"));
-        final JTextField email = new JTextField();
+        email = new JTextField();
         email.setText("laTua@Email.it");
         carrello.add(email);
         centro.add(carrello);
@@ -125,9 +127,12 @@ public class PageFour extends JPanel {
                             openPage(new PageThree(film, proiezione, controller));
                         } else {
 
-                            EmailSender emailSender = new EmailSender();
-                            emailSender.SendEmailRequest(email.getText(), film, proiezione, prenotazione);
-                    openPage(new PageFive(prenotazione,controller));
+                            JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+                            JPanel pannelloCaricamento = new JPanel();
+                            pannelloCaricamento.add(imagineCaricamento);
+                            openPage(pannelloCaricamento);
+
+                            SendEmail().start();
                         }
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(popUpWindow,
@@ -175,5 +180,17 @@ public class PageFour extends JPanel {
         this.add(panel, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
+    }
+
+    private Thread SendEmail() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                EmailSender emailSender = new EmailSender();
+                emailSender.SendEmailRequest(email.getText(), film, proiezione, prenotazione);
+                openPage(new PageFive(prenotazione, controller));
+            }
+        }
+        );
+        return t;
     }
 }
