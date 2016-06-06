@@ -94,25 +94,6 @@ public class PageFive extends JPanel {
             @Override
             public void run() {
                 
-      /*          try {
-                    for(int i  = 0; i < 30; i++) {
-                hourPlus30.add(Calendar.SECOND, -1);
-                endTimeString = hourPlus30.get(Calendar.HOUR_OF_DAY) + ":" + hourPlus30.get(Calendar.MINUTE) + ":" + hourPlus30.get(Calendar.SECOND) ;
-                endTimeLabel.setText(endTimeString);
-                pannelloContenitore.revalidate();
-                System.out.println("revalidate end time label");
-                pannelloContenitore.repaint();
-                System.out.println("repaint end time label");
-                Thread.sleep(1000);
-                }
-                    
-                    
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-                    */
-      
                     int minutes = 29;
                     int seconds = 59;
                     for(int i  = 0; i < 30; i++) {
