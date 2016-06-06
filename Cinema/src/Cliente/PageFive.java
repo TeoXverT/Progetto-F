@@ -163,16 +163,34 @@ public class PageFive extends JPanel {
                 try {
                     Thread.sleep(5000);
                 checkPayment = controller.checkPayment(prenotazione);
-               if(checkPayment==1){i=60;}
+               if(checkPayment==1){
+                   i=60;
+               }
                
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
                 }   catch (SQLException ex) {
+                        System.out.println("\n\nPROBLEMA CON QUERY checkPayment(Prenotazione)\n\n");
                         Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
                     }
             
            }
-            if(checkPayment==1){System.out.println("pagamento effettuato");}else{System.out.println("sessione scaduta");}
+            if(checkPayment==1){
+                System.out.println("pagamento effettuato");
+                pannelloContenitore.removeAll();
+                JLabel pagamentoEffettuato = new JLabel("<html><b>PAGAMENTO EFFETTUATO</b></html>");
+                pannelloContenitore.add(pagamentoEffettuato);
+                pannelloContenitore.revalidate();
+                pannelloContenitore.repaint();
+            }
+            else{
+                System.out.println("sessione scaduta");
+                pannelloContenitore.removeAll();
+                JLabel pagamentoNonEffettuato = new JLabel("<html><b>PAGAMENTO NON EFFETTUATO.</b></html>");
+                pannelloContenitore.add(pagamentoNonEffettuato);
+                pannelloContenitore.revalidate();
+                pannelloContenitore.repaint();
+            }
             
             }
             } );

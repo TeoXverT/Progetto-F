@@ -512,14 +512,17 @@ public class Adapter_SQL {
     }
     
      public int checkPayment(Prenotazione p) throws SQLException{
+         int cp;
          
          String Query = "SELECT booking_status " +
                         "FROM Booking " +
                         "WHERE id_booking = " +p.getId_prenotazione() +"";
          
-         ResultSet result = SQL.eseguiQueryLettura(Query);
          
-         int cp = result.getInt("booking_status");
+         ResultSet result = SQL.eseguiQueryLettura(Query);
+         result.next();
+         cp = result.getInt("booking_status");
+         
        return cp;
     }
     
