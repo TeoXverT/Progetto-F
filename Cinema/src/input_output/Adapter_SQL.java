@@ -536,6 +536,20 @@ public class Adapter_SQL {
          SQL.eseguiQueryScrittura(Query);
          
      }
+     
+    public ArrayList<Prenotazione> salesVolumeSearch(String a, String b) throws SQLException {
+        ArrayList<Prenotazione> books = new ArrayList<>();
+        ResultSet risultato_query;
+        String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n" +
+                        "FROM `Booking`\n" +
+                         "WHERE booking_status =1\n" +
+                        "AND date_time >= '" + a + "'\n" +
+                        "AND date_time <= '" + b + "'";
+        risultato_query = SQL.eseguiQueryLettura(query);
+        books = parser.Prenotazione_SalesVolume(risultato_query);
+        risultato_query.close();
+        return books;
+    }
 
     public void spegni() {
         SQL.chiudiConnessione();

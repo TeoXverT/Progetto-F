@@ -86,6 +86,18 @@ public class Parse_OBJ {
         return prenotazione;
     }
     
+     public ArrayList<Prenotazione> Prenotazione_SalesVolume(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
+        ArrayList<Prenotazione> books = new ArrayList<>();
+
+        while (risultato_query.next()) {//Lo farà una sola volta
+            books.add(new Prenotazione(risultato_query.getInt("id_booking"), risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("date_time")),
+                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price")));
+        }
+        risultato_query.close();
+
+        return books;
+    }
+    
     public ArrayList<Seat> Seat(ResultSet risultato_query) throws SQLException {
         ArrayList<Seat> seat = new ArrayList<>();
         
@@ -96,7 +108,8 @@ public class Parse_OBJ {
         risultato_query.close();
         return seat;   
     }
-
+    
+   
     ////////////////////////////////////////////////// METODI DI USO COMUNE ///////////////////////////////////
     private Calendar parseData_ora(Timestamp timestamp) {
         java.util.Date date = null;
