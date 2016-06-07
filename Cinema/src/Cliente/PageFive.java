@@ -94,7 +94,7 @@ public class PageFive extends JPanel {
             @Override
             public void run() {
                 
-                    int minutes = 29;
+                    int minutes = 4;
                     int seconds = 59;
                     for(int i  = 0; i < 30; i++) {
                         
