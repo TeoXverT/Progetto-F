@@ -132,12 +132,12 @@ public class PanelAddFilm extends JPanel {
                     link_normalizzato = tmp[1];
                     link_normalizzato = "https://www.youtube.com/v/" + link_normalizzato + "?autoplay=1";
                     if (controller.scriviFilm(new Film(titoloField.getText(), Genere, Integer.parseInt(durataField.getText()), descrizioneArea.getText(), link_normalizzato, copertinaField.getText()))) {
-                        outputGrafico.setText("Modifica registrata con successo.");
+                        outputGrafico.setText("The movie has been added.");
                     } else {
-                        outputGrafico.setText("Errore durante il caricamento dei dati. Assicurati che non ci siano campi vuoti");
+                        outputGrafico.setText("Error. Be sure that there are not empity fields.");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Link youtube non valido. \n Esempio formato link corretto: https://www.youtube.com/watch?v=aT_CaVUKp00", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Invalid YouTube's Link. \n Example of right link: https://www.youtube.com/watch?v=aT_CaVUKp00", "Error", JOptionPane.WARNING_MESSAGE);
                 
                 }
                 
