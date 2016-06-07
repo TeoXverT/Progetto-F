@@ -31,6 +31,14 @@ public class Prenotazione {
         this.prezzo = prezzo;
         this.booking_status = booking_status;
     }
+    //Costruttore per gestione fatturato
+    public Prenotazione(int id_prenotazione, int id_proiezione, Calendar data_ora, int number_of_glasses, double prezzo) {
+        this.id_prenotazione = id_prenotazione;
+        this.id_proiezione = id_proiezione;
+        this.data_ora = data_ora;
+        this.number_of_glasses = number_of_glasses;
+        this.prezzo = prezzo;
+    }
 
     public int getBooking_status() {
         return booking_status;
