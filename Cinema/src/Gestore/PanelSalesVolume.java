@@ -9,8 +9,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -27,6 +31,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import oggetti.Prenotazione;
 
 /**
  *
@@ -36,12 +41,12 @@ public class PanelSalesVolume extends JPanel {
     
     public PanelSalesVolume(final Controller_Gestore controller, final JLabel outputGrafico) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(North());
+        this.add(North(controller));
         this.add(Center());
         this.add(South());
     }
     
-    private JPanel North(){
+    private JPanel North(final Controller_Gestore c){
          //RICORDATI DI SETTARE L'ORA A MEZZANOTTE per From e 23:59 per To
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JButton search = new JButton("Search");
@@ -88,7 +93,12 @@ public class PanelSalesVolume extends JPanel {
          search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                try {
+                    ArrayList<Prenotazione> books = c.salesVolume("a", "s");
+                } catch (SQLException ex) {
+                    Logger.getLogger(PanelSalesVolume.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                // do something
             }
         });
         

@@ -163,5 +163,8 @@ public class Controller_Gestore {
         ArrayList<Proiezione> Sale = adapter.viewShows(id_sala);
         return Sale;
     }
-        
+    public ArrayList<Prenotazione> salesVolume (String a, String b) throws SQLException {
+        ArrayList<Prenotazione> books = adapter.salesVolumeSearch(a, b);
+        return books;
+    }    
 }

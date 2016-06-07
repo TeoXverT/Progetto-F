@@ -538,7 +538,7 @@ public class Adapter_SQL {
      }
      
     public ArrayList<Prenotazione> salesVolumeSearch(String a, String b) throws SQLException {
-        ArrayList<Prenotazione> books = new ArrayList<>();
+        ArrayList<Prenotazione> books;
         ResultSet risultato_query;
         String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n" +
                         "FROM `Booking`\n" +
