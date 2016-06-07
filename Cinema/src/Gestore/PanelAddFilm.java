@@ -71,18 +71,18 @@ public class PanelAddFilm extends JPanel {
         durata.add(plus);
 
 //-----     Building Panel Center
-        Center.add(new JLabel("Titolo: "));
+        Center.add(new JLabel("Title: "));
         Center.add(titoloField);
-        Center.add(new JLabel("Genere: "));
+        Center.add(new JLabel("Genre: "));
         //Center.add(genereField);
         Center.add(genereComboBox);
-        Center.add(new JLabel("Durata: "));
+        Center.add(new JLabel("Runtime: "));
         Center.add(durata);
         Center.add(new JLabel("Link Trailer: "));
         Center.add(linkField);
 
 //-----     Building Panel North
-        North.add(new JLabel("Immagine Copertina: "));
+        North.add(new JLabel("Cover Image: "));
         North.add(copertinaField);
         North.add(anteprima);
         imgCopertina.setIcon(icona);
@@ -91,7 +91,7 @@ public class PanelAddFilm extends JPanel {
         Nordico.add(NorthImg, BorderLayout.CENTER);
         
 //------    Building descrizione
-        Descript.add(new JLabel("Descrizione: "));
+        Descript.add(new JLabel("Description: "));
         Descript.add(scroll);
         CenterFull.add(Center, BorderLayout.PAGE_START);
         CenterFull.add(Descript, BorderLayout.PAGE_END);
