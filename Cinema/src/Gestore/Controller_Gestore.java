@@ -16,7 +16,11 @@ public class Controller_Gestore {
     private final Adapter_SQL adapter = new Adapter_SQL();
 
     public Controller_Gestore() {
+     bookingCleaner().start();
 
+		
+		
+		
     }
 
 //        public boolean creaProiezione( String data_ora,int id_film, int id_sala, String  tipo_proiezione, int prezzo_normale, int prezzo_3d){ 
@@ -166,5 +170,25 @@ public class Controller_Gestore {
     public ArrayList<Prenotazione> salesVolume (String a, String b) throws SQLException {
         ArrayList<Prenotazione> books = adapter.salesVolumeSearch(a, b);
         return books;
-    }    
+    }  
+    
+    private Thread bookingCleaner() {  //Da finire
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        adapter.bookingCleaner();
+                        System.out.println("Halo");
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        //Wait more
+                    }
+                }
+
+            }
+        }
+        );
+        return t;
+    }
+	
 }

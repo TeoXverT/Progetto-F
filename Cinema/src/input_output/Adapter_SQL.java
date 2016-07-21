@@ -554,4 +554,21 @@ public class Adapter_SQL {
     public void spegni() {
         SQL.chiudiConnessione();
     }
+    
+     public boolean bookingCleaner() {
+
+        try {
+
+            String Query = "DELETE FROM Booked_Seat\n"
+                    + "WHERE Booked_Seat.id_booking = 68;";
+
+            SQL.eseguiQueryScrittura(Query);
+        } catch (SQLException ex) {
+            return false;
+        }
+
+        return true;
+    }
+	
+	
 }
