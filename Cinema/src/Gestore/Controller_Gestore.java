@@ -178,7 +178,6 @@ public class Controller_Gestore {
                 while (true) {
                     try {
                         adapter.bookingCleaner();
-                        System.out.println("Halo");
                         Thread.sleep(5000);
                     } catch (InterruptedException ex) {
                         //Wait more
