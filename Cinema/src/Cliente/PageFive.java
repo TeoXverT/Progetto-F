@@ -1,69 +1,58 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Cliente;
 
-import chrriis.dj.nativeswing.swtimpl.components.JFlashPlayer;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.Calendar;
 import javax.swing.JPanel;
 import oggetti.Prenotazione;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-/**
- *
- * @author Yoga
- */
+import javax.swing.JOptionPane;
+
 public class PageFive extends JPanel {
 
-    Controller_Cliente controller;
-    Prenotazione prenotazione;
-    JLabel label1=new JLabel("pagamento effettuato");
-    JLabel label2=new JLabel("sessione scaduta");
-    
-    Calendar hourNow = Calendar.getInstance();
-    Calendar hourPlus30 = Calendar.getInstance();
-    
-    String endTimeString ="prova";
-    JLabel endTimeLabel;
-    
-    JPanel pannelloContenitore;
-    
-    public PageFive(final Prenotazione prenotazione, final Controller_Cliente controller) {
-        this.controller = controller;
+    private final int MAX_TIME; //Min
+    private final int DB_READ_POLLING = 10; //Sec
+
+    private Controller_Cliente controller;
+    private Prenotazione prenotazione;
+
+    private JLabel countdownDispaly = new JLabel();
+    private JPanel pannelloContenitore;
+
+    public PageFive(final Prenotazione prenotazione) {
+        controller = Controller_Cliente.getInstance();
         this.prenotazione = prenotazione;
-        
-        hourPlus30.add(Calendar.MINUTE, 30);
-        System.out.println(hourPlus30.toString() + "\n");
-        //pannello più esterno
-        pannelloContenitore = new JPanel(new GridLayout(3,1));   
+
+        int time = 0;
+        try {
+            time = controller.getConfig().getBooking_validation_time();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Errore di connessione con il server, riporovare piu tardi.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
+        MAX_TIME = time;
+
+        draw();
+    }
+
+    void draw() {
+        pannelloContenitore = new JPanel(new BorderLayout(3, 2));
         this.add(pannelloContenitore);
-        
-        
 
-        endTimeLabel = new JLabel();
-        
-        pannelloContenitore.add(endTimeLabel);
+        JPanel nord = new JPanel(new GridLayout(2, 1));
+        nord.add(countdownDispaly);
 
-        //in questo jlabel verrà scritto se la prenotazione è andata a buon fine
-        JLabel displaySuccessoPrenotazione = new JLabel();
-        pannelloContenitore.add(displaySuccessoPrenotazione);
-        
-        
         JButton confirmButton = new JButton("Conferma Prenotazione");
         confirmButton.addActionListener(new ActionListener() {
-            
-            
             public void actionPerformed(ActionEvent ae) {
                 try {
                     controller.getInsertPaymentForced(prenotazione);
@@ -72,114 +61,105 @@ public class PageFive extends JPanel {
                 }
             }
         });
-        
-        pannelloContenitore.add(confirmButton);
-        
-        
-         //CREARE UN CONTO ALLA ROVESCIA DI 5 MIN  E CONTROLLARE OGNI 5 SEC SE SUL DB IL PARAMETRO BOOKING.BOOKING_STATUS E DIVENTATO UNO IN TAL CASO 
-        //USCIRE DAL PROGRAMMA ALTRIMENTI ASPETTARE I 5 MIN E Visualizzare pagamento fallito e andare al page one
-        //PER SIMUALRE LA RICEVUTA DI PAGAMENTO METTERE UN TASTO CHE MODIFICA IL PARAMETRO  BOOKING.BOOKING_STATUS AD 1
-        ThreadTimer(0).start();
-        
-        ThreadCountdown().start();
+        nord.add(confirmButton);
 
-        
-        
-          }
-   
+        pannelloContenitore.add(nord, BorderLayout.NORTH);
+        JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+        pannelloContenitore.add(imagineCaricamento, BorderLayout.CENTER);
+
+        ThreadTimer().start();
+        ThreadCountdown().start();
+    }
+
     private Thread ThreadCountdown() {
-        Thread t = null;
-        
-        t = new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                
-                    int minutes = 4;
-                    int seconds = 59;
-                    for(int i  = 0; i < 30; i++) {
-                        
-                        endTimeLabel.setText("<html><h1><b>" + String.valueOf(minutes+1) + " minuti e 00 secondi rimasti.<br>Allo scadere del tempo la prenotazione non sarà più valida<b></h1></html>");
-                        endTimeLabel.revalidate();
-                        endTimeLabel.repaint();
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        for(int e = 0; e < 59; e++) {
-                            
-                            endTimeLabel.setText("<html><h1><b>" + String.valueOf(minutes) + " minuti e "+ seconds+" secondi rimasti.<br>Allo scadere del tempo la prenotazione non sarà più valida<b></h1></html>");
-                            seconds --;
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        
-                        seconds = 59;
-                        
-                        minutes --;
+
+                int minute = MAX_TIME;
+                int second = 0;
+                for (int i = 0; i < MAX_TIME * 60; i++) {
+
+                    countdownDispaly.setText("<html><center><h1><b>" + String.valueOf(minute) + " minuti e " + second + " secondi rimasti.</center><br>Allo scadere del tempo la prenotazione non sarà più valida.<b></h1></html>");
+
+                    if (second == 0) {
+                        second = 59;
+                        minute = minute - 1;
+                    } else {
+                        second--;
                     }
-                    
-                    endTimeLabel.setText("<html><b>ATTENZIONE TEMPO SCADUTO</b></html>");
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        System.out.println("\n\nPROBLEMA CON Sleep\n\n");
+                    }
+                }
             }
         });
-        
 
-        
         return t;
     }
-    
-    
-    
-    
-    private Thread ThreadTimer(int par){
-        Thread t = null;
-       
-        t=new Thread(new Runnable(){
-            public void run(){
-                int checkPayment = 0;
-            for(int i=0;i<60;i++){
-                try {
-                    Thread.sleep(5000);
-                checkPayment = controller.checkPayment(prenotazione);
-               if(checkPayment==1){
-                   i=60;
-               }
-               
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
-                }   catch (SQLException ex) {
-                        System.out.println("\n\nPROBLEMA CON QUERY checkPayment(Prenotazione)\n\n");
-                        Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-            
-           }
-            if(checkPayment==1){
-                System.out.println("pagamento effettuato");
-                pannelloContenitore.removeAll();
-                JLabel pagamentoEffettuato = new JLabel("<html><b>PAGAMENTO EFFETTUATO</b></html>");
-                pannelloContenitore.add(pagamentoEffettuato);
-                pannelloContenitore.revalidate();
-                pannelloContenitore.repaint();
-            }
-            else{
-                System.out.println("sessione scaduta");
-                pannelloContenitore.removeAll();
-                JLabel pagamentoNonEffettuato = new JLabel("<html><b>PAGAMENTO NON EFFETTUATO.</b></html>");
-                pannelloContenitore.add(pagamentoNonEffettuato);
-                pannelloContenitore.revalidate();
-                pannelloContenitore.repaint();
-            }
-            
-            }
-            } );
-        return t;
-}
-      
-  }
-  
-  
-  
 
+    private Thread ThreadTimer() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                int checkPayment = 0;
+                for (int i = 0; i < (MAX_TIME * 60) / DB_READ_POLLING; i++) {
+                    try {
+                        Thread.sleep(DB_READ_POLLING * 1000);
+                        checkPayment = controller.checkPayment(prenotazione);
+                        if (checkPayment == 1) {
+                            break;
+                        }
+
+                    } catch (InterruptedException ex) {
+                        System.out.println("\n\nPROBLEMA CON Sleep\n\n");
+                    } catch (SQLException ex) {
+                        System.out.println("\n\nPROBLEMA CON QUERY checkPayment(Prenotazione)\n\n");
+                    }
+                }
+
+                pannelloContenitore.removeAll();
+                pannelloContenitore.add(makeHomeButton(), BorderLayout.CENTER);
+                if (checkPayment == 1) {
+                    pannelloContenitore.add(new JLabel("<html><h1><b>PAGAMENTO EFFETTUATO.</b></html>"), BorderLayout.NORTH);
+                } else {
+                    pannelloContenitore.add(new JLabel("<html><h1><b>PAGAMENTO NON PERVENUTO.</b></html>"), BorderLayout.NORTH);
+                }
+                pannelloContenitore.revalidate();
+                pannelloContenitore.repaint();
+
+            }
+        });
+        return t;
+    }
+
+    private JButton makeHomeButton() {
+        JButton homeButton = new JButton();
+        homeButton.setIcon(new ImageIcon(new ImageIcon("immagini/home.png").getImage().getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH)));
+        homeButton.setBorderPainted(true);
+        homeButton.setContentAreaFilled(false);
+        homeButton.addActionListener(goBackEvent());
+        return homeButton;
+    }
+
+    private void goBack() {
+        this.removeAll();
+        this.setLayout(new BorderLayout());
+        this.add(new PageOne());
+        this.revalidate();
+        this.repaint();
+    }
+
+    private ActionListener goBackEvent() {
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goBack();
+            }
+        };
+        return evento;
+    }
+
+}
