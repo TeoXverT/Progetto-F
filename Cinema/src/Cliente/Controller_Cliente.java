@@ -9,10 +9,7 @@ import input_output.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import oggetti.Config;
 import oggetti.Film;
 import oggetti.Prenotazione;
@@ -26,12 +23,22 @@ import oggetti.Seat;
  */
 public class Controller_Cliente {
 
-    ArrayList<Proiezione> listaProiezioniFuture;
-    ArrayList<Proiezione> listaProiezioniFiltrate;
-    Adapter_SQL adapter = new Adapter_SQL();
+    private static Controller_Cliente instance;
 
-    public Controller_Cliente() {
+    private ArrayList<Proiezione> listaProiezioniFuture;
+    private ArrayList<Proiezione> listaProiezioniFiltrate;
+    private Adapter_SQL adapter;
+    private Config config;
 
+    private Controller_Cliente() {
+        adapter = Adapter_SQL.getInstance();
+    }
+
+    public static synchronized Controller_Cliente getInstance() {
+        if (instance == null) {
+            instance = new Controller_Cliente();
+        }
+        return instance;
     }
 
     public ArrayList<Proiezione> listaProiezioniFuture(ArrayList<Proiezione> listaProiezione) {
@@ -99,7 +106,9 @@ public class Controller_Cliente {
     }
 
     public Config getConfig() throws SQLException {
-        Config config = adapter.visualizzaConfig();
+        if (config == null) {
+            config = adapter.visualizzaConfig();
+        }
         return config;
     }
 
@@ -118,21 +127,20 @@ public class Controller_Cliente {
     }
 
     public int scriviPrenotazione(Prenotazione prenotazione) throws SQLException {
-        int numeroPrenotazione=0;
+        int numeroPrenotazione = 0;
         numeroPrenotazione = adapter.writeBookin(prenotazione);
         return numeroPrenotazione;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
     }
-    
+
     public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
         return adapter.getTakenSeats(id_proiezione);
     }
-    
-    
+
     public void getInsertPaymentForced(Prenotazione p) throws SQLException {
         adapter.insertPaymentForced(p);
     }
-    
-    public int checkPayment(Prenotazione p) throws SQLException{
+
+    public int checkPayment(Prenotazione p) throws SQLException {
         return adapter.checkPayment(p);
     }
 }

@@ -30,7 +30,8 @@ import oggetti.*;
  */
 public class PageFour extends JPanel {
 
-    Controller_Cliente controller;
+    private Controller_Cliente controller = Controller_Cliente.getInstance();
+
     Film film;
 
     Proiezione proiezione;
@@ -42,7 +43,7 @@ public class PageFour extends JPanel {
 
     Component popUpWindow;
 
-    public PageFour(Film film, Proiezione proiezione, Prenotazione prenotazione, Config config, Controller_Cliente controller) {
+    public PageFour(Film film, Proiezione proiezione, Prenotazione prenotazione, Config config) {
         this.controller = controller;
         this.film = film;
         this.proiezione = proiezione;
@@ -124,7 +125,7 @@ public class PageFour extends JPanel {
                                     "I Posti da lei scielti sono stati prenotati da qualcun'altro, si prega di scieglere dei nuovi posti.",
                                     "Attenzione!!!",
                                     JOptionPane.WARNING_MESSAGE);
-                            openPage(new PageThree(film, proiezione, controller));
+                            openPage(new PageThree(film, proiezione));
                         } else {
 
                             JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
@@ -153,7 +154,7 @@ public class PageFour extends JPanel {
         JButton back = new JButton("Back");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                openPage(new PageThree(film, proiezione, controller));
+                openPage(new PageThree(film, proiezione));
             }
         });
         this.add(back, BorderLayout.BEFORE_LINE_BEGINS);
@@ -187,7 +188,7 @@ public class PageFour extends JPanel {
             public void run() {
                 EmailSender emailSender = new EmailSender();
                 emailSender.SendEmailRequest(email.getText(), film, proiezione, prenotazione);
-                openPage(new PageFive(prenotazione, controller));
+                openPage(new PageFive(prenotazione));
             }
         }
         );

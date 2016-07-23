@@ -21,13 +21,22 @@ import oggetti.*;
  */
 public class Adapter_SQL {
 
-    SQLConnessione SQL;
-    Parse_OBJ parser;
+    private static Adapter_SQL instance;
 
-    public Adapter_SQL() {
+    private final SQLConnessione SQL;
+    private final Parse_OBJ parser;
+
+    private Adapter_SQL() {
         SQL = new SQLConnessione();
         SQL.creaConnessione();
         parser = new Parse_OBJ();
+    }
+
+    public static synchronized Adapter_SQL getInstance() {
+        if (instance == null) {
+            instance = new Adapter_SQL();
+        }
+        return instance;
     }
 
     public ArrayList<Proiezione> visualizzaProiezione(int tipo) throws SQLException {
@@ -123,9 +132,8 @@ public class Adapter_SQL {
         ResultSet risultato_query;
         ArrayList<Sala> Sale;
 
-        query = "SELECT * FROM `Sala`";
+        query = "SELECT * FROM Sala";
         risultato_query = SQL.eseguiQueryLettura(query);
-
         Sale = parser.Sala(risultato_query);
         risultato_query.close();
 
@@ -266,10 +274,10 @@ public class Adapter_SQL {
 
     public boolean scriviConfig(Config config) {
 
-        String query = "INSERT INTO Config(prezzo_vip,sconto,glasses_price,over_price,disabled_price,offset_time) VALUES("
+        String query = "INSERT INTO Config(prezzo_vip,sconto,glasses_price,over_price,disabled_price,offset_time,booking_validation_time) VALUES("
                 + "'" + config.getPrezzo_vip() + "','" + config.getSconto() + "','"
                 + config.getGlasses_price() + "','" + config.getOver_price() + "','" + config.getDisabled_price() + "','"
-                + config.getOffset_time() + "')";
+                + config.getOffset_time() + "','" + config.getBooking_validation_time() + "')";
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -335,10 +343,10 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
-       // ora = ora + 2; //PER FUSO ORARIO DATABASE
+        // ora = ora + 2; //PER FUSO ORARIO DATABASE
         query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
-             // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
+                // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
                 + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL '" + deltaData + " 2' DAY_HOUR), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
@@ -502,7 +510,7 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> Proiezioni;
-        query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala ="+ id_sala;
+        query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala =" + id_sala;
         risultato_query = SQL.eseguiQueryLettura(query);
 
         Proiezioni = parser.Proiezione(risultato_query);
@@ -510,41 +518,39 @@ public class Adapter_SQL {
 
         return Proiezioni;
     }
-    
-     public int checkPayment(Prenotazione p) throws SQLException{
-         int cp;
-         
-         String Query = "SELECT booking_status " +
-                        "FROM Booking " +
-                        "WHERE id_booking = " +p.getId_prenotazione() +"";
-         
-         
-         ResultSet result = SQL.eseguiQueryLettura(Query);
-         result.next();
-         cp = result.getInt("booking_status");
-         
-       return cp;
+
+    public int checkPayment(Prenotazione p) throws SQLException {
+        int cp;
+
+        String Query = "SELECT booking_status "
+                + "FROM Booking "
+                + "WHERE id_booking = " + p.getId_prenotazione() + "";
+
+        ResultSet result = SQL.eseguiQueryLettura(Query);
+        result.next();
+        cp = result.getInt("booking_status");
+
+        return cp;
     }
-    
-     
-     public void insertPaymentForced(Prenotazione p) throws SQLException {
-         
-         String Query = "UPDATE Booking " +
-                        "SET booking_status=1 " +
-                        "WHERE id_booking = "+p.getId_prenotazione()+"";
-         
-         SQL.eseguiQueryScrittura(Query);
-         
-     }
-     
+
+    public void insertPaymentForced(Prenotazione p) throws SQLException {
+
+        String Query = "UPDATE Booking "
+                + "SET booking_status=1 "
+                + "WHERE id_booking = " + p.getId_prenotazione() + "";
+
+        SQL.eseguiQueryScrittura(Query);
+
+    }
+
     public ArrayList<Prenotazione> salesVolumeSearch(String a, String b) throws SQLException {
         ArrayList<Prenotazione> books;
         ResultSet risultato_query;
-        String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n" +
-                        "FROM `Booking`\n" +
-                         "WHERE booking_status =1\n" +
-                        "AND date_time >= '" + a + "'\n" +
-                        "AND date_time <= '" + b + "'";
+        String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n"
+                + "FROM `Booking`\n"
+                + "WHERE booking_status =1\n"
+                + "AND date_time >= '" + a + "'\n"
+                + "AND date_time <= '" + b + "'";
         risultato_query = SQL.eseguiQueryLettura(query);
         books = parser.Prenotazione_SalesVolume(risultato_query);
         risultato_query.close();
@@ -554,21 +560,33 @@ public class Adapter_SQL {
     public void spegni() {
         SQL.chiudiConnessione();
     }
-    
-     public boolean bookingCleaner() {
 
+    public boolean bookingCleaner() {
+        //Lettura di prenotazioni scadute (5 min), eliminazioni prenotazioni scadute sia booking che bookingseat
+        //Per la relazione di  tipo RESTRICT elimino sia il posto/i che la prenotazione
         try {
-
-            String Query = "DELETE FROM Booked_Seat\n"
-                    + "WHERE Booked_Seat.id_booking = 68;";
-
+            String Query = "delete From Booked_Seat\n"
+                    + "where Booked_Seat.id_booking in (select * from (\n"
+                    + "select Booking.id_booking\n"
+                    + "from Booking,Config\n"
+                    + "where Booking.booking_status = 0 and \n"
+                    + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL 2 HOUR)> Config.booking_validation_time\n"
+                    + ") as Temp_table)";
             SQL.eseguiQueryScrittura(Query);
+            Query = "DELETE FROM Booking\n"
+                    + "where Booking.id_booking in (select * from (\n"
+                    + "select Booking.id_booking\n"
+                    + "from Booking,Config\n"
+                    + "where Booking.booking_status = 0 and \n"
+                    + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL 2 HOUR)> Config.booking_validation_time\n"
+                    + ") as Temp_table)";
+            SQL.eseguiQueryScrittura(Query);
+
         } catch (SQLException ex) {
             return false;
         }
 
         return true;
     }
-	
-	
+
 }

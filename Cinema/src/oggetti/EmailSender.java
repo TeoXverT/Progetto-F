@@ -73,7 +73,7 @@ public class EmailSender {
             messaggio = messaggio + "Hai in oltre comprato " + prenotazione.getNumber_of_glasses() + " occhiali 3D.<br><br>";
         }
         messaggio = messaggio + "Totale da pagare: " + prenotazione.getPrezzo() + " Euro<br><br><br>";
-        messaggio = messaggio + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Se si è chiuso il programma questo ricevuta non è più valdida, riperete la procedura.</i><br><br><br><br>";
+        messaggio = messaggio + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Si prega di portare con se questo documento al cinema.</i><br><br><br><br>";
         messaggio = messaggio + "</center>";
 
         //ORA IN SANDBOX, per toglerlo usare https://www.paypal.com/cgi-bin/webscr\

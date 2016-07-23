@@ -1,6 +1,5 @@
 package Cliente;
 
-
 import oggetti.ButtonCover;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -31,61 +30,59 @@ import oggetti.Film;
 
 public class PageOne extends JPanel {
 
+    private Controller_Cliente controller = Controller_Cliente.getInstance();
+
     JTabbedPane tab = new JTabbedPane();
-    Controller_Cliente controller;
     Component frameErrore;
-    
-    int SliderValue ;
+
+    int SliderValue;
     JSlider slider;
     Calendar ora = Calendar.getInstance();
-    
-    
-    static  int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-    
+
+    static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
     JPanel pannelloSlider;
-    
-    
-    public PageOne(Controller_Cliente controller) {
+
+    public PageOne() {
         this.controller = controller;
-     
+
         this.setLayout(new BorderLayout());
         this.add(tab, BorderLayout.CENTER);
-        JScrollPane scrollPane = new JScrollPane(tab,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.add(scrollPane, BorderLayout.CENTER);    
+        JScrollPane scrollPane = new JScrollPane(tab, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add(scrollPane, BorderLayout.CENTER);
         //istanziazione aggiunta slider a sinistra del frame
-        pannelloSlider = new JPanel(); 
+        pannelloSlider = new JPanel();
         pannelloSlider.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        
-                c.fill = GridBagConstraints.VERTICAL;
-                c.weightx = 0.5;
-                c.gridx = 0;
-                c.gridy = 0;
-       
+
+        c.fill = GridBagConstraints.VERTICAL;
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+
         this.add(pannelloSlider, BorderLayout.WEST);
-      if(oraStart < 15){
-           oraStart = 15;
-      }
-       
+        if (oraStart < 15) {
+            oraStart = 15;
+        }
+
         slider = new JSlider(JSlider.VERTICAL, 15, 23, oraStart);
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
-                if(!slider.getValueIsAdjusting()) {
-                    
+                if (!slider.getValueIsAdjusting()) {
+
                     ThreadScaricaFilm(tab.getSelectedIndex()).start();
-                    
+
                 }
             }
         });
-        
-        pannelloSlider.add(slider,c);
-        slider.setPreferredSize(new Dimension(50,500));
+
+        pannelloSlider.add(slider, c);
+        slider.setPreferredSize(new Dimension(50, 500));
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
-        
-        
+
         Calendar dataAttuale = Calendar.getInstance();
         tab.add(new JPanel(), "Oggi");
 
@@ -102,8 +99,6 @@ public class PageOne extends JPanel {
             }
         });
     }
-    
-    
 
     private String giornoDellaSettimana(int numero) {
         switch (numero) {
@@ -157,14 +152,14 @@ public class PageOne extends JPanel {
         }
     }
 
-    private Thread ThreadScaricaFilm(final int deltaData ) {
-        Thread t= new Thread(new Runnable() {
+    private Thread ThreadScaricaFilm(final int deltaData) {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 20, 30));
                     SliderValue = slider.getValue();
                     ArrayList<Film> Films = controller.FilmFuturoBySlider(deltaData, SliderValue);
-                    
+
                     for (final Film f : Films) {
 //                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
@@ -204,7 +199,7 @@ public class PageOne extends JPanel {
 
     public void OpenPageTwo(Film film, int deltaData, int valueSlider) throws SQLException, IOException {
         this.removeAll();
-        this.add(new PageTwo(film, deltaData,controller, valueSlider));
+        this.add(new PageTwo(film, deltaData, valueSlider));
         this.revalidate();
         this.repaint();
     }

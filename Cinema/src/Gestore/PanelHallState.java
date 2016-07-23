@@ -39,6 +39,7 @@ public class PanelHallState extends JPanel{
     }
     
     private void init() {
+        
         this.removeAll();
         try {
             proiezioni = controller.vieShows(id_sala);

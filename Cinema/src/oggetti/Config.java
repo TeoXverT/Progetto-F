@@ -7,15 +7,16 @@ package oggetti;
 public class Config {
 
     private double prezzo_vip, sconto, glasses_price, over_price, disabled_price;
-    private int offset_time;
+    private int offset_time, booking_validation_time;
 
-    public Config(double prezzo_vip, double sconto, double glasses_price, double over_price, double disabled_price, int offset_time) {
+    public Config(double prezzo_vip, double sconto, double glasses_price, double over_price, double disabled_price, int offset_time, int booking_validation_time) {
         this.prezzo_vip = prezzo_vip;
         this.sconto = sconto;
         this.glasses_price = glasses_price;
         this.over_price = over_price;
         this.disabled_price = disabled_price;
         this.offset_time = offset_time;
+        this.booking_validation_time = booking_validation_time;
     }
 
     public double getPrezzo_vip() {
@@ -31,7 +32,7 @@ public class Config {
     }
 
     public double getGlasses_price() {
-        return  glasses_price;
+        return glasses_price;
     }
 
     public double getOver_price() {
@@ -40,6 +41,10 @@ public class Config {
 
     public double getDisabled_price() {
         return disabled_price;
+    }
+
+    public int getBooking_validation_time() {
+        return booking_validation_time;
     }
 
     @Override

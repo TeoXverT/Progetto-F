@@ -5,6 +5,7 @@ import input_output.SQLConnessione;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Timer;
 import oggetti.*;
 
 /**
@@ -13,14 +14,17 @@ import oggetti.*;
  */
 public class Controller_Gestore {
 
-    private final Adapter_SQL adapter = new Adapter_SQL();
+    private final Adapter_SQL adapter = Adapter_SQL.getInstance();
+
+    //Dati per il Thread di pulitura bigletti non pagati
+    final int DELAY = 0;
+    final int PERIOD = 10000;
 
     public Controller_Gestore() {
-     bookingCleaner().start();
 
-		
-		
-		
+//        Timer timer = new Timer();
+//        timer.schedule(new DbCleanerThread(timer), DELAY, PERIOD);
+
     }
 
 //        public boolean creaProiezione( String data_ora,int id_film, int id_sala, String  tipo_proiezione, int prezzo_normale, int prezzo_3d){ 
@@ -91,7 +95,7 @@ public class Controller_Gestore {
     }
 
     public boolean contolloDisponibilitaProiezione(Proiezione proiezione) throws SQLException {
-      return adapter.contolloProiezioni(proiezione);
+        return adapter.contolloProiezioni(proiezione);
     }
 
     public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
@@ -126,7 +130,6 @@ public class Controller_Gestore {
 //        db.chiudiConnessione();
 //        return c;
 //    }
-
     public boolean scriviConfig(Config config) {
         if (true) { //Eventuale controllo sul valore dei campi di config
             return adapter.scriviConfig(config);
@@ -157,37 +160,20 @@ public class Controller_Gestore {
     public boolean eliminaSale(int id_sala) {
         return adapter.eliminaSale(id_sala);
     }
-    
+
     public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
         ArrayList<Proiezione> Sale = adapter.visualizzaStatoSale();
         return Sale;
     }
-    
+
     public ArrayList<Proiezione> vieShows(int id_sala) throws SQLException {
         ArrayList<Proiezione> Sale = adapter.viewShows(id_sala);
         return Sale;
     }
-    public ArrayList<Prenotazione> salesVolume (String a, String b) throws SQLException {
+
+    public ArrayList<Prenotazione> salesVolume(String a, String b) throws SQLException {
         ArrayList<Prenotazione> books = adapter.salesVolumeSearch(a, b);
         return books;
-    }  
-    
-    private Thread bookingCleaner() {  //Da finire
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    try {
-                        adapter.bookingCleaner();
-                        Thread.sleep(5000);
-                    } catch (InterruptedException ex) {
-                        //Wait more
-                    }
-                }
-
-            }
-        }
-        );
-        return t;
     }
-	
+
 }

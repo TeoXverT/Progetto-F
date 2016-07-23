@@ -321,6 +321,10 @@ public class Gui_Gestore extends JFrame {
         } catch (SQLException ex) {
             System.out.println("Da Gestire l'eccezione!!!!");
         }
+        catch (java.lang.NullPointerException ex) {
+            System.out.println("Da Gestire l'eccezione java.lang.NullPointerException ex nel menu bar CreateHallList !!!!");
+        }
+
 
         for (int i = 0; i < sale.size(); i++) {
             menuItem.add(new JMenuItem("Sala " + sale.get(i).getId_sala()));

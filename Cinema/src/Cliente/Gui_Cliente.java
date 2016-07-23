@@ -6,12 +6,17 @@
 package Cliente;
 
 import java.awt.BorderLayout;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import oggetti.Config;
+import oggetti.Prenotazione;
 
 /**
  *
@@ -20,11 +25,12 @@ import javax.swing.WindowConstants;
 public class Gui_Cliente extends JFrame {
 
     JPanel display = new JPanel(new BorderLayout());
-    Controller_Cliente controller = new Controller_Cliente();
+    Controller_Cliente controller = Controller_Cliente.getInstance();
 
     public Gui_Cliente() {
 
         Create_Gui();
+
     }
 
     public void Create_Gui() {
@@ -36,7 +42,7 @@ public class Gui_Cliente extends JFrame {
         setIconImage(icona.getImage());
 //        this.setResizable(false);
         this.add(display);
-        display.add(new PageOne(controller));
+        display.add(new PageOne());
     }
 
 }

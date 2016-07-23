@@ -32,7 +32,7 @@ import oggetti.Seat;
  */
 public class PageThree extends JPanel {
 
-    Controller_Cliente controller;
+    private Controller_Cliente controller = Controller_Cliente.getInstance();
     Proiezione proiezione;
     Film film;
     Prenotazione prenotazione;
@@ -55,7 +55,7 @@ public class PageThree extends JPanel {
     JLabel prezzo = new JLabel();
     JButton prosegui = new JButton("PROSEGUI");
 
-    public PageThree(Film film, Proiezione proiezione, Controller_Cliente controller) {
+    public PageThree(Film film, Proiezione proiezione) {
         this.controller = controller;
         this.film = film;
         this.proiezione = proiezione;
@@ -140,7 +140,7 @@ public class PageThree extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),Taken_seats,null,0,totale_prezzo,0);
-                openPage(new PageFour(film, proiezione, prenotazione, config, controller));                
+                openPage(new PageFour(film, proiezione, prenotazione, config));                
             }
         });
 
@@ -195,7 +195,7 @@ public class PageThree extends JPanel {
 
     private void goback() {
         this.removeAll();
-        this.add(new PageOne(controller));
+        this.add(new PageOne());
         this.revalidate();
         this.repaint();
     }

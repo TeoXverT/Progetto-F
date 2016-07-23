@@ -47,7 +47,7 @@ import oggetti.Seat;
  */
 public class PageTwo extends JPanel {
 
-    private Controller_Cliente controller;
+    private Controller_Cliente controller = Controller_Cliente.getInstance();
     private Film film;
     private int deltaData;
     private ArrayList<Proiezione> proiezione;
@@ -55,7 +55,7 @@ public class PageTwo extends JPanel {
 
     Proiezione proiezione1;
 
-    public PageTwo(Film film, int deltaData, Controller_Cliente controller, int deltaTime) throws SQLException, IOException {
+    public PageTwo(Film film, int deltaData, int deltaTime) throws SQLException, IOException {
         //Il controller ti permettera di parlare con il database
         //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
         //deltaData è temporaneo in attesa dello slider  laterale di selezione del orario        
@@ -78,7 +78,7 @@ public class PageTwo extends JPanel {
         
         
         JButton cover = new JButton();
-        cover.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("https://cdn3.iconfinder.com/data/icons/web-and-internet-icons/512/Home-512.png"))), 30, 30));
+        cover.setIcon(scalaImmagine(new ImageIcon("immagini/home.png"), 30, 30));
         cover.setBorderPainted(true);
         cover.setContentAreaFilled(false);
         
@@ -191,7 +191,7 @@ public class PageTwo extends JPanel {
     private void goBack() {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new PageOne(controller));
+        this.add(new PageOne());
         this.revalidate();
         this.repaint();
     }
@@ -209,7 +209,7 @@ public class PageTwo extends JPanel {
     private void openPageThree(Film film, Proiezione proiezione, Controller_Cliente controller) {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new PageThree(film, proiezione, controller), BorderLayout.CENTER);
+        this.add(new PageThree(film, proiezione), BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }

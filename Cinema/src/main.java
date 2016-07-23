@@ -2,19 +2,11 @@
 import Cliente.Gui_Cliente;
 import Gestore.*;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import oggetti.EmailSender;
-import oggetti.Film;
-import oggetti.Prenotazione;
-import oggetti.Proiezione;
-import oggetti.Seat;
+
 
 public class main {
 
-    public static void main(String[] args) throws IOException, SQLException {
+    public static void main(String[] args) {
         /*  BACHECA:
         
          //LE MODIFICHE INGENTI RIGUARDANO I SEGUENTI PUNTI:
@@ -48,11 +40,8 @@ public class main {
         
         
          */
-        
-        
-        
-        
 
+        
         Gui_Gestore gestore = new Gui_Gestore();
         gestore.setVisible(true);
         gestore.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -74,14 +63,4 @@ public class main {
             }
         });
     }
-//
-//    public static JPanel getBrowserPanel() {
-//        JPanel webBrowserPanel = new JPanel(new BorderLayout());
-//        JWebBrowser webBrowser = new JWebBrowser();
-//        webBrowserPanel.add(webBrowser, BorderLayout.CENTER);
-//        webBrowser.setBarsVisible(false);
-//        webBrowser.navigate("https://www.youtube.com/v/b-Cr0EWwaTk?fs=1");
-//        return webBrowserPanel;
-//    }
-
 }
