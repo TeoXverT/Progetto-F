@@ -1,5 +1,6 @@
 package Cliente;
 
+import Gestore.EmailSender;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -9,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,12 +28,12 @@ import oggetti.*;
  */
 public class PageFour extends JPanel {
 
-    private Controller_Cliente controller = Controller_Cliente.getInstance();
+    private Controller_Cliente controller;
 
     Film film;
 
-    Proiezione proiezione;
-    Prenotazione prenotazione;
+    Screening proiezione;
+    Booking prenotazione;
     Config config;
     JLabel totalPrice = new JLabel();
     JTextField email;
@@ -43,17 +41,17 @@ public class PageFour extends JPanel {
 
     Component popUpWindow;
 
-    public PageFour(Film film, Proiezione proiezione, Prenotazione prenotazione, Config config) {
-        this.controller = controller;
+    public PageFour(Film film, Screening proiezione, Booking prenotazione, Config config) {
+        controller = Controller_Cliente.getInstance();
         this.film = film;
         this.proiezione = proiezione;
         this.prenotazione = prenotazione;
         this.config = config;
 
-        drawGui();
+        draw();
     }
-
-    private void drawGui() {
+ 
+    private void draw() {
         this.setLayout(new BorderLayout());
 
         JPanel pannelloCopertina = new JPanel();
@@ -70,7 +68,7 @@ public class PageFour extends JPanel {
 
         JPanel carrello = new JPanel(new GridLayout(0, 2));
         carrello.add(new JLabel("<html><font size=\"5\">" + proiezione.getData_ora_friendly_2() + "</font></html>"));
-        carrello.add(new JLabel("<html><font size=\"5\">Room: " + proiezione.getId_sala() + " Type of Projection: " + proiezione.getType_String() + "</font></html>"));
+        carrello.add(new JLabel("<html><font size=\"5\">Room: " + proiezione.getRoom().getId_sala() + " Type of Projection: " + proiezione.getType_String() + "</font></html>"));
 
         carrello.add(new JLabel("<html><b><font size=\"5\">Cart:</font></b><html>"));
         carrello.add(new JLabel(""));
@@ -128,7 +126,7 @@ public class PageFour extends JPanel {
                                     JOptionPane.WARNING_MESSAGE);
                             openPage(new PageThree(film, proiezione));
                         } else {
-                            System.out.println("ID Booking: "+idBooking);
+                            System.out.println("ID Booking: " + idBooking);
                             prenotazione.setId_prenotazione(idBooking);
 
                             JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));

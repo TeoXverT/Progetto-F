@@ -6,7 +6,7 @@
 package Testing;
 
 import Cliente.Controller_Cliente;
-import oggetti.Prenotazione;
+import oggetti.Booking;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import static org.junit.Assert.*;

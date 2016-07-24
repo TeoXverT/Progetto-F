@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JPanel;
-import oggetti.Prenotazione;
+import oggetti.Booking;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -20,12 +20,12 @@ public class PageFive extends JPanel {
     private final int DB_READ_POLLING = 5; //Sec
 
     private Controller_Cliente controller;
-    private Prenotazione prenotazione;
+    private Booking prenotazione;
 
     private JLabel countdownDispaly = new JLabel();
     private JPanel pannelloContenitore;
 
-    public PageFive(final Prenotazione prenotazione) {
+    public PageFive(final Booking prenotazione) {
         controller = Controller_Cliente.getInstance();
         this.prenotazione = prenotazione;
 

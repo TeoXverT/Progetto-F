@@ -1,4 +1,4 @@
-package oggetti;
+package Gestore;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import oggetti.Film;
+import oggetti.Booking;
+import oggetti.Screening;
+import oggetti.Seat;
 
 public class EmailSender {
 
@@ -21,7 +25,7 @@ public class EmailSender {
 
     }
 
-    public boolean SendEmailRequest(String email_destinatario, Film film, Proiezione proiezione, Prenotazione prenotazione) {
+    public boolean SendEmailRequest(String email_destinatario, Film film, Screening proiezione, Booking prenotazione) {
         try {
             URL obj = new URL(URL_SERVER);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -55,7 +59,7 @@ public class EmailSender {
         return false;
     }
 
-    private String purchaseDescription(Film film, Proiezione proiezione, Prenotazione prenotazione) {
+    private String purchaseDescription(Film film, Screening proiezione, Booking prenotazione) {
         String messaggio;
 
         messaggio = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"><title>Pagamento</title></head><body><center>";
@@ -64,7 +68,7 @@ public class EmailSender {
 
         messaggio = messaggio + "<IMG SRC=\"" + film.getLink_copertina() + "\" ALT=\"some text\" WIDTH=400 HEIGHT=600><br><br>";
         messaggio = messaggio + "<p><font size=\"4\">Codice Prenotazione :" + prenotazione.getId_prenotazione() + "</p></font><br><br>";
-        messaggio = messaggio + "<p>" + film.getTitolo_film() + " inizia il " + proiezione.getData_ora_friendly_2() + " nella Sala " + proiezione.getId_sala() + "</p><br>";
+        messaggio = messaggio + "<p>" + film.getTitolo_film() + " inizia il " + proiezione.getData_ora_friendly_2() + " nella Sala " + proiezione.getRoom().getId_sala() + "</p><br>";
         messaggio = messaggio + "Prenotati i seguenti posti:<br>";
         for (Seat s : prenotazione.getPosti_prenotati()) {
             messaggio = messaggio + "Fila " + s.getx() + " Colonna " + s.gety() + "<br>";

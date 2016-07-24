@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import oggetti.Config;
-import oggetti.Prenotazione;
+import oggetti.Booking;
 
 /**
  *

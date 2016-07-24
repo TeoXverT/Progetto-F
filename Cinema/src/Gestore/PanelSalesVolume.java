@@ -34,7 +34,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import oggetti.Prenotazione;
+import oggetti.Booking;
 
 /**
  *
@@ -97,7 +97,7 @@ public class PanelSalesVolume extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ArrayList<Prenotazione> books = c.salesVolume(dateToString((Date)dateFrom.getValue()), dateToString((Date)dateTo.getValue()));
+                    ArrayList<Booking> books = c.salesVolume(dateToString((Date)dateFrom.getValue()), dateToString((Date)dateTo.getValue()));
                     System.out.println(dateToString((Date)dateTo.getValue()));                               
                     double tot = tableUpdateAndCount(books);
                     total.setText(String.valueOf(tot));
@@ -184,10 +184,10 @@ public class PanelSalesVolume extends JPanel {
         return timeDiff;
     }
     
-    public double tableUpdateAndCount(ArrayList<Prenotazione> x){
+    public double tableUpdateAndCount(ArrayList<Booking> x){
         tableModel.setRowCount(0);
         double tot = 0D;
-        for (Prenotazione p : x) {      
+        for (Booking p : x) {      
             Object[] datas = {p.getId_prenotazione(), p.getData_ora_sql(),p.getNumber_of_glasses(), p.getPrezzo()}; 
             tot += p.getPrezzo();
             tableModel.addRow(datas);

@@ -12,9 +12,9 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import oggetti.Config;
 import oggetti.Film;
-import oggetti.Prenotazione;
-import oggetti.Proiezione;
-import oggetti.Sala;
+import oggetti.Booking;
+import oggetti.Screening;
+import oggetti.Room;
 import oggetti.Seat;
 
 /**
@@ -25,8 +25,8 @@ public class Controller_Cliente {
 
     private static Controller_Cliente instance;
 
-    private ArrayList<Proiezione> listaProiezioniFuture;
-    private ArrayList<Proiezione> listaProiezioniFiltrate;
+    private ArrayList<Screening> listaProiezioniFuture;
+    private ArrayList<Screening> listaProiezioniFiltrate;
     private Adapter_SQL adapter;
     private Config config;
 
@@ -41,11 +41,11 @@ public class Controller_Cliente {
         return instance;
     }
 
-    public ArrayList<Proiezione> listaProiezioniFuture(ArrayList<Proiezione> listaProiezione) {
+    public ArrayList<Screening> listaProiezioniFuture(ArrayList<Screening> listaProiezione) {
         int i;
         Calendar giornoAttuale;
         TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
-        Proiezione proiezioneProva;
+        Screening proiezioneProva;
 
         listaProiezioniFuture = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class Controller_Cliente {
 
             if (listaProiezione.get(i).getData_ora().after(giornoAttuale)) {
 
-                proiezioneProva = new Proiezione(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getId_film(), listaProiezione.get(i).getId_sala(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
+                proiezioneProva = new Screening(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getFilm(), listaProiezione.get(i).getRoom(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
 
                 listaProiezioniFuture.add(proiezioneProva);
 
@@ -66,13 +66,13 @@ public class Controller_Cliente {
         return listaProiezioniFuture;
     }
 
-    public ArrayList<Proiezione> listaProiezioniFiltrate(ArrayList<Proiezione> listaProiezione, int GiornoSettimana) {
+    public ArrayList<Screening> listaProiezioniFiltrate(ArrayList<Screening> listaProiezione, int GiornoSettimana) {
 
         int i;
         Calendar giornoAttuale;
 
         TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
-        Proiezione proiezioneProva;
+        Screening proiezioneProva;
 
         listaProiezioniFiltrate = new ArrayList<>();
 
@@ -82,7 +82,7 @@ public class Controller_Cliente {
             System.out.println(listaProiezione.get(i).getData_ora().get(Calendar.DAY_OF_WEEK));
             if (listaProiezione.get(i).getData_ora().after(giornoAttuale) && (listaProiezione.get(i).getData_ora().get(Calendar.DAY_OF_WEEK)) == GiornoSettimana) {
 
-                proiezioneProva = new Proiezione(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getId_film(), listaProiezione.get(i).getId_sala(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
+                proiezioneProva = new Screening(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getFilm(), listaProiezione.get(i).getRoom(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
 
                 listaProiezioniFiltrate.add(proiezioneProva);
 
@@ -112,11 +112,11 @@ public class Controller_Cliente {
         return config;
     }
 
-    public Sala salaByID(int id_Sala) throws SQLException {
+    public Room salaByID(int id_Sala) throws SQLException {
         return adapter.getSalaByIdSala(id_Sala);
     }
 
-    public ArrayList<Proiezione> showByFilm(int id_film, int deltaData, int ora) throws SQLException {
+    public ArrayList<Screening> showByFilm(int id_film, int deltaData, int ora) throws SQLException {
         return adapter.getShowByFilm(id_film, deltaData, ora);
     }
 
@@ -126,12 +126,12 @@ public class Controller_Cliente {
         return seat;
     }
 
-    public int writeBooking(Prenotazione prenotazione) throws SQLException {
-        int idBooking = 0;
+    public int writeBooking(Booking booking) throws SQLException {
+        int idBooking = 0; 
 
-        if (adapter.checkBookedSeat(prenotazione.getId_proiezione(), prenotazione.getPosti_prenotati())) { //Controllo disponibilità posti
-            idBooking = adapter.writeBookin(prenotazione);
-            adapter.writeBookedSeat(idBooking, prenotazione.getPosti_prenotati());
+        if (adapter.checkBookedSeat(booking.getScreening().getId_proiezione(), booking.getPosti_prenotati())) { //Controllo disponibilità posti
+            idBooking = adapter.writeBookin(booking);
+            adapter.writeBookedSeat(idBooking, booking.getPosti_prenotati());
         }
 
         return idBooking;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
@@ -141,7 +141,7 @@ public class Controller_Cliente {
         return adapter.getTakenSeats(id_proiezione);
     }
 
-    public void getInsertPaymentForced(Prenotazione p) throws SQLException {
+    public void getInsertPaymentForced(Booking p) throws SQLException {
         adapter.insertFakePayment(p);
     }
 

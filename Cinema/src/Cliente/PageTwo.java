@@ -36,9 +36,9 @@ import javax.swing.border.EmptyBorder;
 import oggetti.ButtonCart;
 import oggetti.Config;
 import oggetti.Film;
-import oggetti.PanelYoutube;
-import oggetti.Prenotazione;
-import oggetti.Proiezione;
+import oggetti.YoutubePanel;
+import oggetti.Booking;
+import oggetti.Screening;
 import oggetti.Seat;
 
 /**
@@ -50,10 +50,10 @@ public class PageTwo extends JPanel {
     private Controller_Cliente controller = Controller_Cliente.getInstance();
     private Film film;
     private int deltaData;
-    private ArrayList<Proiezione> proiezione;
+    private ArrayList<Screening> proiezione;
     private int deltaTime;
 
-    Proiezione proiezione1;
+    Screening proiezione1;
 
     public PageTwo(Film film, int deltaData, int deltaTime) throws SQLException, IOException {
         //Il controller ti permettera di parlare con il database
@@ -68,14 +68,11 @@ public class PageTwo extends JPanel {
         this.setLayout(new GridLayout(2, 2, 10, 10));
         this.setBorder(new EmptyBorder(10, 30, 10, 10));
         
-        crea_gui();
+        draw();
 
     }
-
-    private void crea_gui() throws SQLException, MalformedURLException, IOException {
-        
-        
-        
+ 
+    private void draw() throws SQLException, MalformedURLException, IOException {
         
         JButton cover = new JButton();
         cover.setIcon(scalaImmagine(new ImageIcon("immagini/home.png"), 30, 30));
@@ -149,7 +146,7 @@ public class PageTwo extends JPanel {
         JPanel pannelloContenitoreBackOrari = new JPanel();
         pannelloContenitoreBackOrari.setBackground(java.awt.Color.WHITE);
         this.add(pannelloContenitoreBackOrari);
-       this.add(new PanelYoutube(film.getLink_youtube(), 200, 200));
+       this.add(new YoutubePanel(film.getLink_youtube(), 200, 200));
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
         pannelloOrari.setBackground(java.awt.Color.WHITE);
         
@@ -161,7 +158,7 @@ public class PageTwo extends JPanel {
         scrollpane.setBorder(null);
         for (int i = 0; i < proiezione.size(); i++) {
 
-            pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "    tipo: " + proiezione.get(i).getType_String() + "    sala: " + proiezione.get(i).getId_sala()), BorderLayout.SOUTH);
+            pannelloOrari.add(new JLabel(sdfDate.format(proiezione.get(i).getData_ora().getTime()) + "    tipo: " + proiezione.get(i).getType_String() + "    sala: " + proiezione.get(i).getRoom().getId_sala()), BorderLayout.SOUTH);
             bottoneCarrello = new ButtonCart(proiezione.get(i));
             bottoneCarrello.setBorderPainted(false);
             bottoneCarrello.setContentAreaFilled(false);
@@ -191,7 +188,7 @@ public class PageTwo extends JPanel {
     private void goBack() {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new PageOne());
+        this.add(new PageOne(),BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }
@@ -206,7 +203,7 @@ public class PageTwo extends JPanel {
         return evento;
     }
 
-    private void openPageThree(Film film, Proiezione proiezione, Controller_Cliente controller) {
+    private void openPageThree(Film film, Screening proiezione, Controller_Cliente controller) {
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(new PageThree(film, proiezione), BorderLayout.CENTER);

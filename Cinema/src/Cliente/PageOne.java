@@ -70,9 +70,7 @@ public class PageOne extends JPanel {
             @Override
             public void stateChanged(ChangeEvent ce) {
                 if (!slider.getValueIsAdjusting()) {
-
                     ThreadScaricaFilm(tab.getSelectedIndex()).start();
-
                 }
             }
         });
@@ -199,7 +197,7 @@ public class PageOne extends JPanel {
 
     public void OpenPageTwo(Film film, int deltaData, int valueSlider) throws SQLException, IOException {
         this.removeAll();
-        this.add(new PageTwo(film, deltaData, valueSlider));
+        this.add(new PageTwo(film, deltaData, valueSlider),BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }

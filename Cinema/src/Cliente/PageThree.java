@@ -18,12 +18,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import oggetti.Booking;
 import oggetti.Config;
 import oggetti.Film;
-import oggetti.Prenotazione;
-import oggetti.Proiezione;
-import oggetti.Sala;
+import oggetti.Booking;
+import oggetti.Screening;
+import oggetti.Room;
 import oggetti.Seat;
 
 /**
@@ -33,9 +32,9 @@ import oggetti.Seat;
 public class PageThree extends JPanel {
 
     private Controller_Cliente controller = Controller_Cliente.getInstance();
-    Proiezione proiezione;
+    Screening screening;
     Film film;
-    Prenotazione prenotazione;
+    Booking booking;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -47,7 +46,7 @@ public class PageThree extends JPanel {
     private double totale_prezzo;
     private Config config;
 
-    private Sala sala;
+    private Room sala;
     private ArrayList<Seat> seats;
     private ArrayList<Seat> booked_seats;
     private ArrayList<Seat> Taken_seats = new ArrayList<>();
@@ -55,12 +54,12 @@ public class PageThree extends JPanel {
     JLabel prezzo = new JLabel();
     JButton prosegui = new JButton("PROSEGUI");
 
-    public PageThree(Film film, Proiezione proiezione) {
+    public PageThree(Film film, Screening proiezione) {
         this.controller = controller;
         this.film = film;
-        this.proiezione = proiezione;
+        this.screening = proiezione;
         try {
-            this.sala = controller.salaByID(proiezione.getId_sala());
+            this.sala = controller.salaByID(proiezione.getRoom().getId_sala());
         } catch (SQLException ex) {
 // TI devi gestire le eccezioni internamente non lanciarle al page precedente
 
@@ -68,7 +67,7 @@ public class PageThree extends JPanel {
 
         booked_seats = new ArrayList<>();
         seats = new ArrayList<>();
-        seats = controller.getSeats(proiezione.getId_sala());
+        seats = controller.getSeats(proiezione.getRoom().getId_sala());
         try {
             config = controller.getConfig();
         } catch (SQLException ex) {
@@ -108,7 +107,7 @@ public class PageThree extends JPanel {
         center.add(seats_layout, BorderLayout.CENTER);
 
         JPanel leggenda = new JPanel(new GridLayout(0, 2));
-        JLabel prezzo_normale = new JLabel("Prezzo: " + proiezione.getPrezzo() + "€");
+        JLabel prezzo_normale = new JLabel("Prezzo: " + screening.getPrezzo() + "€");
         JLabel prezzo_vip = new JLabel("Posti vip costo aggiuntivo di " + config.getPrezzo_vip() + "€");
         leggenda.add(prezzo_normale);
         leggenda.add(prezzo_vip);
@@ -138,8 +137,8 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),Taken_seats,null,0,totale_prezzo,0);
-                openPage(new PageFour(film, proiezione, prenotazione, config));                
+                booking = new Booking(0,screening,Taken_seats,null,0,totale_prezzo,0);
+                openPage(new PageFour(film, screening, booking, config));                
             }
         });
 
@@ -164,15 +163,15 @@ public class PageThree extends JPanel {
                     Taken_seats.remove(Taken_seats.size() - 1);
                     if (seats.get(i).isVip()) {
                         seats.get(i).setIcon(seat_vip);   
-                        totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());
+                        totale_prezzo -= (config.getPrezzo_vip() + screening.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
                         seats.get(i).setIcon(seat_handicap);
-                        totale_prezzo -= proiezione.getPrezzo();
+                        totale_prezzo -= screening.getPrezzo();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
                         seats.get(i).setIcon(seat_free);
-                        totale_prezzo -= proiezione.getPrezzo();
+                        totale_prezzo -= screening.getPrezzo();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     }
                 } else {
@@ -180,10 +179,10 @@ public class PageThree extends JPanel {
                     seats.get(i).setIcon(seat_selezione);
                     Taken_seats.add(seats.get(i));
                     if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
-                        totale_prezzo += (config.getPrezzo_vip() + proiezione.getPrezzo());
+                        totale_prezzo += (config.getPrezzo_vip() + screening.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
-                        totale_prezzo += proiezione.getPrezzo();
+                        totale_prezzo += screening.getPrezzo();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     }
                 }
@@ -210,7 +209,7 @@ public class PageThree extends JPanel {
     private void checkTakenSeats() {
         try {
             booked_seats.clear();
-            booked_seats = controller.getTakenSeats(proiezione.getId_proiezione());
+            booked_seats = controller.getTakenSeats(screening.getId_proiezione());
         } catch (SQLException ex) {
             Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
         }

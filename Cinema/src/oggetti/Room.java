@@ -11,22 +11,26 @@ import java.util.ArrayList;
  *
  * @author Yatin
  */
-public class Sala {
+public class Room {
 
-    private int id_sala, rows,columns;
+    private int id_sala, rows, columns;
     private ArrayList<Seat> seats = new ArrayList<>();
-    
-    public Sala(int id_sala, int rows, int columns) {
+
+    public Room(int id_sala, int rows, int columns) {
         this.id_sala = id_sala;
         this.rows = rows;
         this.columns = columns;
         this.seats = seats;
     }
-    
-    public Sala(int rows, int columns, ArrayList<Seat> seats) {
+
+    public Room(int rows, int columns, ArrayList<Seat> seats) {
         this.rows = rows;
         this.columns = columns;
         this.seats = seats;
+    }
+
+    public Room(int id_sala) {
+        this.id_sala = id_sala;
     }
 
     public int getId_sala() {
@@ -48,8 +52,8 @@ public class Sala {
     public ArrayList<Seat> getSeats() {
         return seats;
     }
-    
-      public String toString() {
+
+    public String toString() {
         return id_sala + "";
     }
 }

@@ -42,13 +42,13 @@ public class Adapter_SQL {
         return instance;
     }
 
-    public ArrayList<Proiezione> visualizzaProiezione(int tipo) throws SQLException {
+    public ArrayList<Screening> visualizzaProiezione(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
         //TIPO = 3 //Sia odierne che future
         String query;
         ResultSet risultato_query;
-        ArrayList<Proiezione> Proiezioni;
+        ArrayList<Screening> Proiezioni;
 
         if (tipo == 0) {
             query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
@@ -67,8 +67,8 @@ public class Adapter_SQL {
         return Proiezioni;
     }
 
-    public boolean scriviProiezione(Proiezione proiezione) {
-        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
+    public boolean scriviProiezione(Screening proiezione) {
+        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getFilm().getId_film() + "','" + proiezione.getRoom().getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -77,7 +77,7 @@ public class Adapter_SQL {
         }
     }
 
-    public boolean contolloProiezioni(Proiezione proiezione) {
+    public boolean contolloProiezioni(Screening proiezione) {
         ResultSet risultato_query;
 
         String query = "select Film.titolo\n"
@@ -92,9 +92,9 @@ public class Adapter_SQL {
                 + "							sql8115909.Config\n"
                 + "						ORDER BY Config.id_config DESC\n"
                 + "						LIMIT 1) AS last_config\n"
-                + "					WHERE  Film.id_film = '" + proiezione.getId_film() + "' \n"
+                + "					WHERE  Film.id_film = '" + proiezione.getFilm().getId_film() + "' \n"
                 + "					) as time_interval\n"
-                + "where Proiezione.id_sala='" + proiezione.getId_sala() + "' AND datediff(Proiezione.data_ora,'" + proiezione.getData_ora_sql() + "')=0 AND Proiezione.id_film=Film.id_film AND(\n"
+                + "where Proiezione.id_sala='" + proiezione.getRoom().getId_sala() + "' AND datediff(Proiezione.data_ora,'" + proiezione.getData_ora_sql() + "')=0 AND Proiezione.id_film=Film.id_film AND(\n"
                 + "(\n"
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_min\n"
                 + ")  OR\n"
@@ -128,10 +128,10 @@ public class Adapter_SQL {
         }
     }
 
-    public ArrayList<Sala> visualizzaSale() throws SQLException {
+    public ArrayList<Room> visualizzaSale() throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Sala> Sale;
+        ArrayList<Room> Sale;
 
         query = "SELECT * FROM Sala";
         risultato_query = SQL.eseguiQueryLettura(query);
@@ -301,7 +301,7 @@ public class Adapter_SQL {
 
     }
 
-    public boolean writeHall(Sala sala) {
+    public boolean writeHall(Room sala) {
         ResultSet risultato_query;
 
         String query = "INSERT INTO Sala(rows,columns) VALUES("
@@ -320,7 +320,7 @@ public class Adapter_SQL {
         }
     }
 
-    public boolean writeSeats(Sala sala) {
+    public boolean writeSeats(Room sala) {
         ArrayList<Seat> posti = sala.getSeats();
         boolean complete = false;
         for (Seat s : posti) {
@@ -338,10 +338,10 @@ public class Adapter_SQL {
 
     }
 
-    public ArrayList<Proiezione> getShowByFilm(int id_film, int deltaData, int ora) throws SQLException {
+    public ArrayList<Screening> getShowByFilm(int id_film, int deltaData, int ora) throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Proiezione> proiezione;
+        ArrayList<Screening> proiezione;
         // ora = ora + TIME_ZONE_COMPENSATION; //PER FUSO ORARIO DATABASE
         query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
@@ -355,10 +355,10 @@ public class Adapter_SQL {
         return proiezione;
     }
 
-    public Sala getSalaByIdSala(int id_sala) throws SQLException {
+    public Room getSalaByIdSala(int id_sala) throws SQLException {
         String query;
         ResultSet risultato_query;
-        Sala sala;
+        Room sala;
 
         query = "SELECT * FROM Sala WHERE id_sala = '" + id_sala + "'";
 
@@ -417,15 +417,15 @@ public class Adapter_SQL {
 
     }
 
-    public ArrayList<Proiezione> visualizzaStatoSale() throws SQLException {
+    public ArrayList<Screening> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Proiezione> proiezioni;
+        ArrayList<Screening> proiezioni;
         query = "SELECT Proiezione.*\n"
                 + "FROM Proiezione, Film\n"
                 + "WHERE (Proiezione.id_film=Film.id_film)\n"
-                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL "+TIME_ZONE_COMPENSATION+" HOUR)<0\n"
-                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL "+TIME_ZONE_COMPENSATION+" HOUR)>-Film.durata\n"
+                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)<0\n"
+                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)>-Film.durata\n"
                 + "";
         risultato_query = SQL.eseguiQueryLettura(query);
         proiezioni = parser.Proiezione(risultato_query);
@@ -436,12 +436,12 @@ public class Adapter_SQL {
     public int getIdLastBooking() throws SQLException {
         String query;
         ResultSet risultato_query;
-        Prenotazione prenotazione;
+        Booking prenotazione;
 
         query = "SELECT * FROM Booking ORDER BY Booking.id_booking DESC LIMIT 1";
 
         risultato_query = SQL.eseguiQueryLettura(query);
-        prenotazione = parser.Prenotazione(risultato_query);
+        prenotazione = parser.Booking(risultato_query).get(0);
         risultato_query.close();
 
         return prenotazione.getId_prenotazione();
@@ -454,13 +454,29 @@ public class Adapter_SQL {
         }
     }
 
-    public int writeBookin(Prenotazione prenotazione) throws SQLException {
+    public int writeBookin(Booking prenotazione) throws SQLException {
         String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status) VALUES("
-                + "'" + prenotazione.getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
+                + "'" + prenotazione.getScreening().getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
                 + prenotazione.getNumber_of_glasses() + "','" + prenotazione.getPrezzo() + "','0')";
         SQL.eseguiQueryScrittura(query);
 
         return getIdLastBooking();
+    }
+
+    public ArrayList<Booking> showBooking() throws SQLException {
+
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Booking> booking;
+
+        query = "SELECT * FROM Booking ORDER BY date_time DESC";
+        risultato_query = SQL.eseguiQueryLettura(query);
+
+        booking = parser.Booking(risultato_query);
+        risultato_query.close();
+
+        return booking;
+
     }
 
     private String getData_ora_sql(Calendar data_ora) {
@@ -492,10 +508,10 @@ public class Adapter_SQL {
         return parser.Seat(risultato_query);
     }
 
-    public ArrayList<Proiezione> viewShows(int id_sala) throws SQLException {
+    public ArrayList<Screening> viewShows(int id_sala) throws SQLException {
         String query;
         ResultSet risultato_query;
-        ArrayList<Proiezione> Proiezioni;
+        ArrayList<Screening> Proiezioni;
         query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala =" + id_sala;
         risultato_query = SQL.eseguiQueryLettura(query);
 
@@ -519,7 +535,7 @@ public class Adapter_SQL {
         return status;
     }
 
-    public void insertFakePayment(Prenotazione p) throws SQLException {
+    public void insertFakePayment(Booking p) throws SQLException {
 
         String Query = "UPDATE Booking "
                 + "SET booking_status=1 "
@@ -529,8 +545,8 @@ public class Adapter_SQL {
 
     }
 
-    public ArrayList<Prenotazione> salesVolumeSearch(String a, String b) throws SQLException {
-        ArrayList<Prenotazione> books;
+    public ArrayList<Booking> salesVolumeSearch(String a, String b) throws SQLException {
+        ArrayList<Booking> booking;
         ResultSet risultato_query;
         String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n"
                 + "FROM `Booking`\n"
@@ -538,9 +554,9 @@ public class Adapter_SQL {
                 + "AND date_time >= '" + a + "'\n"
                 + "AND date_time <= '" + b + "'";
         risultato_query = SQL.eseguiQueryLettura(query);
-        books = parser.Prenotazione_SalesVolume(risultato_query);
+        booking = parser.Prenotazione_SalesVolume(risultato_query);
         risultato_query.close();
-        return books;
+        return booking;
     }
 
     public void spegni() {

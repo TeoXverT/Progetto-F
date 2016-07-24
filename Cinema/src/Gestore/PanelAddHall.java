@@ -29,7 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import oggetti.Config;
-import oggetti.Sala;
+import oggetti.Room;
 import oggetti.Seat;
 
 /**
@@ -162,7 +162,7 @@ public class PanelAddHall extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Sala sala = new Sala(x,y,seats);
+                Room sala = new Room(x,y,seats);
                 controller.scriviHall(sala);
                 aggiornaGui();
             }

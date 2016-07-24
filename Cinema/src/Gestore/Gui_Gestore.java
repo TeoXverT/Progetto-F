@@ -51,7 +51,6 @@ public class Gui_Gestore extends JFrame {
 //        } catch (Exception e) {
 //            // If Nimbus is not available, you can set the GUI to another look and feel.
 //        }
-
         controller = new Controller_Gestore();
         display = new JPanel(new BorderLayout());
         creaGui();
@@ -91,8 +90,6 @@ public class Gui_Gestore extends JFrame {
         menuBar = new JMenuBar();
 
         menu = new JMenu("Visualizza");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menu.getAccessibleContext().setAccessibleDescription("The only menu in this program that has menu items");
         menuBar.add(menu);
 
         menu.addSeparator();
@@ -100,75 +97,64 @@ public class Gui_Gestore extends JFrame {
 
         menu.add(CreateHallList(submenu));
 
-        menuItem = new JMenuItem("Film", KeyEvent.VK_F);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+        menuItem = new JMenuItem("Film");
         menuItem.addActionListener(visualizzaFilm());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Prenotazioni");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
-        menuItem.addActionListener(visualizzaPrenotazioni());
+        menuItem.addActionListener(showBooking());
         menu.add(menuItem);
 
         menu.addSeparator();
-        submenu = new JMenu("Show");
-        submenu.setMnemonic(KeyEvent.VK_P);
+        submenu = new JMenu("Screening");
 
-        menuItem = new JMenuItem("Odierne");
-        menuItem.addActionListener(visualizzaProiezioni(0));
+        menuItem = new JMenuItem("Now");
+        menuItem.addActionListener(showScreening(0));
         submenu.add(menuItem);
 
-        menuItem = new JMenuItem("Future");
-        menuItem.addActionListener(visualizzaProiezioni(1));
+        menuItem = new JMenuItem("Next");
+        menuItem.addActionListener(showScreening(1));
         submenu.add(menuItem);
         menu.add(submenu);
 
         menu = new JMenu("Add / Remove");
-        menu.setMnemonic(KeyEvent.VK_N);
-        menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
 
-        menuItem = new JMenuItem("Add Movie", KeyEvent.VK_A);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-        menuItem.addActionListener(aggiungiFilm()); // cosa deve fare una volta premuto
+        menuItem = new JMenuItem("Add Movie");
+        menuItem.addActionListener(aggiungiFilm()); 
         menu.add(menuItem);
 
-        menuItem = new JMenuItem("Aggiungi Proiezione");
-        menuItem.addActionListener(aggiungiProiezione()); // cosa deve fare una volta premuto
+        menuItem = new JMenuItem("Add Screening");
+        menuItem.addActionListener(aggiungiProiezione()); 
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Add Hall");
-        menuItem.addActionListener(addHall()); // cosa deve fare una volta premuto
+        menuItem.addActionListener(addHall()); 
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Remover");
-        menuItem.addActionListener(Remover()); // cosa deve fare una volta premuto
+        menuItem.addActionListener(Remover()); 
         menu.add(menuItem);
 
         menu = new JMenu("Gestione Fatturati");
-        menu.setMnemonic(KeyEvent.VK_F);
-        menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
         menuBar.add(menu);
 
         menuItem = new JMenuItem("Sales Volume");
-        menuItem.addActionListener(salesVolume()); // cosa deve fare una volta premuto
+        menuItem.addActionListener(salesVolume()); 
         menu.add(menuItem);
 
-        menu = new JMenu("Impostazioni");
-        menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
+        menu = new JMenu("Configuration");
         menuBar.add(menu);
 
-        menuItem = new JMenuItem("Visualizza/Modifica Impostazioni");
-        menuItem.addActionListener(modificaImpostazioni()); // cosa deve fare una volta premuto
+        menuItem = new JMenuItem("Modify/View");
+        menuItem.addActionListener(modificaImpostazioni()); 
         menu.add(menuItem);
 
         menu = new JMenu("Help");
         menuBar.add(menu);
 
         menuItem = new JMenuItem("About");
-        menuItem.addActionListener(About()); // cosa deve fare una volta premuto
+        menuItem.addActionListener(About()); 
         menu.add(menuItem);
 
         return menuBar;
@@ -182,7 +168,36 @@ public class Gui_Gestore extends JFrame {
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
-    private ActionListener visualizzaProiezioni(final int tipo) {
+    private ActionListener showBooking() {
+
+        ActionListener evento = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                display.removeAll();
+
+                String[] columnNames = {"ID ", "ID Screening", "Date&Time", "No° Glasses", "Price", "Booking Status"};
+                DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+                JTable table = new JTable(tableModel);
+                table.setFillsViewportHeight(true);
+                JScrollPane scrollPane = new JScrollPane(table);
+                try {
+                    ArrayList<Booking> booking = controller.showBooking();
+                    for (Booking b : booking) {
+                        Object[] datas = {b.getId_prenotazione(), b.getScreening().getId_proiezione(), b.getData_ora_sql(), b.getNumber_of_glasses(), b.getPrezzo(), b.getBooking_status()};
+                        tableModel.addRow(datas);
+                    }
+                    display.add(scrollPane);
+
+                } catch (SQLException ex) {
+                    serverError();
+                }
+                outputGrafico.setText("Booking list");
+            }
+        };
+        return evento;
+    }
+
+    private ActionListener showScreening(final int tipo) {
         ActionListener evento = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -193,9 +208,9 @@ public class Gui_Gestore extends JFrame {
                 table.setFillsViewportHeight(true);
                 JScrollPane scrollPane = new JScrollPane(table);
                 try {
-                    ArrayList<Proiezione> Proiezioni = controller.visualizzaProiezione(tipo);
-                    for (Proiezione p : Proiezioni) {
-                        Object[] datas = {p.getId_proiezione(), p.getData_ora_friendly(), p.getId_film(), p.getId_sala(), p.getTipo_proiezione(), p.getPrezzo()};
+                    ArrayList<Screening> Proiezioni = controller.visualizzaProiezione(tipo);
+                    for (Screening p : Proiezioni) {
+                        Object[] datas = {p.getId_proiezione(), p.getData_ora_friendly(), p.getFilm().getId_film(), p.getRoom().getId_sala(), p.getTipo_proiezione(), p.getPrezzo()};
                         tableModel.addRow(datas);
                     }
                     display.add(scrollPane);
@@ -214,7 +229,7 @@ public class Gui_Gestore extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 aggiornaGUI(pannelloCaricamento);
-                aggiornaGUI(new PanelAddProiezione(controller, outputGrafico));
+                aggiornaGUI(new PanelAddScreening(controller, outputGrafico));
             }
         };
         return evento;
@@ -253,22 +268,6 @@ public class Gui_Gestore extends JFrame {
         return evento;
     }
 
-    private ActionListener visualizzaPrenotazioni() {
-        ActionListener evento = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                display.removeAll();
-
-                JLabel provaVisualizzazionePrenotazioni = new JLabel("provaVisualizzazioneDinamicaPrenotazioni", SwingConstants.CENTER);
-                display.add(provaVisualizzazionePrenotazioni, BorderLayout.CENTER);
-
-                outputGrafico.setText("Visualizzazione Prenotazioni in Corso");
-            }
-        };
-
-        return evento;
-    }
-
     private ActionListener addHall() {
         ActionListener evento = new ActionListener() {
             @Override
@@ -285,7 +284,7 @@ public class Gui_Gestore extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 aggiornaGUI(pannelloCaricamento);
-                aggiornaGUI(new PanelImpostazioni(controller, outputGrafico));
+                aggiornaGUI(new PanelConfig(controller, outputGrafico));
             }
         };
         return evento;
@@ -314,17 +313,15 @@ public class Gui_Gestore extends JFrame {
     }
 
     private JMenu CreateHallList(JMenu submenu) {
-        ArrayList<Sala> sale = new ArrayList<>();
+        ArrayList<Room> sale = new ArrayList<>();
         ArrayList<JMenuItem> menuItem = new ArrayList<>();
         try {
             sale = controller.visualizzaSale();
         } catch (SQLException ex) {
             System.out.println("Da Gestire l'eccezione!!!!");
-        }
-        catch (java.lang.NullPointerException ex) {
+        } catch (java.lang.NullPointerException ex) {
             System.out.println("Da Gestire l'eccezione java.lang.NullPointerException ex nel menu bar CreateHallList !!!!");
         }
-
 
         for (int i = 0; i < sale.size(); i++) {
             menuItem.add(new JMenuItem("Sala " + sale.get(i).getId_sala()));

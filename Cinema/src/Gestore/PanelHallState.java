@@ -18,8 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import oggetti.Film;
-import oggetti.Proiezione;
-import oggetti.Sala;
+import oggetti.Screening;
+import oggetti.Room;
 
 /**
  *
@@ -28,7 +28,7 @@ import oggetti.Sala;
 public class PanelHallState extends JPanel{
     Controller_Gestore controller;
     JLabel outputGrafico;
-    ArrayList<Proiezione> proiezioni;
+    ArrayList<Screening> proiezioni;
     int id_sala;
     
     public PanelHallState(final Controller_Gestore controller, final JLabel outputGrafico, int id_sala) {

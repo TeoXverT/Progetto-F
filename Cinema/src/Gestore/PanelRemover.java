@@ -91,12 +91,12 @@ public class PanelRemover extends JPanel {
             due.add(new JLabel("Proiezioni: ", SwingConstants.CENTER), BorderLayout.NORTH);
 
             final DefaultListModel modelPro = new DefaultListModel();
-            final JList<Proiezione> listaProiezioni = new JList(modelPro);
+            final JList<Screening> listaProiezioni = new JList(modelPro);
             JScrollPane panePro = new JScrollPane(listaProiezioni);
-            ArrayList<Proiezione> Proiezioni;
+            ArrayList<Screening> Proiezioni;
 
             Proiezioni = controller.visualizzaProiezione(2);
-            for (Proiezione p : Proiezioni) {
+            for (Screening p : Proiezioni) {
                 modelPro.addElement(p);
             }
 
@@ -127,12 +127,12 @@ public class PanelRemover extends JPanel {
             tre.add(new JLabel("Sale: ", SwingConstants.CENTER), BorderLayout.NORTH);
 
             final DefaultListModel modelSale = new DefaultListModel();
-            final JList<Sala> listaSale = new JList(modelSale);
+            final JList<Room> listaSale = new JList(modelSale);
             JScrollPane paneSale = new JScrollPane(listaSale);
-            ArrayList<Sala> Sale;
+            ArrayList<Room> Sale;
 
             Sale = controller.visualizzaSale();
-            for (Sala s : Sale) {
+            for (Room s : Sale) {
                 modelSale.addElement(s);
             }
 
