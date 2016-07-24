@@ -89,7 +89,7 @@ public class Gui_Gestore extends JFrame {
 
         menuBar = new JMenuBar();
 
-        menu = new JMenu("Visualizza");
+        menu = new JMenu("Viewer");
         menuBar.add(menu);
 
         menu.addSeparator();
