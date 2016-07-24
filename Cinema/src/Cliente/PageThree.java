@@ -57,24 +57,19 @@ public class PageThree extends JPanel {
     JButton prosegui = new JButton("PROSEGUI");
 
     public PageThree(Film film, Proiezione proiezione, Controller_Cliente controller) {
-        this.controller = controller;
-        this.film = film;
-        this.proiezione = proiezione;
         try {
+            this.controller = controller;
+            this.film = film;
+            this.proiezione = proiezione;
             this.sala = controller.salaByID(proiezione.getId_sala());
-        } catch (SQLException ex) {
-            outputGrafico.setText("Errore con il server");
-        }
-
-        booked_seats = new ArrayList<>();
-        seats = new ArrayList<>();
-        seats = controller.getSeats(proiezione.getId_sala());
-        try {
+            booked_seats = new ArrayList<>();
+            seats = new ArrayList<>();
+            seats = controller.getSeats(proiezione.getId_sala());
             config = controller.getConfig();
+            initGui();
         } catch (SQLException ex) {
-            outputGrafico.setText("Errore con il server");
+            outputGrafico.setText("Errore lettura dati dal Database.");
         }
-        initGui();
     }
 
     public void initGui() {
@@ -89,16 +84,16 @@ public class PageThree extends JPanel {
         JLabel screen = new JLabel(screen_icon);
         nord.add(screen);
         checkTakenSeats();
-        
-        for(int i = 0; i < booked_seats.size(); i++) {
-            for(int j = 0; j < seats.size(); j++) {
-                if(booked_seats.get(i).getId() == seats.get(j).getId()) {
+
+        for (int i = 0; i < booked_seats.size(); i++) {
+            for (int j = 0; j < seats.size(); j++) {
+                if (booked_seats.get(i).getId() == seats.get(j).getId()) {
                     seats.get(j).setIcon(seat_taken);
                     seats.get(j).setOccupato(true);
                 }
-            } 
+            }
         }
-        
+
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
                 seats.get(i).addActionListener(seatClick(i));
@@ -116,7 +111,7 @@ public class PageThree extends JPanel {
         JPanel total = new JPanel(new BorderLayout(5, 5));
         JLabel totale = new JLabel("TOTALE: ");
 
-        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto()+"%");
+        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto() + "%");
         JButton indietro = new JButton("indietro");
 
         JPanel buttons = new JPanel(new GridLayout(0, 2));
@@ -138,8 +133,8 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                prenotazione = new Prenotazione(0,proiezione.getId_proiezione(),Taken_seats,null,0,totale_prezzo,0);
-                openPage(new PageFour(film, proiezione, prenotazione, config, controller));                
+                prenotazione = new Prenotazione(0, proiezione.getId_proiezione(), Taken_seats, null, 0, totale_prezzo, 0);
+                openPage(new PageFour(film, proiezione, prenotazione, config, controller));
             }
         });
 
@@ -163,7 +158,7 @@ public class PageThree extends JPanel {
                     seats.get(i).setOccupato(false);
                     Taken_seats.remove(Taken_seats.size() - 1);
                     if (seats.get(i).isVip()) {
-                        seats.get(i).setIcon(seat_vip);   
+                        seats.get(i).setIcon(seat_vip);
                         totale_prezzo -= (config.getPrezzo_vip() + proiezione.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
@@ -206,7 +201,7 @@ public class PageThree extends JPanel {
         this.revalidate();
         this.repaint();
     }
-    
+
     private void checkTakenSeats() {
         try {
             booked_seats.clear();

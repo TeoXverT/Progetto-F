@@ -111,7 +111,7 @@ public class Controller_Cliente {
         return adapter.getShowByFilm(id_film, deltaData, ora);
     }
 
-    public ArrayList<Seat> getSeats(int id_sala) {
+    public ArrayList<Seat> getSeats(int id_sala) throws SQLException {
         ArrayList<Seat> seat;
         seat = adapter.getSeats(id_sala);
         return seat;

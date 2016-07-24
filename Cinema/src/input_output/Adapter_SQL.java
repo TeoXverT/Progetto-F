@@ -353,7 +353,7 @@ public class Adapter_SQL {
         ResultSet risultato_query;
         Sala sala;
 
-        query = "SELECT * FROM 'Sala' WHERE id_sala = " + id_sala;
+        query = "SELECT * FROM Sala WHERE id_sala = '" + id_sala +"'";
 
         risultato_query = SQL.eseguiQueryLettura(query);
         sala = parser.getSalaById(risultato_query);
