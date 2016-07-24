@@ -51,7 +51,18 @@ public class Parse_OBJ {
 
         return Proiezioni;
     }
+    
+    public Proiezione ProiezioneSingola(ResultSet risultato_query) throws SQLException {
+        Proiezione Projection = null;
 
+        while (risultato_query.next()) {
+           Projection = new Proiezione(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), risultato_query.getInt("id_film"), risultato_query.getInt("id_sala"), risultato_query.getInt("projection_type"), risultato_query.getDouble("prezzo"));
+        }
+        risultato_query.close();
+
+        return Projection;
+    }
+    
     public ArrayList<Film> Film(ResultSet risultato_query) throws SQLException {
         ArrayList<Film> Films = new ArrayList<>();
 

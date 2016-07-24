@@ -335,10 +335,10 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
-       // ora = ora + 2; //PER FUSO ORARIO DATABASE
+        // ora = ora + 2; //PER FUSO ORARIO DATABASE
         query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
-             // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
+                // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
                 + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL '" + deltaData + " 2' DAY_HOUR), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
@@ -353,7 +353,7 @@ public class Adapter_SQL {
         ResultSet risultato_query;
         Sala sala;
 
-        query = "SELECT * FROM Sala WHERE id_sala = '" + id_sala + "'";
+        query = "SELECT * FROM 'Sala' WHERE id_sala = " + id_sala;
 
         risultato_query = SQL.eseguiQueryLettura(query);
         sala = parser.getSalaById(risultato_query);
@@ -362,7 +362,7 @@ public class Adapter_SQL {
         return sala;
     }
 
-    public ArrayList<Seat> getSeats(int id_sala) {          // da finire...sono arrivato a leggere da DB ora devo parsare le cose..
+    public ArrayList<Seat> getSeats(int id_sala) throws SQLException {          // da finire...sono arrivato a leggere da DB ora devo parsare le cose..
         String query;
         ResultSet risultato_query;
         ArrayList<Seat> seats = new ArrayList<>();
@@ -373,39 +373,34 @@ public class Adapter_SQL {
         ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
 
         query = "SELECT *  FROM Seats WHERE id_sala = '" + id_sala + "'";
-        try {
-            risultato_query = SQL.eseguiQueryLettura(query);
-            int i = 0;
-            while (risultato_query.next()) {
-                seats.add(new Seat(risultato_query.getInt("x"), risultato_query.getInt("y")));
-                switch (risultato_query.getInt("tipo")) {
-                    case 1:
-                        seats.get(i).setIcon(seat_free);
-                        break;
-                    case 2:
-                        seats.get(i).setIcon(seat_vip);
-                        seats.get(i).setVip(true);
-                        break;
-                    case 3:
-                        seats.get(i).setIcon(seat_handicap);
-                        seats.get(i).setHandicap(true);
-                        break;
-                    case 4:
-                        seats.get(i).setIcon(seat_disable);
-                        seats.get(i).setDisable(true);
-                        break;
-                    case 5:
-                        seats.get(i).setIcon(seat_taken);
-                        seats.get(i).setOccupato(true);
-                        break;
-                }
-                seats.get(i).setId_seat(risultato_query.getInt("Id_seat"));
-                i++;
+        risultato_query = SQL.eseguiQueryLettura(query);
+        int i = 0;
+        while (risultato_query.next()) {
+            seats.add(new Seat(risultato_query.getInt("x"), risultato_query.getInt("y")));
+            switch (risultato_query.getInt("tipo")) {
+                case 1:
+                    seats.get(i).setIcon(seat_free);
+                    break;
+                case 2:
+                    seats.get(i).setIcon(seat_vip);
+                    seats.get(i).setVip(true);
+                    break;
+                case 3:
+                    seats.get(i).setIcon(seat_handicap);
+                    seats.get(i).setHandicap(true);
+                    break;
+                case 4:
+                    seats.get(i).setIcon(seat_disable);
+                    seats.get(i).setDisable(true);
+                    break;
+                case 5:
+                    seats.get(i).setIcon(seat_taken);
+                    seats.get(i).setOccupato(true);
+                    break;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Adapter_SQL.class.getName()).log(Level.SEVERE, null, ex);
+            seats.get(i).setId_seat(risultato_query.getInt("Id_seat"));
+            i++;
         }
-
         return seats;
 
     }
@@ -502,7 +497,7 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> Proiezioni;
-        query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala ="+ id_sala;
+        query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala =" + id_sala;
         risultato_query = SQL.eseguiQueryLettura(query);
 
         Proiezioni = parser.Proiezione(risultato_query);
@@ -510,45 +505,56 @@ public class Adapter_SQL {
 
         return Proiezioni;
     }
-    
-     public int checkPayment(Prenotazione p) throws SQLException{
-         int cp;
-         
-         String Query = "SELECT booking_status " +
-                        "FROM Booking " +
-                        "WHERE id_booking = " +p.getId_prenotazione() +"";
-         
-         
-         ResultSet result = SQL.eseguiQueryLettura(Query);
-         result.next();
-         cp = result.getInt("booking_status");
-         
-       return cp;
+
+    public int checkPayment(Prenotazione p) throws SQLException {
+        int cp;
+
+        String Query = "SELECT booking_status "
+                + "FROM Booking "
+                + "WHERE id_booking = " + p.getId_prenotazione() + "";
+
+        ResultSet result = SQL.eseguiQueryLettura(Query);
+        result.next();
+        cp = result.getInt("booking_status");
+
+        return cp;
     }
-    
-     
-     public void insertPaymentForced(Prenotazione p) throws SQLException {
-         
-         String Query = "UPDATE Booking " +
-                        "SET booking_status=1 " +
-                        "WHERE id_booking = "+p.getId_prenotazione()+"";
-         
-         SQL.eseguiQueryScrittura(Query);
-         
-     }
-     
+
+    public void insertPaymentForced(Prenotazione p) throws SQLException {
+
+        String Query = "UPDATE Booking "
+                + "SET booking_status=1 "
+                + "WHERE id_booking = " + p.getId_prenotazione() + "";
+
+        SQL.eseguiQueryScrittura(Query);
+
+    }
+
     public ArrayList<Prenotazione> salesVolumeSearch(String a, String b) throws SQLException {
         ArrayList<Prenotazione> books;
         ResultSet risultato_query;
-        String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n" +
-                        "FROM `Booking`\n" +
-                         "WHERE booking_status =1\n" +
-                        "AND date_time >= '" + a + "'\n" +
-                        "AND date_time <= '" + b + "'";
+        String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n"
+                + "FROM `Booking`\n"
+                + "WHERE booking_status =1\n"
+                + "AND date_time >= '" + a + "'\n"
+                + "AND date_time <= '" + b + "'";
         risultato_query = SQL.eseguiQueryLettura(query);
         books = parser.Prenotazione_SalesVolume(risultato_query);
         risultato_query.close();
         return books;
+    }
+
+    public Proiezione getProiezioneById(int id_proiezione) throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        Proiezione Projection = null;
+        query = "SELECT * FROM  `Proiezione` WHERE 'id_proiezione' = '" + id_proiezione + "'";
+        risultato_query = SQL.eseguiQueryLettura(query);
+
+        Projection = parser.ProiezioneSingola(risultato_query);
+        risultato_query.close();
+
+        return Projection;
     }
 
     public void spegni() {

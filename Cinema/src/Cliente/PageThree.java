@@ -36,6 +36,7 @@ public class PageThree extends JPanel {
     Proiezione proiezione;
     Film film;
     Prenotazione prenotazione;
+    JLabel outputGrafico;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -62,8 +63,7 @@ public class PageThree extends JPanel {
         try {
             this.sala = controller.salaByID(proiezione.getId_sala());
         } catch (SQLException ex) {
-// TI devi gestire le eccezioni internamente non lanciarle al page precedente
-
+            outputGrafico.setText("Errore con il server");
         }
 
         booked_seats = new ArrayList<>();
@@ -72,7 +72,7 @@ public class PageThree extends JPanel {
         try {
             config = controller.getConfig();
         } catch (SQLException ex) {
-// TI devi gestire le eccezioni internamente non lanciarle al page precedente
+            outputGrafico.setText("Errore con il server");
         }
         initGui();
     }
@@ -95,7 +95,6 @@ public class PageThree extends JPanel {
                 if(booked_seats.get(i).getId() == seats.get(j).getId()) {
                     seats.get(j).setIcon(seat_taken);
                     seats.get(j).setOccupato(true);
-                    System.out.println("ciao");
                 }
             } 
         }

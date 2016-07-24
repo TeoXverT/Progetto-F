@@ -159,12 +159,17 @@ public class Controller_Gestore {
         return Sale;
     }
     
-    public ArrayList<Proiezione> vieShows(int id_sala) throws SQLException {
+    public ArrayList<Proiezione> viewShows(int id_sala) throws SQLException {
         ArrayList<Proiezione> Sale = adapter.viewShows(id_sala);
         return Sale;
     }
     public ArrayList<Prenotazione> salesVolume (String a, String b) throws SQLException {
         ArrayList<Prenotazione> books = adapter.salesVolumeSearch(a, b);
         return books;
-    }    
+    }
+    
+    public Proiezione ProiezioneById(int id_proiezione) throws SQLException{
+        Proiezione show = adapter.getProiezioneById(id_proiezione);
+        return show;
+    }
 }
