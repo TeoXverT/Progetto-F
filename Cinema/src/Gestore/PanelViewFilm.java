@@ -33,7 +33,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import oggetti.ButtonCover;
 import oggetti.Film;
-import oggetti.PanelYoutube;
+import oggetti.YoutubePanel;
 
 /**
  *
@@ -121,7 +121,7 @@ public class PanelViewFilm extends JPanel {
             Logger.getLogger(PanelViewFilm.class.getName()).log(Level.SEVERE, null, ex);
         }
         nord.add(new JLabel(scalaImmagine(immagine, 230, 320)));
-        nord.add(new PanelYoutube(film.getLink_youtube(), 100, 100));
+        nord.add(new YoutubePanel(film.getLink_youtube(), 100, 100));
 
         JPanel centro = new JPanel();
         centro.setLayout(new GridLayout(0, 2, 12, 12));

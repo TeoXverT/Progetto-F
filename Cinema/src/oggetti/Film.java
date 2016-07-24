@@ -24,7 +24,8 @@ public class Film {
         this.link_copertina = link_copertina;
         this.data_ora = data_ora;
     }
-        public Film(String titolo_film, String genere, int durata, String descrizione, String link_youtube, String link_copertina) {
+
+    public Film(String titolo_film, String genere, int durata, String descrizione, String link_youtube, String link_copertina) {
 
         this.titolo_film = titolo_film;
         this.genere = genere;
@@ -32,6 +33,10 @@ public class Film {
         this.descrizione = descrizione;
         this.link_youtube = link_youtube;
         this.link_copertina = link_copertina;
+    }
+
+    public Film(int id_film) {
+        this.id_film = id_film;
     }
 
     public Calendar getData_ora() {

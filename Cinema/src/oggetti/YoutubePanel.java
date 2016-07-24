@@ -6,9 +6,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 
-public class PanelYoutube extends JPanel {
+public class YoutubePanel extends JPanel {
 
-    public PanelYoutube(String youtube_link, int lunghezza, int altezza) {
+    public YoutubePanel(String youtube_link, int lunghezza, int altezza) {
         //Dimensioni del pannello restituito, molti borderLayout tendono a strechiare le dimensioni nonostante siano  definite
         this.setLayout(new BorderLayout());
         NativeInterface.open();

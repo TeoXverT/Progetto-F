@@ -23,12 +23,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 import oggetti.Film;
-import oggetti.Proiezione;
-import oggetti.Sala;
+import oggetti.Screening;
+import oggetti.Room;
 
-public class PanelAddProiezione extends JPanel {
+public class PanelAddScreening extends JPanel {
 
-    public PanelAddProiezione(final Controller_Gestore controller, final JLabel outputGrafico) {
+    public PanelAddScreening(final Controller_Gestore controller, final JLabel outputGrafico) {
 
         this.setLayout(new BorderLayout(10, 30));
 
@@ -55,11 +55,11 @@ public class PanelAddProiezione extends JPanel {
             pannello.add(new JLabel("Sale: "), BorderLayout.NORTH);
 
             final DefaultListModel model1 = new DefaultListModel();
-            final JList<Sala> listaSale = new JList(model1);
+            final JList<Room> listaSale = new JList(model1);
             JScrollPane pane1 = new JScrollPane(listaSale);
 
-            ArrayList<Sala> Sale = controller.visualizzaSale();
-            for (Sala s : Sale) {
+            ArrayList<Room> Sale = controller.visualizzaSale();
+            for (Room s : Sale) {
                 model1.addElement(s);
             }
             pannello.add(pane1, BorderLayout.CENTER);
@@ -105,7 +105,7 @@ public class PanelAddProiezione extends JPanel {
                         outputGrafico.setText("Riempire tutti i campi");
                     } else {
                         //Creazione oggetto
-                        Proiezione proiezione = new Proiezione(0, dateToCalendar((Date) selettoreDataOra.getValue()), listaFilm.getSelectedValue().getId_film(), (int) listaSale.getSelectedValue().getId_sala(),tipoLista.getSelectedIndex(), (double) spinnerPrezzo.getValue());
+                        Screening proiezione = new Screening(0, dateToCalendar((Date) selettoreDataOra.getValue()), new Film(listaFilm.getSelectedValue().getId_film()), new Room(listaSale.getSelectedValue().getId_sala()),tipoLista.getSelectedIndex(), (double) spinnerPrezzo.getValue());
                         try {
                             if (controller.scriviProiezione(proiezione)) {
                                 outputGrafico.setText("Nuova proiezione aggiunta con successo.");

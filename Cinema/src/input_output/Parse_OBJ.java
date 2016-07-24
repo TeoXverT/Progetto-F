@@ -22,34 +22,34 @@ public class Parse_OBJ {
     public Parse_OBJ() {
     }
 
-    public ArrayList<Sala> Sala(ResultSet risultato_query) throws SQLException {
-        ArrayList<Sala> Sale = new ArrayList<>();
+    public ArrayList<Room> Sala(ResultSet risultato_query) throws SQLException {
+        ArrayList<Room> Sale = new ArrayList<>();
         while (risultato_query.next()) {
-            Sale.add(new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns")));
+            Sale.add(new Room(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns")));
         }
         risultato_query.close();
 
         return Sale;
     }
 
-    public Sala getSalaById(ResultSet risultato_query) throws SQLException {
-        Sala sala = null;
+    public Room getSalaById(ResultSet risultato_query) throws SQLException {
+        Room sala = null;
         while (risultato_query.next()) {
-            sala = new Sala(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns"));
+            sala = new Room(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns"));
         }
         risultato_query.close();
         return sala;
     }
 
-    public ArrayList<Proiezione> Proiezione(ResultSet risultato_query) throws SQLException {
-        ArrayList<Proiezione> Proiezioni = new ArrayList<>();
+    public ArrayList<Screening> Proiezione(ResultSet risultato_query) throws SQLException {
+        ArrayList<Screening> screening = new ArrayList<>();
 
         while (risultato_query.next()) {
-            Proiezioni.add(new Proiezione(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), risultato_query.getInt("id_film"), risultato_query.getInt("id_sala"), risultato_query.getInt("projection_type"), risultato_query.getDouble("prezzo")));
+            screening.add(new Screening(risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("data_ora")), new Film(risultato_query.getInt("id_film")), new Room(risultato_query.getInt("id_sala")), risultato_query.getInt("projection_type"), risultato_query.getDouble("prezzo")));
         }
         risultato_query.close();
 
-        return Proiezioni;
+        return screening;
     }
 
     public ArrayList<Film> Film(ResultSet risultato_query) throws SQLException {
@@ -74,42 +74,41 @@ public class Parse_OBJ {
         return config;
     }
 
-    public Prenotazione Prenotazione(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
-        Prenotazione prenotazione = null;
+    public ArrayList<Booking> Booking(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
+        ArrayList<Booking> booking = new ArrayList<>();
 
-        while (risultato_query.next()) {//Lo farà una sola volta
-            prenotazione = new Prenotazione(risultato_query.getInt("id_booking"), risultato_query.getInt("id_proiezione"), null, parseData_ora(risultato_query.getTimestamp("date_time")),
-                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price"), risultato_query.getInt("booking_status"));
+        while (risultato_query.next()) {
+            booking.add(new Booking(risultato_query.getInt("id_booking"), new Screening(risultato_query.getInt("id_proiezione")), null, parseData_ora(risultato_query.getTimestamp("date_time")),
+                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price"), risultato_query.getInt("booking_status")));
         }
         risultato_query.close();
 
-        return prenotazione;
+        return booking;
     }
-    
-     public ArrayList<Prenotazione> Prenotazione_SalesVolume(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
-        ArrayList<Prenotazione> books = new ArrayList<>();
+
+    public ArrayList<Booking> Prenotazione_SalesVolume(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
+        ArrayList<Booking> booking = new ArrayList<>();
 
         while (risultato_query.next()) {//Lo farà una sola volta
-            books.add(new Prenotazione(risultato_query.getInt("id_booking"), risultato_query.getInt("id_proiezione"), parseData_ora(risultato_query.getTimestamp("date_time")),
+            booking.add(new Booking(risultato_query.getInt("id_booking"), new Screening(risultato_query.getInt("id_proiezione")), parseData_ora(risultato_query.getTimestamp("date_time")),
                     risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price")));
         }
         risultato_query.close();
 
-        return books;
+        return booking;
     }
-    
+
     public ArrayList<Seat> Seat(ResultSet risultato_query) throws SQLException {
         ArrayList<Seat> seat = new ArrayList<>();
-        
+
         while (risultato_query.next()) {
-            seat.add(new Seat(risultato_query.getInt("id_seat"), risultato_query.getInt("x"), risultato_query.getInt("y"), risultato_query.getInt("tipo"),risultato_query.getInt("id_sala")));
-            
+            seat.add(new Seat(risultato_query.getInt("id_seat"), risultato_query.getInt("x"), risultato_query.getInt("y"), risultato_query.getInt("tipo"), risultato_query.getInt("id_sala")));
+
         }
         risultato_query.close();
-        return seat;   
+        return seat;
     }
-    
-   
+
     ////////////////////////////////////////////////// METODI DI USO COMUNE ///////////////////////////////////
     private Calendar parseData_ora(Timestamp timestamp) {
         java.util.Date date = null;

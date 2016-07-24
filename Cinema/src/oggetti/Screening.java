@@ -13,31 +13,34 @@ import java.util.Calendar;
  *
  * @author Yoga
  */
-public class Proiezione {
+public class Screening {
 
-    private int id_proiezione;
+    private int id_screening;
     private Calendar data_ora;
-    private int id_film;
-    private int id_sala;
+    private Film film;
+    private Room room;
     private int tipo_proiezione; // 0- Normale 1- 3D 2-IMAX 3D 3- Live Event
     private double prezzo;
 
-    public Proiezione(int id_proiezione, Calendar data_ora, int id_film, int id_sala, int tipo_proiezione, double prezzo) {
-        this.id_proiezione = id_proiezione;
+    public Screening(int id_screening, Calendar data_ora, Film film, Room room, int tipo_proiezione, double prezzo) {
+        this.id_screening = id_screening;
         this.data_ora = data_ora;
-        this.id_film = id_film;
-        this.id_sala = id_sala;
+        this.film = film;
+        this.room = room;
         this.tipo_proiezione = tipo_proiezione;
         this.prezzo = prezzo;
+    }
+     public Screening(int id_proiezione) {
+        this.id_screening = id_proiezione;
     }
 
     @Override
     public String toString() {
-        return "Sala:" + id_sala + " Del:" + getData_ora_friendly();
+        return "Sala:" + id_screening + " Del:" + getData_ora_friendly();
     }
 
     public int getId_proiezione() {
-        return id_proiezione;
+        return id_screening;
     }
 
     public String getData_ora_sql() {
@@ -58,14 +61,6 @@ public class Proiezione {
 
     public Calendar getData_ora() {
         return data_ora;
-    }
-
-    public int getId_film() {
-        return id_film;
-    }
-
-    public int getId_sala() {
-        return id_sala;
     }
 
     public int getTipo_proiezione() {
@@ -105,6 +100,14 @@ public class Proiezione {
 
     public double getPrezzo() {
         return prezzo;
+    }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
 }

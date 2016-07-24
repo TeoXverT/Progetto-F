@@ -16,9 +16,9 @@ import oggetti.Config;
  *
  * @author Yatin
  */
-public class PanelImpostazioni extends JPanel {
+public class PanelConfig extends JPanel {
 
-    public PanelImpostazioni(final Controller_Gestore controller, final JLabel outputGrafico) {
+    public PanelConfig(final Controller_Gestore controller, final JLabel outputGrafico) {
 
         //final ArrayList<Config> c = new ArrayList<>();
         //c.clear();
@@ -55,7 +55,7 @@ public class PanelImpostazioni extends JPanel {
             this.add(text[3]);
             this.add(new JLabel("Disabled Price:"));
             this.add(text[4]);
-            this.add(new JLabel("Tempo pulizia sala: (Min.):"));
+            this.add(new JLabel("Tempo pulizia sala: [MIN]"));
             this.add(text[5]);
             this.add(new JLabel("Durata validità biglietti non pagati: [MIN]"));
             this.add(text[6]);

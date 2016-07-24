@@ -18,12 +18,12 @@ import javax.swing.JButton;
  */
 public class ButtonCart extends JButton{
     
-    private Proiezione proiezione;
+    private Screening proiezione;
     
-    public ButtonCart(Proiezione proiezione) throws IOException {
+    public ButtonCart(Screening proiezione) throws IOException {
         
         this.proiezione = proiezione;
-        this.setIcon(scalaImmagine(new ImageIcon(ImageIO.read(new URL("https://d30y9cdsu7xlg0.cloudfront.net/png/28468-200.png"))), 30, 30));
+        this.setIcon(scalaImmagine(new ImageIcon("immagini/carrello.png"), 30, 30));
         
         
     }
