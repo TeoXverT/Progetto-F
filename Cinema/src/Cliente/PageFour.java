@@ -120,13 +120,16 @@ public class PageFour extends JPanel {
                         prenotazione.setNumber_of_glasses(spinner.getNumber_of_glasses());
                     }
                     try {
-                        if (controller.scriviPrenotazione(prenotazione) == 0) {
+                        int idBooking = controller.writeBooking(prenotazione);
+                        if (idBooking == 0) { //Durante la scelta dei posti qualcunaltro li ha comprati
                             JOptionPane.showMessageDialog(popUpWindow,
                                     "I Posti da lei scielti sono stati prenotati da qualcun'altro, si prega di scieglere dei nuovi posti.",
                                     "Attenzione!!!",
                                     JOptionPane.WARNING_MESSAGE);
                             openPage(new PageThree(film, proiezione));
                         } else {
+                            System.out.println("ID Booking: "+idBooking);
+                            prenotazione.setId_prenotazione(idBooking);
 
                             JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
                             JPanel pannelloCaricamento = new JPanel();

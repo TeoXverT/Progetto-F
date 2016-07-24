@@ -17,13 +17,12 @@ public class Controller_Gestore {
     private final Adapter_SQL adapter = Adapter_SQL.getInstance();
 
     //Dati per il Thread di pulitura bigletti non pagati
-    final int DELAY = 0;
     final int PERIOD = 10000;
 
     public Controller_Gestore() {
 
-//        Timer timer = new Timer();
-//        timer.schedule(new DbCleanerThread(timer), DELAY, PERIOD);
+        Timer timer = new Timer();
+        timer.schedule(new DbCleanerThread(timer), 0, PERIOD);
 
     }
 

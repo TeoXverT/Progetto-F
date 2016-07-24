@@ -95,7 +95,6 @@ public class PageThree extends JPanel {
                 if(booked_seats.get(i).getId() == seats.get(j).getId()) {
                     seats.get(j).setIcon(seat_taken);
                     seats.get(j).setOccupato(true);
-                    System.out.println("ciao");
                 }
             } 
         }

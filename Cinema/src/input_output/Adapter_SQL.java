@@ -26,6 +26,9 @@ public class Adapter_SQL {
     private final SQLConnessione SQL;
     private final Parse_OBJ parser;
 
+    private final int TIME_LIMIT_ONLINE_PURCHASE = 15; // Min - è possibile comprare il bigletto online fino a tot min prima del inizio
+    private final int TIME_ZONE_COMPENSATION = 2; // Ore      - lo si utilizza per adeguarsi al fuso orario del DB
+
     private Adapter_SQL() {
         SQL = new SQLConnessione();
         SQL.creaConnessione();
@@ -66,7 +69,6 @@ public class Adapter_SQL {
 
     public boolean scriviProiezione(Proiezione proiezione) {
         String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getId_film() + "','" + proiezione.getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
-        System.out.println(query);
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
@@ -103,7 +105,6 @@ public class Adapter_SQL {
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n"
                 + ")OR(Proiezione.data_ora=time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) =time_interval.time_max)\n"
                 + ")";
-//        System.out.println(query);
 
         try {
             risultato_query = SQL.eseguiQueryLettura(query);
@@ -163,7 +164,6 @@ public class Adapter_SQL {
 
             risultato_query = SQL.eseguiQueryLettura(query);
         } else {
-//            query = "SELECT * FROM `Film` ORDER BY Film.data_ora desc";
             query = "SELECT * FROM `Film` ORDER BY data_ora desc LIMIT " + quantita_max_da_visualizzare;
             risultato_query = SQL.eseguiQueryLettura(query);
         }
@@ -213,7 +213,7 @@ public class Adapter_SQL {
 //        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
         String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
                 + "     FROM Film, Proiezione "
-                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL 120 MINUTE)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
+                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
                 + "     ";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
@@ -240,15 +240,14 @@ public class Adapter_SQL {
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
 
         if ((deltaData == 0) && (sliderValue <= Calendar.getInstance().get(Calendar.HOUR_OF_DAY))) {
-            System.out.println("ciao");
             query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube "
                     + "FROM Proiezione p, Film f "
-                    + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL 135 MINUTE), ' " + sliderValue + ":00:00')) AND p.data_ora > (NOW() +INTERVAL 135 MINUTE)";
+                    + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE), ' " + sliderValue + ":00:00')) AND p.data_ora > (NOW() +INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE)";
 
         } else {
             query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube "
                     + "FROM Proiezione p, Film f "
-                    + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL 135 MINUTE), ' " + sliderValue + ":00:00'))";
+                    + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE), ' " + sliderValue + ":00:00'))";
         }
 
         risultatoQuery = SQL.eseguiQueryLettura(query);
@@ -343,11 +342,11 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Proiezione> proiezione;
-        // ora = ora + 2; //PER FUSO ORARIO DATABASE
+        // ora = ora + TIME_ZONE_COMPENSATION; //PER FUSO ORARIO DATABASE
         query = "SELECT Proiezione.* "
                 + "FROM Proiezione "
                 // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
-                + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL '" + deltaData + " 2' DAY_HOUR), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
+                + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL '" + deltaData + " " + TIME_ZONE_COMPENSATION + "' DAY_HOUR), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
         risultato_query = SQL.eseguiQueryLettura(query);
 
         proiezione = parser.Proiezione(risultato_query);
@@ -425,8 +424,8 @@ public class Adapter_SQL {
         query = "SELECT Proiezione.*\n"
                 + "FROM Proiezione, Film\n"
                 + "WHERE (Proiezione.id_film=Film.id_film)\n"
-                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)<0\n"
-                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL 2 HOUR)>-Film.durata\n"
+                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL "+TIME_ZONE_COMPENSATION+" HOUR)<0\n"
+                + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL "+TIME_ZONE_COMPENSATION+" HOUR)>-Film.durata\n"
                 + "";
         risultato_query = SQL.eseguiQueryLettura(query);
         proiezioni = parser.Proiezione(risultato_query);
@@ -448,31 +447,20 @@ public class Adapter_SQL {
         return prenotazione.getId_prenotazione();
     }
 
-    public int writeBookin(Prenotazione prenotazione) throws SQLException {
-        prenotazione.setId_prenotazione(getIdLastBooking() + 1);
-        int completed = prenotazione.getId_prenotazione();
-        System.out.println("ID Prenotazione: " + prenotazione.getId_prenotazione());
-        System.out.println("ID Proiezione: " + prenotazione.getId_proiezione());
-
-        //Controllo disponibilià posti
-        if (checkBookedSeat(prenotazione.getId_proiezione(), prenotazione.getPosti_prenotati())) {
-            //Scrivo Prenotazione
-            String query = "INSERT INTO Booking(id_booking,id_proiezione,date_time,number_of_glasses,price,booking_status) VALUES("
-                    + "'" + prenotazione.getId_prenotazione() + "','" + prenotazione.getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
-                    + prenotazione.getNumber_of_glasses() + "','" + prenotazione.getPrezzo() + "','0')";
+    public void writeBookedSeat(int idBooking, ArrayList<Seat> seats) throws SQLException {
+        for (Seat s : seats) {
+            String query = "INSERT INTO Booked_Seat(id_booking,id_seat) VALUES('" + idBooking + "','" + s.getId() + "')";
             SQL.eseguiQueryScrittura(query);
-
-            //Scrivo prenotazione Posti
-            for (Seat s : prenotazione.getPosti_prenotati()) {
-                query = "INSERT INTO Booked_Seat(id_booking,id_seat) VALUES('" + prenotazione.getId_prenotazione() + "','" + s.getId() + "')";
-                SQL.eseguiQueryScrittura(query);
-            }
-
-        } else {
-            completed = 0;
         }
+    }
 
-        return completed;
+    public int writeBookin(Prenotazione prenotazione) throws SQLException {
+        String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status) VALUES("
+                + "'" + prenotazione.getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
+                + prenotazione.getNumber_of_glasses() + "','" + prenotazione.getPrezzo() + "','0')";
+        SQL.eseguiQueryScrittura(query);
+
+        return getIdLastBooking();
     }
 
     private String getData_ora_sql(Calendar data_ora) {
@@ -480,10 +468,9 @@ public class Adapter_SQL {
         return sdf.format(data_ora.getTime());
     }
 
-    private boolean checkBookedSeat(int id_proiezione, ArrayList<Seat> posti) throws SQLException {
+    public boolean checkBookedSeat(int id_proiezione, ArrayList<Seat> posti) throws SQLException {
 
         for (Seat s : posti) {
-            System.out.println("ID Posto Prenotato: " + s.getId());
             String query = "SELECT * FROM Booking,Booked_Seat where Booking.id_proiezione=" + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND Booked_Seat.id_seat=" + s.getId();
             ResultSet risultato_query = SQL.eseguiQueryLettura(query);
             while (risultato_query.next()) { // Non ci entra se i posti sono ancora liberi
@@ -501,7 +488,6 @@ public class Adapter_SQL {
                 + "FROM Booking,Booked_Seat, Seats "
                 + "WHERE Booking.id_proiezione = " + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND"
                 + " Booked_Seat.id_seat = Seats.id_seat";
-        System.out.println(query);
         risultato_query = SQL.eseguiQueryLettura(query);
         return parser.Seat(risultato_query);
     }
@@ -519,21 +505,21 @@ public class Adapter_SQL {
         return Proiezioni;
     }
 
-    public int checkPayment(Prenotazione p) throws SQLException {
-        int cp;
+    public int checkBookingPayment(int idBooking) throws SQLException {
+        int status;
 
         String Query = "SELECT booking_status "
                 + "FROM Booking "
-                + "WHERE id_booking = " + p.getId_prenotazione() + "";
+                + "WHERE id_booking = " + idBooking + "";
 
         ResultSet result = SQL.eseguiQueryLettura(Query);
         result.next();
-        cp = result.getInt("booking_status");
+        status = result.getInt("booking_status");
 
-        return cp;
+        return status;
     }
 
-    public void insertPaymentForced(Prenotazione p) throws SQLException {
+    public void insertFakePayment(Prenotazione p) throws SQLException {
 
         String Query = "UPDATE Booking "
                 + "SET booking_status=1 "
@@ -570,7 +556,7 @@ public class Adapter_SQL {
                     + "select Booking.id_booking\n"
                     + "from Booking,Config\n"
                     + "where Booking.booking_status = 0 and \n"
-                    + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL 2 HOUR)> Config.booking_validation_time\n"
+                    + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)> Config.booking_validation_time\n"
                     + ") as Temp_table)";
             SQL.eseguiQueryScrittura(Query);
             Query = "DELETE FROM Booking\n"
@@ -578,7 +564,7 @@ public class Adapter_SQL {
                     + "select Booking.id_booking\n"
                     + "from Booking,Config\n"
                     + "where Booking.booking_status = 0 and \n"
-                    + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL 2 HOUR)> Config.booking_validation_time\n"
+                    + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)> Config.booking_validation_time\n"
                     + ") as Temp_table)";
             SQL.eseguiQueryScrittura(Query);
 

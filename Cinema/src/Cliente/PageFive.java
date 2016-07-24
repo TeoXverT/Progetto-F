@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class PageFive extends JPanel {
 
     private final int MAX_TIME; //Min
-    private final int DB_READ_POLLING = 10; //Sec
+    private final int DB_READ_POLLING = 5; //Sec
 
     private Controller_Cliente controller;
     private Prenotazione prenotazione;
@@ -57,7 +57,7 @@ public class PageFive extends JPanel {
                 try {
                     controller.getInsertPaymentForced(prenotazione);
                 } catch (SQLException ex) {
-                    Logger.getLogger(PageFive.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Problema: inserimento pagamento fake");
                 }
             }
         });
@@ -92,7 +92,7 @@ public class PageFive extends JPanel {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
-                        System.out.println("\n\nPROBLEMA CON Sleep\n\n");
+                        System.out.println("PROBLEMA CON Sleep");
                     }
                 }
             }
@@ -108,15 +108,15 @@ public class PageFive extends JPanel {
                 for (int i = 0; i < (MAX_TIME * 60) / DB_READ_POLLING; i++) {
                     try {
                         Thread.sleep(DB_READ_POLLING * 1000);
-                        checkPayment = controller.checkPayment(prenotazione);
+                        checkPayment = controller.checkBookingPayment(prenotazione.getId_prenotazione());
                         if (checkPayment == 1) {
                             break;
                         }
 
                     } catch (InterruptedException ex) {
-                        System.out.println("\n\nPROBLEMA CON Sleep\n\n");
+                        System.out.println("PROBLEMA: con istruzine Sleep");
                     } catch (SQLException ex) {
-                        System.out.println("\n\nPROBLEMA CON QUERY checkPayment(Prenotazione)\n\n");
+                        System.out.println("PROBLEMA: lettura avvenuto pagamento");
                     }
                 }
 

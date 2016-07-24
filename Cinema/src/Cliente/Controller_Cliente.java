@@ -126,10 +126,15 @@ public class Controller_Cliente {
         return seat;
     }
 
-    public int scriviPrenotazione(Prenotazione prenotazione) throws SQLException {
-        int numeroPrenotazione = 0;
-        numeroPrenotazione = adapter.writeBookin(prenotazione);
-        return numeroPrenotazione;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
+    public int writeBooking(Prenotazione prenotazione) throws SQLException {
+        int idBooking = 0;
+
+        if (adapter.checkBookedSeat(prenotazione.getId_proiezione(), prenotazione.getPosti_prenotati())) { //Controllo disponibilità posti
+            idBooking = adapter.writeBookin(prenotazione);
+            adapter.writeBookedSeat(idBooking, prenotazione.getPosti_prenotati());
+        }
+
+        return idBooking;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
     }
 
     public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
@@ -137,10 +142,10 @@ public class Controller_Cliente {
     }
 
     public void getInsertPaymentForced(Prenotazione p) throws SQLException {
-        adapter.insertPaymentForced(p);
+        adapter.insertFakePayment(p);
     }
 
-    public int checkPayment(Prenotazione p) throws SQLException {
-        return adapter.checkPayment(p);
+    public int checkBookingPayment(int idBooking) throws SQLException {
+        return adapter.checkBookingPayment(idBooking);
     }
 }
