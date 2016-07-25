@@ -1,7 +1,7 @@
 
-import Cliente.Controller_Cliente;
-import Cliente.Gui_Cliente;
-import Gestore.*;
+import admin.AdminGui;
+import customer.CustomerController;
+import customer.CustomerGui;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 
 
@@ -43,7 +43,7 @@ public class main {
          */
 
         
-        Gui_Gestore gestore = new Gui_Gestore();
+        AdminGui gestore = new AdminGui();
         gestore.setVisible(true);
         gestore.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -53,7 +53,7 @@ public class main {
             }
         });
 
-        final Gui_Cliente gui = new Gui_Cliente();
+        final CustomerGui gui = new CustomerGui();
         gui.setVisible(true);
 
         gui.addWindowListener(new java.awt.event.WindowAdapter() {

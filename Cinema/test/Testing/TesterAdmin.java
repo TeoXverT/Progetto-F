@@ -5,8 +5,8 @@
  */
 package Testing;
 
-import Cliente.Controller_Cliente;
-import oggetti.Booking;
+import customer.CustomerController;
+import obj.Booking;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -27,7 +27,7 @@ public class TesterAdmin {
 
     @Test
     public void eliminazioneBiglettiNonPagati() {
-        Controller_Cliente c = Controller_Cliente.getInstance();
+        CustomerController c = CustomerController.getInstance();
     }
 
 }
