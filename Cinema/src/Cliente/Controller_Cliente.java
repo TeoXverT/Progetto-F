@@ -27,11 +27,11 @@ public class Controller_Cliente {
 
     private ArrayList<Screening> listaProiezioniFuture;
     private ArrayList<Screening> listaProiezioniFiltrate;
-    private Adapter_SQL adapter;
+    private Adapter_SQL_Cliente adapter;
     private Config config;
 
     private Controller_Cliente() {
-        adapter = new Adapter_SQL();
+        adapter = new Adapter_SQL_Cliente();
     }
 
     public static synchronized Controller_Cliente getInstance() {
@@ -75,7 +75,7 @@ public class Controller_Cliente {
     }
 
     public ArrayList<Film> FilmFuturo(int deltaData) throws SQLException {
-        return adapter.FilmFuturo(deltaData);
+        return adapter.futureFilm(deltaData);
     }
 
     public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
