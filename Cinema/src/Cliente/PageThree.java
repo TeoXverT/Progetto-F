@@ -6,6 +6,7 @@
 package Cliente;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import oggetti.Config;
 import oggetti.Film;
@@ -32,9 +34,9 @@ import oggetti.Seat;
 public class PageThree extends JPanel {
 
     private Controller_Cliente controller;
-    Screening screening;
-    Film film;
-    Booking booking;
+private    Screening screening;
+    private Film film;
+  private  Booking booking;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -50,9 +52,9 @@ public class PageThree extends JPanel {
     private ArrayList<Seat> seats;
     private ArrayList<Seat> booked_seats;
     private ArrayList<Seat> Taken_seats = new ArrayList<>();
-
-    JLabel prezzo = new JLabel();
-    JButton prosegui = new JButton("PROSEGUI");
+private Component frameErrore;
+    private JLabel prezzo = new JLabel();
+   private JButton prosegui = new JButton("PROSEGUI");
 
     public PageThree(Screening proiezione) {
         this.controller = Controller_Cliente.getInstance();
@@ -61,6 +63,8 @@ public class PageThree extends JPanel {
         try {
             this.sala = controller.roomByID(proiezione.getRoom().getId_sala());
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+          
 
         }
 
@@ -70,6 +74,8 @@ public class PageThree extends JPanel {
         try {
             config = controller.getConfig();
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+          
         }
         initGui();
     }
@@ -190,14 +196,14 @@ public class PageThree extends JPanel {
         return event;
     }
 
-    private void goback() {
+    private void goback() {  //ritorna alla pagina selezione film
         this.removeAll();
         this.add(new PageOne());
         this.revalidate();
         this.repaint();
     }
 
-    private void openPage(JPanel panel) {
+    private void openPage(JPanel panel) { 
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(panel, BorderLayout.CENTER);
@@ -205,7 +211,7 @@ public class PageThree extends JPanel {
         this.repaint();
     }
 
-    private void checkTakenSeats() {
+    private void checkTakenSeats() {  
         try {
             booked_seats.clear();
             booked_seats = controller.getTakenSeats(screening.getId_proiezione());

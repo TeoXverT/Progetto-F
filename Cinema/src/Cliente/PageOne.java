@@ -34,16 +34,16 @@ public class PageOne extends JPanel {
 
     private Controller_Cliente controller;
 
-    JTabbedPane tab = new JTabbedPane();
-    Component frameErrore;
+private    JTabbedPane tab = new JTabbedPane();
+    private Component frameErrore;
 
-    int SliderValue;
-    JSlider slider;
-    Calendar ora = Calendar.getInstance();
+    private int SliderValue;
+    private JSlider slider;
+    private Calendar ora = Calendar.getInstance();
 
-    static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    private static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-    JPanel pannelloSlider;
+    private JPanel pannelloSlider;
 
     public PageOne() {
         this.controller = Controller_Cliente.getInstance();
@@ -156,7 +156,7 @@ public class PageOne extends JPanel {
         }
     }
 
-    private Thread ThreadDownloadFilm(final int deltaData) {
+    private Thread ThreadDownloadFilm(final int deltaData) {    //scarica i film secondo i filtri selezionati
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
@@ -179,8 +179,10 @@ public class PageOne extends JPanel {
                                     OpenPageTwo(f, focusedDateTime);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                  
                                 } catch (IOException ex) {
                                     Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                  
                                 }
                             }
                         });
@@ -199,7 +201,7 @@ public class PageOne extends JPanel {
         return t;
     }
 
-    public void updateGui(int deltaDate, JPanel pannelloGiornaliero) {
+    public void updateGui(int deltaDate, JPanel pannelloGiornaliero) { //aggiorna la gui quando necessario(modifica filtri orari o giorni)
         JPanel Pannello = (JPanel) tab.getComponentAt(deltaDate);
         Pannello.removeAll();
         Pannello.add(pannelloGiornaliero);
@@ -207,7 +209,7 @@ public class PageOne extends JPanel {
         Pannello.repaint();
     }
 
-    public void OpenPageTwo(Film film, Calendar focusedDateTime) throws SQLException, IOException {
+    public void OpenPageTwo(Film film, Calendar focusedDateTime) throws SQLException, IOException { //apre pagina selezione proiezioni del film scelto
         this.removeAll();
         this.add(new PageTwo(film, focusedDateTime), BorderLayout.CENTER);
         this.revalidate();
