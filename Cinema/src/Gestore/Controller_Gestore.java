@@ -15,7 +15,7 @@ public class Controller_Gestore {
     private final Adapter_SQL_Gestore adapter;
 
     //Dati per il Thread di pulitura bigletti non pagati
-    final int PERIOD = 10000;
+    private final int PERIOD = 10000;
 
     public Controller_Gestore() {
         adapter = new Adapter_SQL_Gestore();
