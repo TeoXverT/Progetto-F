@@ -105,12 +105,10 @@ public class Controller_Cliente {
 
     public int writeBooking(Booking booking) throws SQLException {
         int idBooking = 0;
-
         if (adapter.checkBookedSeat(booking.getScreening().getId_proiezione(), booking.getPosti_prenotati())) { //Controllo disponibilità posti
             idBooking = adapter.writeBookin(booking);
             adapter.writeBookedSeat(idBooking, booking.getPosti_prenotati());
         }
-
         return idBooking;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
     }
 

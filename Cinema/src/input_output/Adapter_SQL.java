@@ -20,10 +20,10 @@ import oggetti.*;
  * @author Yoga
  */
 public class Adapter_SQL {
-
+    
     private final SQLConnessione SQL;
     private final Parse_OBJ parser;
-
+    
     private final int TIME_LIMIT_ONLINE_PURCHASE = 15; // Min - è possibile comprare il bigletto online fino a tot min prima del inizio
     private final int TIME_ZONE_COMPENSATION = 2; // Ore      - lo si utilizza per adeguarsi al fuso orario del DB
 
@@ -32,7 +32,7 @@ public class Adapter_SQL {
         SQL.creaConnessione();
         parser = new Parse_OBJ();
     }
-
+    
     public ArrayList<Screening> visualizzaProiezione(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
@@ -40,7 +40,7 @@ public class Adapter_SQL {
         String query;
         ResultSet risultato_query;
         ArrayList<Screening> Proiezioni;
-
+        
         if (tipo == 0) {
             query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
@@ -51,13 +51,13 @@ public class Adapter_SQL {
             query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) > DATE( NOW( ) ) OR DATE( Proiezione.data_ora ) = DATE( NOW( ) ) ORDER BY Proiezione.data_ora DESC";
             risultato_query = SQL.eseguiQueryLettura(query);
         }
-
-        Proiezioni = parser.Proiezione(risultato_query);
+        
+        Proiezioni = parser.Screening(risultato_query);
         risultato_query.close();
-
+        
         return Proiezioni;
     }
-
+    
     public boolean scriviProiezione(Screening proiezione) {
         String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proiezione.getData_ora_sql() + "','" + proiezione.getFilm().getId_film() + "','" + proiezione.getRoom().getId_sala() + "','" + proiezione.getTipo_proiezione() + "','" + proiezione.getPrezzo() + "');";
         try {
@@ -67,10 +67,10 @@ public class Adapter_SQL {
             return false;
         }
     }
-
+    
     public boolean contolloProiezioni(Screening proiezione) {
         ResultSet risultato_query;
-
+        
         String query = "select Film.titolo\n"
                 + "from Proiezione, Film,\n"
                 + "					(\n"
@@ -96,7 +96,7 @@ public class Adapter_SQL {
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_max\n"
                 + ")OR(Proiezione.data_ora=time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) =time_interval.time_max)\n"
                 + ")";
-
+        
         try {
             risultato_query = SQL.eseguiQueryLettura(query);
             while (risultato_query.next()) {
@@ -108,7 +108,7 @@ public class Adapter_SQL {
             return false;
         }
     }
-
+    
     public boolean eliminaProiezione(int id_proiezione) {
         String query = "DELETE FROM Proiezione WHERE Proiezione.id_proiezione =" + id_proiezione;
         try {
@@ -118,23 +118,23 @@ public class Adapter_SQL {
             return false;
         }
     }
-
+    
     public ArrayList<Room> visualizzaSale() throws SQLException {
         String query;
         ResultSet risultato_query;
         ArrayList<Room> Sale;
-
+        
         query = "SELECT * FROM Sala";
         risultato_query = SQL.eseguiQueryLettura(query);
-        Sale = parser.Sala(risultato_query);
+        Sale = parser.Room(risultato_query);
         risultato_query.close();
-
+        
         return Sale;
     }
-
+    
     public boolean eliminaSale(int id_sale) {
         String query = "DELETE FROM Seats WHERE Seats.id_sala =" + id_sale;
-
+        
         try {
             SQL.eseguiQueryScrittura(query);
             query = "DELETE FROM Sala WHERE Sala.id_sala =" + id_sale;
@@ -144,27 +144,27 @@ public class Adapter_SQL {
             return false;
         }
     }
-
+    
     public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
         String query;
         ResultSet risultato_query;
         ArrayList<Film> Films;
-
+        
         if (quantita_max_da_visualizzare == 0) {
             query = "SELECT * FROM  `Film` WHERE Film.titolo IS NOT NULL AND Film.titolo != '' ORDER BY Film.data_ora DESC";
-
+            
             risultato_query = SQL.eseguiQueryLettura(query);
         } else {
             query = "SELECT * FROM `Film` ORDER BY data_ora desc LIMIT " + quantita_max_da_visualizzare;
             risultato_query = SQL.eseguiQueryLettura(query);
         }
-
+        
         Films = parser.Film(risultato_query);
         risultato_query.close();
-
+        
         return Films;
     }
-
+    
     public boolean eliminaFilm(int id_film) {
         String query = "DELETE FROM Film WHERE Film.id_film =" + id_film;
         try {
@@ -174,12 +174,12 @@ public class Adapter_SQL {
             return false;
         }
     }
-
+    
     public ArrayList<Film> visualizzaFilmFiltratiRispettoOraEData(Calendar Data_ora_inizio, Calendar Data_ora_fine) throws SQLException {
-
+        
         ArrayList<Film> listaFilmFiltrati;
         ResultSet risultatoQuery;
-
+        
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate1 = sdfDate.format(Data_ora_fine.getTime());
         String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
@@ -187,15 +187,15 @@ public class Adapter_SQL {
         //TEMPORANEO TEST
         //String query = "SELECT Film.id_film, Film.titolo, Film.genere, Film.durata, Film.descrizione, Film.link_youtube, Film.link_copertina FROM  Proiezione LEFT JOIN Film ON Proiezione.id_film = Film.id_film  WHERE ( DATE( Proiezione.data_ora ) > DATE( '" + strDate2 + "' ) AND DATE( Proiezione.data_ora ) < DATE( '" + strDate1 + "' ))";
         String query = "SELECT DISTINCT f.id_film, f.titolo, f.genere, f.durata, f.descrizione, f.link_youtube, f.link_copertina FROM  Proiezione p LEFT JOIN Film f ON p.id_film = f.id_film  WHERE (  p.data_ora  > '" + strDate2 + "'  AND p.data_ora  < '" + strDate1 + "' )";
-
+        
         risultatoQuery = SQL.eseguiQueryLettura(query);
         listaFilmFiltrati = parser.Film(risultatoQuery);
-
+        
         return listaFilmFiltrati;
     }
-
+    
     public ArrayList<Film> FilmFuturo(int deltaData) throws SQLException {
-
+        
         ArrayList<Film> Films;
         ResultSet risultatoQuery;
 
@@ -208,16 +208,16 @@ public class Adapter_SQL {
                 + "     ";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
-
+        
         risultatoQuery = SQL.eseguiQueryLettura(query);
         Films = parser.Film(risultatoQuery);
-
+        
         return Films;
-
+        
     }
-
+    
     public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
-
+        
         ArrayList<Film> Films;
         ResultSet risultatoQuery;
         String query;
@@ -229,41 +229,41 @@ public class Adapter_SQL {
         //    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
-
+        
         if ((deltaData == 0) && (sliderValue <= Calendar.getInstance().get(Calendar.HOUR_OF_DAY))) {
             query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube "
                     + "FROM Proiezione p, Film f "
                     + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE), ' " + sliderValue + ":00:00')) AND p.data_ora > (NOW() +INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE)";
-
+            
         } else {
             query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube "
                     + "FROM Proiezione p, Film f "
                     + "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE) = " + deltaData + " AND p.data_ora > (concat(date(now()+ INTERVAL  " + deltaData + " DAY + INTERVAL " + ((TIME_ZONE_COMPENSATION * 60) + TIME_LIMIT_ONLINE_PURCHASE) + " MINUTE), ' " + sliderValue + ":00:00'))";
         }
-
+        
         risultatoQuery = SQL.eseguiQueryLettura(query);
         Films = parser.Film(risultatoQuery);
-
+        
         return Films;
-
+        
     }
-
+    
     public Config visualizzaConfig() throws SQLException {
         String query;
         ResultSet risultato_query;
         Config config;
-
+        
         query = "SELECT * FROM Config ORDER BY id_config DESC LIMIT 1";
         risultato_query = SQL.eseguiQueryLettura(query);
-
+        
         config = parser.Config(risultato_query);
         risultato_query.close();
-
+        
         return config;
     }
-
+    
     public boolean scriviConfig(Config config) {
-
+        
         String query = "INSERT INTO Config(prezzo_vip,sconto,glasses_price,over_price,disabled_price,offset_time,booking_validation_time) VALUES("
                 + "'" + config.getPrezzo_vip() + "','" + config.getSconto() + "','"
                 + config.getGlasses_price() + "','" + config.getOver_price() + "','" + config.getDisabled_price() + "','"
@@ -275,26 +275,26 @@ public class Adapter_SQL {
             return false;
         }
     }
-
+    
     public boolean scriviFilm(Film film) {
-
+        
         String query = "INSERT INTO Film(titolo,genere,durata,descrizione,link_youtube,link_copertina) VALUES("
                 + "'" + film.getTitolo_film() + "','" + film.getGenere() + "','"
                 + film.getDurata() + "','" + film.getDescrizione() + "','" + film.getLink_youtube() + "','"
                 + film.getLink_copertina() + "')";
-
+        
         try {
             SQL.eseguiQueryScrittura(query);
             return true;
         } catch (SQLException ex) {
             return false;
         }
-
+        
     }
-
+    
     public boolean writeHall(Room sala) {
         ResultSet risultato_query;
-
+        
         String query = "INSERT INTO Sala(rows,columns) VALUES("
                 + "'" + sala.getRows() + "','" + sala.getColumns() + "')";
         try {
@@ -304,13 +304,13 @@ public class Adapter_SQL {
             while (risultato_query.next()) {
                 sala.setId_sala(risultato_query.getInt("id_sala"));
             }
-
+            
             return true;
         } catch (SQLException ex) {
             return false;
         }
     }
-
+    
     public boolean writeSeats(Room sala) {
         ArrayList<Seat> posti = sala.getSeats();
         boolean complete = false;
@@ -326,46 +326,46 @@ public class Adapter_SQL {
             }
         }
         return complete;
-
+        
     }
-
+    
     public ArrayList<Screening> screeningFilteredByFilmAndTime(int id_film, Calendar focusedDateTime) throws SQLException {
         String query;
         ResultSet resultSet;
         ArrayList<Screening> screening;
-
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+        
         Calendar midnight = (Calendar) focusedDateTime.clone();
-
+        
         midnight.set(Calendar.HOUR_OF_DAY, 23);
         midnight.set(Calendar.MINUTE, 59);
         midnight.set(Calendar.SECOND, 59);
-
+        
         query = "select *\n"
                 + "from Proiezione\n"
                 + "where Proiezione.id_film= " + id_film + " and Proiezione.data_ora>  \"" + sdf.format(focusedDateTime.getTime()) + "\" and Proiezione.data_ora< \"" + sdf.format(midnight.getTime()) + "\"";
-
+        
         resultSet = SQL.eseguiQueryLettura(query);
-        screening = parser.Proiezione(resultSet);
+        screening = parser.Screening(resultSet);
         resultSet.close();
         return screening;
     }
-
+    
     public Room getSalaByIdSala(int id_sala) throws SQLException {
         String query;
         ResultSet risultato_query;
         Room sala;
-
+        
         query = "SELECT * FROM Sala WHERE id_sala = '" + id_sala + "'";
-
+        
         risultato_query = SQL.eseguiQueryLettura(query);
-        sala = parser.getSalaById(risultato_query);
+        sala = parser.Room(risultato_query).get(0);
         risultato_query.close();
-
+        
         return sala;
     }
-
+    
     public ArrayList<Seat> getSeats(int id_sala) {          // da finire...sono arrivato a leggere da DB ora devo parsare le cose..
         String query;
         ResultSet risultato_query;
@@ -375,7 +375,7 @@ public class Adapter_SQL {
         ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
         ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
         ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
-
+        
         query = "SELECT *  FROM Seats WHERE id_sala = '" + id_sala + "'";
         try {
             risultato_query = SQL.eseguiQueryLettura(query);
@@ -409,11 +409,11 @@ public class Adapter_SQL {
         } catch (SQLException ex) {
             Logger.getLogger(Adapter_SQL.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return seats;
-
+        
     }
-
+    
     public ArrayList<Screening> visualizzaStatoSale() throws SQLException {
         String query;
         ResultSet risultato_query;
@@ -425,64 +425,63 @@ public class Adapter_SQL {
                 + "AND TIMESTAMPDIFF(MINUTE, Proiezione.data_ora + INTERVAL Film.durata MINUTE ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)>-Film.durata\n"
                 + "";
         risultato_query = SQL.eseguiQueryLettura(query);
-        proiezioni = parser.Proiezione(risultato_query);
+        proiezioni = parser.Screening(risultato_query);
         risultato_query.close();
         return proiezioni;
     }
-
+    
     public int getIdLastBooking() throws SQLException {
         String query;
         ResultSet risultato_query;
         Booking prenotazione;
-
+        
         query = "SELECT * FROM Booking ORDER BY Booking.id_booking DESC LIMIT 1";
-
+        
         risultato_query = SQL.eseguiQueryLettura(query);
         prenotazione = parser.Booking(risultato_query).get(0);
         risultato_query.close();
-
+        
         return prenotazione.getId_prenotazione();
     }
-
+    
     public void writeBookedSeat(int idBooking, ArrayList<Seat> seats) throws SQLException {
         for (Seat s : seats) {
             String query = "INSERT INTO Booked_Seat(id_booking,id_seat) VALUES('" + idBooking + "','" + s.getId() + "')";
             SQL.eseguiQueryScrittura(query);
         }
     }
-
-    public int writeBookin(Booking prenotazione) throws SQLException {
-        String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status) VALUES("
-                + "'" + prenotazione.getScreening().getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
-                + prenotazione.getNumber_of_glasses() + "','" + prenotazione.getPrezzo() + "','0')";
+    
+    public int writeBookin(Booking booking) throws SQLException {
+        String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status,email) VALUES("
+                + "'" + booking.getScreening().getId_proiezione() + "','" + getData_ora_sql(Calendar.getInstance()) + "','"
+                + booking.getNumber_of_glasses() + "','" + booking.getPrezzo() + "','0',\"" + booking.getEmail() + "\")";
         SQL.eseguiQueryScrittura(query);
-
-        return getIdLastBooking();
+        return getIdLastBooking();        
     }
-
+    
     public ArrayList<Booking> showBooking() throws SQLException {
-
+        
         String query;
         ResultSet risultato_query;
         ArrayList<Booking> booking;
-
+        
         query = "SELECT * FROM Booking ORDER BY date_time DESC";
         risultato_query = SQL.eseguiQueryLettura(query);
-
+        
         booking = parser.Booking(risultato_query);
         risultato_query.close();
-
+        
         return booking;
-
+        
     }
-
+    
     private String getData_ora_sql(Calendar data_ora) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(data_ora.getTime());
     }
-
+    
     public boolean checkBookedSeat(int id_proiezione, ArrayList<Seat> posti) throws SQLException {
-
+        
         for (Seat s : posti) {
             String query = "SELECT * FROM Booking,Booked_Seat where Booking.id_proiezione=" + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND Booked_Seat.id_seat=" + s.getId();
             ResultSet risultato_query = SQL.eseguiQueryLettura(query);
@@ -493,7 +492,7 @@ public class Adapter_SQL {
         }
         return true;
     }
-
+    
     public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
         String query;
         ResultSet risultato_query;
@@ -504,44 +503,44 @@ public class Adapter_SQL {
         risultato_query = SQL.eseguiQueryLettura(query);
         return parser.Seat(risultato_query);
     }
-
+    
     public ArrayList<Screening> viewShows(int id_sala) throws SQLException {
         String query;
         ResultSet risultato_query;
         ArrayList<Screening> Proiezioni;
         query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala =" + id_sala;
         risultato_query = SQL.eseguiQueryLettura(query);
-
-        Proiezioni = parser.Proiezione(risultato_query);
+        
+        Proiezioni = parser.Screening(risultato_query);
         risultato_query.close();
-
+        
         return Proiezioni;
     }
-
+    
     public int checkBookingPayment(int idBooking) throws SQLException {
         int status;
-
+        
         String Query = "SELECT booking_status "
                 + "FROM Booking "
-                + "WHERE id_booking = " + idBooking + "";
-
+                + "WHERE Booking.id_booking = " + idBooking + "";
+        
         ResultSet result = SQL.eseguiQueryLettura(Query);
         result.next();
         status = result.getInt("booking_status");
-
+        
         return status;
     }
-
+    
     public void insertFakePayment(Booking p) throws SQLException {
-
+        
         String Query = "UPDATE Booking "
-                + "SET booking_status=1 "
-                + "WHERE id_booking = " + p.getId_prenotazione() + "";
-
+                + "SET Booking.booking_status=1 "
+                + "WHERE Booking.id_booking = " + p.getId_prenotazione() + "";
+        
         SQL.eseguiQueryScrittura(Query);
-
+        
     }
-
+    
     public ArrayList<Booking> salesVolumeSearch(String a, String b) throws SQLException {
         ArrayList<Booking> booking;
         ResultSet risultato_query;
@@ -551,15 +550,15 @@ public class Adapter_SQL {
                 + "AND date_time >= '" + a + "'\n"
                 + "AND date_time <= '" + b + "'";
         risultato_query = SQL.eseguiQueryLettura(query);
-        booking = parser.Prenotazione_SalesVolume(risultato_query);
+        booking = parser.Booking(risultato_query);
         risultato_query.close();
         return booking;
     }
-
+    
     public void spegni() {
         SQL.chiudiConnessione();
     }
-
+    
     public boolean bookingCleaner() {
         //Lettura di prenotazioni scadute (5 min), eliminazioni prenotazioni scadute sia booking che bookingseat
         //Per la relazione di  tipo RESTRICT elimino sia il posto/i che la prenotazione
@@ -580,12 +579,12 @@ public class Adapter_SQL {
                     + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)> Config.booking_validation_time\n"
                     + ") as Temp_table)";
             SQL.eseguiQueryScrittura(Query);
-
+            
         } catch (SQLException ex) {
             return false;
         }
-
+        
         return true;
     }
-
+    
 }

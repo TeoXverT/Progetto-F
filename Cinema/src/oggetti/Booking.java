@@ -22,8 +22,9 @@ public class Booking {
     private int number_of_glasses = 0;
     private int booking_status = 0;
     private Screening screening;
+    private String email;
 
-    public Booking(int id_prenotazione, Screening screening, ArrayList<Seat> posti_prenotati, Calendar data_ora, int number_of_glasses, double prezzo, int booking_status) {
+    public Booking(int id_prenotazione, Screening screening, ArrayList<Seat> posti_prenotati, Calendar data_ora, int number_of_glasses, double prezzo, int booking_status, String email) {
         this.id_prenotazione = id_prenotazione;
         this.screening = screening;
         this.posti_prenotati = posti_prenotati;
@@ -31,15 +32,18 @@ public class Booking {
         this.number_of_glasses = number_of_glasses;
         this.prezzo = prezzo;
         this.booking_status = booking_status;
+        this.email = email;
     }
-    //Costruttore per gestione fatturato
-    public Booking(int id_prenotazione, Screening screening, Calendar data_ora, int number_of_glasses, double prezzo) {
-        this.id_prenotazione = id_prenotazione;
-        this.screening = screening;
-        this.data_ora = data_ora;
-        this.number_of_glasses = number_of_glasses;
-        this.prezzo = prezzo;
-    }
+
+//    //Costruttore per gestione fatturato
+//    public Booking(int id_prenotazione, Screening screening, Calendar data_ora, int number_of_glasses, double prezzo, String email) {
+//        this.id_prenotazione = id_prenotazione;
+//        this.screening = screening;
+//        this.data_ora = data_ora;
+//        this.number_of_glasses = number_of_glasses;
+//        this.prezzo = prezzo;
+//        this.email = email;
+//    }
 
     public int getBooking_status() {
         return booking_status;
@@ -67,8 +71,6 @@ public class Booking {
         return id_prenotazione;
     }
 
-  
-
     public Calendar getData_ora() {
         return data_ora;
     }
@@ -93,4 +95,11 @@ public class Booking {
         return screening;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

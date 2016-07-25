@@ -24,6 +24,7 @@ public class Controller_Gestore {
 
         Timer timer = new Timer();
         timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
+        
 
     }
 

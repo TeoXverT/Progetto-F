@@ -18,12 +18,11 @@ public class SQLConnessione {
     public SQLConnessione() {
     }
 
-    public ResultSet eseguiQueryLettura(String query) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
-//       System.out.println(query);
+    public ResultSet eseguiQueryLettura(String query) throws SQLException { 
         return stmt.executeQuery(query);
     }
 
-    public void eseguiQueryScrittura(String query) throws SQLException {  //Questo metodo lo di deve utilizzare ogni qual volta si fa una scittura su db
+    public void eseguiQueryScrittura(String query) throws SQLException {  
         stmt.executeUpdate(query);
     }
 

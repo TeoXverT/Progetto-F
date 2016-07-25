@@ -155,7 +155,7 @@ public class Gui_Gestore extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 display.removeAll();
 
-                String[] columnNames = {"ID ", "ID Screening", "Date&Time", "No° Glasses", "Price", "Booking Status"};
+                String[] columnNames = {"ID ", "ID Screening", "Date&Time", "No° Glasses", "Price", "Booking Status","Email"};
                 DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
                 JTable table = new JTable(tableModel);
                 table.setFillsViewportHeight(true);
@@ -163,7 +163,7 @@ public class Gui_Gestore extends JFrame {
                 try {
                     ArrayList<Booking> booking = controller.showBooking();
                     for (Booking b : booking) {
-                        Object[] datas = {b.getId_prenotazione(), b.getScreening().getId_proiezione(), b.getData_ora_sql(), b.getNumber_of_glasses(), b.getPrezzo(), b.getBooking_status()};
+                        Object[] datas = {b.getId_prenotazione(), b.getScreening().getId_proiezione(), b.getData_ora_sql(), b.getNumber_of_glasses(), b.getPrezzo(), b.getBooking_status(),b.getEmail()};
                         tableModel.addRow(datas);
                     }
                     display.add(scrollPane);

@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.StringTokenizer;
 import oggetti.*;
 
 /**
@@ -22,7 +21,7 @@ public class Parse_OBJ {
     public Parse_OBJ() {
     }
 
-    public ArrayList<Room> Sala(ResultSet risultato_query) throws SQLException {
+    public ArrayList<Room> Room(ResultSet risultato_query) throws SQLException {
         ArrayList<Room> Sale = new ArrayList<>();
         while (risultato_query.next()) {
             Sale.add(new Room(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns")));
@@ -32,16 +31,7 @@ public class Parse_OBJ {
         return Sale;
     }
 
-    public Room getSalaById(ResultSet risultato_query) throws SQLException {
-        Room sala = null;
-        while (risultato_query.next()) {
-            sala = new Room(risultato_query.getInt("id_sala"), risultato_query.getInt("rows"), risultato_query.getInt("columns"));
-        }
-        risultato_query.close();
-        return sala;
-    }
-
-    public ArrayList<Screening> Proiezione(ResultSet risultato_query) throws SQLException {
+    public ArrayList<Screening> Screening(ResultSet risultato_query) throws SQLException {
         ArrayList<Screening> screening = new ArrayList<>();
 
         while (risultato_query.next()) {
@@ -79,19 +69,7 @@ public class Parse_OBJ {
 
         while (risultato_query.next()) {
             booking.add(new Booking(risultato_query.getInt("id_booking"), new Screening(risultato_query.getInt("id_proiezione")), null, parseData_ora(risultato_query.getTimestamp("date_time")),
-                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price"), risultato_query.getInt("booking_status")));
-        }
-        risultato_query.close();
-
-        return booking;
-    }
-
-    public ArrayList<Booking> Prenotazione_SalesVolume(ResultSet risultato_query) throws SQLException {  //Non si scarica i posti
-        ArrayList<Booking> booking = new ArrayList<>();
-
-        while (risultato_query.next()) {//Lo farà una sola volta
-            booking.add(new Booking(risultato_query.getInt("id_booking"), new Screening(risultato_query.getInt("id_proiezione")), parseData_ora(risultato_query.getTimestamp("date_time")),
-                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price")));
+                    risultato_query.getInt("number_of_glasses"), risultato_query.getDouble("price"), risultato_query.getInt("booking_status"), risultato_query.getString("email")));
         }
         risultato_query.close();
 
@@ -108,7 +86,6 @@ public class Parse_OBJ {
         risultato_query.close();
         return seat;
     }
-
     ////////////////////////////////////////////////// METODI DI USO COMUNE ///////////////////////////////////
     private Calendar parseData_ora(Timestamp timestamp) {
         java.util.Date date = null;
@@ -118,21 +95,6 @@ public class Parse_OBJ {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
-    }
-
-    private ArrayList<Seat> parsePosti(String stringPosti) {
-        ArrayList<Seat> posti = new ArrayList<>();
-
-        if (!stringPosti.equals("0")) {
-            StringTokenizer st = new StringTokenizer(stringPosti, ",");
-            StringTokenizer rt;
-            while (st.hasMoreTokens()) {
-                rt = new StringTokenizer(st.nextToken(), ":");
-                posti.add(new Seat(Integer.parseInt(rt.nextToken()), Integer.parseInt(rt.nextToken())));
-            }
-        }
-
-        return posti;
     }
 
 }

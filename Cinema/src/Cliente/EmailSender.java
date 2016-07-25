@@ -1,4 +1,4 @@
-package Gestore;
+package Cliente;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -25,7 +25,7 @@ public class EmailSender {
 
     }
 
-    public boolean SendEmailRequest(String email_destinatario, Booking booking) {
+    public boolean SendEmailRequest(Booking booking) {
 
         Screening screening = booking.getScreening();
         Film film = screening.getFilm();
@@ -38,7 +38,7 @@ public class EmailSender {
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + email_destinatario + "&oggetto=" + OBJECT + "&messaggio=" + purchaseDescription(film, screening, booking);
+            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + booking.getEmail() + "&oggetto=" + OBJECT + "&messaggio=" + purchaseDescription(film, screening, booking);
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 

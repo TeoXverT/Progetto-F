@@ -140,7 +140,7 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0);
+                booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0,null);
                 openPage(new PageFour(booking));
             }
         });
