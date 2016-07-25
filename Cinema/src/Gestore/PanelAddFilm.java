@@ -150,8 +150,8 @@ public class PanelAddFilm extends JPanel {
                threadAnteprima().start();
             }
         });
-    }
-
+    } 
+ 
     private Thread threadAnteprima() {
         Thread t = new Thread(new Runnable() {
             public void run() {
