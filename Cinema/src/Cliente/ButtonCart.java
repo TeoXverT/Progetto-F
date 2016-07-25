@@ -24,12 +24,12 @@ public class ButtonCart extends JButton{
     public ButtonCart(Screening proiezione) throws IOException {
         
         this.proiezione = proiezione;
-        this.setIcon(scalaImmagine(new ImageIcon("immagini/carrello.png"), 30, 30));
+        this.setIcon(imageScaling(new ImageIcon("immagini/carrello.png"), 30, 30));
         
         
     }
     
-    private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+    private ImageIcon imageScaling(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
     

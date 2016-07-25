@@ -59,9 +59,8 @@ public class PageThree extends JPanel {
         this.film = film;
         this.screening = proiezione;
         try {
-            this.sala = controller.salaByID(proiezione.getRoom().getId_sala());
+            this.sala = controller.roomByID(proiezione.getRoom().getId_sala());
         } catch (SQLException ex) {
-// TI devi gestire le eccezioni internamente non lanciarle al page precedente
 
         }
 
@@ -71,7 +70,6 @@ public class PageThree extends JPanel {
         try {
             config = controller.getConfig();
         } catch (SQLException ex) {
-// TI devi gestire le eccezioni internamente non lanciarle al page precedente
         }
         initGui();
     }
@@ -154,8 +152,6 @@ public class PageThree extends JPanel {
         this.add(center, BorderLayout.CENTER);
         this.add(sud, BorderLayout.SOUTH);
     }
-
-    // questo metodo serve per prenotare i posti.
     public ActionListener seatClick(final int i) {
         ActionListener event = new ActionListener() {
 
