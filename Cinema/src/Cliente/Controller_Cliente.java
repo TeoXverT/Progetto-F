@@ -30,7 +30,7 @@ public class Controller_Cliente {
     private Adapter_SQL_Cliente adapter;
     private Config config;
 
-    private Controller_Cliente() {
+    public Controller_Cliente() {
         adapter = new Adapter_SQL_Cliente();
     }
 

@@ -319,5 +319,55 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
 
         return true;
     }
+    
+     public Screening getProiezioneById(int id_proiezione) throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Screening> Projection = null;
+        query = "SELECT * FROM  `Proiezione` WHERE 'id_proiezione' = '" + id_proiezione + "'";
+        risultato_query = SQL.eseguiQueryLettura(query);
 
+        Projection = parser.Screening(risultato_query);
+        risultato_query.close();
+
+        return Projection.get(0);
+    }
+     
+    public Room getSalaByIdSala(int id_sala) throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Room> sala;
+
+        query = "SELECT * FROM Sala WHERE id_sala = '" + id_sala +"'";
+
+        risultato_query = SQL.eseguiQueryLettura(query);
+        sala = parser.Room(risultato_query);
+        risultato_query.close();
+
+        return sala.get(0);
+    }
+    
+    public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {//C
+        String query;
+        ResultSet risultato_query;
+        query = "SELECT Seats.* "
+                + "FROM Booking,Booked_Seat, Seats "
+                + "WHERE Booking.id_proiezione = " + id_proiezione + " AND Booking.id_booking=Booked_Seat.id_booking AND"
+                + " Booked_Seat.id_seat = Seats.id_seat";
+        risultato_query = SQL.eseguiQueryLettura(query);
+        return parser.Seat(risultato_query);
+    }
+    
+     public ArrayList<Screening> viewShows(int id_sala) throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Screening> Proiezioni;
+        query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW( ) ) AND Proiezione.id_sala =" + id_sala;
+        risultato_query = SQL.eseguiQueryLettura(query);
+
+        Proiezioni = parser.Screening(risultato_query);
+        risultato_query.close();
+
+        return Proiezioni;
+    }
 }
