@@ -40,7 +40,7 @@ public class PanelHallState extends JPanel {
     private ArrayList<Seat> bookedSeats;
     int id_sala;
     Hall sala;
-    private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
+    private ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
 
     public PanelHallState(final AdminController controller, final JLabel outputGrafico, int id_sala) {
         try {
@@ -51,7 +51,7 @@ public class PanelHallState extends JPanel {
             sala = controller.getHall(id_sala);
             init();
         } catch (SQLException ex) {
-            outputGrafico.setText("Erroe letture dati dal database.");
+            outputGrafico.setText("Errore letture dati dal database.");
         }
     }
 

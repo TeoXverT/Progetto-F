@@ -147,7 +147,7 @@ public class PageFour extends JPanel {
                             System.out.println("ID Booking: " + idBooking);
                             booking.setIdBooking(idBooking);
                             
-                            JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+                            JLabel imagineCaricamento = new JLabel(new ImageIcon("images/loading.gif"));
                             JPanel pannelloCaricamento = new JPanel();
                             pannelloCaricamento.add(imagineCaricamento);
                             openPage(pannelloCaricamento);

@@ -122,11 +122,11 @@ public class AdapterSQLCustomer extends AdapterSQL {
         String query;
         ResultSet result;
         ArrayList<Seat> seats = new ArrayList<>();
-        ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
-        ImageIcon seat_disable = new ImageIcon("immagini/poltrone/seat_diasable.png");
-        ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
-        ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
-        ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
+        ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
+        ImageIcon seat_disable = new ImageIcon("images/hall/seat_diasable.png");
+        ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
+        ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
+        ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
 
         query = "SELECT *  FROM Seats WHERE id_sala = '" + idHall + "'";
         try {

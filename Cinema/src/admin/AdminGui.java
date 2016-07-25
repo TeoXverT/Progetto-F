@@ -56,7 +56,7 @@ public class AdminGui extends JFrame {
         this.setBounds(900, 100, 850, 700);
 
 //        this.setResizable(false);
-        ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
+        ImageIcon icona = new ImageIcon("images/logo.png");
         setIconImage(icona.getImage());
 
     }
@@ -141,7 +141,7 @@ public class AdminGui extends JFrame {
 
     private JPanel splashScreen() {
         JPanel pannello = new JPanel();
-        ImageIcon immagine = new ImageIcon("immagini/logo_trasparente.png");
+        ImageIcon immagine = new ImageIcon("images/logo.png");
         pannello.add(new JLabel(new ImageIcon(immagine.getImage().getScaledInstance(640, 433, java.awt.Image.SCALE_SMOOTH))));
         return pannello;
     }

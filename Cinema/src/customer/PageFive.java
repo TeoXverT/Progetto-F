@@ -65,7 +65,7 @@ public class PageFive extends JPanel {
         nord.add(confirmButton);
 
         pannelloContenitore.add(nord, BorderLayout.NORTH);
-        JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+        JLabel imagineCaricamento = new JLabel(new ImageIcon("images/loading.gif"));
         pannelloContenitore.add(imagineCaricamento, BorderLayout.CENTER);
 
         ThreadTimer().start();
@@ -138,7 +138,7 @@ public class PageFive extends JPanel {
 
     private JButton makeHomeButton() {  //crea bottone per il ritorno alla home
         JButton homeButton = new JButton();
-        homeButton.setIcon(new ImageIcon(new ImageIcon("immagini/home.png").getImage().getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH)));
+        homeButton.setIcon(new ImageIcon(new ImageIcon("images/home.png").getImage().getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH)));
         homeButton.setBorderPainted(true);
         homeButton.setContentAreaFilled(false);
         homeButton.addActionListener(goBackEvent());

@@ -21,7 +21,7 @@ public class PanelAbout extends JPanel {
 
     public PanelAbout(final AdminController controller, final JLabel outputGrafico) {
         JPanel panel = new JPanel(new GridLayout(0, 1, 20, 20));
-        ImageIcon immagine = new ImageIcon("immagini/logo_trasparente.png");
+        ImageIcon immagine = new ImageIcon("images/logo.png");
         String info = "PROGETTO F - v2.023 <Beta>\n" + " \n";
         info += "Sviluppato da: \n";
         info += "Umeer Mohammad \n";

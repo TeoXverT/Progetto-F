@@ -65,7 +65,7 @@ public class PageTwo extends JPanel {
     private void draw() {
 
         JButton cover = new JButton();
-        cover.setIcon(imageScaling(new ImageIcon("immagini/home.png"), 30, 30));
+        cover.setIcon(imageScaling(new ImageIcon("images/home.png"), 30, 30));
         cover.setBorderPainted(true);
         cover.setContentAreaFilled(false);
 

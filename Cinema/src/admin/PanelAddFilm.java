@@ -43,7 +43,7 @@ public class PanelAddFilm extends JPanel {
     JLabel imgCopertina = new JLabel();
     
     JTextField copertinaField = new JTextField();
-    ImageIcon icona = new ImageIcon("immagini/prova_immagine_copertina.gif");
+    ImageIcon icona = new ImageIcon("images/place_holder.gif");
     
     public PanelAddFilm(final AdminController controller, final JLabel outputGrafico) {
         this.setLayout(new BorderLayout(10,10));         

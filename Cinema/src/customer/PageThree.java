@@ -38,12 +38,12 @@ private    Projection screening;
     private Film film;
   private  Booking booking;
 
-    private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
-    private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
-    private ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
-    private ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
-    private ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
-    private ImageIcon seat_selezione = new ImageIcon("immagini/poltrone/seat_selezione.png");
+    private ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
+    private ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
+    private ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
+    private ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
+    private ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
+    private ImageIcon seat_selezione = new ImageIcon("images/hall/seat_selezione.png");
 
     private double totale_prezzo;
     private Config config;

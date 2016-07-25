@@ -24,7 +24,7 @@ public class ButtonCart extends JButton{
     public ButtonCart(Projection proiezione) throws IOException {
         
         this.proiezione = proiezione;
-        this.setIcon(imageScaling(new ImageIcon("immagini/carrello.png"), 30, 30));
+        this.setIcon(imageScaling(new ImageIcon("images/cart.png"), 30, 30));
         
         
     }

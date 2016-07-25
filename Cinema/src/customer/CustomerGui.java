@@ -26,7 +26,7 @@ public class CustomerGui extends JFrame {
         this.setTitle("Customer");
         this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 920, 770);
-        ImageIcon icon = new ImageIcon("immagini/logo_trasparente.png");
+        ImageIcon icon = new ImageIcon("images/logo.png");
         setIconImage(icon.getImage());
 
         this.add(display);

@@ -10,25 +10,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import obj.Config;
+
 import obj.Hall;
 import obj.Seat;
 
@@ -43,11 +34,11 @@ public class PanelAddHall extends JPanel {
     private ArrayList<Seat> seats = null;
     JLabel outputGrafico;
     AdminController controller;
-    ImageIcon seat_free = new ImageIcon("immagini/poltrone/seat_free.png");
-    ImageIcon seat_disable = new ImageIcon("immagini/poltrone/seat_diasable.png");
-    ImageIcon seat_vip = new ImageIcon("immagini/poltrone/seat_vip.png");
-    ImageIcon seat_handicap = new ImageIcon("immagini/poltrone/seat_handicap.png");
-    ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
+    ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
+    ImageIcon seat_disable = new ImageIcon("images/hall/seat_diasable.png");
+    ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
+    ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
+    ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
     JComboBox seat_type;
 
     public PanelAddHall(AdminController controller, final JLabel outputGrafico) {
