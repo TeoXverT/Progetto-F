@@ -135,7 +135,7 @@ public class PageTwo extends JPanel {
          JPanel pannelloContenitoreBackOrari = new JPanel();
         pannelloContenitoreBackOrari.setBackground(java.awt.Color.WHITE);
         this.add(pannelloContenitoreBackOrari);
-//        this.add(new YoutubePanel(film.getLink_youtube(), 200, 200));
+        this.add(new YoutubePanel(film.getLink_youtube(), 200, 200));
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
         pannelloOrari.setBackground(java.awt.Color.WHITE);
 
