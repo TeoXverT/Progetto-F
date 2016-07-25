@@ -58,7 +58,7 @@ public class PanelViewFilm extends JPanel {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
-                    ArrayList<Film> Films = controller.visualizzaFilm(0);
+                    ArrayList<Film> Films = controller.getFilm(0);
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 15, 15));
                     for (final Film f : Films) {
 //                        System.out.println("In Download immagine URL: " + f.getLink_copertina());

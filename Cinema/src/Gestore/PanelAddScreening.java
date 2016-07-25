@@ -42,7 +42,7 @@ public class PanelAddScreening extends JPanel {
             final JList<Film> listaFilm = new JList(model);
             JScrollPane pane = new JScrollPane(listaFilm);
 
-            ArrayList<Film> Films = controller.visualizzaFilm(0);
+            ArrayList<Film> Films = controller.getFilm(0);
             for (Film f : Films) {
                 model.addElement(f);
             }
@@ -58,7 +58,7 @@ public class PanelAddScreening extends JPanel {
             final JList<Room> listaSale = new JList(model1);
             JScrollPane pane1 = new JScrollPane(listaSale);
 
-            ArrayList<Room> Sale = controller.visualizzaSale();
+            ArrayList<Room> Sale = controller.getRoom();
             for (Room s : Sale) {
                 model1.addElement(s);
             }
@@ -107,7 +107,7 @@ public class PanelAddScreening extends JPanel {
                         //Creazione oggetto
                         Screening proiezione = new Screening(0, dateToCalendar((Date) selettoreDataOra.getValue()), new Film(listaFilm.getSelectedValue().getId_film()), new Room(listaSale.getSelectedValue().getId_sala()),tipoLista.getSelectedIndex(), (double) spinnerPrezzo.getValue());
                         try {
-                            if (controller.scriviProiezione(proiezione)) {
+                            if (controller.writeScreening(proiezione)) {
                                 outputGrafico.setText("Nuova proiezione aggiunta con successo.");
                             } else {
                                 outputGrafico.setText("La sala già occupata, cambiare l'orario.");

@@ -74,9 +74,9 @@ public class Controller_Cliente {
         return listaProiezioniFiltrate;
     }
 
-    public ArrayList<Film> FilmFuturo(int deltaData) throws SQLException {
-        return adapter.futureFilm(deltaData);
-    }
+//    public ArrayList<Film> FilmFuturop(int deltaData) throws SQLException {
+//        return adapter.futureFilm(deltaData);
+//    }
 
     public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
         return adapter.FilmFuturoBySlider(deltaData, sliderValue);
@@ -84,13 +84,13 @@ public class Controller_Cliente {
 
     public Config getConfig() throws SQLException {
         if (config == null) {
-            config = adapter.visualizzaConfig();
+            config = adapter.getConfig();
         }
         return config;
     }
 
     public Room salaByID(int id_Sala) throws SQLException {
-        return adapter.getSalaByIdSala(id_Sala);
+        return adapter.getRoomByIdRoom(id_Sala);
     }
 
     public ArrayList<Screening> screeningFilteredByFilmAndTime(int id_film, Calendar focusedDateTime) throws SQLException {
@@ -106,7 +106,8 @@ public class Controller_Cliente {
     public int writeBooking(Booking booking) throws SQLException {
         int idBooking = 0;
         if (adapter.checkBookedSeat(booking.getScreening().getId_proiezione(), booking.getPosti_prenotati())) { //Controllo disponibilità posti
-            idBooking = adapter.writeBookin(booking);
+            adapter.writeBooking(booking);
+            idBooking=adapter.getIdLastBooking();
             adapter.writeBookedSeat(idBooking, booking.getPosti_prenotati());
         }
         return idBooking;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione

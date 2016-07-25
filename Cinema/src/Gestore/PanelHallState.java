@@ -42,7 +42,7 @@ public class PanelHallState extends JPanel{
         
         this.removeAll();
         try {
-            proiezioni = controller.vieShows(id_sala);
+            proiezioni = controller.getScreeningByRoom(id_sala);
         } catch (SQLException ex) {
             outputGrafico.setText("Errore con il server");
         }

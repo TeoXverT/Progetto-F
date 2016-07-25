@@ -163,7 +163,7 @@ public class PanelAddHall extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Room sala = new Room(x,y,seats);
-                controller.scriviHall(sala);
+                controller.writeRoom(sala);
                 aggiornaGui();
             }
         };

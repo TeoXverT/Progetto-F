@@ -59,7 +59,7 @@ public class Adapter_SQL {
 
    
 
-    public Config visualizzaConfig() throws SQLException {//PG
+    public Config getConfig() throws SQLException {//PG
         String query;
         ResultSet risultato_query;
         Config config;

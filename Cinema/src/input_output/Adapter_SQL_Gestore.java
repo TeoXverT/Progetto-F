@@ -24,7 +24,7 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
     public Adapter_SQL_Gestore() {
     }
 
-    public ArrayList<Screening> showScreening(int tipo) throws SQLException { //G
+    public ArrayList<Screening> getScreening(int tipo) throws SQLException { //G
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
         //TIPO = 3 //Sia odierne che future
@@ -110,7 +110,7 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
         }
     }
 
-    public ArrayList<Room> showRoom() throws SQLException {//G
+    public ArrayList<Room> getRoom() throws SQLException {//G
         String query;
         ResultSet risultato_query;
         ArrayList<Room> Sale;
@@ -136,7 +136,7 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
         }
     }
 
-    public ArrayList<Film> showFilm(int quantita_max_da_visualizzare) throws SQLException {//G
+    public ArrayList<Film> getFilm(int quantita_max_da_visualizzare) throws SQLException {//G
         String query;
         ResultSet risultato_query;
         ArrayList<Film> Films;
@@ -233,7 +233,7 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
 
     }
 
-    public ArrayList<Screening> visualizzaStatoSale() throws SQLException {//G
+    public ArrayList<Screening> getCurrentScreening() throws SQLException {//G
         String query;
         ResultSet risultato_query;
         ArrayList<Screening> proiezioni;
@@ -249,7 +249,7 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
         return proiezioni;
     }
 
-    public ArrayList<Booking> showBooking() throws SQLException {//G
+    public ArrayList<Booking> getBooking() throws SQLException {//G
 
         String query;
         ResultSet risultato_query;
@@ -265,7 +265,7 @@ public class Adapter_SQL_Gestore extends Adapter_SQL {
 
     }
 
-    public ArrayList<Screening> viewShows(int id_sala) throws SQLException {//G
+    public ArrayList<Screening> getScreeningByRoom(int id_sala) throws SQLException {//G
         String query;
         ResultSet risultato_query;
         ArrayList<Screening> Proiezioni;

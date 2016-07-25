@@ -22,45 +22,40 @@ public class Controller_Gestore {
 
         Timer timer = new Timer();
         timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
-        
 
     }
 
-    public ArrayList<Booking> showBooking() throws SQLException {
-        return adapter.showBooking();
+    public ArrayList<Booking> getBooking() throws SQLException {
+        return adapter.getBooking();
     }
 
-    public ArrayList<Screening> visualizzaProiezione(int tipo) throws SQLException {
+    public ArrayList<Screening> getScreening(int tipo) throws SQLException {
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
         //TIPO = 2  //Odierne e Future
-        ArrayList<Screening> Proiezioni = adapter.showScreening(tipo);
+        ArrayList<Screening> Proiezioni = adapter.getScreening(tipo);
         return Proiezioni;
     }
 
-    public boolean scriviProiezione(Screening proiezione) throws SQLException {
-        if (contolloDisponibilitaProiezione(proiezione)) { //Eventuale controllo sul valore dei campi di config
+    public boolean writeScreening(Screening proiezione) throws SQLException {
+        if (adapter.checkScreening(proiezione)) { //Eventuale controllo sul valore dei campi di config
             return adapter.writeScrinning(proiezione);
         } else {
             return false;
         }
     }
 
-    public boolean eliminaProiezione(int id_proiezione) {
+    public boolean deleteScreening(int id_proiezione) {
         return adapter.deleteScreening(id_proiezione);
     }
 
-    public boolean contolloDisponibilitaProiezione(Screening proiezione) throws SQLException {
-        return adapter.checkScreening(proiezione);
-    }
-
-    public ArrayList<Film> visualizzaFilm(int quantita_max_da_visualizzare) throws SQLException {
+    public ArrayList<Film> getFilm(int quantita_max_da_visualizzare) throws SQLException {
         //quantita_max_da_visualizzare = 0 //NO LIMIT
-        ArrayList<Film> Films = adapter.showFilm(quantita_max_da_visualizzare);
+        ArrayList<Film> Films = adapter.getFilm(quantita_max_da_visualizzare);
         return Films;
     }
 
-    public boolean scriviFilm(Film film) {
+    public boolean writeFilm(Film film) {
         if ((!"".equals(film.getTitolo_film())) && (!"".equals(film.getDescrizione())) && (!"".equals(film.getLink_copertina())) & (!"".equals(film.getGenere())) & (film.getDurata() > 0)) {
             return adapter.writeFilm(film);
         } else {
@@ -68,11 +63,11 @@ public class Controller_Gestore {
         }
     }
 
-    public boolean eliminaFilm(int id_film) {
+    public boolean deleteFilm(int id_film) {
         return adapter.deleteFilm(id_film);
     }
 
-    public boolean scriviConfig(Config config) {
+    public boolean writeConfig(Config config) {
         if (true) { //Eventuale controllo sul valore dei campi di config
             return adapter.writeConfig(config);
         } else {
@@ -80,17 +75,17 @@ public class Controller_Gestore {
         }
     }
 
-    public Config visualizzaConfig() throws SQLException {
-        Config config = adapter.visualizzaConfig();
+    public Config getConfig() throws SQLException {
+        Config config = adapter.getConfig();
         return config;
     }
 
-    public ArrayList<Room> visualizzaSale() throws SQLException {
-        ArrayList<Room> Sale = adapter.showRoom();
+    public ArrayList<Room> getRoom() throws SQLException {
+        ArrayList<Room> Sale = adapter.getRoom();
         return Sale;
     }
 
-    public boolean scriviHall(Room sala) {
+    public boolean writeRoom(Room sala) {
         if (adapter.writeHall(sala) == true) {
             if (adapter.writeSeats(sala) == true) {
                 return true;
@@ -99,17 +94,17 @@ public class Controller_Gestore {
         return false;
     }
 
-    public boolean eliminaSale(int id_sala) {
+    public boolean deleteRoom(int id_sala) {
         return adapter.deleteRoom(id_sala);
     }
 
-    public ArrayList<Screening> visualizzaStatoSale() throws SQLException {
-        ArrayList<Screening> Sale = adapter.visualizzaStatoSale();
+    public ArrayList<Screening> getCurrentScreening() throws SQLException {
+        ArrayList<Screening> Sale = adapter.getCurrentScreening();
         return Sale;
     }
 
-    public ArrayList<Screening> vieShows(int id_sala) throws SQLException {
-        ArrayList<Screening> Sale = adapter.viewShows(id_sala);
+    public ArrayList<Screening> getScreeningByRoom(int id_sala) throws SQLException {
+        ArrayList<Screening> Sale = adapter.getScreeningByRoom(id_sala);
         return Sale;
     }
 

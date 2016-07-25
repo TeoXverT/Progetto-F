@@ -161,7 +161,7 @@ public class Gui_Gestore extends JFrame {
                 table.setFillsViewportHeight(true);
                 JScrollPane scrollPane = new JScrollPane(table);
                 try {
-                    ArrayList<Booking> booking = controller.showBooking();
+                    ArrayList<Booking> booking = controller.getBooking();
                     for (Booking b : booking) {
                         Object[] datas = {b.getId_prenotazione(), b.getScreening().getId_proiezione(), b.getData_ora_sql(), b.getNumber_of_glasses(), b.getPrezzo(), b.getBooking_status(),b.getEmail()};
                         tableModel.addRow(datas);
@@ -188,7 +188,7 @@ public class Gui_Gestore extends JFrame {
                 table.setFillsViewportHeight(true);
                 JScrollPane scrollPane = new JScrollPane(table);
                 try {
-                    ArrayList<Screening> Proiezioni = controller.visualizzaProiezione(tipo);
+                    ArrayList<Screening> Proiezioni = controller.getScreening(tipo);
                     for (Screening p : Proiezioni) {
                         Object[] datas = {p.getId_proiezione(), p.getData_ora_friendly(), p.getFilm().getId_film(), p.getRoom().getId_sala(), p.getTipo_proiezione(), p.getPrezzo()};
                         tableModel.addRow(datas);
@@ -298,7 +298,7 @@ public class Gui_Gestore extends JFrame {
         ArrayList<Room> sale = new ArrayList<>();
         ArrayList<JMenuItem> menuItem = new ArrayList<>();
         try {
-            sale = controller.visualizzaSale();
+            sale = controller.getRoom();
         } catch (SQLException ex) {
             System.out.println("Da Gestire l'eccezione!!!!");
         } catch (java.lang.NullPointerException ex) {

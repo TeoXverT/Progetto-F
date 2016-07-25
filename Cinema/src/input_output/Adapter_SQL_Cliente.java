@@ -13,11 +13,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import oggetti.Booking;
-import oggetti.Film;
-import oggetti.Room;
-import oggetti.Screening;
-import oggetti.Seat;
+import oggetti.*;
 
 /**
  *
@@ -28,28 +24,27 @@ public class Adapter_SQL_Cliente extends Adapter_SQL {
     public Adapter_SQL_Cliente() {
     }
 
-    public ArrayList<Film> futureFilm(int deltaData) throws SQLException {//C
-
-        ArrayList<Film> Films;
-        ResultSet risultatoQuery;
-
-//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
-//        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-        String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
-                + "     FROM Film, Proiezione "
-                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
-                + "     ";
-        /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
-        /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
-
-        risultatoQuery = SQL.eseguiQueryLettura(query);
-        Films = parser.Film(risultatoQuery);
-
-        return Films;
-
-    }
-
+//    public ArrayList<Film> futureFilm(int deltaData) throws SQLException {//C
+//
+//        ArrayList<Film> Films;
+//        ResultSet risultatoQuery;
+//
+////        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+////        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
+////        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
+//        String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
+//                + "     FROM Film, Proiezione "
+//                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
+//                + "     ";
+//        /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
+//        /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
+//
+//        risultatoQuery = SQL.eseguiQueryLettura(query);
+//        Films = parser.Film(risultatoQuery);
+//
+//        return Films;
+//
+//    }
     public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {//C
 
         ArrayList<Film> Films;
@@ -105,7 +100,7 @@ public class Adapter_SQL_Cliente extends Adapter_SQL {
         return screening;
     }
 
-    public Room getSalaByIdSala(int id_sala) throws SQLException {//C
+    public Room getRoomByIdRoom(int id_sala) throws SQLException {//C
         String query;
         ResultSet risultato_query;
         Room sala;
@@ -188,14 +183,13 @@ public class Adapter_SQL_Cliente extends Adapter_SQL {
         }
     }
 
-    public int writeBookin(Booking booking) throws SQLException {//C
+    public void writeBooking(Booking booking) throws SQLException {//C
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status,email) VALUES("
                 + "'" + booking.getScreening().getId_proiezione() + "','" + sdf.format(Calendar.getInstance().getTime()) + "','"
                 + booking.getNumber_of_glasses() + "','" + booking.getPrezzo() + "','0',\"" + booking.getEmail() + "\")";
         SQL.eseguiQueryScrittura(query);
-        return getIdLastBooking();
     }
 
     public boolean checkBookedSeat(int id_proiezione, ArrayList<Seat> posti) throws SQLException {//C

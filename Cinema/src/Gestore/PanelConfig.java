@@ -35,7 +35,7 @@ public class PanelConfig extends JPanel {
 
         try {
             //c.add(gestore.aggiornaConfig());
-            Config c = controller.visualizzaConfig();
+            Config c = controller.getConfig();
 
             text[0].setText(String.valueOf(c.getPrezzo_vip()));
             text[1].setText(String.valueOf(c.getSconto()));
@@ -70,7 +70,7 @@ public class PanelConfig extends JPanel {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (controller.scriviConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()), Double.parseDouble(text[2].getText()), Double.parseDouble(text[3].getText()), Double.parseDouble(text[4].getText()), Integer.parseInt(text[5].getText()), Integer.parseInt(text[6].getText()) ))) {
+                if (controller.writeConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()), Double.parseDouble(text[2].getText()), Double.parseDouble(text[3].getText()), Double.parseDouble(text[4].getText()), Integer.parseInt(text[5].getText()), Integer.parseInt(text[6].getText()) ))) {
                     outputGrafico.setText("Modifica registrata con successo.");
                 } else {
                     outputGrafico.setText("Errore durante il caricamento dei dati.");

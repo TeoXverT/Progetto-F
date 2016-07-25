@@ -56,7 +56,7 @@ public class PanelRemover extends JPanel {
             final JList<Film> listaFilm = new JList(modelFilm);
             JScrollPane paneFilm = new JScrollPane(listaFilm);
             ArrayList<Film> Films;
-            Films = controller.visualizzaFilm(0);
+            Films = controller.getFilm(0);
             for (Film f : Films) {
                 modelFilm.addElement(f);
             }
@@ -73,7 +73,7 @@ public class PanelRemover extends JPanel {
                         outputGrafico.setText("Selezionare il film dalla lista prima di premere il tasto.");
                     } else {
                         //Creazione oggetto
-                        if (controller.eliminaFilm(listaFilm.getSelectedValue().getId_film())) {
+                        if (controller.deleteFilm(listaFilm.getSelectedValue().getId_film())) {
                             outputGrafico.setText("Film eliminato con successo.");
                             reDrawGui();
                         } else {
@@ -95,7 +95,7 @@ public class PanelRemover extends JPanel {
             JScrollPane panePro = new JScrollPane(listaProiezioni);
             ArrayList<Screening> Proiezioni;
 
-            Proiezioni = controller.visualizzaProiezione(2);
+            Proiezioni = controller.getScreening(2);
             for (Screening p : Proiezioni) {
                 modelPro.addElement(p);
             }
@@ -110,7 +110,7 @@ public class PanelRemover extends JPanel {
                         outputGrafico.setText("Selezionare la proiezione dalla lista prima di premere il tasto.");
                     } else {
                         //Creazione oggetto
-                        if (controller.eliminaProiezione(listaProiezioni.getSelectedValue().getId_proiezione())) {
+                        if (controller.deleteScreening(listaProiezioni.getSelectedValue().getId_proiezione())) {
                             outputGrafico.setText("Proiezione eliminata con successo.");
                             reDrawGui();
                         } else {
@@ -131,7 +131,7 @@ public class PanelRemover extends JPanel {
             JScrollPane paneSale = new JScrollPane(listaSale);
             ArrayList<Room> Sale;
 
-            Sale = controller.visualizzaSale();
+            Sale = controller.getRoom();
             for (Room s : Sale) {
                 modelSale.addElement(s);
             }
@@ -147,7 +147,7 @@ public class PanelRemover extends JPanel {
                         outputGrafico.setText("Selezionare la sala dalla lista prima di premere il tasto.");
                     } else {
                         //Creazione oggetto
-                        if (controller.eliminaSale(listaSale.getSelectedValue().getId_sala())) {
+                        if (controller.deleteRoom(listaSale.getSelectedValue().getId_sala())) {
                             outputGrafico.setText("Sala eliminata con successo.");
                             reDrawGui();
                         } else {
