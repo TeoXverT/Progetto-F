@@ -30,7 +30,7 @@ public class Controller_Cliente {
     private Adapter_SQL_Cliente adapter;
     private Config config;
 
-    private Controller_Cliente() {
+    public Controller_Cliente() {
         adapter = new Adapter_SQL_Cliente();
     }
 
@@ -41,7 +41,7 @@ public class Controller_Cliente {
         return instance;
     }
 
-    public ArrayList<Screening> listaProiezioniFuture(ArrayList<Screening> listaProiezione) {
+    public ArrayList<Screening> listFutureProjections(ArrayList<Screening> listaProiezione) {
         int i;
         Calendar giornoAttuale;
         TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
@@ -57,7 +57,7 @@ public class Controller_Cliente {
         return listaProiezioniFuture;
     }
 
-    public ArrayList<Screening> listaProiezioniFiltrate(ArrayList<Screening> listaProiezione, int GiornoSettimana) {
+    public ArrayList<Screening> listFilteredProjections(ArrayList<Screening> listaProiezione, int GiornoSettimana) {
         int i;
         Calendar giornoAttuale;
         TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
@@ -74,11 +74,9 @@ public class Controller_Cliente {
         return listaProiezioniFiltrate;
     }
 
-//    public ArrayList<Film> FilmFuturop(int deltaData) throws SQLException {
-//        return adapter.futureFilm(deltaData);
-//    }
 
-    public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
+
+    public ArrayList<Film> futureFilmBySlider(int deltaData, int sliderValue) throws SQLException {
         return adapter.FilmFuturoBySlider(deltaData, sliderValue);
     }
 
@@ -89,11 +87,11 @@ public class Controller_Cliente {
         return config;
     }
 
-    public Room salaByID(int id_Sala) throws SQLException {
+    public Room roomByID(int id_Sala) throws SQLException {
         return adapter.getRoomByIdRoom(id_Sala);
     }
 
-    public ArrayList<Screening> screeningFilteredByFilmAndTime(int id_film, Calendar focusedDateTime) throws SQLException {
+    public ArrayList<Screening> projectionFilteredByFilmAndTime(int id_film, Calendar focusedDateTime) throws SQLException {
         return adapter.screeningFilteredByFilmAndTime(id_film, focusedDateTime);
     }
 
@@ -110,8 +108,7 @@ public class Controller_Cliente {
             idBooking=adapter.getIdLastBooking();
             adapter.writeBookedSeat(idBooking, booking.getPosti_prenotati());
         }
-        return idBooking;  //Se uguale a zero è fallita la scittura altrimenti contiene il numero della prenotazione
-    }
+        return idBooking;  }
 
     public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
         return adapter.getTakenSeats(id_proiezione);

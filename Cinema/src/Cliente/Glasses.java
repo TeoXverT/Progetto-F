@@ -10,8 +10,8 @@ import javax.swing.SpinnerModel;
 
 public class Glasses extends JSpinner {
 
-    String name;
-    double price;
+   private String name;
+    private double price;
 
     public Glasses(String name, double price, SpinnerModel model) {
         super(model);

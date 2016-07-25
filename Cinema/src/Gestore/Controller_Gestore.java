@@ -112,5 +112,24 @@ public class Controller_Gestore {
         ArrayList<Booking> books = adapter.salesVolumeSearch(a, b);
         return books;
     }
+    
+        public Room getSala(int id_Sala) throws SQLException {
+        return adapter.getSalaByIdSala(id_Sala);
+    }
+    
+//     public ArrayList<Seat> getSeats(int id_sala) throws SQLException {
+//        ArrayList<Seat> seat;
+//        seat = adapter.getSeats(id_sala);
+//        return seat;
+//    }
+     
+    public ArrayList<Seat> getTakenSeats(int id_proiezione) throws SQLException {
+        return adapter.getTakenSeats(id_proiezione);
+    }
+    
+    public ArrayList<Screening> viewShows(int id_sala) throws SQLException {
+        ArrayList<Screening> Sale = adapter.viewShows(id_sala);
+        return Sale;
+    }
 
 }

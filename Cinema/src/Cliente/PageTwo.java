@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import javafx.scene.paint.Color;
+
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -54,24 +54,18 @@ public class PageTwo extends JPanel {
     private Calendar focusedDateTime;
 
     public PageTwo(Film film, Calendar focusedDateTime) {
-        //Il controller ti permettera di parlare con il database
-        //deltaData è l'offset in giorni rispetto ad oggi, ad es: se oggi è lunedi ed il tab da dove viene selezionato il film è martedi allora questo valore vale 1
-        //deltaData è temporaneo in attesa dello slider  laterale di selezione del orario        
-        //film è proprio il film che viene clickato con tutti i dati del caso, guarda i suoi metodi
-        //Tè dovrai eseguire una query per scoprire in quali orari viene proiettatto questo film il giorno oggi+deltaData 
         this.controller = Controller_Cliente.getInstance();
         this.film = film;
         this.focusedDateTime = focusedDateTime;
         this.setLayout(new GridLayout(2, 2, 10, 10));
-        // this.setBorder(new EmptyBorder(10, 30, 10, 10)); // Da problemi... meglio non avere i bordi.
-
+        
         draw();
     }
 
     private void draw() {
 
         JButton cover = new JButton();
-        cover.setIcon(scalaImmagine(new ImageIcon("immagini/home.png"), 30, 30));
+        cover.setIcon(imageScaling(new ImageIcon("immagini/home.png"), 30, 30));
         cover.setBorderPainted(true);
         cover.setContentAreaFilled(false);
 
@@ -85,7 +79,7 @@ public class PageTwo extends JPanel {
         } catch (IOException e) {
         }
         ImageIcon ii = new ImageIcon(image);
-        JLabel label1 = new JLabel(scalaImmagine(ii, 250, 350));
+        JLabel label1 = new JLabel(imageScaling(ii, 250, 350));
         pannelloCopertina.add(label1);
 
         cover.addActionListener(goBackEvent());
@@ -104,7 +98,7 @@ public class PageTwo extends JPanel {
 
         pannelloTramaGridLayout.add(new JLabel());
 
-        //PROVA CON PANNELLO
+        
         JPanel pannelloHome = new JPanel();
         pannelloTramaGridLayout.add(pannelloHome);
         pannelloHome.add(cover);
@@ -128,7 +122,7 @@ public class PageTwo extends JPanel {
         pannelloTrama.add(Trama, BorderLayout.CENTER);
 
         try {
-            proiezione = controller.screeningFilteredByFilmAndTime(film.getId_film(), focusedDateTime);
+            proiezione = controller.projectionFilteredByFilmAndTime(film.getId_film(), focusedDateTime);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Errore lettura informazioni film, riprovare più tardi.",
@@ -138,8 +132,7 @@ public class PageTwo extends JPanel {
         }
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
 
-        //ABBIAMO MODIFICAGTO QUI PRIMA ERA COSI new BorderLayout() DENTRO AL NEW JPANEL()
-        JPanel pannelloContenitoreBackOrari = new JPanel();
+         JPanel pannelloContenitoreBackOrari = new JPanel();
         pannelloContenitoreBackOrari.setBackground(java.awt.Color.WHITE);
         this.add(pannelloContenitoreBackOrari);
         this.add(new YoutubePanel(film.getLink_youtube(), 200, 200));
@@ -151,7 +144,6 @@ public class PageTwo extends JPanel {
         JScrollPane scrollpane = new JScrollPane(pannelloOrari, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pannelloContenitoreBackOrari.add(scrollpane, BorderLayout.CENTER);
         scrollpane.setBorder(null);
-//        for (int i = 0; i < proiezione.size(); i++) {
 
         for (final Screening s : proiezione) {
 
@@ -185,7 +177,7 @@ public class PageTwo extends JPanel {
 
     }
 
-    private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+    private ImageIcon imageScaling(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
 

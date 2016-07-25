@@ -2,6 +2,7 @@ package Cliente;
 
 import oggetti.ButtonCover;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -33,16 +34,16 @@ public class PageOne extends JPanel {
 
     private Controller_Cliente controller;
 
-    JTabbedPane tab = new JTabbedPane();
-    Component frameErrore;
+private    JTabbedPane tab = new JTabbedPane();
+    private Component frameErrore;
 
-    int SliderValue;
-    JSlider slider;
-    Calendar ora = Calendar.getInstance();
+    private int SliderValue;
+    private JSlider slider;
+    private Calendar ora = Calendar.getInstance();
 
-    static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    private static int oraStart = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-    JPanel pannelloSlider;
+    private JPanel pannelloSlider;
 
     public PageOne() {
         this.controller = Controller_Cliente.getInstance();
@@ -51,8 +52,10 @@ public class PageOne extends JPanel {
         this.add(tab, BorderLayout.CENTER);
         JScrollPane scrollPane = new JScrollPane(tab, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(scrollPane, BorderLayout.CENTER);
-        //istanziazione aggiunta slider a sinistra del frame
+      
         pannelloSlider = new JPanel();
+        pannelloSlider.setBackground(Color.white);
+        
         pannelloSlider.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -67,11 +70,13 @@ public class PageOne extends JPanel {
         }
 
         slider = new JSlider(JSlider.VERTICAL, 15, 23, oraStart);
+        slider.setBackground(Color.white);
+        
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
                 if (!slider.getValueIsAdjusting()) {
-                    ThreadScaricaFilm(tab.getSelectedIndex()).start();
+                    ThreadDownloadFilm(tab.getSelectedIndex()).start();
                 }
             }
         });
@@ -87,19 +92,19 @@ public class PageOne extends JPanel {
 
         for (int i = 0; i < 6; i++) {
             dataAttuale.add(Calendar.DAY_OF_MONTH, 1);
-            tab.add(new JPanel(), giornoDellaSettimana(dataAttuale.get(Calendar.DAY_OF_WEEK)) + ", " + dataAttuale.get(Calendar.DAY_OF_MONTH) + " " + elaboraMese(dataAttuale.get(Calendar.MONTH)));
+            tab.add(new JPanel(), dayOfTheWeek(dataAttuale.get(Calendar.DAY_OF_WEEK)) + ", " + dataAttuale.get(Calendar.DAY_OF_MONTH) + " " + processMonth(dataAttuale.get(Calendar.MONTH)));
         }
-        ThreadScaricaFilm(0).start();
+        ThreadDownloadFilm(0).start();
 
         tab.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
-                ThreadScaricaFilm(tab.getSelectedIndex()).start();
+                ThreadDownloadFilm(tab.getSelectedIndex()).start();
             }
         });
     }
 
-    private String giornoDellaSettimana(int numero) {
+    private String dayOfTheWeek(int numero) {
         switch (numero) {
             case 1:
                 return "domenica";
@@ -120,7 +125,7 @@ public class PageOne extends JPanel {
         }
     }
 
-    private String elaboraMese(int numero) {
+    private String processMonth(int numero) {
         switch (numero) {
             case 0:
                 return "Gennaio";
@@ -151,13 +156,13 @@ public class PageOne extends JPanel {
         }
     }
 
-    private Thread ThreadScaricaFilm(final int deltaData) {
+    private Thread ThreadDownloadFilm(final int deltaData) {    //scarica i film secondo i filtri selezionati
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
                     JPanel pannello = new JPanel(new GridLayout(0, 3, 20, 30));
                     SliderValue = slider.getValue();
-                    ArrayList<Film> Films = controller.FilmFuturoBySlider(deltaData, SliderValue);
+                    ArrayList<Film> Films = controller.futureFilmBySlider(deltaData, SliderValue);
 
                     for (final Film f : Films) {
                         ButtonCover cover = new ButtonCover(f);
@@ -174,15 +179,17 @@ public class PageOne extends JPanel {
                                     OpenPageTwo(f, focusedDateTime);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                  
                                 } catch (IOException ex) {
                                     Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                  
                                 }
                             }
                         });
                         pannello.add(cover);
-//                        System.out.println("finito caricamento immagini");
+
                     }
-                    aggiornaGui(deltaData, pannello);
+                    updateGui(deltaData, pannello);
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(frameErrore, "Errore con scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
                 } catch (SQLException ex) {
@@ -194,7 +201,7 @@ public class PageOne extends JPanel {
         return t;
     }
 
-    public void aggiornaGui(int deltaDate, JPanel pannelloGiornaliero) {
+    public void updateGui(int deltaDate, JPanel pannelloGiornaliero) { //aggiorna la gui quando necessario(modifica filtri orari o giorni)
         JPanel Pannello = (JPanel) tab.getComponentAt(deltaDate);
         Pannello.removeAll();
         Pannello.add(pannelloGiornaliero);
@@ -202,7 +209,7 @@ public class PageOne extends JPanel {
         Pannello.repaint();
     }
 
-    public void OpenPageTwo(Film film, Calendar focusedDateTime) throws SQLException, IOException {
+    public void OpenPageTwo(Film film, Calendar focusedDateTime) throws SQLException, IOException { //apre pagina selezione proiezioni del film scelto
         this.removeAll();
         this.add(new PageTwo(film, focusedDateTime), BorderLayout.CENTER);
         this.revalidate();

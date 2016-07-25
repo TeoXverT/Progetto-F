@@ -28,7 +28,7 @@ public class Gui_Cliente extends JFrame {
         this.setBounds(100, 100, 920, 770);
         ImageIcon icona = new ImageIcon("immagini/logo_trasparente.png");
         setIconImage(icona.getImage());
-//        this.setResizable(false);
+
         this.add(display);
         display.add(new PageOne());
     }

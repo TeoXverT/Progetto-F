@@ -70,7 +70,7 @@ public class PageFour extends JPanel {
         try {
             URL url = new URL(film.getLink_copertina());
             Image image = ImageIO.read(url);
-            JLabel label1 = new JLabel(scalaImmagine(new ImageIcon(image), 210, 300));
+            JLabel label1 = new JLabel(imageScaling(new ImageIcon(image), 210, 300));
             pannelloCopertina.add(label1);
         } catch (IOException e) {
         }
@@ -175,7 +175,7 @@ public class PageFour extends JPanel {
         this.add(back, BorderLayout.BEFORE_LINE_BEGINS);
     }
     
-    private ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+    private ImageIcon imageScaling(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
     

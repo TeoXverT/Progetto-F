@@ -72,7 +72,7 @@ public class PageFive extends JPanel {
         ThreadCountdown().start();
     }
 
-    private Thread ThreadCountdown() {
+    private Thread ThreadCountdown() {   //countdown per il pagamento
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -102,7 +102,7 @@ public class PageFive extends JPanel {
         return t;
     }
 
-    private Thread ThreadTimer() {
+    private Thread ThreadTimer() {  //thread per il controllo pagamento avvenuto
         Thread t = new Thread(new Runnable() {
             public void run() {
                 int checkPayment = 0;
@@ -136,7 +136,7 @@ public class PageFive extends JPanel {
         return t;
     }
 
-    private JButton makeHomeButton() {
+    private JButton makeHomeButton() {  //crea bottone per il ritorno alla home
         JButton homeButton = new JButton();
         homeButton.setIcon(new ImageIcon(new ImageIcon("immagini/home.png").getImage().getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH)));
         homeButton.setBorderPainted(true);
@@ -145,7 +145,7 @@ public class PageFive extends JPanel {
         return homeButton;
     }
 
-    private void goBack() {
+    private void goBack() {   //ritorna pagina selezione film
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(new PageOne());
