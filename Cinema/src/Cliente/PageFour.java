@@ -2,6 +2,7 @@ package Cliente;
 
 import Gestore.EmailSender;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -10,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,31 +33,41 @@ public class PageFour extends JPanel {
 
     private Controller_Cliente controller;
 
-    Film film;
+    private Film film;
+    private Screening screening;
+    private Booking booking;
 
-    Screening proiezione;
-    Booking prenotazione;
-    Config config;
-    JLabel totalPrice = new JLabel();
-    JTextField email;
-    Glasses spinner;
+    private Config config;
+
+    private JLabel totalPrice = new JLabel();
+    private JTextField email;
+    private Glasses spinner;
 
     Component popUpWindow;
 
-    public PageFour(Film film, Screening proiezione, Booking prenotazione, Config config) {
-        controller = Controller_Cliente.getInstance();
-        this.film = film;
-        this.proiezione = proiezione;
-        this.prenotazione = prenotazione;
-        this.config = config;
+    public PageFour(Booking booking) {
+        this.controller = Controller_Cliente.getInstance();
+
+        this.booking = booking;
+        this.screening = this.booking.getScreening();
+        this.film = this.screening.getFilm();
+
+        try {
+            this.config = controller.getConfig();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Server Error, try again later.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
 
         draw();
     }
- 
+
     private void draw() {
         this.setLayout(new BorderLayout());
 
         JPanel pannelloCopertina = new JPanel();
+        pannelloCopertina.setBackground(java.awt.Color.WHITE);
+
         try {
             URL url = new URL(film.getLink_copertina());
             Image image = ImageIO.read(url);
@@ -67,29 +80,30 @@ public class PageFour extends JPanel {
         JPanel centro = new JPanel(new GridLayout(0, 1));
 
         JPanel carrello = new JPanel(new GridLayout(0, 2));
-        carrello.add(new JLabel("<html><font size=\"5\">" + proiezione.getData_ora_friendly_2() + "</font></html>"));
-        carrello.add(new JLabel("<html><font size=\"5\">Room: " + proiezione.getRoom().getId_sala() + " Type of Projection: " + proiezione.getType_String() + "</font></html>"));
+
+        carrello.add(new JLabel("<html><font size=\"5\">" + screening.getData_ora_friendly_2() + "</font></html>"));
+        carrello.add(new JLabel("<html><font size=\"5\">Room: " + screening.getRoom().getId_sala() + " Type of Projection: " + screening.getType_String() + "</font></html>"));
 
         carrello.add(new JLabel("<html><b><font size=\"5\">Cart:</font></b><html>"));
         carrello.add(new JLabel(""));
 
-        for (Seat s : prenotazione.getPosti_prenotati()) {
+        for (Seat s : booking.getPosti_prenotati()) {
             carrello.add(new JLabel("<html><font size=\"4\"><i> Line: " + s.getx() + " Seat: " + s.gety() + "</font></html>"));
             if (s.isVip()) {
-                double price = proiezione.getPrezzo() + config.getPrezzo_vip() + config.getOver_price();
+                double price = screening.getPrezzo() + config.getPrezzo_vip() + config.getOver_price();
                 carrello.add(new JLabel(price + " €"));
             } else if (s.isDisable()) {
-                double price = proiezione.getPrezzo() + config.getDisabled_price() + config.getOver_price();
+                double price = screening.getPrezzo() + config.getDisabled_price() + config.getOver_price();
                 carrello.add(new JLabel(price + " €"));
             } else {
-                double price = proiezione.getPrezzo() + config.getOver_price();
+                double price = screening.getPrezzo() + config.getOver_price();
                 carrello.add(new JLabel(price + " €"));
             }
         }
 
-        if (proiezione.getTipo_proiezione() == 1 || proiezione.getTipo_proiezione() == 2) {  // 0- Normale 1- 3D 2-IMAX 3D 3- Live Event
+        if (screening.getTipo_proiezione() == 1 || screening.getTipo_proiezione() == 2) {  // 0- Normale 1- 3D 2-IMAX 3D 3- Live Event
             JPanel price = new JPanel(new GridLayout(1, 2));
-            spinner = new Glasses("3D Glasses", config.getGlasses_price(), new SpinnerNumberModel(0, 0, prenotazione.getPosti_prenotati().size(), 1));
+            spinner = new Glasses("3D Glasses", config.getGlasses_price(), new SpinnerNumberModel(0, 0, booking.getPosti_prenotati().size(), 1));
             spinner.addChangeListener(updateTotal());
             price.add(spinner);
             price.add(new JLabel("X " + spinner.getPrice() + " €"));
@@ -98,7 +112,7 @@ public class PageFour extends JPanel {
         }
 
         carrello.add(new JLabel("<html><font size=\"5\"><i>Total</font></html>"));
-        totalPrice.setText("<html><font size=\"6\">" + prenotazione.getPrezzo() + " €</font></html>");
+        totalPrice.setText("<html><font size=\"6\">" + booking.getPrezzo() + " €</font></html>");
         carrello.add(totalPrice);
         carrello.add(new JLabel("<html><font size=\"5\"><i>Email for Payment:</font></html>"));
         email = new JTextField();
@@ -113,21 +127,21 @@ public class PageFour extends JPanel {
             public void actionPerformed(ActionEvent ae) {
 
                 if (email.getText().compareTo("laTua@Email.it") != 0) {
-                    if (proiezione.isType3D() || proiezione.isTypeIMAX3D()) { //Considero anche il prezzo dei occhiali 3D
-                        prenotazione.setPrezzo(spinner.getTotalPrice() + prenotazione.getPrezzo());
-                        prenotazione.setNumber_of_glasses(spinner.getNumber_of_glasses());
+                    if (screening.isType3D() || screening.isTypeIMAX3D()) { //Considero anche il prezzo dei occhiali 3D
+                        booking.setPrezzo(spinner.getTotalPrice() + booking.getPrezzo());
+                        booking.setNumber_of_glasses(spinner.getNumber_of_glasses());
                     }
                     try {
-                        int idBooking = controller.writeBooking(prenotazione);
+                        int idBooking = controller.writeBooking(booking);
                         if (idBooking == 0) { //Durante la scelta dei posti qualcunaltro li ha comprati
                             JOptionPane.showMessageDialog(popUpWindow,
                                     "I Posti da lei scielti sono stati prenotati da qualcun'altro, si prega di scieglere dei nuovi posti.",
                                     "Attenzione!!!",
                                     JOptionPane.WARNING_MESSAGE);
-                            openPage(new PageThree(film, proiezione));
+                            openPage(new PageThree(screening));
                         } else {
                             System.out.println("ID Booking: " + idBooking);
-                            prenotazione.setId_prenotazione(idBooking);
+                            booking.setId_prenotazione(idBooking);
 
                             JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
                             JPanel pannelloCaricamento = new JPanel();
@@ -155,7 +169,7 @@ public class PageFour extends JPanel {
         JButton back = new JButton("Back");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                openPage(new PageThree(film, proiezione));
+                openPage(new PageThree(screening));
             }
         });
         this.add(back, BorderLayout.BEFORE_LINE_BEGINS);
@@ -169,7 +183,7 @@ public class PageFour extends JPanel {
         ChangeListener evento = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                double price = spinner.getTotalPrice() + prenotazione.getPrezzo();
+                double price = spinner.getTotalPrice() + booking.getPrezzo();
                 totalPrice.setText("<html><font size=\"6\">" + price + " €</font></html>");
             }
         };
@@ -188,8 +202,8 @@ public class PageFour extends JPanel {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 EmailSender emailSender = new EmailSender();
-                emailSender.SendEmailRequest(email.getText(), film, proiezione, prenotazione);
-                openPage(new PageFive(prenotazione));
+                emailSender.SendEmailRequest(email.getText(),booking);
+                openPage(new PageFive(booking));
             }
         }
         );

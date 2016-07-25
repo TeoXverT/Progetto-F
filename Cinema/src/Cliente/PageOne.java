@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -30,7 +31,7 @@ import oggetti.Film;
 
 public class PageOne extends JPanel {
 
-    private Controller_Cliente controller = Controller_Cliente.getInstance();
+    private Controller_Cliente controller;
 
     JTabbedPane tab = new JTabbedPane();
     Component frameErrore;
@@ -44,7 +45,7 @@ public class PageOne extends JPanel {
     JPanel pannelloSlider;
 
     public PageOne() {
-        this.controller = controller;
+        this.controller = Controller_Cliente.getInstance();
 
         this.setLayout(new BorderLayout());
         this.add(tab, BorderLayout.CENTER);
@@ -159,12 +160,18 @@ public class PageOne extends JPanel {
                     ArrayList<Film> Films = controller.FilmFuturoBySlider(deltaData, SliderValue);
 
                     for (final Film f : Films) {
-//                        System.out.println("In Download immagine URL: " + f.getLink_copertina());
                         ButtonCover cover = new ButtonCover(f);
                         cover.addActionListener(new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 try {
-                                    OpenPageTwo(f, deltaData, SliderValue);
+
+                                    Calendar focusedDateTime = Calendar.getInstance();
+                                    focusedDateTime.add(Calendar.DAY_OF_YEAR, deltaData);
+                                    focusedDateTime.set(Calendar.HOUR_OF_DAY, SliderValue);
+                                    focusedDateTime.set(Calendar.MINUTE, 0);
+                                    focusedDateTime.set(Calendar.SECOND, 0);
+
+                                    OpenPageTwo(f, focusedDateTime);
                                 } catch (SQLException ex) {
                                     Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (IOException ex) {
@@ -174,8 +181,8 @@ public class PageOne extends JPanel {
                         });
                         pannello.add(cover);
 //                        System.out.println("finito caricamento immagini");
-                        aggiornaGui(deltaData, pannello);
                     }
+                    aggiornaGui(deltaData, pannello);
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(frameErrore, "Errore con scaricamento immagini", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
                 } catch (SQLException ex) {
@@ -195,9 +202,9 @@ public class PageOne extends JPanel {
         Pannello.repaint();
     }
 
-    public void OpenPageTwo(Film film, int deltaData, int valueSlider) throws SQLException, IOException {
+    public void OpenPageTwo(Film film, Calendar focusedDateTime) throws SQLException, IOException {
         this.removeAll();
-        this.add(new PageTwo(film, deltaData, valueSlider),BorderLayout.CENTER);
+        this.add(new PageTwo(film, focusedDateTime), BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }

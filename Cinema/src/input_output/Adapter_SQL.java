@@ -21,25 +21,16 @@ import oggetti.*;
  */
 public class Adapter_SQL {
 
-    private static Adapter_SQL instance;
-
     private final SQLConnessione SQL;
     private final Parse_OBJ parser;
 
     private final int TIME_LIMIT_ONLINE_PURCHASE = 15; // Min - è possibile comprare il bigletto online fino a tot min prima del inizio
     private final int TIME_ZONE_COMPENSATION = 2; // Ore      - lo si utilizza per adeguarsi al fuso orario del DB
 
-    private Adapter_SQL() {
+    public Adapter_SQL() {
         SQL = new SQLConnessione();
         SQL.creaConnessione();
         parser = new Parse_OBJ();
-    }
-
-    public static synchronized Adapter_SQL getInstance() {
-        if (instance == null) {
-            instance = new Adapter_SQL();
-        }
-        return instance;
     }
 
     public ArrayList<Screening> visualizzaProiezione(int tipo) throws SQLException {
@@ -338,21 +329,27 @@ public class Adapter_SQL {
 
     }
 
-    public ArrayList<Screening> getShowByFilm(int id_film, int deltaData, int ora) throws SQLException {
+    public ArrayList<Screening> screeningFilteredByFilmAndTime(int id_film, Calendar focusedDateTime) throws SQLException {
         String query;
-        ResultSet risultato_query;
-        ArrayList<Screening> proiezione;
-        // ora = ora + TIME_ZONE_COMPENSATION; //PER FUSO ORARIO DATABASE
-        query = "SELECT Proiezione.* "
-                + "FROM Proiezione "
-                // + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL " + deltaData + " DAY), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
-                + "WHERE (Proiezione.id_film=" + id_film + ") AND (concat(date(now()+ INTERVAL '" + deltaData + " " + TIME_ZONE_COMPENSATION + "' DAY_HOUR), ' 00:00:00')=concat(date(Proiezione.data_ora), ' 00:00:00')) and (Proiezione.data_ora>concat(date(now()+ INTERVAL " + deltaData + " DAY), ' " + ora + ":00:00' ))";
-        risultato_query = SQL.eseguiQueryLettura(query);
+        ResultSet resultSet;
+        ArrayList<Screening> screening;
 
-        proiezione = parser.Proiezione(risultato_query);
-        risultato_query.close();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        return proiezione;
+        Calendar midnight = (Calendar) focusedDateTime.clone();
+
+        midnight.set(Calendar.HOUR_OF_DAY, 23);
+        midnight.set(Calendar.MINUTE, 59);
+        midnight.set(Calendar.SECOND, 59);
+
+        query = "select *\n"
+                + "from Proiezione\n"
+                + "where Proiezione.id_film= " + id_film + " and Proiezione.data_ora>  \"" + sdf.format(focusedDateTime.getTime()) + "\" and Proiezione.data_ora< \"" + sdf.format(midnight.getTime()) + "\"";
+
+        resultSet = SQL.eseguiQueryLettura(query);
+        screening = parser.Proiezione(resultSet);
+        resultSet.close();
+        return screening;
     }
 
     public Room getSalaByIdSala(int id_sala) throws SQLException {

@@ -1,4 +1,5 @@
 
+import Cliente.Controller_Cliente;
 import Cliente.Gui_Cliente;
 import Gestore.*;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
@@ -58,6 +59,7 @@ public class main {
         gui.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                
                 NativeInterface.close();
                 System.exit(0);
             }

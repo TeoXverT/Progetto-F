@@ -8,18 +8,10 @@ package Gestore;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
-import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import oggetti.*;
@@ -35,26 +27,14 @@ public class Gui_Gestore extends JFrame {
     private JPanel display;
     private JLabel outputGrafico; //Scritte in basso
 
-    private JLabel imagineCaricamento;
     private JPanel pannelloCaricamento;
 
-//    private Component frameErrore = null;
     public Gui_Gestore() {
 
-//        try {
-//            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (Exception e) {
-//            // If Nimbus is not available, you can set the GUI to another look and feel.
-//        }
         controller = new Controller_Gestore();
         display = new JPanel(new BorderLayout());
         creaGui();
-        imagineCaricamento = new JLabel(new ImageIcon("immagini/logo_2.gif"));
+        JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
         pannelloCaricamento = new JPanel();
         pannelloCaricamento.add(imagineCaricamento);
 
@@ -121,40 +101,40 @@ public class Gui_Gestore extends JFrame {
         menuBar.add(menu);
 
         menuItem = new JMenuItem("Add Movie");
-        menuItem.addActionListener(aggiungiFilm()); 
+        menuItem.addActionListener(aggiungiFilm());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Add Screening");
-        menuItem.addActionListener(aggiungiProiezione()); 
+        menuItem.addActionListener(aggiungiProiezione());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Add Hall");
-        menuItem.addActionListener(addHall()); 
+        menuItem.addActionListener(addHall());
         menu.add(menuItem);
 
         menuItem = new JMenuItem("Remover");
-        menuItem.addActionListener(Remover()); 
+        menuItem.addActionListener(Remover());
         menu.add(menuItem);
 
         menu = new JMenu("Gestione Fatturati");
         menuBar.add(menu);
 
         menuItem = new JMenuItem("Sales Volume");
-        menuItem.addActionListener(salesVolume()); 
+        menuItem.addActionListener(salesVolume());
         menu.add(menuItem);
 
         menu = new JMenu("Configuration");
         menuBar.add(menu);
 
         menuItem = new JMenuItem("Modify/View");
-        menuItem.addActionListener(modificaImpostazioni()); 
+        menuItem.addActionListener(modificaImpostazioni());
         menu.add(menuItem);
 
         menu = new JMenu("Help");
         menuBar.add(menu);
 
         menuItem = new JMenuItem("About");
-        menuItem.addActionListener(About()); 
+        menuItem.addActionListener(About());
         menu.add(menuItem);
 
         return menuBar;
@@ -218,6 +198,8 @@ public class Gui_Gestore extends JFrame {
                 } catch (SQLException ex) {
                     serverError();
                 }
+                display.revalidate();
+                display.repaint();
                 outputGrafico.setText("Visualzatore Proiezioni, val tipo: " + tipo);
             }
         };

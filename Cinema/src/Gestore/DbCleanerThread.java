@@ -9,9 +9,9 @@ public class DbCleanerThread extends TimerTask {
     Timer timer;
     Adapter_SQL adapter;
 
-    public DbCleanerThread(Timer timer) {
+    public DbCleanerThread(Timer timer, Adapter_SQL adapter) {
         this.timer = timer;
-        this.adapter =  Adapter_SQL.getInstance();
+        this.adapter = adapter;
     }
 
     @Override

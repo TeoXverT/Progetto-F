@@ -14,20 +14,21 @@ import oggetti.*;
  */
 public class Controller_Gestore {
 
-    private final Adapter_SQL adapter = Adapter_SQL.getInstance();
+    private final Adapter_SQL adapter;
 
     //Dati per il Thread di pulitura bigletti non pagati
     final int PERIOD = 10000;
 
     public Controller_Gestore() {
+        adapter = new Adapter_SQL();
 
         Timer timer = new Timer();
-        timer.schedule(new DbCleanerThread(timer), 0, PERIOD);
+        timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
 
     }
-    
-       public ArrayList<Booking> showBooking() throws SQLException {
-       return adapter.showBooking();
+
+    public ArrayList<Booking> showBooking() throws SQLException {
+        return adapter.showBooking();
     }
 
     public ArrayList<Screening> visualizzaProiezione(int tipo) throws SQLException {
@@ -71,7 +72,6 @@ public class Controller_Gestore {
     public boolean eliminaFilm(int id_film) {
         return adapter.eliminaFilm(id_film);
     }
-
 
     public boolean scriviConfig(Config config) {
         if (true) { //Eventuale controllo sul valore dei campi di config

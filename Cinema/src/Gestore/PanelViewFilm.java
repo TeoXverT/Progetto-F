@@ -20,16 +20,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import oggetti.ButtonCover;
 import oggetti.Film;
@@ -83,6 +79,8 @@ public class PanelViewFilm extends JPanel {
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
                 }
+                outputGrafico.setText("Caricamento lista film completato.");
+
             }
         }
         );
@@ -108,7 +106,6 @@ public class PanelViewFilm extends JPanel {
     private void drawDetail(Film film) {
         threadSync = false;
 
-//        System.out.println(film.toString());
         this.removeAll();
         outputGrafico.setText("");
         this.setLayout(new BorderLayout());
@@ -120,7 +117,7 @@ public class PanelViewFilm extends JPanel {
         } catch (IOException ex) {
             Logger.getLogger(PanelViewFilm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        nord.add(new JLabel(scalaImmagine(immagine, 230, 320)));
+        nord.add(new JLabel(new ImageIcon(immagine.getImage().getScaledInstance(230, 320, java.awt.Image.SCALE_SMOOTH))));
         nord.add(new YoutubePanel(film.getLink_youtube(), 100, 100));
 
         JPanel centro = new JPanel();
@@ -154,10 +151,6 @@ public class PanelViewFilm extends JPanel {
 
         this.revalidate();
         this.repaint();
-    }
-
-    ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
-        return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
 
 }

@@ -48,6 +48,10 @@ public class Screening {
         return sdf.format(data_ora.getTime());
     }
 
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
     public String getData_ora_friendly() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM HH:mm");
         return sdf.format(data_ora.getTime());

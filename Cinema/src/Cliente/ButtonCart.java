@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package oggetti;
+package Cliente;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import oggetti.Screening;
 
 /**
  *

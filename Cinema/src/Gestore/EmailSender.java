@@ -25,7 +25,11 @@ public class EmailSender {
 
     }
 
-    public boolean SendEmailRequest(String email_destinatario, Film film, Screening proiezione, Booking prenotazione) {
+    public boolean SendEmailRequest(String email_destinatario, Booking booking) {
+
+        Screening screening = booking.getScreening();
+        Film film = screening.getFilm();
+
         try {
             URL obj = new URL(URL_SERVER);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -34,7 +38,7 @@ public class EmailSender {
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + email_destinatario + "&oggetto=" + OBJECT + "&messaggio=" + purchaseDescription(film, proiezione, prenotazione);
+            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + email_destinatario + "&oggetto=" + OBJECT + "&messaggio=" + purchaseDescription(film, screening, booking);
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 
@@ -59,41 +63,41 @@ public class EmailSender {
         return false;
     }
 
-    private String purchaseDescription(Film film, Screening proiezione, Booking prenotazione) {
-        String messaggio;
+    private String purchaseDescription(Film film, Screening screening, Booking booking) {
+        String message; 
 
-        messaggio = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"><title>Pagamento</title></head><body><center>";
-        messaggio = messaggio + "<IMG SRC=\" http://xsacniopanzax.altervista.org/progettof/logo.png \n"
+        message = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"><title>Pagamento</title></head><body><center>";
+        message = message + "<IMG SRC=\" http://xsacniopanzax.altervista.org/progettof/logo.png \n"
                 + "\" ALT=\"some text\" WIDTH=600 HEIGHT=400><br><br>";
 
-        messaggio = messaggio + "<IMG SRC=\"" + film.getLink_copertina() + "\" ALT=\"some text\" WIDTH=400 HEIGHT=600><br><br>";
-        messaggio = messaggio + "<p><font size=\"4\">Codice Prenotazione :" + prenotazione.getId_prenotazione() + "</p></font><br><br>";
-        messaggio = messaggio + "<p>" + film.getTitolo_film() + " inizia il " + proiezione.getData_ora_friendly_2() + " nella Sala " + proiezione.getRoom().getId_sala() + "</p><br>";
-        messaggio = messaggio + "Prenotati i seguenti posti:<br>";
-        for (Seat s : prenotazione.getPosti_prenotati()) {
-            messaggio = messaggio + "Fila " + s.getx() + " Colonna " + s.gety() + "<br>";
+        message = message + "<IMG SRC=\"" + film.getLink_copertina() + "\" ALT=\"some text\" WIDTH=400 HEIGHT=600><br><br>";
+        message = message + "<p><font size=\"4\">Codice Prenotazione :" + booking.getId_prenotazione() + "</p></font><br><br>";
+        message = message + "<p>" + film.getTitolo_film() + " inizia il " + screening.getData_ora_friendly_2() + " nella Sala " + screening.getRoom().getId_sala() + "</p><br>";
+        message = message + "Prenotati i seguenti posti:<br>";
+        for (Seat s : booking.getPosti_prenotati()) {
+            message = message + "Fila " + s.getx() + " Colonna " + s.gety() + "<br>";
         }
-        if (prenotazione.getNumber_of_glasses() != 0) {
-            messaggio = messaggio + "Hai in oltre comprato " + prenotazione.getNumber_of_glasses() + " occhiali 3D.<br><br>";
+        if (booking.getNumber_of_glasses() != 0) {
+            message = message + "Hai in oltre comprato " + booking.getNumber_of_glasses() + " occhiali 3D.<br><br>";
         }
-        messaggio = messaggio + "Totale da pagare: " + prenotazione.getPrezzo() + " Euro<br><br><br>";
-        messaggio = messaggio + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Si prega di portare con se questo documento al cinema.</i><br><br><br><br>";
-        messaggio = messaggio + "</center>";
+        message = message + "Totale da pagare: " + booking.getPrezzo() + " Euro<br><br><br>";
+        message = message + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Si prega di portare con se questo documento al cinema.</i><br><br><br><br>";
+        message = message + "</center>";
 
         //ORA IN SANDBOX, per toglerlo usare https://www.paypal.com/cgi-bin/webscr\
-        messaggio = messaggio + "<center>\n"
+        message = message + "<center>\n"
                 + "   <form action=\"https://www.sandbox.paypal.com/cgi-bin/webscr\" method=\"post\">\n"
                 + "       <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">\n"
                 + "       <input type=\"hidden\" name=\"currency_code\" value=\"EUR\" />\n"
                 + "       <input type=\"hidden\" name=\"lc\" value=\"IT\" />\n"
                 + "	   \n"
                 + "       <input type=\"hidden\" name=\"item_name\" value=\"Prenotazione Cinema\" />\n"
-                + "       <input type=\"hidden\" name=\"amount\" value=\"" + prenotazione.getPrezzo() + "\" />\n"
-                + "	   <input type=\"hidden\" name=\"item_number\" value=\"" + prenotazione.getId_prenotazione() + "\">\n"
+                + "       <input type=\"hidden\" name=\"amount\" value=\"" + booking.getPrezzo() + "\" />\n"
+                + "	   <input type=\"hidden\" name=\"item_number\" value=\"" + booking.getId_prenotazione() + "\">\n"
                 + "\n"
-                + "       <input type=\"hidden\" name=\"business\" value=\""+PAYMENT_RECIVER+"\" />\n"
+                + "       <input type=\"hidden\" name=\"business\" value=\"" + PAYMENT_RECIVER + "\" />\n"
                 + "       <input type=\"hidden\" name=\"notify_url\" value=\"http://xsacniopanzax.altervista.org/progettof/conferma_paypal.php\" />\n"
-                + "       <input type=\"hidden\" name=\"custom\" value=\""+prenotazione.getId_prenotazione()+"\" />\n"
+                + "       <input type=\"hidden\" name=\"custom\" value=\"" + booking.getId_prenotazione() + "\" />\n"
                 + "	   	  \n"
                 + "	  <input type=\"image\" src=\"http://xsacniopanzax.altervista.org/progettof/pay_img.jpg\" border=\"0\" name=\"submit\" width=\"400\" height=\"150\" alt=\"Make payments with PayPal\">  \n"
                 + "   </form> \n"
@@ -104,6 +108,6 @@ public class EmailSender {
                 + "   \n"
                 + "</body>\n"
                 + "</html>";
-        return messaggio;
+        return message;
     }
 }

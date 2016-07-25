@@ -31,7 +31,7 @@ import oggetti.Seat;
  */
 public class PageThree extends JPanel {
 
-    private Controller_Cliente controller = Controller_Cliente.getInstance();
+    private Controller_Cliente controller;
     Screening screening;
     Film film;
     Booking booking;
@@ -54,8 +54,8 @@ public class PageThree extends JPanel {
     JLabel prezzo = new JLabel();
     JButton prosegui = new JButton("PROSEGUI");
 
-    public PageThree(Film film, Screening proiezione) {
-        this.controller = controller;
+    public PageThree(Screening proiezione) {
+        this.controller = Controller_Cliente.getInstance();
         this.film = film;
         this.screening = proiezione;
         try {
@@ -79,7 +79,10 @@ public class PageThree extends JPanel {
     public void initGui() {
         this.removeAll();
         this.setLayout(new BorderLayout(20, 30));
+
         JPanel nord = new JPanel();
+        nord.setBackground(java.awt.Color.WHITE);
+
         JPanel sud = new JPanel(new GridLayout(0, 2));
         JPanel center = new JPanel(new BorderLayout());
 
@@ -88,16 +91,16 @@ public class PageThree extends JPanel {
         JLabel screen = new JLabel(screen_icon);
         nord.add(screen);
         checkTakenSeats();
-        
-        for(int i = 0; i < booked_seats.size(); i++) {
-            for(int j = 0; j < seats.size(); j++) {
-                if(booked_seats.get(i).getId() == seats.get(j).getId()) {
+
+        for (int i = 0; i < booked_seats.size(); i++) {
+            for (int j = 0; j < seats.size(); j++) {
+                if (booked_seats.get(i).getId() == seats.get(j).getId()) {
                     seats.get(j).setIcon(seat_taken);
                     seats.get(j).setOccupato(true);
                 }
-            } 
+            }
         }
-        
+
         for (int i = 0; i < seats.size(); i++) {
             if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
                 seats.get(i).addActionListener(seatClick(i));
@@ -115,7 +118,7 @@ public class PageThree extends JPanel {
         JPanel total = new JPanel(new BorderLayout(5, 5));
         JLabel totale = new JLabel("TOTALE: ");
 
-        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto()+"%");
+        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto() + "%");
         JButton indietro = new JButton("indietro");
 
         JPanel buttons = new JPanel(new GridLayout(0, 2));
@@ -137,8 +140,8 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                booking = new Booking(0,screening,Taken_seats,null,0,totale_prezzo,0);
-                openPage(new PageFour(film, screening, booking, config));                
+                booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0);
+                openPage(new PageFour(booking));
             }
         });
 
@@ -162,7 +165,7 @@ public class PageThree extends JPanel {
                     seats.get(i).setOccupato(false);
                     Taken_seats.remove(Taken_seats.size() - 1);
                     if (seats.get(i).isVip()) {
-                        seats.get(i).setIcon(seat_vip);   
+                        seats.get(i).setIcon(seat_vip);
                         totale_prezzo -= (config.getPrezzo_vip() + screening.getPrezzo());
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
@@ -205,7 +208,7 @@ public class PageThree extends JPanel {
         this.revalidate();
         this.repaint();
     }
-    
+
     private void checkTakenSeats() {
         try {
             booked_seats.clear();

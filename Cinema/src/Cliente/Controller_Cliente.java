@@ -31,7 +31,7 @@ public class Controller_Cliente {
     private Config config;
 
     private Controller_Cliente() {
-        adapter = Adapter_SQL.getInstance();
+        adapter = new Adapter_SQL();
     }
 
     public static synchronized Controller_Cliente getInstance() {
@@ -46,63 +46,40 @@ public class Controller_Cliente {
         Calendar giornoAttuale;
         TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
         Screening proiezioneProva;
-
         listaProiezioniFuture = new ArrayList<>();
-
         giornoAttuale = Calendar.getInstance(timezone);
-
         for (i = 0; i < listaProiezione.size(); i++) {
-
             if (listaProiezione.get(i).getData_ora().after(giornoAttuale)) {
-
                 proiezioneProva = new Screening(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getFilm(), listaProiezione.get(i).getRoom(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
-
                 listaProiezioniFuture.add(proiezioneProva);
-
             }
-
         }
-
         return listaProiezioniFuture;
     }
 
     public ArrayList<Screening> listaProiezioniFiltrate(ArrayList<Screening> listaProiezione, int GiornoSettimana) {
-
         int i;
         Calendar giornoAttuale;
-
         TimeZone timezone = TimeZone.getTimeZone("Europe/Rome");
         Screening proiezioneProva;
-
         listaProiezioniFiltrate = new ArrayList<>();
-
         giornoAttuale = Calendar.getInstance(timezone);
-
         for (i = 0; i < listaProiezione.size(); i++) {
             System.out.println(listaProiezione.get(i).getData_ora().get(Calendar.DAY_OF_WEEK));
             if (listaProiezione.get(i).getData_ora().after(giornoAttuale) && (listaProiezione.get(i).getData_ora().get(Calendar.DAY_OF_WEEK)) == GiornoSettimana) {
-
                 proiezioneProva = new Screening(listaProiezione.get(i).getId_proiezione(), listaProiezione.get(i).getData_ora(), listaProiezione.get(i).getFilm(), listaProiezione.get(i).getRoom(), listaProiezione.get(i).getTipo_proiezione(), listaProiezione.get(i).getPrezzo());
-
                 listaProiezioniFiltrate.add(proiezioneProva);
-
             }
-
         }
-
         return listaProiezioniFiltrate;
     }
 
     public ArrayList<Film> FilmFuturo(int deltaData) throws SQLException {
-
         return adapter.FilmFuturo(deltaData);
-
     }
 
     public ArrayList<Film> FilmFuturoBySlider(int deltaData, int sliderValue) throws SQLException {
-
         return adapter.FilmFuturoBySlider(deltaData, sliderValue);
-
     }
 
     public Config getConfig() throws SQLException {
@@ -116,8 +93,8 @@ public class Controller_Cliente {
         return adapter.getSalaByIdSala(id_Sala);
     }
 
-    public ArrayList<Screening> showByFilm(int id_film, int deltaData, int ora) throws SQLException {
-        return adapter.getShowByFilm(id_film, deltaData, ora);
+    public ArrayList<Screening> screeningFilteredByFilmAndTime(int id_film, Calendar focusedDateTime) throws SQLException {
+        return adapter.screeningFilteredByFilmAndTime(id_film, focusedDateTime);
     }
 
     public ArrayList<Seat> getSeats(int id_sala) {
@@ -127,7 +104,7 @@ public class Controller_Cliente {
     }
 
     public int writeBooking(Booking booking) throws SQLException {
-        int idBooking = 0; 
+        int idBooking = 0;
 
         if (adapter.checkBookedSeat(booking.getScreening().getId_proiezione(), booking.getPosti_prenotati())) { //Controllo disponibilità posti
             idBooking = adapter.writeBookin(booking);

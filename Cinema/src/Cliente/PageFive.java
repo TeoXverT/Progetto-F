@@ -1,6 +1,7 @@
 package Cliente;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,14 +21,14 @@ public class PageFive extends JPanel {
     private final int DB_READ_POLLING = 5; //Sec
 
     private Controller_Cliente controller;
-    private Booking prenotazione;
+    private Booking booking;
 
     private JLabel countdownDispaly = new JLabel();
     private JPanel pannelloContenitore;
 
-    public PageFive(final Booking prenotazione) {
+    public PageFive(final Booking booking) {
         controller = Controller_Cliente.getInstance();
-        this.prenotazione = prenotazione;
+        this.booking = booking;
 
         int time = 0;
         try {
@@ -55,7 +56,7 @@ public class PageFive extends JPanel {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    controller.getInsertPaymentForced(prenotazione);
+                    controller.getInsertPaymentForced(booking);
                 } catch (SQLException ex) {
                     System.out.println("Problema: inserimento pagamento fake");
                 }
@@ -108,7 +109,7 @@ public class PageFive extends JPanel {
                 for (int i = 0; i < (MAX_TIME * 60) / DB_READ_POLLING; i++) {
                     try {
                         Thread.sleep(DB_READ_POLLING * 1000);
-                        checkPayment = controller.checkBookingPayment(prenotazione.getId_prenotazione());
+                        checkPayment = controller.checkBookingPayment(booking.getId_prenotazione());
                         if (checkPayment == 1) {
                             break;
                         }

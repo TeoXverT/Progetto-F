@@ -11,22 +11,22 @@ public class SQLConnessione {
 
     private final String url = "sql8.freemysqlhosting.net";
     private final String nomeDatabase = "sql8115909";
-    private final String user = "sql8115909"; 
+    private final String user = "sql8115909";
     private final String pass = "ifYmYwRJJS";
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnessione() {
-
     }
 
-   public ResultSet eseguiQueryLettura(String query) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
+    public ResultSet eseguiQueryLettura(String query) throws SQLException { //Necessita di stetmet try chatch esterno (si possono fare diagnosi con output a display vi spiego in classe)
 //       System.out.println(query);
-       return stmt.executeQuery(query);
+        return stmt.executeQuery(query);
     }
-   
+
     public void eseguiQueryScrittura(String query) throws SQLException {  //Questo metodo lo di deve utilizzare ogni qual volta si fa una scittura su db
         stmt.executeUpdate(query);
     }
+
     public boolean creaConnessione() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
