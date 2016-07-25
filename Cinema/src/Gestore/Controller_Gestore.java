@@ -22,7 +22,6 @@ public class Controller_Gestore {
 
 //        Timer timer = new Timer();
 //        timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
-
     }
 
     public ArrayList<Booking> getBooking() throws SQLException {
@@ -57,6 +56,8 @@ public class Controller_Gestore {
 
     public boolean writeFilm(Film film) {
         if ((!"".equals(film.getTitolo_film())) && (!"".equals(film.getDescrizione())) && (!"".equals(film.getLink_copertina())) & (!"".equals(film.getGenere())) & (film.getDurata() > 0)) {
+            System.out.println("hoal");
+
             return adapter.writeFilm(film);
         } else {
             return false;
