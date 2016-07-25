@@ -20,8 +20,8 @@ public class Controller_Gestore {
     public Controller_Gestore() {
         adapter = new Adapter_SQL_Gestore();
 
-        Timer timer = new Timer();
-        timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
+//        Timer timer = new Timer();
+//        timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
 
     }
 
