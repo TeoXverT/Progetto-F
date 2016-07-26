@@ -61,7 +61,7 @@ public class CustomerController {
         return config;
     }
 
-    public Hall roomByID(int idHall) throws SQLException {
+    public Hall getHallByIdHall(int idHall) throws SQLException {
         return adapter.getHallByIdHall(idHall);
     }
 
@@ -69,7 +69,7 @@ public class CustomerController {
         return adapter.getProjectionFilteredByFilmAndTime(idFilm, focusedDateTime);
     }
 
-    public ArrayList<Seat> getSeats(int idHall) {
+    public ArrayList<Seat> getSeatsByIdHall(int idHall) {
         ArrayList<Seat> seat;
         seat = adapter.getSeatByIdHall(idHall);
         return seat;

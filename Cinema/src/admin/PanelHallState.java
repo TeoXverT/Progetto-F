@@ -80,7 +80,7 @@ public class PanelHallState extends JPanel {
             this.removeAll();
             this.setLayout(new BorderLayout());
             JPanel seats_layout = new JPanel(new GridLayout(sala.getRows(), sala.getColumns(), 0, 1));
-            seats = controller_cliente.getSeats(id_sala);
+            seats = controller_cliente.getSeatsByIdHall(id_sala);
             bookedSeats = controller.getTakenSeats(id_proiezione);
 
             for (int i = 0; i < bookedSeats.size(); i++) {

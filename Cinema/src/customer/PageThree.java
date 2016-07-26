@@ -58,7 +58,7 @@ public class PageThree extends JPanel {
         this.controller = CustomerController.getInstance();
         this.screening = proiezione;
         try {
-            this.sala = controller.roomByID(proiezione.getRoom().getIdHall());
+            this.sala = controller.getHallByIdHall(proiezione.getRoom().getIdHall());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
 
@@ -66,7 +66,7 @@ public class PageThree extends JPanel {
 
         booked_seats = new ArrayList<>();
         seats = new ArrayList<>();
-        seats = controller.getSeats(proiezione.getRoom().getIdHall());
+        seats = controller.getSeatsByIdHall(proiezione.getRoom().getIdHall());
         try {
             config = controller.getConfig();
         } catch (SQLException ex) {
