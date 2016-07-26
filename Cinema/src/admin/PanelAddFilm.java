@@ -132,7 +132,11 @@ public class PanelAddFilm extends JPanel {
                     String[] tmp = linkField.getText().split("=");
                     link_normalizzato = tmp[1];
                     link_normalizzato = "https://www.youtube.com/v/" + link_normalizzato + "?autoplay=1";
-                    if (controller.writeFilm(new Film(titoloField.getText(), Genere, Integer.parseInt(durataField.getText()), descrizioneArea.getText(), link_normalizzato, copertinaField.getText()))) {
+                     String DescrizioneMax100 = descrizioneArea.getText(); 
+                    if(descrizioneArea.getText().length() > 50){
+                        DescrizioneMax100 = descrizioneArea.getText().substring(0, 47) +  "...";
+                    }
+                    if (controller.writeFilm(new Film(titoloField.getText(), Genere, Integer.parseInt(durataField.getText()), DescrizioneMax100, link_normalizzato, copertinaField.getText()))) {
                         outputGrafico.setText("The movie has been added.");
                     } else {
                         outputGrafico.setText("Error. Be sure that there are not empity fields.");
