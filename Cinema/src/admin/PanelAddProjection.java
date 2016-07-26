@@ -5,13 +5,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,9 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
-import obj.Film;
-import obj.Projection;
-import obj.Hall;
+import obj.*;
 
 public class PanelAddProjection extends JPanel {
 
@@ -46,13 +40,12 @@ public class PanelAddProjection extends JPanel {
             for (Film f : Films) {
                 model.addElement(f);
             }
-            
-           
+
             pannello.add(pane, BorderLayout.CENTER);
             pannelloNord.add(pannello);
 
             pannello = new JPanel(new BorderLayout());
-            pannello.add(new JLabel("Sale: "), BorderLayout.NORTH);
+            pannello.add(new JLabel("Hall: "), BorderLayout.NORTH);
 
             final DefaultListModel model1 = new DefaultListModel();
             final JList<Hall> listaSale = new JList(model1);
@@ -70,7 +63,7 @@ public class PanelAddProjection extends JPanel {
 
             Date today = new Date();
 
-            pannello.add(new JLabel("Data Ora: "), BorderLayout.WEST);
+            pannello.add(new JLabel("Date & Time: "), BorderLayout.WEST);
 
             final JSpinner selettoreDataOra = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
             JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreDataOra, "dd-MM-yyyy (EEEE) HH:mm");
@@ -83,44 +76,45 @@ public class PanelAddProjection extends JPanel {
 
             pannelloNord = new JPanel(new GridLayout(0, 1, 10, 50));
 
-            pannello.add(new JLabel("Tipo: "));
+            pannello.add(new JLabel("Type: "));
             String[] stringaLista = {"Normal", "3D", "IMAX 3D", "Live Event"};
+
             final JComboBox tipoLista = new JComboBox(stringaLista);
             tipoLista.setSelectedIndex(0);
             pannello.add(tipoLista);
 
-            pannello.add(new JLabel("Prezzo: "));
+            pannello.add(new JLabel("Price: "));
 
             final JSpinner spinnerPrezzo = new JSpinner(new SpinnerNumberModel(6, 3, 20, 0.5));
             pannello.add(spinnerPrezzo);
 
             pannelloNord.add(pannello);
-            JButton aggiungiProiezione = new JButton("Registra");
+            JButton aggiungiProiezione = new JButton("Save");
             pannelloNord.add(aggiungiProiezione);
 
             aggiungiProiezione.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (listaFilm.getSelectedValue() == null || listaSale.getSelectedValue() == null) {
-                        outputGrafico.setText("Riempire tutti i campi");
+                        outputGrafico.setText("Please fill all form.");
                     } else {
                         //Creazione oggetto
-                        Projection proiezione = new Projection(0, dateToCalendar((Date) selettoreDataOra.getValue()), new Film(listaFilm.getSelectedValue().getIdFilm()), new Hall(listaSale.getSelectedValue().getIdHall()),tipoLista.getSelectedIndex(), (double) spinnerPrezzo.getValue());
+                        Projection proiezione = new Projection(0, dateToCalendar((Date) selettoreDataOra.getValue()), new Film(listaFilm.getSelectedValue().getIdFilm()), new Hall(listaSale.getSelectedValue().getIdHall()), tipoLista.getSelectedIndex(), (double) spinnerPrezzo.getValue());
                         try {
                             if (controller.writeProjection(proiezione)) {
-                                outputGrafico.setText("Nuova proiezione aggiunta con successo.");
+                                outputGrafico.setText("New Projection has been saved.");
                             } else {
-                                outputGrafico.setText("La sala già occupata, cambiare l'orario.");
+                                outputGrafico.setText("The Hall is occupied by another projection.");
                             }
                         } catch (SQLException ex) {
-                            outputGrafico.setText("Errore con il server.");
+                            outputGrafico.setText("ERROR: Server Failure");
                         }
                     }
                 }
             });
             this.add(pannelloNord, BorderLayout.SOUTH);
         } catch (SQLException ex) {
-            outputGrafico.setText("Errore collegamento con il server.");
+            outputGrafico.setText("ERROR: Server Failure");
         }
     }
 

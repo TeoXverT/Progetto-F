@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import obj.Film;
-import obj.FilmGenere;
+import obj.FilmCategories;
 
 /**
  *      BUG NOTI:
@@ -48,8 +48,8 @@ public class PanelAddFilm extends JPanel {
         this.setLayout(new BorderLayout(10,10));         
         outputGrafico.setText("Add Movie");
         final JTextField titoloField = new JTextField("", 30);
-        final JComboBox<FilmGenere> genereComboBox = new JComboBox<>();
-        genereComboBox.setModel(new DefaultComboBoxModel<>(FilmGenere.values()));
+        final JComboBox<FilmCategories> genereComboBox = new JComboBox<>();
+        genereComboBox.setModel(new DefaultComboBoxModel<>(FilmCategories.values()));
         final JTextField durataField = new JTextField("90");
         final JTextArea descrizioneArea = new JTextArea("Not too long",5,1);
         final JTextField linkField = new JTextField();

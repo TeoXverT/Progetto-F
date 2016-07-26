@@ -7,6 +7,7 @@ package inputoutput;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import obj.Booking;
 import obj.Config;
@@ -49,8 +50,10 @@ public class AdapterSQLAdmin extends AdapterSQL {
         return projection;
     }
 
-    public boolean writeProjection(Projection proection) {//G
-        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + proection.getData_ora_sql() + "','" + proection.getFilm().getIdFilm() + "','" + proection.getRoom().getIdHall() + "','" + proection.getpProjectionType() + "','" + proection.getPrice() + "');";
+    public boolean writeProjection(Projection projection) {//G
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String query = "INSERT INTO Proiezione(id_proiezione,data_ora, id_film, id_sala, projection_type, prezzo) VALUES (NULL," + "'" + sdf.format(projection.getData_ora().getTime()) + "','" + projection.getFilm().getIdFilm() + "','" + projection.getRoom().getIdHall() + "','" + projection.getpProjectionType() + "','" + projection.getPrice() + "');";
         try {
             SQL.writingQuery(query);
             return true;
@@ -61,11 +64,12 @@ public class AdapterSQLAdmin extends AdapterSQL {
 
     public boolean checkProjection(Projection projection) {//G 
         ResultSet result;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String query = "select Film.titolo\n"
                 + "from Proiezione, Film,\n"
                 + "					(\n"
-                + "					SELECT '" + projection.getData_ora_sql() + "' as time_min,    ('" + projection.getData_ora_sql() + "' + INTERVAL Film.durata MINUTE + INTERVAL last_config.offset_time MINUTE) AS time_max, last_config.offset_time as offset_time\n"
+                + "					SELECT '" + sdf.format(projection.getData_ora().getTime()) + "' as time_min,    ('" + sdf.format(projection.getData_ora().getTime()) + "' + INTERVAL Film.durata MINUTE + INTERVAL last_config.offset_time MINUTE) AS time_max, last_config.offset_time as offset_time\n"
                 + "					FROM\n"
                 + "						Film,\n"
                 + "						(SELECT \n"
@@ -76,7 +80,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
                 + "						LIMIT 1) AS last_config\n"
                 + "					WHERE  Film.id_film = '" + projection.getFilm().getIdFilm() + "' \n"
                 + "					) as time_interval\n"
-                + "where Proiezione.id_sala='" + projection.getRoom().getIdHall() + "' AND datediff(Proiezione.data_ora,'" + projection.getData_ora_sql() + "')=0 AND Proiezione.id_film=Film.id_film AND(\n"
+                + "where Proiezione.id_sala='" + projection.getRoom().getIdHall() + "' AND datediff(Proiezione.data_ora,'" + sdf.format(projection.getData_ora().getTime()) + "')=0 AND Proiezione.id_film=Film.id_film AND(\n"
                 + "(\n"
                 + "Proiezione.data_ora<time_interval.time_min AND (Proiezione.data_ora +INTERVAL Film.durata MINUTE + INTERVAL time_interval.offset_time MINUTE) >time_interval.time_min\n"
                 + ")  OR\n"

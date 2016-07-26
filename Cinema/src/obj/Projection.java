@@ -1,18 +1,8 @@
 package obj;
 
-import admin.AdminController;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Yoga
- */
 public class Projection {
 
     private int idProjection;
@@ -28,7 +18,7 @@ public class Projection {
         this.film = film;
         this.hall = hall;
         this.projectionType = projectionType;
-        this.price = price; 
+        this.price = price;
     }
 
     public Projection(int idProjection) {
@@ -37,31 +27,19 @@ public class Projection {
 
     @Override
     public String toString() {
-        return "Hall:" + idProjection + " Del:" + getData_ora_friendly();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM HH:mm");
+        return "Hall:" + idProjection + " Del:" + sdf.format(data_ora.getTime());
     }
 
+            
+            
+            
     public int getIdProjection() {
         return idProjection;
     }
 
-    public String getData_ora_sql() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(data_ora.getTime());
-    }
-
     public void setFilm(Film film) {
         this.film = film;
-    }
-
-    public String getData_ora_friendly() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM HH:mm");
-        return sdf.format(data_ora.getTime());
-    }
-
-    public String getData_ora_friendly_2() {
-        SimpleDateFormat giorno = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat ora = new SimpleDateFormat("HH:mm");
-        return "Giorno: " + giorno.format(data_ora.getTime()) + " Alle Ore: " + ora.format(data_ora.getTime());
     }
 
     public Calendar getData_ora() {

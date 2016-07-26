@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -70,8 +71,10 @@ public class PageFour extends JPanel {
         JPanel centro = new JPanel(new GridLayout(0, 1));
 
         //creazione pannello carrello
+        SimpleDateFormat giorno = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat ora = new SimpleDateFormat("HH:mm");
         JPanel carrello = new JPanel(new GridLayout(0, 2));
-        carrello.add(new JLabel("<html><font size=\"5\">" + screening.getData_ora_friendly_2() + "</font></html>"));
+        carrello.add(new JLabel("<html><font size=\"5\"> Giorno: " + giorno.format(screening.getData_ora().getTime()) + " Alle Ore: " + ora.format(screening.getData_ora().getTime()) + "</font></html>"));
         carrello.add(new JLabel("<html><font size=\"5\">Sala: " + screening.getRoom().getIdHall() + " Tipo di proiezione: " + screening.getType_String() + "</font></html>"));
         carrello.add(new JLabel("<html><b><font size=\"5\">Carrello:</font></b><html>"));
         carrello.add(new JLabel(""));
@@ -99,7 +102,7 @@ public class PageFour extends JPanel {
             carrello.add(new JLabel("<html><font size=\"4\"><i>" + spinner.getName() + "</font></html>"));
             carrello.add(price);
         }
-        
+
         carrello.add(new JLabel("<html><font size=\"5\"><i>Totale</font></html>"));
         totalPrice.setText("<html><font size=\"6\">" + booking.getPrice() + " €</font></html>");
         carrello.add(totalPrice);
@@ -114,7 +117,7 @@ public class PageFour extends JPanel {
         JButton next = new JButton("Next");
         next.addActionListener(nextActionListener());
         this.add(next, BorderLayout.AFTER_LINE_ENDS);
-        
+
         JButton back = new JButton("Indietro");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {

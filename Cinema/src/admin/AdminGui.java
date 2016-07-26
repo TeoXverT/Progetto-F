@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -180,18 +181,22 @@ public class AdminGui extends JFrame {
         ActionListener event = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM HH:mm");
+
                 display.removeAll();
                 String[] columnNames = {"ID", "Date&Time", "ID Movie", "ID Hall", "Type", "Price"};
                 DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
                 JTable table = new JTable(tableModel);
                 TableColumn id = table.getColumnModel().getColumn(0);
-                id.setMinWidth(50); id.setMaxWidth(50); id.setPreferredWidth(50);
+                id.setMinWidth(50);
+                id.setMaxWidth(50);
+                id.setPreferredWidth(50);
                 table.setFillsViewportHeight(true);
                 JScrollPane scrollPane = new JScrollPane(table);
                 try {
                     ArrayList<Projection> projection = controller.getProjection(tipo);
                     for (Projection p : projection) {
-                        Object[] datas = {p.getIdProjection(), p.getData_ora_friendly(), p.getFilm().getIdFilm(), p.getRoom().getIdHall(), p.getpProjectionType(), p.getPrice()};
+                        Object[] datas = {p.getIdProjection(), sdf.format(p.getData_ora().getTime()), p.getFilm().getIdFilm(), p.getRoom().getIdHall(), p.getpProjectionType(), p.getPrice()};
                         tableModel.addRow(datas);
                     }
                     display.add(scrollPane);

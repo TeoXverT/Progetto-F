@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import obj.Film;
 import obj.Booking;
@@ -60,20 +61,22 @@ public class EmailSender {
                 return true;
             }
         } catch (IOException ex) {
-            
+
             JOptionPane.showMessageDialog(null,
                     "Error while sending email.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-            
-            
-            
+
         }
         return false;
     }
 
     private String purchaseDescription(Film film, Projection screening, Booking booking) {
-        String message; 
+
+        SimpleDateFormat giorno = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat ora = new SimpleDateFormat("HH:mm");
+
+        String message;
 
         message = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"><title>Pagamento</title></head><body><center>";
         message = message + "<IMG SRC=\" http://xsacniopanzax.altervista.org/progettof/logo.png \n"
@@ -81,7 +84,7 @@ public class EmailSender {
 
         message = message + "<IMG SRC=\"" + film.getLinkCover() + "\" ALT=\"some text\" WIDTH=400 HEIGHT=600><br><br>";
         message = message + "<p><font size=\"4\">Codice Prenotazione :" + booking.getIdBooking() + "</p></font><br><br>";
-        message = message + "<p>" + film.getTitle() + " inizia il " + screening.getData_ora_friendly_2() + " nella Sala " + screening.getRoom().getIdHall() + "</p><br>";
+        message = message + "<p>" + film.getTitle() + " inizia il giorno: " + giorno.format(screening.getData_ora().getTime()) + " alle " + ora.format(screening.getData_ora().getTime()) + " nella Sala N° " + screening.getRoom().getIdHall() + "</p><br>";
         message = message + "Prenotati i seguenti posti:<br>";
         for (Seat s : booking.getBookedSeat()) {
             message = message + "Fila " + s.getx() + " Colonna " + s.gety() + "<br>";
