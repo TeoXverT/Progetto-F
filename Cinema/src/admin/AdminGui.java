@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -184,6 +185,8 @@ public class AdminGui extends JFrame {
                 String[] columnNames = {"ID", "Date&Time", "ID Movie", "ID Hall", "Type", "Price"};
                 DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
                 JTable table = new JTable(tableModel);
+                TableColumn id = table.getColumnModel().getColumn(0);
+                id.setMinWidth(50); id.setMaxWidth(50); id.setPreferredWidth(50);
                 table.setFillsViewportHeight(true);
                 JScrollPane scrollPane = new JScrollPane(table);
                 try {
