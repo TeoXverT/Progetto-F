@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package admin;
 
 import customer.CustomerController;
@@ -18,10 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import obj.Film;
 import obj.Projection;
 import obj.Hall;
 import obj.Seat;

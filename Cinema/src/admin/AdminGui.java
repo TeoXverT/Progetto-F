@@ -31,35 +31,33 @@ public class AdminGui extends JFrame {
     private JPanel loadingPanel;
 
     public AdminGui() {
-
         controller = new AdminController();
         display = new JPanel(new BorderLayout());
-        draw();
+
         JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
         loadingPanel = new JPanel();
         loadingPanel.add(imagineCaricamento);
 
+        draw();
+
     }
 
     private void draw() {
-        this.setJMenuBar(craftMenuBar());  //Costruttore del menu a tendina
+        display = craftLoginForm(); 
 
-        display = splashScreen();     //Visualizzo logo in splash 
-
+        bottomText = new JLabel("", SwingConstants.CENTER);
         JPanel sud = new JPanel(new BorderLayout());
-        bottomText = new JLabel("Output del risultato", SwingConstants.CENTER);
         sud.add(bottomText, BorderLayout.CENTER);
 
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.add(display, BorderLayout.CENTER);
-        this.add(sud, BorderLayout.SOUTH);
+        this.add(bottomText, BorderLayout.SOUTH);
         this.setTitle("Admin");
         this.setBounds(900, 100, 850, 700);
 
         ImageIcon icona = new ImageIcon("images/logo.png");
         setIconImage(icona.getImage());
-
     }
 
     private JMenuBar craftMenuBar() {
@@ -140,14 +138,48 @@ public class AdminGui extends JFrame {
         return menuBar;
     }
 
-    private JPanel splashScreen() {
-        JPanel pannello = new JPanel();
+    private JPanel craftLoginForm() {
+        JPanel panel = new JPanel();
+
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(new GridLayout(2, 0, 0, 50));
+        loginPanel.add(new JLabel("<html><p style=\"font-size:60px\">Insert code: 123 </font></html>", SwingConstants.CENTER), BorderLayout.SOUTH);
+        JPasswordField code = new JPasswordField(10);
+        Font font = new Font("SansSerif", Font.BOLD, 30);
+        code.setFont(font);
+        code.setHorizontalAlignment(JTextField.CENTER);
+        code.addActionListener(codeVerification(code));
+        loginPanel.add(code, BorderLayout.NORTH);
+        panel.add(loginPanel);
+
         ImageIcon immagine = new ImageIcon("images/logo.png");
-        pannello.add(new JLabel(new ImageIcon(immagine.getImage().getScaledInstance(640, 433, java.awt.Image.SCALE_SMOOTH))));
-        return pannello;
+        panel.add(new JLabel(new ImageIcon(immagine.getImage().getScaledInstance(640, 433, java.awt.Image.SCALE_SMOOTH))));
+
+        return panel;
     }
 
 //////////////////////////////////////////////////// AZIONI /////////////////////////////////////////////////////
+    private ActionListener codeVerification(final JPasswordField code) {
+        ActionListener event = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (controller.codeVerification(code.getPassword())) {
+                    setJMenuBar(craftMenuBar());
+                    JPanel home = new JPanel(new BorderLayout());
+                    ImageIcon logo = new ImageIcon("images/logo.png");
+                    home.add(new JLabel(new ImageIcon(logo.getImage().getScaledInstance(640, 433, java.awt.Image.SCALE_SMOOTH))), BorderLayout.CENTER);
+                    updateGUI(home);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Invalid password. Try again.",
+                            "Error Message",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
+        return event;
+    }
+
     private ActionListener showBooking() {
 
         ActionListener event = new ActionListener() {

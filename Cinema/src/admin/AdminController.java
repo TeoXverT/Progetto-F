@@ -9,6 +9,7 @@ import obj.Booking;
 import inputoutput.AdapterSQLAdmin;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 
 /**
@@ -26,6 +27,17 @@ public class AdminController {
 
 //        Timer timer = new Timer();
 //        timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
+    }
+
+    public boolean codeVerification(char[] code) {
+        boolean isCorrect;
+        char[] correctPassword = {'1', '2', '3'};
+
+        if (Arrays.equals(code, correctPassword)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public ArrayList<Booking> getBooking() throws SQLException {
