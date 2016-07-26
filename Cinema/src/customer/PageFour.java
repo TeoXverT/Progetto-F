@@ -61,25 +61,20 @@ public class PageFour extends JPanel {
     private void draw() {
         this.setLayout(new BorderLayout());
         
+        
+        //aggiunta pannello copertina e relativi elementi
         JPanel pannelloCopertina = new JPanel();
         pannelloCopertina.setBackground(java.awt.Color.WHITE);
-        
-        try {
-            URL url = new URL(film.getLinkCover());
-            Image image = ImageIO.read(url);
-            JLabel label1 = new JLabel(imageScaling(new ImageIcon(image), 210, 300));
-            pannelloCopertina.add(label1);
-        } catch (IOException e) {
-        }
+        pannelloCopertina.add(downloadImageFromUrl(film.getLinkCover())); //scarica e aggiunge immagine copertina
         this.add(pannelloCopertina, BorderLayout.NORTH);
         
         JPanel centro = new JPanel(new GridLayout(0, 1));
         
-        JPanel carrello = new JPanel(new GridLayout(0, 2));
         
+        //creazione pannello carrello
+        JPanel carrello = new JPanel(new GridLayout(0, 2));
         carrello.add(new JLabel("<html><font size=\"5\">" + screening.getData_ora_friendly_2() + "</font></html>"));
         carrello.add(new JLabel("<html><font size=\"5\">Room: " + screening.getRoom().getIdHall() + " Type of Projection: " + screening.getType_String() + "</font></html>"));
-        
         carrello.add(new JLabel("<html><b><font size=\"5\">Cart:</font></b><html>"));
         carrello.add(new JLabel(""));
         
@@ -206,4 +201,32 @@ public class PageFour extends JPanel {
         );
         return t;
     }
-}
+    
+    
+    private JLabel downloadImageFromUrl(String link_url) {
+        
+     try {
+            //scarica immagine copertina film
+            URL url = new URL(link_url);
+            Image image = ImageIO.read(url); 
+            JLabel label1 = new JLabel(imageScaling(new ImageIcon(image), 210, 300));
+            return label1;
+        } catch (IOException e) {
+            
+            JOptionPane.showMessageDialog(null,
+                        "Error while downloading film's cover, retry later.",
+                        "Error",
+                        JOptionPane.WARNING_MESSAGE);
+                        return null;
+        }
+        
+        
+    }
+    }
+    
+    
+    
+    
+    
+    
+

@@ -42,36 +42,24 @@ public class PageTwo extends JPanel {
     }
 
     private void draw() {
-
+        
+        //Creazione bottone home e assegnazione action listener
         JButton cover = new JButton();
         cover.setIcon(imageScaling(new ImageIcon("images/home.png"), 30, 30));
         cover.setBorderPainted(true);
         cover.setContentAreaFilled(false);
-
+        cover.addActionListener(goBackEvent());
+        
+        //pannello copertina e relativa JLabel con immagine
         JPanel pannelloCopertina = new JPanel();
         pannelloCopertina.setBackground(java.awt.Color.WHITE);
         this.add(pannelloCopertina);
-        Image image = null;
-        try {
-            URL url = new URL(film.getLinkCover());
-            image = ImageIO.read(url);
-        } catch (IOException e) {
-            
-            JOptionPane.showMessageDialog(null,
-                    "Error while downloading film's cover, retry later.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-                        
-        }
-        ImageIcon ii = new ImageIcon(image);
-        JLabel label1 = new JLabel(imageScaling(ii, 250, 350));
+        JLabel label1 = new JLabel(imageScaling(downloadImageFromUrl(film.getLinkCover()), 250, 350));
         pannelloCopertina.add(label1);
 
-        cover.addActionListener(goBackEvent());
-
+        
         JPanel pannelloTrama = new JPanel(new BorderLayout(10, 10));
         pannelloTrama.setBackground(java.awt.Color.WHITE);
-
         this.setBackground(java.awt.Color.WHITE);
         this.add(pannelloTrama);
 
@@ -199,5 +187,27 @@ public class PageTwo extends JPanel {
         this.revalidate();
         this.repaint();
     }
+
+
+    private ImageIcon downloadImageFromUrl(String link_url) {
+        
+        Image image = null;
+        try {
+            URL url = new URL(link_url);
+            image = ImageIO.read(url);
+        } catch (IOException e) {
+            
+            JOptionPane.showMessageDialog(null,
+                    "Error while downloading film's cover, retry later.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                        
+        }
+        ImageIcon ii = new ImageIcon(image);
+        return ii;
+    }
+
+
+
 
 }
