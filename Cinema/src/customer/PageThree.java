@@ -35,7 +35,7 @@ public class PageThree extends JPanel {
 
     private CustomerController controller;
     private Projection screening;
-
+    private Booking booking;
     private ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
     private ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
     private ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
@@ -46,7 +46,7 @@ public class PageThree extends JPanel {
     private double totale_prezzo;
     private Config config;
 
-    private Hall sala;
+    private Hall hall;
     private ArrayList<Seat> seats;
     private ArrayList<Seat> booked_seats;
     private ArrayList<Seat> Taken_seats = new ArrayList<>();
@@ -58,7 +58,7 @@ public class PageThree extends JPanel {
         this.controller = CustomerController.getInstance();
         this.screening = proiezione;
         try {
-            this.sala = controller.getHallByIdHall(proiezione.getRoom().getIdHall());
+            this.hall = controller.getHallByIdHall(proiezione.getRoom().getIdHall());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
 
@@ -86,7 +86,7 @@ public class PageThree extends JPanel {
         JPanel sud = new JPanel(new GridLayout(0, 2));
         JPanel center = new JPanel(new BorderLayout());
 
-        JPanel seats_layout = new JPanel(new GridLayout(sala.getRows(), sala.getColumns(), 0, 1));
+        JPanel seats_layout = new JPanel(new GridLayout(hall.getRows(), hall.getColumns(), 0, 1));
 
         JLabel screen = new JLabel(screen_icon);
         nord.add(screen);
@@ -109,23 +109,19 @@ public class PageThree extends JPanel {
         }
         center.add(seats_layout, BorderLayout.CENTER);
 
-        JPanel leggenda = new JPanel(new GridLayout(0, 2));
-        JLabel prezzo_normale = new JLabel("Prezzo: " + screening.getPrice() + "€");
-        JLabel prezzo_vip = new JLabel("Posti vip costo aggiuntivo di " + config.getVipOverprice() + "€");
-        leggenda.add(prezzo_normale);
-        leggenda.add(prezzo_vip);
+        JPanel leggenda = new JPanel(new BorderLayout());
+        ImageIcon Seat_description = new ImageIcon("images/Leggenda.png");
+        JLabel legend = new JLabel(Seat_description);
+        leggenda.add(legend, BorderLayout.WEST);
 
-        JPanel total = new JPanel(new BorderLayout(5, 5));
+        JPanel total = new JPanel(new GridLayout(2, 2));
         JLabel totale = new JLabel("TOTALE: ");
-
         JButton indietro = new JButton("indietro");
-
-        JPanel buttons = new JPanel(new GridLayout(0, 2));
 
         total.add(totale, BorderLayout.WEST);
         total.add(prezzo, BorderLayout.EAST);
-        buttons.add(indietro);
-        buttons.add(prosegui);
+        total.add(indietro);
+        total.add(prosegui);
 
         indietro.addActionListener(new ActionListener() {
 
@@ -139,14 +135,21 @@ public class PageThree extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                openPage(new PageFour(new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0, null)));
+                if (Taken_seats.size() != 0) {
+                    booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0, null);
+                    openPage(new PageFour(booking));
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Please select the seat.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
         sud.add(leggenda);
         sud.add(total);
-        sud.add(buttons);
-
+        
         this.add(nord, BorderLayout.NORTH);
         this.add(center, BorderLayout.CENTER);
         this.add(sud, BorderLayout.SOUTH);
