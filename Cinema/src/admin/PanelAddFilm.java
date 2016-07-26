@@ -139,7 +139,7 @@ public class PanelAddFilm extends JPanel {
                     if (controller.writeFilm(new Film(titoloField.getText(), Genere, Integer.parseInt(durataField.getText()), DescrizioneMax100, link_normalizzato, copertinaField.getText()))) {
                         outputGrafico.setText("The movie has been added.");
                     } else {
-                        outputGrafico.setText("Error. Be sure that there are not empity fields.");
+                        outputGrafico.setText("Error. Be sure that there are not empity fields and your internet connection works properly.");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid YouTube's Link. \n Example of right link: https://www.youtube.com/watch?v=aT_CaVUKp00", "Error", JOptionPane.WARNING_MESSAGE);
