@@ -105,12 +105,12 @@ public class PageFive extends JPanel {
     private Thread ThreadTimer() {  //thread per il controllo pagamento avvenuto
         Thread t = new Thread(new Runnable() {
             public void run() {
-                int checkPayment = 0;
+                boolean checkPayment = false;
                 for (int i = 0; i < (MAX_TIME * 60) / DB_READ_POLLING; i++) {
                     try {
                         Thread.sleep(DB_READ_POLLING * 1000);
                         checkPayment = controller.checkBookingPayment(booking.getIdBooking());
-                        if (checkPayment == 1) {
+                        if (checkPayment) {
                             break;
                         }
 
@@ -123,7 +123,7 @@ public class PageFive extends JPanel {
 
                 pannelloContenitore.removeAll();
                 pannelloContenitore.add(makeHomeButton(), BorderLayout.CENTER);
-                if (checkPayment == 1) {
+                if (checkPayment) {
                     pannelloContenitore.add(new JLabel("<html><h1><b>PAGAMENTO EFFETTUATO.</b></html>"), BorderLayout.NORTH);
                 } else {
                     pannelloContenitore.add(new JLabel("<html><h1><b>PAGAMENTO NON PERVENUTO.</b></html>"), BorderLayout.NORTH);

@@ -25,6 +25,34 @@ public class AdapterSQLAdmin extends AdapterSQL {
     public AdapterSQLAdmin() {
     }
 
+    public ArrayList<Booking> getPayedBooking() throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Booking> booking;
+
+        query = "SELECT * FROM  `Booking` WHERE Booking.booking_status=2";
+        risultato_query = SQL.readingQuery(query);
+
+        booking = parser.booking(risultato_query);
+        risultato_query.close();
+
+        return booking;
+    }
+
+    public ArrayList<Booking> getUnSendedBooking() throws SQLException {
+        String query;
+        ResultSet risultato_query;
+        ArrayList<Booking> booking;
+
+        query = "SELECT * FROM  `Booking` WHERE Booking.booking_status=0";
+        risultato_query = SQL.readingQuery(query);
+
+        booking = parser.booking(risultato_query);
+        risultato_query.close();
+
+        return booking;
+    }
+
     public ArrayList<Projection> getProjection(int type) throws SQLException { //G
         //TIPO = 0 //Odierne
         //TIPO = 1 //Future
@@ -298,7 +326,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
                     + "where Booked_Seat.id_booking in (select * from (\n"
                     + "select Booking.id_booking\n"
                     + "from Booking,Config\n"
-                    + "where Booking.booking_status = 0 and \n"
+                    + "where Booking.booking_status = 1 and \n"
                     + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)> Config.booking_validation_time\n"
                     + ") as Temp_table)";
             SQL.writingQuery(query);
@@ -306,7 +334,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
                     + "where Booking.id_booking in (select * from (\n"
                     + "select Booking.id_booking\n"
                     + "from Booking,Config\n"
-                    + "where Booking.booking_status = 0 and \n"
+                    + "where Booking.booking_status = 1 and \n"
                     + "TIMESTAMPDIFF(MINUTE, Booking.date_time ,NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)> Config.booking_validation_time\n"
                     + ") as Temp_table)";
             SQL.writingQuery(query);
@@ -322,13 +350,26 @@ public class AdapterSQLAdmin extends AdapterSQL {
         String query;
         ResultSet result;
         ArrayList<Projection> projection = null;
-        query = "SELECT * FROM  `Proiezione` WHERE 'id_proiezione' = '" + idProjection + "'";
+        query = "SELECT * FROM  `Proiezione` WHERE  Proiezione.id_proiezione =" + idProjection;
         result = SQL.readingQuery(query);
 
         projection = parser.projection(result);
         result.close();
 
         return projection.get(0);
+    }
+
+    public Film getFilmById(int idFilm) throws SQLException {
+        String query;
+        ResultSet result;
+        ArrayList<Film> film = null;
+        query = "SELECT * FROM  `Film` WHERE Film.id_film = " + idFilm;
+        result = SQL.readingQuery(query);
+
+        film = parser.film(result);
+        result.close();
+
+        return film.get(0);
     }
 
     public Hall getHallByIdHall(int idHall) throws SQLException {
@@ -367,5 +408,33 @@ public class AdapterSQLAdmin extends AdapterSQL {
         result.close();
 
         return projection;
+    }
+
+    public void saveTicket(int idBooking, String personalCode) throws SQLException {
+        String query = "UPDATE Booking "
+                + "SET Booking.booking_status=3, Booking.personal_code=\"" + personalCode
+                + "\" WHERE Booking.id_booking = " + idBooking + "";
+        SQL.writingQuery(query);
+    }
+
+    public void savePaymentRequest(int idBooking) throws SQLException {
+        String query = "UPDATE Booking "
+                + "SET Booking.booking_status=1,Booking.date_time=(NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)"
+                + " WHERE Booking.id_booking = " + idBooking;
+        
+        
+        SQL.writingQuery(query);
+    }
+
+    public ArrayList<Seat> getTakenSeatByIdBooking(int idBooking) throws SQLException {
+        String query;
+        ResultSet result;
+        query = "SELECT Seats.* "
+                + "FROM Booking,Booked_Seat, Seats "
+                + "WHERE Booking.id_booking = " + idBooking + " AND Booking.id_booking=Booked_Seat.id_booking AND"
+                + " Booked_Seat.id_seat = Seats.id_seat";
+        result = SQL.readingQuery(query);
+        return parser.seat(result);
+
     }
 }

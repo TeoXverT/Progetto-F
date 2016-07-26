@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -22,17 +23,74 @@ public class AdminController {
 
     private final int PERIOD = 10000; //Dato per il Thread di pulitura bigletti non pagati
     private final char[] PASSWORD = {'1', '2', '3'};
+    private final String ALPHA_NUMERIC_SEED = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private final int CODE_LENGTH = 5;
+    private EmailSender emailSender;
 
     public AdminController() {
-        adapter = new AdapterSQLAdmin();
 
-//        Timer timer = new Timer();
-//        timer.schedule(new DbCleanerThread(timer, adapter), 0, PERIOD);
+        adapter = new AdapterSQLAdmin();
+        emailSender = new EmailSender();
+
+        Timer timer = new Timer();
+        timer.schedule(ticketSender(), 0, PERIOD);
+
+    }
+
+    private TimerTask ticketSender() {
+        TimerTask t = new TimerTask() {
+            @Override
+            public void run() {
+                adapter.bookingCleaner();
+                try {
+                    ArrayList<Booking> payedBooking = adapter.getPayedBooking();
+                    for (Booking booking : payedBooking) {
+                        System.out.println("Send ticket to: " + booking.getEmail());
+                        String personalCode = randomAlphaNumeric();
+                        if (emailSender.sendTicket(booking, personalCode)) {
+                            adapter.saveTicket(booking.getIdBooking(), personalCode);
+                        }
+                    }
+
+                } catch (SQLException ex) {
+                    System.out.println("ERROR: Ticket Sender");
+                }
+
+                try {
+                    ArrayList<Booking> unSendedBooking = adapter.getUnSendedBooking();
+                    for (Booking booking : unSendedBooking) {
+                        ArrayList<Seat> seat = adapter.getTakenSeatByIdBooking(booking.getIdBooking());
+                        booking.setBookedSeat(seat);
+                        Projection projection = adapter.getProjectionById(booking.getProjection().getIdProjection());
+                        projection.setFilm(adapter.getFilmById(projection.getFilm().getIdFilm()));
+                        booking.setProjection(projection);
+                        System.out.println("Send Payment Request to: " + booking.getEmail());
+                        if (emailSender.sendPaymentRequest(booking)) {
+                            adapter.savePaymentRequest(booking.getIdBooking());
+                        }
+                    }
+                } catch (SQLException ex) {
+                    System.out.println("ERROR: Payment request");
+                }
+
+            }
+        };
+        return t;
+    }
+
+    private String randomAlphaNumeric() {
+        int count = CODE_LENGTH;
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int) (Math.random() * ALPHA_NUMERIC_SEED.length());
+            builder.append(ALPHA_NUMERIC_SEED.charAt(character));
+        }
+        return builder.toString();
     }
 
     public boolean codeVerification(char[] code) {
         boolean isCorrect;
-        char[] correctPassword = PASSWORD; 
+        char[] correctPassword = PASSWORD;
 
         if (Arrays.equals(code, correctPassword)) {
             return true;
@@ -86,7 +144,7 @@ public class AdminController {
     }
 
     public boolean writeConfig(Config config) throws SQLException {
-        if (config.getBookingValidationTime() > 0 && config.getDisabledPrice() > 0 && config.getGlassesPrice() > 0 && config.getOffsetTime() > 0 && config.getVipOverprice() > 0) {
+        if (config.getBookingValidationTime() > 0 && config.getDisabledPrice() > -0.0001 && config.getGlassesPrice() > 0 && config.getOffsetTime() > 0 && config.getVipOverprice() > 0) {
             adapter.writeConfig(config);
             return true;
         } else {

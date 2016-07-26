@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author Yoga
  */
-public class AdapterSQL {
+public abstract class AdapterSQL {
 
     protected final SQLConnection SQL;
     protected final ParserObj parser;

@@ -1,4 +1,4 @@
-package customer;
+package admin;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,7 +19,7 @@ public class EmailSender {
     private String NAME_SENDER = "Cinema F";
     private String EMAIL_SENDER = "umeer@outlook.it";
     private String NAME_RECIVER = "Gentile Cliente";
-    private String OBJECT = "Richiesta di pagamento";
+    private String OBJECT = "Cinema Progetto F";
 
     private String PAYMENT_RECIVER = "umeer@outlook.it";
 
@@ -27,11 +27,33 @@ public class EmailSender {
 
     }
 
-    public boolean sendEmailRequest(Booking booking) {
+    public boolean sendPaymentRequest(Booking booking) {
 
         Projection screening = booking.getProjection();
         Film film = screening.getFilm();
+        return sendEmail(booking.getEmail(), purchaseDescription(film, screening, booking));
+    }
 
+    public boolean sendTicket(Booking booking, String personalCode) {
+        String message = ticketDescription(booking, personalCode);
+        return sendEmail(booking.getEmail(), message);
+    }
+
+    private String ticketDescription(Booking booking, String personalCode) {
+        String message;
+        message = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"><title>Biglietto</title></head><body><center>";
+        message = message + "<IMG SRC=\" http://xsacniopanzax.altervista.org/progettof/logo.png \n"
+                + "\" ALT=\"some text\" WIDTH=600 HEIGHT=400><br><br>";
+        message = message + "<p><font size=\"4\">Complimenti abbiamo riceveuto il tuo pagamento.</font></p><BR>";
+        message = message + "<p><font size=\"3\">Biglietto N°: " + booking.getIdBooking() + " Codice: " + personalCode + "</font></p><BR>";
+        message = message + "<i>*Il biglietto può essere utilizzato una volta sola.<br>**E' consigliabile presentarsi 10 min. prima del inizio del film.<br>***Si prega di portare con se questo documento al cinema.</i><br><br>";
+        message = message + "<img src=\"http://xsacniopanzax.altervista.org/progettof/popcorn.png\" width=\"300\" height=\"400\"><br><br><br><br>";
+        message = message + "</body></html>";
+
+        return message;
+    }
+
+    private boolean sendEmail(String addressee, String message) {
         try {
             URL obj = new URL(URL_SERVER);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -40,7 +62,7 @@ public class EmailSender {
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + booking.getEmail() + "&oggetto=" + OBJECT + "&messaggio=" + purchaseDescription(film, screening, booking);
+            String urlParameters = "nome_mittente=" + NAME_SENDER + "&email_mittente=" + EMAIL_SENDER + "&nome_destinatario=" + NAME_RECIVER + "&email_destinatario=" + addressee + "&oggetto=" + OBJECT + "&messaggio=" + message;
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 
@@ -69,6 +91,7 @@ public class EmailSender {
 
         }
         return false;
+
     }
 
     private String purchaseDescription(Film film, Projection screening, Booking booking) {
@@ -93,12 +116,12 @@ public class EmailSender {
             message = message + "Hai in oltre comprato " + booking.getNumberOfGlasses() + " occhiali 3D.<br><br>";
         }
         message = message + "Totale da pagare: " + booking.getPrice() + " Euro<br><br><br>";
-        message = message + "<i>*Fino a che non viene saldato il pagamento questa ricevuta non è valida per entrare al cinema.<br>**Si prega di portare con se questo documento al cinema.</i><br><br><br><br>";
+        message = message + "<i>*Questa ricevuta non è valida per entrare al cinema, effettuare il pagamento per ricevere il biglietto<br>**Si prega di portare con se questo documento al cinema.</i><br><br><br><br>";
         message = message + "</center>";
 
-        //ORA IN SANDBOX, per toglerlo usare https://www.paypal.com/cgi-bin/webscr\
+        //ORA IN SANDBOX, per toglerlo usare https://www.paypal.com/cgi-bin/webscr\ <----https://www.sandbox.paypal.com/cgi-bin/webscr\
         message = message + "<center>\n"
-                + "   <form action=\"https://www.sandbox.paypal.com/cgi-bin/webscr\" method=\"post\">\n"
+                + "   <form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\">\n"
                 + "       <input type=\"hidden\" name=\"cmd\" value=\"_xclick\">\n"
                 + "       <input type=\"hidden\" name=\"currency_code\" value=\"EUR\" />\n"
                 + "       <input type=\"hidden\" name=\"lc\" value=\"IT\" />\n"

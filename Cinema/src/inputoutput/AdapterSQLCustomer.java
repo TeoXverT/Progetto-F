@@ -190,9 +190,9 @@ public class AdapterSQLCustomer extends AdapterSQL {
     public void writeBooking(Booking booking) throws SQLException {//C
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status,email) VALUES("
+        String query = "INSERT INTO Booking(id_proiezione,date_time,number_of_glasses,price,booking_status,email,personal_code) VALUES("
                 + "'" + booking.getProjection().getIdProjection() + "','" + sdf.format(Calendar.getInstance().getTime()) + "','"
-                + booking.getNumberOfGlasses() + "','" + booking.getPrice() + "','0',\"" + booking.getEmail() + "\")";
+                + booking.getNumberOfGlasses() + "','" + booking.getPrice() + "','0',\"" + booking.getEmail() + "\",'0')";
         SQL.writingQuery(query);
     }
 
@@ -220,23 +220,19 @@ public class AdapterSQLCustomer extends AdapterSQL {
         return parser.seat(result);
     }
 
-    public int checkBookingPayment(int idBooking) throws SQLException {//C
-        int status;
-
-        String Query = "SELECT booking_status "
+    public boolean checkBookingPayment(int idBooking) throws SQLException {//C
+        String Query = "SELECT Booking.booking_status "
                 + "FROM Booking "
-                + "WHERE Booking.id_booking = " + idBooking + "";
+                + "WHERE Booking.id_booking = " + idBooking;
 
         ResultSet result = SQL.readingQuery(Query);
         result.next();
-        status = result.getInt("booking_status");
-
-        return status;
+        return result.getInt("booking_status") == 2;
     }
 
     public void insertFakePayment(int idBooking) throws SQLException {//C
         String Query = "UPDATE Booking "
-                + "SET Booking.booking_status=1 "
+                + "SET Booking.booking_status=2 "
                 + "WHERE Booking.id_booking = " + idBooking + "";
         SQL.writingQuery(Query);
     }

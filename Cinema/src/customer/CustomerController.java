@@ -17,11 +17,9 @@ public class CustomerController {
 
     private AdapterSQLCustomer adapter;
     private Config config;
-    EmailSender emailSender;
 
     public CustomerController() {
         adapter = new AdapterSQLCustomer();
-        emailSender = new EmailSender();
     }
 
     public static synchronized CustomerController getInstance() {
@@ -29,25 +27,6 @@ public class CustomerController {
             instance = new CustomerController();
         }
         return instance;
-    }
-
-    public boolean makeEmailRequest(Booking booking) {
-        if (booking.getEmail().isEmpty() || booking.getBookedSeat().isEmpty()) {
-            return false;
-        } else {
-            sendEmailRequest(booking).start();
-            return true;
-        }
-    }
-
-    private Thread sendEmailRequest(final Booking booking) {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                emailSender.sendEmailRequest(booking);
-            }
-        }
-        );
-        return t;
     }
 
     public ArrayList<Film> futureFilmBySlider(int deltaData, int sliderValue) throws SQLException {
@@ -93,7 +72,7 @@ public class CustomerController {
         adapter.insertFakePayment(booking.getIdBooking());
     }
 
-    public int checkBookingPayment(int idBooking) throws SQLException {
+    public boolean checkBookingPayment(int idBooking) throws SQLException {
         return adapter.checkBookingPayment(idBooking);
     }
 }

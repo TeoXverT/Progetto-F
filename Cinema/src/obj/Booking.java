@@ -93,6 +93,14 @@ public class Booking {
         return projection;
     }
 
+    public void setBookedSeat(ArrayList<Seat> bookedSeat) {
+        this.bookedSeat = bookedSeat;
+    }
+
+    public void setProjection(Projection projection) {
+        this.projection = projection;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }

@@ -10,7 +10,7 @@ public class SQLConnection {
     private Statement stmt;
 
     private final String url = "sql8.freemysqlhosting.net";
-    private final String DbName = "sql8115909"; 
+    private final String DbName = "sql8115909";
     private final String user = "sql8115909";
     private final String pass = "ifYmYwRJJS";
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
@@ -18,11 +18,12 @@ public class SQLConnection {
     public SQLConnection() {
     }
 
-    public ResultSet readingQuery(String query) throws SQLException { 
+    public ResultSet readingQuery(String query) throws SQLException {
         return stmt.executeQuery(query);
     }
 
-    public void writingQuery(String query) throws SQLException {  
+    public void writingQuery(String query) throws SQLException {
+        System.out.println(query);
         stmt.executeUpdate(query);
     }
 
