@@ -59,6 +59,8 @@ public class AdminController {
 
     public boolean writeFilm(Film film) {
         if ((!"".equals(film.getTitle())) && (!"".equals(film.getDescription())) && (!"".equals(film.getLinkCover())) & (!"".equals(film.getCategories())) & (film.getLength() > 0)) {
+            
+            film.setDescription(stringCharReplacer(film.getDescription()));
             return adapter.writeFilm(film);
         } else {
             return false;
@@ -127,5 +129,9 @@ public class AdminController {
         ArrayList<Projection> projection = adapter.getTodayProjectionByHall(idHall);
         return projection;
     }
-
+        public String stringCharReplacer(String a){
+        a = a.replaceAll("\"", " ");
+        a = a.replaceAll("'", " ");
+        return a;
+    }
 }

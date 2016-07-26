@@ -129,7 +129,7 @@ public class PanelAddFilm extends JPanel {
                     String[] tmp = linkField.getText().split("=");
                     link_normalizzato = tmp[1];
                     link_normalizzato = "https://www.youtube.com/v/" + link_normalizzato + "?autoplay=1";
-                     String DescrizioneMax100 = descrizioneArea.getText(); 
+                    String DescrizioneMax100 = descrizioneArea.getText();
                     if(descrizioneArea.getText().length() > 50){
                         DescrizioneMax100 = DescrizioneMax100.substring(0, 47) +  "...";
                     }
@@ -203,6 +203,4 @@ public class PanelAddFilm extends JPanel {
     public ImageIcon imgResize(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
-    
-    
 }
