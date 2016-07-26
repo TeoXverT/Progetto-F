@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 public class CustomerGui extends JFrame {
 
-    JPanel display = new JPanel(new BorderLayout());
+    private JPanel display = new JPanel(new BorderLayout());
 
     public CustomerGui() {
         draw();
