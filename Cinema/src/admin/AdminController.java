@@ -21,6 +21,7 @@ public class AdminController {
     private final AdapterSQLAdmin adapter;
 
     private final int PERIOD = 10000; //Dato per il Thread di pulitura bigletti non pagati
+    private final char[] PASSWORD = {'1', '2', '3'};
 
     public AdminController() {
         adapter = new AdapterSQLAdmin();
@@ -31,7 +32,7 @@ public class AdminController {
 
     public boolean codeVerification(char[] code) {
         boolean isCorrect;
-        char[] correctPassword = {'1', '2', '3'};
+        char[] correctPassword = PASSWORD; 
 
         if (Arrays.equals(code, correctPassword)) {
             return true;
