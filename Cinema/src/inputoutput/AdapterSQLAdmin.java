@@ -184,11 +184,12 @@ public class AdapterSQLAdmin extends AdapterSQL {
 
     public boolean writeConfig(Config config) {//G
 
-        String query = "INSERT INTO Config(prezzo_vip,sconto,glasses_price,over_price,disabled_price,offset_time,booking_validation_time) VALUES("
-                + "'" + config.getVipOverprice() + "','" + config.getSconto() + "','"
-                + config.getGlassesPrice() + "','" + config.getOver_price() + "','" + config.getDisabledPrice() + "','"
+        String query = "INSERT INTO Config(prezzo_vip,glasses_price,disabled_price,offset_time,booking_validation_time) VALUES("
+                + "'" + config.getVipOverprice() + "','"
+                + config.getGlassesPrice() + "','" + config.getDisabledPrice() + "','"
                 + config.getOffsetTime() + "','" + config.getBookingValidationTime() + "')";
         try {
+            System.out.println(query);
             SQL.writingQuery(query);
             return true;
         } catch (SQLException ex) {
@@ -280,11 +281,11 @@ public class AdapterSQLAdmin extends AdapterSQL {
     public ArrayList<Booking> salesVolumeSearch(String a, String b) throws SQLException {//G
         ArrayList<Booking> booking;
         ResultSet risultato_query;
-        String query = "SELECT * \n" +
-                       "FROM `Booking`\n" +
-                       "WHERE booking_status =1\n" +
-                       "AND date_time >= '" + a + "'\n" +
-                       "AND date_time <= '" + b + "'";         
+        String query = "SELECT * \n"
+                + "FROM `Booking`\n"
+                + "WHERE booking_status =1\n"
+                + "AND date_time >= '" + a + "'\n"
+                + "AND date_time <= '" + b + "'";
         risultato_query = SQL.readingQuery(query);
         booking = parser.booking(risultato_query);
         risultato_query.close();
@@ -360,7 +361,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
     public ArrayList<Projection> getTodayProjectionByHall(int idHall) throws SQLException {
         String query;
         ResultSet result;
-        ArrayList<Projection> projection; 
+        ArrayList<Projection> projection;
         query = "SELECT * FROM  `Proiezione` WHERE DATE( Proiezione.data_ora ) = DATE( NOW() ) AND Proiezione.id_sala =" + idHall;
         result = SQL.readingQuery(query);
 

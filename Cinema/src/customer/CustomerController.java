@@ -1,4 +1,3 @@
-
 package customer;
 
 import inputoutput.AdapterSQLCustomer;
@@ -18,9 +17,11 @@ public class CustomerController {
 
     private AdapterSQLCustomer adapter;
     private Config config;
+    EmailSender emailSender;
 
     public CustomerController() {
         adapter = new AdapterSQLCustomer();
+        emailSender = new EmailSender();
     }
 
     public static synchronized CustomerController getInstance() {
@@ -28,6 +29,25 @@ public class CustomerController {
             instance = new CustomerController();
         }
         return instance;
+    }
+
+    public boolean makeEmailRequest(Booking booking) {
+        if (booking.getEmail().isEmpty() || booking.getBookedSeat().isEmpty()) {
+            return false;
+        } else {
+            sendEmailRequest(booking).start();
+            return true;
+        }
+    }
+
+    private Thread sendEmailRequest(final Booking booking) {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                emailSender.sendEmailRequest(booking);
+            }
+        }
+        );
+        return t;
     }
 
     //mod
@@ -43,16 +63,16 @@ public class CustomerController {
     }
 
     public Hall roomByID(int idHall) throws SQLException {
-        return adapter.getHallByIdHall(idHall); 
+        return adapter.getHallByIdHall(idHall);
     }
 
     public ArrayList<Projection> projectionFilteredByFilmAndTime(int idFilm, Calendar focusedDateTime) throws SQLException {
-        return adapter.getProjectionFilteredByFilmAndTime(idFilm, focusedDateTime); 
+        return adapter.getProjectionFilteredByFilmAndTime(idFilm, focusedDateTime);
     }
 
     public ArrayList<Seat> getSeats(int idHall) {
         ArrayList<Seat> seat;
-        seat = adapter.getSeatByIdHall(idHall); 
+        seat = adapter.getSeatByIdHall(idHall);
         return seat;
     }
 
@@ -71,7 +91,7 @@ public class CustomerController {
     }
 
     public void getInsertPaymentForced(Booking booking) throws SQLException {
-        adapter.insertFakePayment(booking.getIdBooking()); 
+        adapter.insertFakePayment(booking.getIdBooking());
     }
 
     public int checkBookingPayment(int idBooking) throws SQLException {

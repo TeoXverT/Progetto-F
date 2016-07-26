@@ -26,8 +26,8 @@ public class ParserObj {
     public ParserObj() {
     }
 
-    public ArrayList<Hall> hall(ResultSet result) throws SQLException { 
-        ArrayList<Hall> hall = new ArrayList<>(); 
+    public ArrayList<Hall> hall(ResultSet result) throws SQLException {
+        ArrayList<Hall> hall = new ArrayList<>();
         while (result.next()) {
             hall.add(new Hall(result.getInt("id_sala"), result.getInt("rows"), result.getInt("columns")));
         }
@@ -37,8 +37,8 @@ public class ParserObj {
     }
 
     public ArrayList<Projection> projection(ResultSet result) throws SQLException {
-        ArrayList<Projection> projection = new ArrayList<>(); 
- 
+        ArrayList<Projection> projection = new ArrayList<>();
+
         while (result.next()) {
             projection.add(new Projection(result.getInt("id_proiezione"), parseDateTime(result.getTimestamp("data_ora")), new Film(result.getInt("id_film")), new Hall(result.getInt("id_sala")), result.getInt("projection_type"), result.getDouble("prezzo")));
         }
@@ -48,8 +48,8 @@ public class ParserObj {
     }
 
     public ArrayList<Film> film(ResultSet result) throws SQLException {
-        ArrayList<Film> film = new ArrayList<>(); 
- 
+        ArrayList<Film> film = new ArrayList<>();
+
         while (result.next()) {
             film.add(new Film(result.getInt("id_film"), result.getString("titolo"), result.getString("genere"), result.getInt("durata"), result.getString("descrizione"), result.getString("link_youtube"), result.getString("link_copertina"), parseDateTime(result.getTimestamp("data_ora"))));
         }
@@ -58,11 +58,10 @@ public class ParserObj {
     }
 
     public Config config(ResultSet result) throws SQLException {
-        Config config = null; 
+        Config config = null;
 
         while (result.next()) {//Lo farà una sola volta
-            config = new Config(result.getDouble("prezzo_vip"), result.getDouble("sconto"), result.getDouble("glasses_price"), result.getDouble("over_price"),
-                    result.getDouble("disabled_price"), result.getInt("offset_time"), result.getInt("booking_validation_time"));
+            config = new Config(result.getDouble("prezzo_vip"), result.getDouble("glasses_price"), result.getDouble("disabled_price"), result.getInt("offset_time"), result.getInt("booking_validation_time"));
         }
         result.close();
 
@@ -70,7 +69,7 @@ public class ParserObj {
     }
 
     public ArrayList<Booking> booking(ResultSet result) throws SQLException {
-        ArrayList<Booking> booking = new ArrayList<>(); 
+        ArrayList<Booking> booking = new ArrayList<>();
 
         while (result.next()) {
             booking.add(new Booking(result.getInt("id_booking"), new Projection(result.getInt("id_proiezione")), null, parseDateTime(result.getTimestamp("date_time")),
@@ -80,7 +79,7 @@ public class ParserObj {
 
         return booking;
     }
- 
+
     public ArrayList<Seat> seat(ResultSet result) throws SQLException {
         ArrayList<Seat> seat = new ArrayList<>();
 
@@ -91,8 +90,9 @@ public class ParserObj {
         result.close();
         return seat;
     }
+
     ////////////////////////////////////////////////// COMMON USE STUFF ///////////////////////////////////
-    private Calendar parseDateTime(Timestamp timestamp) { 
+    private Calendar parseDateTime(Timestamp timestamp) {
         java.util.Date date = null;
         if (timestamp != null) {
             date = new java.util.Date(timestamp.getTime());

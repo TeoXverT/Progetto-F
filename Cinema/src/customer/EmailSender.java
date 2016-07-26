@@ -26,7 +26,7 @@ public class EmailSender {
 
     }
 
-    public boolean SendEmailRequest(Booking booking) {
+    public boolean sendEmailRequest(Booking booking) {
 
         Projection screening = booking.getProjection();
         Film film = screening.getFilm();
