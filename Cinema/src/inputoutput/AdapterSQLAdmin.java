@@ -280,11 +280,11 @@ public class AdapterSQLAdmin extends AdapterSQL {
     public ArrayList<Booking> salesVolumeSearch(String a, String b) throws SQLException {//G
         ArrayList<Booking> booking;
         ResultSet risultato_query;
-        String query = "SELECT id_booking, id_proiezione, date_time, number_of_glasses, price\n"
-                + "FROM `Booking`\n"
-                + "WHERE booking_status =1\n"
-                + "AND date_time >= '" + a + "'\n"
-                + "AND date_time <= '" + b + "'";
+        String query = "SELECT * \n" +
+                       "FROM `Booking`\n" +
+                       "WHERE booking_status =1\n" +
+                       "AND date_time >= '" + a + "'\n" +
+                       "AND date_time <= '" + b + "'";         
         risultato_query = SQL.readingQuery(query);
         booking = parser.booking(risultato_query);
         risultato_query.close();

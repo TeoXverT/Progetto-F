@@ -51,7 +51,6 @@ public class PanelSalesVolume extends JPanel {
     }
     
     private JPanel North(final AdminController c){
-         //RICORDATI DI SETTARE L'ORA A MEZZANOTTE per From e 23:59 per To
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JButton search = new JButton("Search");
         final Date today = new Date();
@@ -99,10 +98,9 @@ public class PanelSalesVolume extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    From = dateToString((Date)dateFrom.getValue()); 
-                    To = dateToString((Date)dateTo.getValue());
-                    ArrayList<Booking> books = c.salesVolume(From, To);
-                    System.out.println(dateToString((Date)dateTo.getValue()));                               
+                    From = dateToString((Date)dateFrom.getValue()).substring(0, 10) + " 00:00:00"; 
+                    To = dateToString((Date)dateTo.getValue()).substring(0, 10) + " 23:59:59";
+                    ArrayList<Booking> books = c.salesVolume(From, To);                          
                     double tot = tableUpdateAndCount(books);
                     total.setText(String.valueOf(tot));
                     
@@ -152,10 +150,8 @@ public class PanelSalesVolume extends JPanel {
                 if (rVal == JFileChooser.APPROVE_OPTION) {
                     String filename = (c.getSelectedFile().getName());
                     String path = (c.getCurrentDirectory().toString());
-                    System.out.println("path = " + path);
-                    System.out.println("filename = " + filename);
                       try{
-                        try (PrintWriter writer = new PrintWriter(path + "/the-file-name.txt", "UTF-8")) {
+                        try (PrintWriter writer = new PrintWriter(path + "/" + filename  + ".txt", "UTF-8")) {
                             writer.println("From: " + From + " To: " + To);
                             writer.println("Total Gain: " + total.getText());
                         }
