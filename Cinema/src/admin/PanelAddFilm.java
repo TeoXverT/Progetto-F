@@ -50,7 +50,6 @@ public class PanelAddFilm extends JPanel {
         this.setLayout(new BorderLayout(10,10));         
         
         final JTextField titoloField = new JTextField("", 30);
-        //final JTextField genereField = new JTextField("", 30);
         final JComboBox<FilmGenere> genereComboBox = new JComboBox<>();
         genereComboBox.setModel(new DefaultComboBoxModel<>(FilmGenere.values()));
         final JTextField durataField = new JTextField("90");
@@ -134,7 +133,7 @@ public class PanelAddFilm extends JPanel {
                     link_normalizzato = "https://www.youtube.com/v/" + link_normalizzato + "?autoplay=1";
                      String DescrizioneMax100 = descrizioneArea.getText(); 
                     if(descrizioneArea.getText().length() > 50){
-                        DescrizioneMax100 = descrizioneArea.getText().substring(0, 47) +  "...";
+                        DescrizioneMax100 = DescrizioneMax100.substring(0, 47) +  "...";
                     }
                     if (controller.writeFilm(new Film(titoloField.getText(), Genere, Integer.parseInt(durataField.getText()), DescrizioneMax100, link_normalizzato, copertinaField.getText()))) {
                         outputGrafico.setText("The movie has been added.");
@@ -187,8 +186,6 @@ public class PanelAddFilm extends JPanel {
     private void refreshGUI(final JPanel panel) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                //String tmp = copertinaField.getText();
-                //copertinaField.setText("");
                 CenterFull.removeAll();
                 BoxPanel.removeAll();
                 Dispy.removeAll();
