@@ -45,9 +45,12 @@ public class PanelRemover extends JPanel {
 
     private JPanel drawGui(JPanel pannelloDisplay) {
         JPanel ritorno = new JPanel(new BorderLayout());
-        ritorno.add(new JLabel("<html><br><br><br><br><center><h2>Guida Al Utilizzo:</h2></center></br><h3>Per eliminare un elemento bisogna selezionarlo dalla lista e poi clikkare il relativo tasto cancella.</h3><br><br><br></html>", SwingConstants.CENTER), BorderLayout.NORTH);
+        ritorno.add(new JLabel("<html><br><br><br><br><center><h2>Remover:</h2></center></br><h3>Select one of them from the list, and than click the corresponding delete button.</h3><br><br><br></html>", SwingConstants.CENTER), BorderLayout.NORTH);
         ritorno.add(pannelloDisplay, BorderLayout.CENTER);
-        ritorno.add(new JLabel("<html><br><br><br><center>Attenzione:</center></br><i>*E' possibile eliminare un film solo se quest'ultimo non è presente in alcuna proiezione<br>*E' possibile eliminare una proiezione soltanto se non vi sono delle prenotazioni ad essa associate.<br>*E' possibile eliminare una sala solo se ad essa non sono associate proiezioni.</i></html>", SwingConstants.CENTER), BorderLayout.SOUTH);
+        ritorno.add(new JLabel("<html><br><br><br><center>Attenzione:</center></br"
+                + "><i>*You can delete a movie only if it is not in any projection<br>"
+                + "**You can delete a projection only if there are no bookings associated with it <br>"
+                + "***You can delete a room if it is not associated with any projection</i></html>", SwingConstants.CENTER), BorderLayout.SOUTH);
 
         try {
             JPanel uno = new JPanel(new BorderLayout());

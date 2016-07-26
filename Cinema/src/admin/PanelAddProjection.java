@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import obj.*;
 
 public class PanelAddProjection extends JPanel {
@@ -27,10 +28,10 @@ public class PanelAddProjection extends JPanel {
         this.setLayout(new BorderLayout(10, 30));
 
         try {
-            JPanel pannelloNord = new JPanel(new GridLayout(0, 2, 20, 20));
-            JPanel pannello = new JPanel(new BorderLayout());
+            JPanel panelNordDown = new JPanel(new GridLayout(0, 2, 20, 20));
+            JPanel panel = new JPanel(new BorderLayout());
 
-            pannello.add(new JLabel("Film: "), BorderLayout.NORTH);
+            panel.add(new JLabel("Film: "), BorderLayout.NORTH);
 
             final DefaultListModel model = new DefaultListModel();
             final JList<Film> listaFilm = new JList(model);
@@ -41,56 +42,64 @@ public class PanelAddProjection extends JPanel {
                 model.addElement(f);
             }
 
-            pannello.add(pane, BorderLayout.CENTER);
-            pannelloNord.add(pannello);
+            panel.add(pane, BorderLayout.CENTER);
+            panelNordDown.add(panel);
 
-            pannello = new JPanel(new BorderLayout());
-            pannello.add(new JLabel("Hall: "), BorderLayout.NORTH);
+            panel = new JPanel(new BorderLayout());
+            panel.add(new JLabel("Hall: "), BorderLayout.NORTH);
 
             final DefaultListModel model1 = new DefaultListModel();
             final JList<Hall> listaSale = new JList(model1);
             JScrollPane pane1 = new JScrollPane(listaSale);
 
             ArrayList<Hall> Sale = controller.getHall();
-            for (Hall s : Sale) {
+            for (Hall s : Sale) { 
                 model1.addElement(s);
             }
-            pannello.add(pane1, BorderLayout.CENTER);
-            pannelloNord.add(pannello);
-            this.add(pannelloNord, BorderLayout.NORTH);
+            panel.add(pane1, BorderLayout.CENTER);
+            panelNordDown.add(panel); 
 
-            pannello = new JPanel(new BorderLayout());
+            JPanel panelNordUp = new JPanel(new BorderLayout());
+            panelNordUp.add(new JLabel("<html><br><br><center><h2>Create new projection:</h2></center></br><h3>Fill all forms properly and than press save button.<br>"
+                    + "It's possible that the hall is already in use in that case change date or time and retry.</h3><br><br><br></html>", SwingConstants.CENTER), BorderLayout.NORTH);
+ 
+            JPanel NordPanel = new JPanel(new BorderLayout());
+            NordPanel.add(panelNordUp, BorderLayout.NORTH);
+            NordPanel.add(panelNordDown, BorderLayout.CENTER);
+            this.add(NordPanel, BorderLayout.NORTH);
+
+            panel = new JPanel(new BorderLayout());
 
             Date today = new Date();
 
-            pannello.add(new JLabel("Date & Time: "), BorderLayout.WEST);
+            panel.add(new JLabel("Date & Time: "), BorderLayout.WEST);
 
             final JSpinner selettoreDataOra = new JSpinner(new SpinnerDateModel(today, addDays(today, -1), null, Calendar.MONTH));
             JSpinner.DateEditor selettoreGiornoGui = new JSpinner.DateEditor(selettoreDataOra, "dd-MM-yyyy (EEEE) HH:mm");
             selettoreDataOra.setEditor(selettoreGiornoGui);
-            pannello.add(selettoreDataOra, BorderLayout.CENTER);
+            panel.add(selettoreDataOra, BorderLayout.CENTER);
 
-            this.add(pannello, BorderLayout.CENTER);
+            this.add(panel, BorderLayout.CENTER);
 
-            pannello = new JPanel(new GridLayout(0, 4));
+            panel = new JPanel(new GridLayout(0, 4));
 
-            pannelloNord = new JPanel(new GridLayout(0, 1, 10, 50));
+            NordPanel = new JPanel(new GridLayout(0, 1, 10, 50));
 
-            pannello.add(new JLabel("Type: "));
+            panel.add(new JLabel("Type: "));
             String[] stringaLista = {"Normal", "3D", "IMAX 3D", "Live Event"};
 
             final JComboBox tipoLista = new JComboBox(stringaLista);
             tipoLista.setSelectedIndex(0);
-            pannello.add(tipoLista);
+            panel.add(tipoLista);
 
-            pannello.add(new JLabel("Price: "));
+            panel.add(new JLabel("Price: "));
 
             final JSpinner spinnerPrezzo = new JSpinner(new SpinnerNumberModel(6, 3, 20, 0.5));
-            pannello.add(spinnerPrezzo);
+            panel.add(spinnerPrezzo);
 
-            pannelloNord.add(pannello);
+            NordPanel.add(panel);
             JButton aggiungiProiezione = new JButton("Save");
-            pannelloNord.add(aggiungiProiezione);
+            NordPanel.add(aggiungiProiezione);
 
             aggiungiProiezione.addActionListener(new ActionListener() {
                 @Override
@@ -112,7 +121,7 @@ public class PanelAddProjection extends JPanel {
                     }
                 }
             });
-            this.add(pannelloNord, BorderLayout.SOUTH);
+            this.add(NordPanel, BorderLayout.SOUTH);
         } catch (SQLException ex) {
             outputGrafico.setText("ERROR: Server Failure");
         }
