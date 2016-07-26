@@ -122,8 +122,12 @@ public class PanelSalesVolume extends JPanel {
         JTable table = new JTable(tableModel);
         TableColumn id = table.getColumnModel().getColumn(0);
         id.setMinWidth(40); id.setMaxWidth(40); id.setPreferredWidth(40);
-        table.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(table);
+        TableColumn glasses = table.getColumnModel().getColumn(3);
+        glasses.setMinWidth(80); glasses.setMaxWidth(80); glasses.setPreferredWidth(80);
+        JScrollPane scrollPane = new JScrollPane(table); 
+//        table.setPreferredSize(new Dimension(600, 200));
+//        table.setPreferredScrollableViewportSize(table.getPreferredSize());
+//        table.setFillsViewportHeight(true);
         center.add(scrollPane);
         return center;
     }
