@@ -189,7 +189,6 @@ public class AdapterSQLAdmin extends AdapterSQL {
                 + config.getGlassesPrice() + "','" + config.getDisabledPrice() + "','"
                 + config.getOffsetTime() + "','" + config.getBookingValidationTime() + "')";
         try {
-            System.out.println(query);
             SQL.writingQuery(query);
             return true;
         } catch (SQLException ex) {
