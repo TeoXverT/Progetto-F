@@ -30,17 +30,16 @@ import obj.FilmGenere;
  */
 
 public class PanelAddFilm extends JPanel {
-    JPanel Center = new JPanel(new GridLayout(0, 2, 1, 1));
-    JPanel CenterFull = new JPanel(new BorderLayout());
-    JPanel BoxPanel = new JPanel(new BorderLayout(12,12));
-    JPanel North = new JPanel(new GridLayout(0, 3));
-    JPanel NorthImg = new JPanel();
-    JPanel Dispy = new JPanel(new GridLayout(0,1,1,1));
-    JPanel Nordico = new JPanel(new BorderLayout());
-    JPanel Descript = new JPanel(new GridLayout(0, 2, 1, 1));
-    
-    JButton addMovie = new JButton("Add Movie");
-    JLabel imgCopertina = new JLabel();
+    private final JPanel Center = new JPanel(new GridLayout(0, 2, 1, 1));
+    private final JPanel CenterFull = new JPanel(new BorderLayout());
+    private final JPanel BoxPanel = new JPanel(new BorderLayout(12,12));
+    private final JPanel North = new JPanel(new GridLayout(0, 3));
+    private final JPanel NorthImg = new JPanel();
+    private final JPanel Dispy = new JPanel(new GridLayout(0,1,1,1));
+    private final JPanel Nordico = new JPanel(new BorderLayout());
+    private final JPanel Descript = new JPanel(new GridLayout(0, 2, 1, 1));
+    private final JButton addMovie = new JButton("Add Movie");
+    private final JLabel imgCopertina = new JLabel();
     
     JTextField copertinaField = new JTextField();
     ImageIcon icona = new ImageIcon("images/place_holder.gif");
