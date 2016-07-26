@@ -122,7 +122,7 @@ private Component frameErrore;
         JPanel total = new JPanel(new BorderLayout(5, 5));
         JLabel totale = new JLabel("TOTALE: ");
 
-        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto() + "%");
+        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha uno sconto di " + config.getSconto() + "%");
         JButton indietro = new JButton("indietro");
 
         JPanel buttons = new JPanel(new GridLayout(0, 2));
