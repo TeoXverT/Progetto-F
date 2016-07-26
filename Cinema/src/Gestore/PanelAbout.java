@@ -5,6 +5,7 @@
  */
 package Gestore;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
@@ -22,6 +23,7 @@ public class PanelAbout extends JPanel {
     public PanelAbout(final Controller_Gestore controller, final JLabel outputGrafico) {
         JPanel panel = new JPanel(new GridLayout(0, 1, 20, 20));
         ImageIcon immagine = new ImageIcon("immagini/logo_trasparente.png");
+        JPanel south = new JPanel(new GridLayout(1,5,5,1));
         String info = "PROGETTO F - v2.023 <Beta>\n" + " \n";
         info += "Sviluppato da: \n";
         info += "Umeer Mohammad \n";

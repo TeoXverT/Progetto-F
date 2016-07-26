@@ -7,7 +7,7 @@ package Testing;
 
 import Cliente.Controller_Cliente;
 import oggetti.Booking;
-import static org.hamcrest.CoreMatchers.is;
+//import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,7 +22,7 @@ public class TesterAdmin {
 
     @Test
     public void hello() {
-        assertThat(true, is(true));
+//        assertThat(true, is(true));
     }
 
     @Test

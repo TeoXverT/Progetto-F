@@ -34,9 +34,9 @@ import oggetti.Seat;
 public class PageThree extends JPanel {
 
     private Controller_Cliente controller;
-private    Screening screening;
+    private Screening screening;
     private Film film;
-  private  Booking booking;
+    private Booking booking;
 
     private ImageIcon screen_icon = new ImageIcon("immagini/poltrone/screen.png");
     private ImageIcon seat_taken = new ImageIcon("immagini/poltrone/seat_taken.png");
@@ -52,9 +52,9 @@ private    Screening screening;
     private ArrayList<Seat> seats;
     private ArrayList<Seat> booked_seats;
     private ArrayList<Seat> Taken_seats = new ArrayList<>();
-private Component frameErrore;
+    private Component frameErrore;
     private JLabel prezzo = new JLabel();
-   private JButton prosegui = new JButton("PROSEGUI");
+    private JButton prosegui = new JButton("PROSEGUI");
 
     public PageThree(Screening proiezione) {
         this.controller = Controller_Cliente.getInstance();
@@ -64,7 +64,6 @@ private Component frameErrore;
             this.sala = controller.roomByID(proiezione.getRoom().getId_sala());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-          
 
         }
 
@@ -74,8 +73,8 @@ private Component frameErrore;
         try {
             config = controller.getConfig();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-          
+            JOptionPane.showMessageDialog(frameErrore, "Problem to connecting with server!", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
+
         }
         initGui();
     }
@@ -113,24 +112,20 @@ private Component frameErrore;
         }
         center.add(seats_layout, BorderLayout.CENTER);
 
-        JPanel leggenda = new JPanel(new GridLayout(0, 2));
-        JLabel prezzo_normale = new JLabel("Prezzo: " + screening.getPrezzo() + "€");
-        JLabel prezzo_vip = new JLabel("Posti vip costo aggiuntivo di " + config.getPrezzo_vip() + "€");
-        leggenda.add(prezzo_normale);
-        leggenda.add(prezzo_vip);
+        JPanel leggenda = new JPanel(new BorderLayout());
+        ImageIcon Seat_description = new ImageIcon("immagini/Leggenda.png");
+        JLabel legend = new JLabel(Seat_description);
+        leggenda.add(legend, BorderLayout.WEST);
 
-        JPanel total = new JPanel(new BorderLayout(5, 5));
+        JPanel total = new JPanel(new GridLayout(2, 2));
         JLabel totale = new JLabel("TOTALE: ");
-
-        JLabel offer = new JLabel("Con l'acquisto di 3 biglietti si ha unos conto di " + config.getSconto() + "%");
         JButton indietro = new JButton("indietro");
-
-        JPanel buttons = new JPanel(new GridLayout(0, 2));
+//        JPanel buttons = new JPanel(new GridLayout(0, 2));
 
         total.add(totale, BorderLayout.WEST);
         total.add(prezzo, BorderLayout.EAST);
-        buttons.add(indietro);
-        buttons.add(prosegui);
+        total.add(indietro);
+        total.add(prosegui);
 
         indietro.addActionListener(new ActionListener() {
 
@@ -144,20 +139,26 @@ private Component frameErrore;
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0,null);
-                openPage(new PageFour(booking));
+                if (Taken_seats.size() != 0) {
+                    booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0, null);
+                    openPage(new PageFour(booking));
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Please select the seat.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
         sud.add(leggenda);
         sud.add(total);
-        sud.add(offer);
-        sud.add(buttons);
-
+        
         this.add(nord, BorderLayout.NORTH);
         this.add(center, BorderLayout.CENTER);
         this.add(sud, BorderLayout.SOUTH);
     }
+
     public ActionListener seatClick(final int i) {
         ActionListener event = new ActionListener() {
 
@@ -203,7 +204,7 @@ private Component frameErrore;
         this.repaint();
     }
 
-    private void openPage(JPanel panel) { 
+    private void openPage(JPanel panel) {
         this.removeAll();
         this.setLayout(new BorderLayout());
         this.add(panel, BorderLayout.CENTER);
@@ -211,12 +212,15 @@ private Component frameErrore;
         this.repaint();
     }
 
-    private void checkTakenSeats() {  
+    private void checkTakenSeats() {
         try {
             booked_seats.clear();
             booked_seats = controller.getTakenSeats(screening.getId_proiezione());
         } catch (SQLException ex) {
-            Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,
+                    "Something goes wrong...Please Retry!!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }
