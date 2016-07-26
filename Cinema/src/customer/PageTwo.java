@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -107,9 +109,17 @@ public class PageTwo extends JPanel {
         pannelloHome.setBackground(java.awt.Color.WHITE);
 
         pannelloTramaGridLayout.add(new JLabel());
-        JLabel labeln = new JLabel(film.toString());
-
-        labeln.setFont(labeln.getFont().deriveFont(22.0f));
+        
+        
+        JEditorPane labeln = new JEditorPane();      //film.toString());
+        
+       labeln.setContentType("text/html");
+        labeln.setText("<b>" + film.toString() + "</b>");
+        
+        labeln.setEditable(false);
+        labeln.setBorder(null);
+        labeln.setBackground(java.awt.Color.WHITE);
+       
         pannelloTramaGridLayout.add(labeln);
         pannelloTramaGridLayout.add(new JLabel());
 
@@ -118,7 +128,7 @@ public class PageTwo extends JPanel {
         Trama.setEditable(false);
         Trama.setBorder(null);
         Trama.setBackground(java.awt.Color.WHITE);
-
+        Trama.setWrapStyleWord(true);
         pannelloTrama.add(Trama, BorderLayout.CENTER);
 
         try {
