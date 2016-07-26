@@ -35,7 +35,7 @@ public class PanelAddHall extends JPanel {
     JLabel outputGrafico;
     AdminController controller;
     ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
-    ImageIcon seat_disable = new ImageIcon("images/hall/seat_diasable.png");
+    ImageIcon seat_disable = new ImageIcon("images/hall/seat_disable.png");
     ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
     ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
     ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");

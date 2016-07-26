@@ -5,6 +5,7 @@
  */
 package admin;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
@@ -14,34 +15,30 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author cl421572
+ * @author yatin
  */
 
 public class PanelAbout extends JPanel {
 
     public PanelAbout(final AdminController controller, final JLabel outputGrafico) {
-        JPanel panel = new JPanel(new GridLayout(0, 1, 20, 20));
-        ImageIcon immagine = new ImageIcon("images/logo.png");
-        String info = "PROGETTO F aka CINEMA - v11.02 <Stable>\n" + " \n";
-        info += "Development Team: \n";
-        info += "Umeer Mohammad \n";
-        info += "Riccardo Previtali \n";
-        info += "Cristian Santangelo \n";
-        info += "Yatin Bhutani \n";
-        info += "Federico Avarino \n";
-        JTextArea infos = new JTextArea("");
-        //infos.setFont(new Font("Courier", Font.ROMAN_BASELINE, 24));
-        //infos.setPreferredSize(new java.awt.Dimension(384, 129));
-        infos.setWrapStyleWord(true); //dovrebbe settare a capo automatico
-        infos.setText(info);
-        infos.setEnabled(false);
-        panel.add(new JLabel(imgResize(immagine, 640 / 2, 433 / 2)));
-        panel.add(infos);
-        this.add(panel);
-    }
-        
-   public ImageIcon imgResize(ImageIcon immagine, int lunghezza, int altezza) {
-        return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
+        init();
     }
 
+    private void init() {
+        this.setLayout(new BorderLayout(1, 10));
+        ImageIcon logo_image = new ImageIcon("images/logo_300px.png");
+        JLabel logo = new JLabel(logo_image);
+        JPanel north = new JPanel(new BorderLayout());
+        JPanel south = new JPanel(new BorderLayout());
+        
+        north.add(logo, BorderLayout.CENTER);
+        
+        ImageIcon names_image = new ImageIcon("images/names.gif");
+        JLabel names = new JLabel(names_image);
+        south.add(names, BorderLayout.SOUTH);
+        
+        this.add(north, BorderLayout.NORTH);
+        this.add(south, BorderLayout.SOUTH);
+
+    }
 }

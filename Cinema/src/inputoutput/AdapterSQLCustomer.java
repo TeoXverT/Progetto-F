@@ -118,54 +118,6 @@ public class AdapterSQLCustomer extends AdapterSQL {
         return hall;
     }
 
-    public ArrayList<Seat> getSeatByIdHall(int idHall) { //C         // da finire...sono arrivato a leggere da DB ora devo parsare le cose..
-        String query;
-        ResultSet result;
-        ArrayList<Seat> seats = new ArrayList<>();
-        ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
-        ImageIcon seat_disable = new ImageIcon("images/hall/seat_diasable.png");
-        ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
-        ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
-        ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
-
-        query = "SELECT *  FROM Seats WHERE id_sala = '" + idHall + "'";
-        try {
-            result = SQL.readingQuery(query);
-            int i = 0;
-            while (result.next()) {
-                seats.add(new Seat(result.getInt("x"), result.getInt("y")));
-                switch (result.getInt("tipo")) {
-                    case 1:
-                        seats.get(i).setIcon(seat_free);
-                        break;
-                    case 2:
-                        seats.get(i).setIcon(seat_vip);
-                        seats.get(i).setVip(true);
-                        break;
-                    case 3:
-                        seats.get(i).setIcon(seat_handicap);
-                        seats.get(i).setHandicap(true);
-                        break;
-                    case 4:
-                        seats.get(i).setIcon(seat_disable);
-                        seats.get(i).setDisable(true);
-                        break;
-                    case 5:
-                        seats.get(i).setIcon(seat_taken);
-                        seats.get(i).setOccupato(true);
-                        break;
-                }
-                seats.get(i).setId_seat(result.getInt("Id_seat"));
-                i++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AdapterSQL.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return seats;
-
-    }
-
     public int getIdLastBooking() throws SQLException {//C
         String query;
         ResultSet result;

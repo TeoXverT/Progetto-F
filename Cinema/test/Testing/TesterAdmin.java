@@ -5,9 +5,10 @@
  */
 package Testing;
 
+import com.sun.org.apache.xerces.internal.util.FeatureState;
+import static com.sun.org.apache.xerces.internal.util.FeatureState.is;
 import customer.CustomerController;
 import obj.Booking;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -28,6 +29,10 @@ public class TesterAdmin {
     @Test
     public void eliminazioneBiglettiNonPagati() {
         CustomerController c = CustomerController.getInstance();
+    }
+
+    private void assertThat(boolean b, FeatureState is) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
