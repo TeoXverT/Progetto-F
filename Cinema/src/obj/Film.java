@@ -80,4 +80,8 @@ public class Film {
         return length;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
 }
