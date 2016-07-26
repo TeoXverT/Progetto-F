@@ -56,7 +56,6 @@ public class AdminGui extends JFrame {
         this.setTitle("Admin");
         this.setBounds(900, 100, 850, 700);
 
-//        this.setResizable(false);
         ImageIcon icona = new ImageIcon("images/logo.png");
         setIconImage(icona.getImage());
 

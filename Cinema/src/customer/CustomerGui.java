@@ -14,7 +14,7 @@ public class CustomerGui extends JFrame {
     }
 
     public void draw() {
-        this.setTitle("Customer");
+        this.setTitle("Cliente");
         this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 920, 770);
         ImageIcon icon = new ImageIcon("images/logo.png");

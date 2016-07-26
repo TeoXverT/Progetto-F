@@ -50,7 +50,6 @@ public class CustomerController {
         return t;
     }
 
-    //mod
     public ArrayList<Film> futureFilmBySlider(int deltaData, int sliderValue) throws SQLException {
         return adapter.getIncomingFilmBySlider(deltaData, sliderValue);
     }

@@ -51,7 +51,7 @@ public class PageFour extends JPanel {
         try {
             this.config = controller.getConfig();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Server Error, try again later.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Errore del server, riprovare più tardi.", "Errore", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
 
@@ -72,12 +72,12 @@ public class PageFour extends JPanel {
         //creazione pannello carrello
         JPanel carrello = new JPanel(new GridLayout(0, 2));
         carrello.add(new JLabel("<html><font size=\"5\">" + screening.getData_ora_friendly_2() + "</font></html>"));
-        carrello.add(new JLabel("<html><font size=\"5\">Room: " + screening.getRoom().getIdHall() + " Type of Projection: " + screening.getType_String() + "</font></html>"));
-        carrello.add(new JLabel("<html><b><font size=\"5\">Cart:</font></b><html>"));
+        carrello.add(new JLabel("<html><font size=\"5\">Sala: " + screening.getRoom().getIdHall() + " Tipo di proiezione: " + screening.getType_String() + "</font></html>"));
+        carrello.add(new JLabel("<html><b><font size=\"5\">Carrello:</font></b><html>"));
         carrello.add(new JLabel(""));
 
         for (Seat s : booking.getBookedSeat()) {
-            carrello.add(new JLabel("<html><font size=\"4\"><i> Line: " + s.getx() + " Seat: " + s.gety() + "</font></html>"));
+            carrello.add(new JLabel("<html><font size=\"4\"><i> Fila: " + s.getx() + " Posto: " + s.gety() + "</font></html>"));
             if (s.isVip()) {
                 double price = screening.getPrice() + config.getVipOverprice();
                 carrello.add(new JLabel(price + " €"));
@@ -92,18 +92,18 @@ public class PageFour extends JPanel {
 
         if (screening.getpProjectionType() == 1 || screening.getpProjectionType() == 2) {  // 0- Normale 1- 3D 2-IMAX 3D 3- Live Event
             JPanel price = new JPanel(new GridLayout(1, 2));
-            spinner = new Glasses("3D Glasses", config.getGlassesPrice(), new SpinnerNumberModel(0, 0, booking.getBookedSeat().size(), 1));
+            spinner = new Glasses("Occhiali 3D", config.getGlassesPrice(), new SpinnerNumberModel(0, 0, booking.getBookedSeat().size(), 1));
             spinner.addChangeListener(updateTotal());
             price.add(spinner);
             price.add(new JLabel("X " + spinner.getPrice() + " €"));
             carrello.add(new JLabel("<html><font size=\"4\"><i>" + spinner.getName() + "</font></html>"));
             carrello.add(price);
         }
-
-        carrello.add(new JLabel("<html><font size=\"5\"><i>Total</font></html>"));
+        
+        carrello.add(new JLabel("<html><font size=\"5\"><i>Totale</font></html>"));
         totalPrice.setText("<html><font size=\"6\">" + booking.getPrice() + " €</font></html>");
         carrello.add(totalPrice);
-        carrello.add(new JLabel("<html><font size=\"5\"><i>Email for Payment:</font></html>"));
+        carrello.add(new JLabel("<html><font size=\"5\"><i>Email per il pagamento:</font></html>"));
         email = new JTextField();
         email.setText("laTua@Email.it");
         carrello.add(email);
@@ -114,8 +114,8 @@ public class PageFour extends JPanel {
         JButton next = new JButton("Next");
         next.addActionListener(nextActionListener());
         this.add(next, BorderLayout.AFTER_LINE_ENDS);
-
-        JButton back = new JButton("Back");
+        
+        JButton back = new JButton("Indietro");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 openPage(new PageThree(screening));
@@ -166,8 +166,8 @@ public class PageFour extends JPanel {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(popUpWindow,
-                    "Error while writing booking.",
-                    "Attenction!!!",
+                    "Errore durante la prenotazione.",
+                    "Attenzione!!!",
                     JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -206,8 +206,8 @@ public class PageFour extends JPanel {
         } catch (IOException e) {
 
             JOptionPane.showMessageDialog(null,
-                    "Error while downloading film's cover, retry later.",
-                    "Error",
+                    "Errore: scaricamento copertina non riuscito",
+                    "Errore",
                     JOptionPane.WARNING_MESSAGE);
             return null;
         }
