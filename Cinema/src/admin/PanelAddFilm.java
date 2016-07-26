@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.text.DefaultStyledDocument;
 import obj.Film;
 import obj.FilmGenere;
 
@@ -39,7 +40,7 @@ public class PanelAddFilm extends JPanel {
     JPanel Nordico = new JPanel(new BorderLayout());
     JPanel Descript = new JPanel(new GridLayout(0, 2, 1, 1));
     
-    JButton addMovie = new JButton("ADD MOVIE");
+    JButton addMovie = new JButton("Add Movie");
     JLabel imgCopertina = new JLabel();
     
     JTextField copertinaField = new JTextField();
@@ -53,11 +54,11 @@ public class PanelAddFilm extends JPanel {
         final JComboBox<FilmGenere> genereComboBox = new JComboBox<>();
         genereComboBox.setModel(new DefaultComboBoxModel<>(FilmGenere.values()));
         final JTextField durataField = new JTextField("90");
-        final JTextArea descrizioneArea = new JTextArea("Non troppo lunga perchè il database non la prende",5,1);
+        final JTextArea descrizioneArea = new JTextArea("Not too long",5,1);
         final JTextField linkField = new JTextField();
         descrizioneArea.setLineWrap(true);
         copertinaField.setPreferredSize(new Dimension(1, 10));
-        JButton anteprima = new JButton("Anteprima"); 
+        JButton anteprima = new JButton("Preview"); 
         JScrollPane scroll = new JScrollPane(descrizioneArea);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         
@@ -158,21 +159,20 @@ public class PanelAddFilm extends JPanel {
 
                 try {
                     ImageIcon immagine = new ImageIcon(ImageIO.read(new URL(copertinaField.getText())));
-                    //EVENTUALMENTE SCALARLA LEGGENDO PRIMA LE DIMENSIONI ORIGINALI
-                    imgCopertina.setIcon(scalaImmagine(immagine, 170, 200));
+                    imgCopertina.setIcon(imgResize(immagine, 170, 200));
                     Nordico.removeAll();
                     NorthImg.add(imgCopertina);
                     Nordico.add(North, BorderLayout.NORTH);
                     Nordico.add(NorthImg, BorderLayout.CENTER);  
-                    aggiornaGUI(Nordico);
+                    refreshGUI(Nordico);
                 } catch (IOException ex) {
                     imgCopertina.setIcon(icona);
                     Nordico.removeAll();
                     NorthImg.add(imgCopertina);
                     Nordico.add(North, BorderLayout.NORTH);
                     Nordico.add(NorthImg, BorderLayout.CENTER);  
-                    aggiornaGUI(Nordico);
-                    JOptionPane.showMessageDialog(null, "Errore caricamento anteprima. \n Assicurati che il link sia corretto e che il computer sia connesso a internet. ", "Attenzione!!!", JOptionPane.WARNING_MESSAGE); 
+                    refreshGUI(Nordico);
+                    JOptionPane.showMessageDialog(null, "Loading preview error. \n Be sure the link is correct and that the computer is connected to internet. ", "Error", JOptionPane.WARNING_MESSAGE); 
                 }
             }
         }
@@ -180,7 +180,7 @@ public class PanelAddFilm extends JPanel {
         return t;
     }
     
-    private void aggiornaGUI(final JPanel panel) {
+    private void refreshGUI(final JPanel panel) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 //String tmp = copertinaField.getText();
@@ -201,7 +201,7 @@ public class PanelAddFilm extends JPanel {
         });
     }
     
-    public ImageIcon scalaImmagine(ImageIcon immagine, int lunghezza, int altezza) {
+    public ImageIcon imgResize(ImageIcon immagine, int lunghezza, int altezza) {
         return new ImageIcon(immagine.getImage().getScaledInstance(lunghezza, altezza, java.awt.Image.SCALE_SMOOTH));
     }
     
