@@ -91,15 +91,15 @@ public class Projection {
     public String getType_String() {
         switch (projectionType) {
             case 0:
-                return "Normal";
+                return "Normale";
             case 1:
                 return "3D";
             case 2:
                 return "IMAX 3D";
             case 3:
-                return "Live Show";
+                return "Diretta Evento";
             default:
-                return "Error";
+                return "Errore";
         }
     }
 

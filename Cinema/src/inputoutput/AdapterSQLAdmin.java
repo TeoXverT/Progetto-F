@@ -182,18 +182,13 @@ public class AdapterSQLAdmin extends AdapterSQL {
         }
     }
 
-    public boolean writeConfig(Config config) {//G
+    public void writeConfig(Config config) throws SQLException {//G
 
         String query = "INSERT INTO Config(prezzo_vip,glasses_price,disabled_price,offset_time,booking_validation_time) VALUES("
                 + "'" + config.getVipOverprice() + "','"
                 + config.getGlassesPrice() + "','" + config.getDisabledPrice() + "','"
                 + config.getOffsetTime() + "','" + config.getBookingValidationTime() + "')";
-        try {
-            SQL.writingQuery(query);
-            return true;
-        } catch (SQLException ex) {
-            return false;
-        }
+        SQL.writingQuery(query);
     }
 
     public boolean writeHall(Hall hall) {//G 

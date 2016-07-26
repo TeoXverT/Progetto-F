@@ -43,15 +43,15 @@ public class PanelConfig extends JPanel {
             text[3].setText(String.valueOf(c.getOffsetTime()));
             text[4].setText(String.valueOf(c.getBookingValidationTime()));
 
-            this.add(new JLabel("Prezzo VIP:"));
+            this.add(new JLabel("VIP Price:"));
             this.add(text[0]);
             this.add(new JLabel("Glasses Price:"));
             this.add(text[1]);
             this.add(new JLabel("Disabled Price:"));
             this.add(text[2]);
-            this.add(new JLabel("Tempo pulizia sala: [MIN]"));
+            this.add(new JLabel("Hall Preparation Time: [MIN]"));
             this.add(text[3]);
-            this.add(new JLabel("Durata validità biglietti non pagati: [MIN]"));
+            this.add(new JLabel("Booking Validation Time: [MIN]"));
             this.add(text[4]);
 
             this.add(submit);
@@ -64,14 +64,18 @@ public class PanelConfig extends JPanel {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (controller.writeConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()),  Double.parseDouble(text[2].getText()), Integer.parseInt(text[3].getText()), Integer.parseInt(text[4].getText()) ))) {
-                    outputGrafico.setText("Modifica registrata con successo.");
-                } else {
-                    outputGrafico.setText("Errore durante il caricamento dei dati.");
+                try {
+                    if (controller.writeConfig(new Config(Double.parseDouble(text[0].getText()), Double.parseDouble(text[1].getText()), Double.parseDouble(text[2].getText()), Integer.parseInt(text[3].getText()), Integer.parseInt(text[4].getText())))) {
+                        outputGrafico.setText("New configuration has been saved.");
+                    } else {
+                        outputGrafico.setText("ERROR: Be sure you insert corret value");
+                    }
+                } catch (SQLException ex) {
+                    outputGrafico.setText("ERROR: Upload Fail");
                 }
             }
         });
-        outputGrafico.setText("Visualizzazione Impostazioni in Corso");
+        outputGrafico.setText("Configuration");
     }
 
 }

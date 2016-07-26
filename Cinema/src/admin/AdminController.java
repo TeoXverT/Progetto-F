@@ -16,6 +16,7 @@ import java.util.Timer;
  * @author Yatin
  */
 public class AdminController {
+
     private final AdapterSQLAdmin adapter;
 
     private final int PERIOD = 10000; //Dato per il Thread di pulitura bigletti non pagati
@@ -59,7 +60,7 @@ public class AdminController {
 
     public boolean writeFilm(Film film) {
         if ((!"".equals(film.getTitle())) && (!"".equals(film.getDescription())) && (!"".equals(film.getLinkCover())) & (!"".equals(film.getCategories())) & (film.getLength() > 0)) {
-            
+
             film.setDescription(stringCharReplacer(film.getDescription()));
             return adapter.writeFilm(film);
         } else {
@@ -71,9 +72,10 @@ public class AdminController {
         return adapter.deleteFilm(id_film);
     }
 
-    public boolean writeConfig(Config config) {
-        if (true) { //Eventuale controllo sul valore dei campi di config
-            return adapter.writeConfig(config);
+    public boolean writeConfig(Config config) throws SQLException {
+        if (config.getBookingValidationTime() > 0 && config.getDisabledPrice() > 0 && config.getGlassesPrice() > 0 && config.getOffsetTime() > 0 && config.getVipOverprice() > 0) {
+            adapter.writeConfig(config);
+            return true;
         } else {
             return false;
         }
@@ -129,7 +131,8 @@ public class AdminController {
         ArrayList<Projection> projection = adapter.getTodayProjectionByHall(idHall);
         return projection;
     }
-        public String stringCharReplacer(String a){
+
+    public String stringCharReplacer(String a) {
         a = a.replaceAll("\"", " ");
         a = a.replaceAll("'", " ");
         return a;
