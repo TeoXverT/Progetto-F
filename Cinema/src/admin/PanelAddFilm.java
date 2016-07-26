@@ -48,7 +48,7 @@ public class PanelAddFilm extends JPanel {
     
     public PanelAddFilm(final AdminController controller, final JLabel outputGrafico) {
         this.setLayout(new BorderLayout(10,10));         
-        
+        outputGrafico.setText("Add Movie");
         final JTextField titoloField = new JTextField("", 30);
         final JComboBox<FilmGenere> genereComboBox = new JComboBox<>();
         genereComboBox.setModel(new DefaultComboBoxModel<>(FilmGenere.values()));
