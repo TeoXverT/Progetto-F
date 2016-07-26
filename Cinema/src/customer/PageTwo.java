@@ -81,19 +81,19 @@ public class PageTwo extends JPanel {
 
         pannelloTramaGridLayout.add(new JLabel());
         
-        
+        //titolo film
         JEditorPane labeln = new JEditorPane();
-        
-       labeln.setContentType("text/html");
+        labeln.setContentType("text/html");
         labeln.setText("<b>" + film.toString() + "</b>");
-        
         labeln.setEditable(false);
         labeln.setBorder(null);
         labeln.setBackground(java.awt.Color.WHITE);
-       
         pannelloTramaGridLayout.add(labeln);
+       
+        
         pannelloTramaGridLayout.add(new JLabel());
-
+        
+        //creazione trama film
         JTextArea Trama = new JTextArea(film.getDescription());
         Trama.setLineWrap(true);
         Trama.setEditable(false);
@@ -101,31 +101,36 @@ public class PageTwo extends JPanel {
         Trama.setBackground(java.awt.Color.WHITE);
         Trama.setWrapStyleWord(true);
         pannelloTrama.add(Trama, BorderLayout.CENTER);
-
+        
+        
+        //filtra le proiezioni del determinato film in base all'orario
         try {
             proiezione = controller.projectionFilteredByFilmAndTime(film.getIdFilm(), focusedDateTime);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
-                    "Error while reading film's informations, retry later.",
-                    "Error",
+                    "Errore nella lettura delle informazioni del film, prova più tardi.",
+                    "Errore",
                     JOptionPane.WARNING_MESSAGE);
             System.exit(0);
         }
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
 
-         JPanel pannelloContenitoreBackOrari = new JPanel();
+        JPanel pannelloContenitoreBackOrari = new JPanel();
         pannelloContenitoreBackOrari.setBackground(java.awt.Color.WHITE);
         this.add(pannelloContenitoreBackOrari);
         this.add(new YoutubePanel(film.getLinkYoutube(), 200, 200));
+        
         JPanel pannelloOrari = new JPanel(new GridLayout(proiezione.size(), 2, 10, 10));
         pannelloOrari.setBackground(java.awt.Color.WHITE);
 
         ButtonCart bottoneCarrello = null;
+        
         JPanel pannelloCart;
         JScrollPane scrollpane = new JScrollPane(pannelloOrari, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pannelloContenitoreBackOrari.add(scrollpane, BorderLayout.CENTER);
         scrollpane.setBorder(null);
-
+        
+        //aggiunta proiezioni con relativa ora e sala
         for (final Projection s : proiezione) {
 
             pannelloOrari.add(new JLabel(sdfDate.format(s.getData_ora().getTime()) + "    tipo: " + s.getType_String() + "    sala: " + s.getRoom().getIdHall()), BorderLayout.SOUTH);
@@ -133,8 +138,8 @@ public class PageTwo extends JPanel {
                 bottoneCarrello = new ButtonCart(s);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null,
-                        "Error while reading projection, retry later.",
-                        "Error",
+                        "Errore nella lettura della proiezione, riprova più tardi.",
+                        "Errore",
                         JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }
@@ -147,7 +152,8 @@ public class PageTwo extends JPanel {
                     openPageThree(s);
                 }
             });
-
+            
+            //creazione e aggiunta bottone carrello
             pannelloCart = new JPanel();
             pannelloCart.setBackground(java.awt.Color.WHITE);
             pannelloCart.add(bottoneCarrello);
@@ -198,8 +204,8 @@ public class PageTwo extends JPanel {
         } catch (IOException e) {
             
             JOptionPane.showMessageDialog(null,
-                    "Error while downloading film's cover, retry later.",
-                    "Error",
+                    "Errore nello scaricamento copertina film, riprovare più tardi.",
+                    "Errore",
                     JOptionPane.ERROR_MESSAGE);
                         
         }
