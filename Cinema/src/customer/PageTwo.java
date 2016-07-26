@@ -2,57 +2,34 @@ package customer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import obj.Config;
 import obj.Film;
 import obj.YoutubePanel;
-import obj.Booking;
 import obj.Projection;
-import obj.Seat;
 
-/**
- *
- * @author Riccardo
- */
 public class PageTwo extends JPanel {
 
     private CustomerController controller;
     private Film film;
     private ArrayList<Projection> proiezione;
-    private Projection proiezione1;
     private Calendar focusedDateTime;
 
     public PageTwo(Film film, Calendar focusedDateTime) {
@@ -79,6 +56,12 @@ public class PageTwo extends JPanel {
             URL url = new URL(film.getLinkCover());
             image = ImageIO.read(url);
         } catch (IOException e) {
+            
+            JOptionPane.showMessageDialog(null,
+                    "Error while downloading film's cover, retry later.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                        
         }
         ImageIcon ii = new ImageIcon(image);
         JLabel label1 = new JLabel(imageScaling(ii, 250, 350));
@@ -111,7 +94,7 @@ public class PageTwo extends JPanel {
         pannelloTramaGridLayout.add(new JLabel());
         
         
-        JEditorPane labeln = new JEditorPane();      //film.toString());
+        JEditorPane labeln = new JEditorPane();
         
        labeln.setContentType("text/html");
         labeln.setText("<b>" + film.toString() + "</b>");
@@ -135,8 +118,8 @@ public class PageTwo extends JPanel {
             proiezione = controller.projectionFilteredByFilmAndTime(film.getIdFilm(), focusedDateTime);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
-                    "Errore lettura informazioni film, riprovare più tardi.",
-                    "Errore",
+                    "Error while reading film's informations, retry later.",
+                    "Error",
                     JOptionPane.WARNING_MESSAGE);
             System.exit(0);
         }
@@ -162,8 +145,8 @@ public class PageTwo extends JPanel {
                 bottoneCarrello = new ButtonCart(s);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null,
-                        "Errore lettura proiezione, riprovare più tardi.",
-                        "Errore",
+                        "Error while reading projection, retry later.",
+                        "Error",
                         JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }

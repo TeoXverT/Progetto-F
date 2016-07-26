@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.swing.JOptionPane;
 import obj.Film;
 import obj.Booking;
 import obj.Projection;
@@ -59,6 +60,14 @@ public class EmailSender {
                 return true;
             }
         } catch (IOException ex) {
+            
+            JOptionPane.showMessageDialog(null,
+                    "Error while sending email.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            
+            
+            
         }
         return false;
     }

@@ -6,7 +6,6 @@ import obj.Projection;
 import obj.Film;
 import obj.Booking;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -15,8 +14,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,10 +25,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- *
- * @author Yoga
- */
 public class PageFour extends JPanel {
     
     private CustomerController controller;
@@ -156,8 +149,8 @@ public class PageFour extends JPanel {
                         }
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(popUpWindow,
-                                "Errore con la scrittura della prenotazione.",
-                                "Attenzione!!!",
+                                "Error while writing booking.",
+                                "Attenction!!!",
                                 JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
