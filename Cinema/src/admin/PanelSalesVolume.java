@@ -9,12 +9,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import static java.util.Calendar.HOUR_OF_DAY;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +41,7 @@ import obj.Booking;
  * @author NEVERMIND
  */
 public class PanelSalesVolume extends JPanel {
+    private String From, To;
     
     public PanelSalesVolume(final AdminController controller, final JLabel outputGrafico) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -54,8 +55,8 @@ public class PanelSalesVolume extends JPanel {
         JPanel north = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JButton search = new JButton("Search");
         final Date today = new Date();
-        final JSpinner dateFrom = new JSpinner(new SpinnerDateModel(setDate(today, 1, 0), null, today, Calendar.MONTH));
-        final JSpinner dateTo = new JSpinner(new SpinnerDateModel(setDate(today,0,1), null, today, Calendar.MONTH));
+        final JSpinner dateFrom = new JSpinner(new SpinnerDateModel(setDate(today, 1, true), null, today, Calendar.MONTH));
+        final JSpinner dateTo = new JSpinner(new SpinnerDateModel(today, null, today, Calendar.MONTH));
         JSpinner.DateEditor formatFrom = new JSpinner.DateEditor(dateFrom, "dd-MM-yyyy");
         JSpinner.DateEditor formatTo = new JSpinner.DateEditor(dateTo, "dd-MM-yyyy");
         dateFrom.setEditor(formatFrom);
@@ -88,6 +89,7 @@ public class PanelSalesVolume extends JPanel {
                 if (x<0) {
                     search.setEnabled(false);
                 }else{
+                    
                     search.setEnabled(true);
                 }
             }
@@ -97,7 +99,9 @@ public class PanelSalesVolume extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ArrayList<Booking> books = c.salesVolume(dateToString((Date)dateFrom.getValue()), dateToString((Date)dateTo.getValue()));
+                    From = dateToString((Date)dateFrom.getValue()); 
+                    To = dateToString((Date)dateTo.getValue());
+                    ArrayList<Booking> books = c.salesVolume(From, To);
                     System.out.println(dateToString((Date)dateTo.getValue()));                               
                     double tot = tableUpdateAndCount(books);
                     total.setText(String.valueOf(tot));
@@ -146,35 +150,45 @@ public class PanelSalesVolume extends JPanel {
                 c.addChoosableFileFilter(filter);
                 int rVal = c.showSaveDialog(null);
                 if (rVal == JFileChooser.APPROVE_OPTION) {
-//                    filename.setText(c.getSelectedFile().getName());
-//                    dir.setText(c.getCurrentDirectory().toString());
+                    String filename = (c.getSelectedFile().getName());
+                    String path = (c.getCurrentDirectory().toString());
+                    System.out.println("path = " + path);
+                    System.out.println("filename = " + filename);
+                      try{
+                        try (PrintWriter writer = new PrintWriter(path + "/the-file-name.txt", "UTF-8")) {
+                            writer.println("From: " + From + " To: " + To);
+                            writer.println("Total Gain: " + total.getText());
+                        }
+                      }catch(Exception a){
+                          
+                      }
                 }
                 if (rVal == JFileChooser.CANCEL_OPTION) {
 //                    outputGrafico.setText("You pressed cancel");
                 }
             }
         });
-         
+
         return south;
     }
-    
+
 //******************************************************************************
-    private Date setDate(Date date, int month, int check) {
+    private Date setDate(Date date, int month, boolean check) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        if(check==0){ //FROM
+        if (check) { //FROM
             cal.add(Calendar.MONTH, -month);
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
             return cal.getTime();
-        }else{        //TO
+        } else {        //TO
             cal.set(Calendar.HOUR_OF_DAY, 22);
             cal.set(Calendar.MINUTE, 59);
             cal.set(Calendar.SECOND, 59);
             cal.set(Calendar.MILLISECOND, 0);
-            
+
             return cal.getTime();
         }
     }
