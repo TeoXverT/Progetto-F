@@ -21,11 +21,11 @@ public class AdminController {
 
     private final AdapterSQLAdmin adapter;
 
-    private final int PERIOD = 10000; //Dato per il Thread di pulitura bigletti non pagati
+    private final int PERIOD = 10000;
     private final char[] PASSWORD = {'1', '2', '3'};
     private final String ALPHA_NUMERIC_SEED = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private final int CODE_LENGTH = 5;
-    private EmailSender emailSender;
+    private final EmailSender emailSender;
 
     public AdminController() {
 

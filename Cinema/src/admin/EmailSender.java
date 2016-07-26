@@ -46,7 +46,7 @@ public class EmailSender {
                 + "\" ALT=\"some text\" WIDTH=600 HEIGHT=400><br><br>";
         message = message + "<p><font size=\"4\">Complimenti abbiamo riceveuto il tuo pagamento.</font></p><BR>";
         message = message + "<p><font size=\"3\">Biglietto N°: " + booking.getIdBooking() + " Codice: " + personalCode + "</font></p><BR>";
-        message = message + "<i>*Il biglietto può essere utilizzato una volta sola.<br>**E' consigliabile presentarsi 10 min. prima del inizio del film.<br>***Si prega di portare con se questo documento al cinema.</i><br><br>";
+        message = message + "<i>*Il biglietto puo' essere utilizzato una volta sola.<br>**E' consigliabile presentarsi 10 min. prima del inizio del film.<br>***Si prega di portare con se questo documento al cinema.</i><br><br>";
         message = message + "<img src=\"http://xsacniopanzax.altervista.org/progettof/popcorn.png\" width=\"300\" height=\"400\"><br><br><br><br>";
         message = message + "</body></html>";
 

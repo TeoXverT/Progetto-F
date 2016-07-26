@@ -23,7 +23,6 @@ public class SQLConnection {
     }
 
     public void writingQuery(String query) throws SQLException {
-        System.out.println(query);
         stmt.executeUpdate(query);
     }
 

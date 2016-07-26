@@ -56,6 +56,9 @@ public class CustomerController {
 
     public int writeBooking(Booking booking) throws SQLException {
         int idBooking = 0;
+        if (booking.getEmail().isEmpty() || booking.getBookedSeat().isEmpty() || booking.getProjection() == null) {
+            return 0;
+        }
         if (adapter.checkBookedSeat(booking.getProjection().getIdProjection(), booking.getBookedSeat())) { //Controllo disponibilità posti
             adapter.writeBooking(booking);
             idBooking = adapter.getIdLastBooking();

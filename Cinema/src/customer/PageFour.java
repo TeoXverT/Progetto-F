@@ -158,14 +158,7 @@ public class PageFour extends JPanel {
                 openPage(new PageThree(screening));
             } else {
                 booking.setIdBooking(idBooking);
-
                 openPage(new PageFive(booking));
-//                if (!controller.makeEmailRequest(booking)) {
-//                    JOptionPane.showMessageDialog(popUpWindow,
-//                            "Attenzione errore inaspettato, contattare l'assistenza.",
-//                            "Attenzione!!!",
-//                            JOptionPane.WARNING_MESSAGE);
-//                }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(popUpWindow,
