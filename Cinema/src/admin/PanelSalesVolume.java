@@ -44,6 +44,7 @@ public class PanelSalesVolume extends JPanel {
     private String From, To;
     
     public PanelSalesVolume(final AdminController controller, final JLabel outputGrafico) {
+        outputGrafico.setText("Sales Volume");
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(North(controller));
         this.add(Center());
