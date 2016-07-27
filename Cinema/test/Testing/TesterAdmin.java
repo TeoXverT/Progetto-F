@@ -37,7 +37,6 @@ public class TesterAdmin {
     public void getBooking()  {
         
         ArrayList<Booking> booking = new ArrayList<>();
-        
         try {
             booking = c.getBooking();
         } catch (SQLException ex) {
