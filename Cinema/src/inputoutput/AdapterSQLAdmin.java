@@ -151,7 +151,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
         result = SQL.readingQuery(query);
         hall = parser.hall(result);
         result.close();
-
+        
         return hall;
     }
 

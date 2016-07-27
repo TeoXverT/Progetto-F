@@ -112,6 +112,7 @@ public class AdapterSQLCustomer extends AdapterSQL {
         query = "SELECT * FROM Sala WHERE id_sala = '" + idHall + "'";
 
         result = SQL.readingQuery(query);
+        
         hall = parser.hall(result).get(0);
         result.close();
 

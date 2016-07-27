@@ -8,6 +8,7 @@ package Testing;
 import customer.CustomerController;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import obj.Booking;
@@ -27,17 +28,59 @@ import static org.junit.Assert.*;
  */
 public class TesterCustomer {
     
+    CustomerController c;
+    
     public TesterCustomer() {
+         c = CustomerController.getInstance();
     }
     
     @Test
-    public void eliminazioneBiglettiNonPagati() {
-        CustomerController c = CustomerController.getInstance();
+    public void scritturaPrenotazione() {
+        
         try {
-           
-             assertThat( c.writeBooking(new Booking(1, null, null, null, 0, 0, 0, ""))==0 , is(true));
+            //testo scrittura prenotazione vuota se ritorna 0
+            assertThat( c.writeBooking(new Booking(1, null, null, null, 0, 0, 0, ""))==0 , is(true));
         } catch (SQLException ex) {
             Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    
+    @Test
+    public void filmFuturiGiornoEOra() throws SQLException {
+        //testo se dato un giorno molto lontano in cui non ci sono proiezioni effettivamente ritorna un array vuoto
+        assertThat(c.futureFilmBySlider(125, 12).isEmpty(), is(true));
+        
+        
+    }
+    
+    
+    
+    @Test
+    public void getTakenSeats() throws SQLException {
+        //testo se dato un id Sala ci sono dei posti prenotati: in questo caso voglio che sia vuoto fornendo un id inesistente
+        assertThat(c.getTakenSeats(155).isEmpty(), is(true));
+    }
+    
+    
+    
+    @Test
+    public void projectionFilteredByFilmAndTime() throws SQLException {
+        //testo se le proiezioni filtrate tramite un id Film inesistente restituisce un array vuoto
+        assertThat(c.projectionFilteredByFilmAndTime(154, Calendar.getInstance()).isEmpty(), is(true));
+        
+    }
+    
+    
+    @Test
+    public void test3() throws SQLException {
+        //testo se Config non è NULL 
+        assertThat(c.getConfig() == null, is(false));
+    }
+    
+    
+    
+    
+    
 }
