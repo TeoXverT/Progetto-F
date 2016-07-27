@@ -108,4 +108,13 @@ public class Booking {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" + "idBooking=" + idBooking + ", dateTime=" + dateTime + ", price=" + price + ", bookedSeat=" + bookedSeat + ", numberOfGlasses=" + numberOfGlasses + ", bookingStatus=" + bookingStatus + ", projection=" + projection + ", email=" + email + '}';
+    }
+    
+    public String toStringFileSalesVolume() {
+        return "ID = " + idBooking + " | Date & Time = " + getData_ora_sql() + " | price = " + price + " | 3D Glasses = " + numberOfGlasses;
+    }
 }

@@ -8,6 +8,7 @@ import obj.Film;
 import obj.Projection;
 import obj.Booking;
 import inputoutput.AdapterSQLAdmin;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -216,5 +217,22 @@ public class AdminController {
         a = a.replaceAll("\"", " ");
         a = a.replaceAll("'", " ");
         return a;
+    }
+    
+    public boolean fileWriter(String path, String From, String To, ArrayList<Booking> b, String total){
+        try{
+            try (PrintWriter writer = new PrintWriter(path, "UTF-8")) {
+                writer.println("From: " + From.substring(0, 10) + " To: " + To.substring(0, 10));
+                writer.println("\n");
+                for(Booking a : b){
+                    writer.println(a.toStringFileSalesVolume());
+                }
+                writer.println("\n");
+                writer.println("Total Gain: " + total);
+            }
+        }catch(Exception a){
+            return false;              
+        }
+        return true;
     }
 }

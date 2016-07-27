@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -22,6 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -42,13 +42,15 @@ import obj.Booking;
  */
 public class PanelSalesVolume extends JPanel {
     private String From, To;
+    private ArrayList<Booking> books;
+//    private double tot;
     
     public PanelSalesVolume(final AdminController controller, final JLabel outputGrafico) {
         outputGrafico.setText("Sales Volume");
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(North(controller));
         this.add(Center());
-        this.add(South());
+        this.add(South(controller));
     }
     
     private JPanel North(final AdminController c){
@@ -101,7 +103,7 @@ public class PanelSalesVolume extends JPanel {
                 try {
                     From = dateToString((Date)dateFrom.getValue()).substring(0, 10) + " 00:00:00"; 
                     To = dateToString((Date)dateTo.getValue()).substring(0, 10) + " 23:59:59";
-                    ArrayList<Booking> books = c.salesVolume(From, To);                          
+                    books = c.salesVolume(From, To);                          
                     double tot = tableUpdateAndCount(books);
                     total.setText(String.valueOf(tot));
                     
@@ -133,7 +135,7 @@ public class PanelSalesVolume extends JPanel {
     }
     
     final JTextField total = new JTextField("0", 10);
-    private JPanel South(){
+    private JPanel South(final AdminController contr){
         JPanel south = new JPanel();
         JLabel tot = new JLabel("Tot: ");
         total.setEditable(false); 
@@ -155,14 +157,10 @@ public class PanelSalesVolume extends JPanel {
                 if (rVal == JFileChooser.APPROVE_OPTION) {
                     String filename = (c.getSelectedFile().getName());
                     String path = (c.getCurrentDirectory().toString());
-                      try{
-                        try (PrintWriter writer = new PrintWriter(path + "/" + filename  + ".txt", "UTF-8")) {
-                            writer.println("From: " + From + " To: " + To);
-                            writer.println("Total Gain: " + total.getText());
-                        }
-                      }catch(Exception a){
-                          
-                      }
+                    if (contr.fileWriter(path + "/" + filename  + ".txt", From, To, books, total.getText())) {
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Error while trying to export the data. \n", "Save Error", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
                 if (rVal == JFileChooser.CANCEL_OPTION) {
 //                    outputGrafico.setText("You pressed cancel");

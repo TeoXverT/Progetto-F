@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inputoutput;
 
 import obj.Seat;
@@ -15,51 +10,19 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 
-/**
- *
- * @author Yoga
- */
 public class AdapterSQLCustomer extends AdapterSQL {
 
     public AdapterSQLCustomer() {
     }
 
-//    public ArrayList<Film> futureFilm(int deltaData) throws SQLException {//C
-//
-//        ArrayList<Film> Films;
-//        ResultSet risultatoQuery;
-//
-////        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-////        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
-////        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-//        String query = " SELECT DISTINCT   Film.id_film,    Film.titolo,    Film.descrizione,    Film.data_ora,   Film.durata,    Film.genere,    Film.link_copertina, Film.link_youtube "
-//                + "     FROM Film, Proiezione "
-//                + "     WHERE Film.id_film = Proiezione.id_film AND DATEDIFF(Proiezione.data_ora, (NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)) = " + deltaData + " AND TIMESTAMPDIFF(MINUTE,  NOW(),  Proiezione.data_ora)>0 "
-//                + "     ";
-//        /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
-//        /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
-//
-//        risultatoQuery = SQL.eseguiQueryLettura(query);
-//        Films = parser.Film(risultatoQuery);
-//
-//        return Films;
-//
-//    }
+
     public ArrayList<Film> getIncomingFilmBySlider(int deltaData, int sliderValue) throws SQLException {//C
 
         ArrayList<Film> film;
         ResultSet result;
         String query;
-//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
-//        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-        //    String query = "SELECT DISTINCT f.id_film, f.titolo, f.descrizione, f.data_ora, f.durata, f.genere, f.link_copertina, f.link_youtube " +
-        //    "FROM Proiezione p, Film f " +
-        //    "WHERE f.id_film = p.id_film AND DATEDIFF(p.data_ora, NOW() + INTERVAL 135 MINUTE) = " +deltaData+ " AND p.data_ora > (concat(date(now()+ INTERVAL  " +deltaData+ " DAY + INTERVAL 135 MINUTE), ' " +sliderValue+ ":00:00'))";
+
         /* Qui mettere la data e ora dopo la quale visaulizzare i film*/
         /*Se oggi mettere 0, altrimenti per domani metti 1 ecc...*/
 
@@ -112,6 +75,7 @@ public class AdapterSQLCustomer extends AdapterSQL {
         query = "SELECT * FROM Sala WHERE id_sala = '" + idHall + "'";
 
         result = SQL.readingQuery(query);
+        
         hall = parser.hall(result).get(0);
         result.close();
 
