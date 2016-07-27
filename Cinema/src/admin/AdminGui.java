@@ -33,7 +33,7 @@ public class AdminGui extends JFrame {
     public AdminGui() {
         display = new JPanel(new BorderLayout());
 
-        JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
+        JLabel imagineCaricamento = new JLabel(new ImageIcon("images/loading.gif"));
         loadingPanel = new JPanel();
         loadingPanel.add(imagineCaricamento);
 
@@ -164,11 +164,11 @@ public class AdminGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (controller.codeVerification(code.getPassword())) {
                     controller = AdminController.getInstance();
-                    setJMenuBar(craftMenuBar());
                     JPanel home = new JPanel(new BorderLayout());
                     ImageIcon logo = new ImageIcon("images/logo.png");
                     home.add(new JLabel(new ImageIcon(logo.getImage().getScaledInstance(640, 433, java.awt.Image.SCALE_SMOOTH))), BorderLayout.CENTER);
                     updateGUI(home);
+                    uio();
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "Invalid password. Try again.",
@@ -178,6 +178,10 @@ public class AdminGui extends JFrame {
             }
         };
         return event;
+    }
+
+    private void uio() {
+        setJMenuBar(craftMenuBar());
     }
 
     private ActionListener showBooking() {
@@ -338,10 +342,10 @@ public class AdminGui extends JFrame {
         try {
             hall = controller.getHall();
         } catch (SQLException ex) {
-            System.out.println("ERRORE: lettura sale");
+            System.out.println("ERRORE: lettura sale sql exception");
             serverError();
         } catch (java.lang.NullPointerException ex) {
-            System.out.println("ERRORE: lettura sale");
+            System.out.println("ERRORE: lettura sale null exception");
             serverError();
         }
 

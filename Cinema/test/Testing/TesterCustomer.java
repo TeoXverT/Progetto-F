@@ -6,6 +6,7 @@
 package Testing;
 
 import customer.CustomerController;
+import inputoutput.AdapterSQLAdmin;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,6 +30,16 @@ public class TesterCustomer {
     
     public TesterCustomer() {
     }
+    @Test
+    public void testQuery() throws SQLException {
+        ArrayList<Hall> hall =new ArrayList();
+        
+        AdapterSQLAdmin sql  = new AdapterSQLAdmin();
+        assertThat(sql.getHall().isEmpty(), is(false));
+        
+    }
+    
+   
     
     @Test
     public void eliminazioneBiglettiNonPagati() {

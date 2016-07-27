@@ -149,6 +149,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
 
         query = "SELECT * FROM Sala";
         result = SQL.readingQuery(query);
+
         hall = parser.hall(result);
         result.close();
 
@@ -421,8 +422,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
         String query = "UPDATE Booking "
                 + "SET Booking.booking_status=1,Booking.date_time=(NOW() + INTERVAL " + TIME_ZONE_COMPENSATION + " HOUR)"
                 + " WHERE Booking.id_booking = " + idBooking;
-        
-        
+
         SQL.writingQuery(query);
     }
 

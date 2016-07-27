@@ -11,10 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import obj.Booking;
 import static org.hamcrest.CoreMatchers.is;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -42,10 +39,5 @@ public class TesterAdmin {
             Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-  
-
-//    private void assertThat(boolean b, FeatureState is) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-
+ 
 }
