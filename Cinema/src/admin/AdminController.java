@@ -1,5 +1,6 @@
 package admin;
 
+import customer.CustomerController;
 import obj.Seat;
 import obj.Config;
 import obj.Hall;
@@ -22,12 +23,14 @@ public class AdminController {
     private final AdapterSQLAdmin adapter;
 
     private final int PERIOD = 10000;
-    private final char[] PASSWORD = {'1', '2', '3'};
+    private static final char[] PASSWORD = {'1', '2', '3'};
     private final String ALPHA_NUMERIC_SEED = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private final int CODE_LENGTH = 5;
     private final EmailSender emailSender;
 
-    public AdminController() {
+    private static boolean Authentication = false;
+
+    private AdminController() {
 
         adapter = new AdapterSQLAdmin();
         emailSender = new EmailSender();
@@ -35,6 +38,23 @@ public class AdminController {
         Timer timer = new Timer();
         timer.schedule(ticketSender(), 0, PERIOD);
 
+    }
+
+    public static synchronized AdminController getInstance() {
+        if (Authentication) {
+            return new AdminController();
+        } else {
+            return null;
+        }
+    }
+
+    public static boolean codeVerification(char[] code) {
+        if (Arrays.equals(code, PASSWORD)) {
+            Authentication = true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private TimerTask ticketSender() {
@@ -86,17 +106,6 @@ public class AdminController {
             builder.append(ALPHA_NUMERIC_SEED.charAt(character));
         }
         return builder.toString();
-    }
-
-    public boolean codeVerification(char[] code) {
-        boolean isCorrect;
-        char[] correctPassword = PASSWORD;
-
-        if (Arrays.equals(code, correctPassword)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public ArrayList<Booking> getBooking() throws SQLException {

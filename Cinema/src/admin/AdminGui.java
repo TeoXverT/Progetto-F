@@ -24,14 +24,13 @@ import javax.swing.table.TableColumn;
  */
 public class AdminGui extends JFrame {
 
-    private final AdminController controller;
+    private AdminController controller;
 
     private JPanel display;
     private JLabel bottomText;
     private JPanel loadingPanel;
 
     public AdminGui() {
-        controller = new AdminController();
         display = new JPanel(new BorderLayout());
 
         JLabel imagineCaricamento = new JLabel(new ImageIcon("immagini/caricamento.gif"));
@@ -43,7 +42,7 @@ public class AdminGui extends JFrame {
     }
 
     private void draw() {
-        display = craftLoginForm(); 
+        display = craftLoginForm();
 
         bottomText = new JLabel("", SwingConstants.CENTER);
         JPanel sud = new JPanel(new BorderLayout());
@@ -164,6 +163,8 @@ public class AdminGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (controller.codeVerification(code.getPassword())) {
+                    controller = AdminController.getInstance();
+ 
                     setJMenuBar(craftMenuBar());
                     JPanel home = new JPanel(new BorderLayout());
                     ImageIcon logo = new ImageIcon("images/logo.png");
