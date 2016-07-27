@@ -349,17 +349,6 @@ public class AdminGui extends JFrame {
         };
         return event;
     }
-
-//    private ActionListener hallStatus(final int id_sala) {
-//        ActionListener event = new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                updateGUI(loadingPanel);
-//                updateGUI(new PanelHallState(controller, bottomText, id_sala));
-//            }
-//        };
-//        return event;
-//    }
 ///////////////////////////////////////////////////////   COMMON USE STUFF     ////////////////////////////////
 
     private void updateGUI(final JPanel displayPanel) {

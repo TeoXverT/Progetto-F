@@ -21,20 +21,13 @@ import obj.Hall;
 import obj.Seat;
 
 public class PageThree extends JPanel {
-
     private CustomerController controller;
-   
-
     private double totale_prezzo;
     private Component frameErrore;
     private JLabel prezzo = new JLabel();
     
-
     public PageThree(Projection proiezione) {
         this.controller = CustomerController.getInstance();
-
-       
-
         initGui(proiezione);
     }
 
@@ -145,7 +138,7 @@ public class PageThree extends JPanel {
         }
     }
 
-    public ActionListener seatClick(final int i, final ImageIcon seat_vip, final ImageIcon seat_handicap, final ImageIcon seat_free, final ImageIcon seat_selezione,final ArrayList<Seat> seats,
+    private ActionListener seatClick(final int i, final ImageIcon seat_vip, final ImageIcon seat_handicap, final ImageIcon seat_free, final ImageIcon seat_selezione,final ArrayList<Seat> seats,
             final ArrayList<Seat> Taken_seats, final Projection screening, final Config config) {
         ActionListener event = new ActionListener() {
 
