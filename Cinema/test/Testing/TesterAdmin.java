@@ -7,9 +7,11 @@ package Testing;
 
 import customer.CustomerController;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import obj.Booking;
+import obj.Film;
 import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.Test;
@@ -39,5 +41,38 @@ public class TesterAdmin {
             Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
- 
+    
+    @Test
+    public void creazioneFilmCampoVuoto() {
+        CustomerController c = CustomerController.getInstance();
+        try {
+           
+             assertThat(c.writeFilm(new Film(null, null, null, null, null, null)) , is(false));
+        } catch (SQLException ex) {
+            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Test
+    public void fileWriterPercorsoNullo() {
+        CustomerController c = CustomerController.getInstance();
+        try {
+           
+             assertThat(c.fileWriter(null, "..", "..", null, "") , is(false));
+        } catch (SQLException ex) {
+            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    @Test
+    public void rimozioneApici() {
+        CustomerController c = CustomerController.getInstance();
+        try {
+           
+             assertThat(c.stringCharReplacer("a'a")=="a a" , is(true));
+        } catch (SQLException ex) {
+            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

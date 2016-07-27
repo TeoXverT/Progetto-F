@@ -235,4 +235,10 @@ public class AdminController {
         }
         return true;
     }
+    
+    public ArrayList<Seat> getSeatsByIdHall(int idHall) {
+        ArrayList<Seat> seat;
+        seat = adapter.getSeatByIdHall(idHall);
+        return seat;
+    }
 }

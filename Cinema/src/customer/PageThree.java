@@ -23,130 +23,130 @@ import obj.Seat;
 public class PageThree extends JPanel {
 
     private CustomerController controller;
-    private Projection screening;
-    private Booking booking;
-
    
-    private ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
-    private ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
-    private ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
-    private ImageIcon seat_selezione = new ImageIcon("images/hall/seat_selezione.png");
 
     private double totale_prezzo;
-    private Config config;
-
-    private Hall hall;
-    private ArrayList<Seat> seats;
-    private ArrayList<Seat> booked_seats;
-    private ArrayList<Seat> Taken_seats = new ArrayList<>();
     private Component frameErrore;
     private JLabel prezzo = new JLabel();
-    private JButton prosegui = new JButton("PROSEGUI");
+    
 
     public PageThree(Projection proiezione) {
         this.controller = CustomerController.getInstance();
-        this.screening = proiezione;
-        try {
-            this.hall = controller.getHallByIdHall(proiezione.getRoom().getIdHall());
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
 
-        }
+       
 
-        booked_seats = new ArrayList<>();
-        seats = new ArrayList<>();
-        seats = controller.getSeatsByIdHall(proiezione.getRoom().getIdHall());
-        try {
-            config = controller.getConfig();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(frameErrore, "Errore con il server", "Attenzione!!!", JOptionPane.WARNING_MESSAGE);
-
-        }
-        initGui();
+        initGui(proiezione);
     }
 
-    public void initGui() {
-        ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
-        ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
-        this.removeAll();
-        this.setLayout(new BorderLayout(20, 30));
-
-        JPanel nord = new JPanel();
-        nord.setBackground(java.awt.Color.WHITE);
-
-        JPanel sud = new JPanel(new GridLayout(0, 2));
-        JPanel center = new JPanel(new BorderLayout());
-
-        JPanel seats_layout = new JPanel(new GridLayout(hall.getRows(), hall.getColumns(), 0, 1));
-
-        JLabel screen = new JLabel(screen_icon);
-        nord.add(screen);
-        checkTakenSeats();
-
-        for (int i = 0; i < booked_seats.size(); i++) {
-            for (int j = 0; j < seats.size(); j++) {
-                if (booked_seats.get(i).getId() == seats.get(j).getId()) {
-                    seats.get(j).setIcon(seat_taken);
-                    seats.get(j).setOccupato(true);
+    public void initGui(Projection screening) {
+        try {
+            ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
+            ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
+            ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
+            ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
+            ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
+            ImageIcon seat_selezione = new ImageIcon("images/hall/seat_selezione.png");
+            ArrayList<Seat> seats = new ArrayList<>();
+            ArrayList<Seat> booked_seats = new ArrayList<>();
+            ArrayList<Seat> Taken_seats = new ArrayList<>();
+            Booking booking = null;
+            
+            
+            Config config = controller.getConfig();
+            Hall hall = controller.getHallByIdHall(screening.getRoom().getIdHall());
+            seats = controller.getSeatsByIdHall(screening.getRoom().getIdHall());
+            
+            this.removeAll();
+            this.setLayout(new BorderLayout(20, 30));
+            
+            JPanel nord = new JPanel();
+            nord.setBackground(java.awt.Color.WHITE);
+            
+            JPanel sud = new JPanel(new GridLayout(0, 2));
+            JPanel center = new JPanel(new BorderLayout());
+            
+            JPanel seats_layout = new JPanel(new GridLayout(hall.getRows(), hall.getColumns(), 0, 1));
+            
+            JLabel screen = new JLabel(screen_icon);
+            nord.add(screen);
+            checkTakenSeats(booked_seats, screening);
+            
+            for (int i = 0; i < booked_seats.size(); i++) {
+                for (int j = 0; j < seats.size(); j++) {
+                    if (booked_seats.get(i).getId() == seats.get(j).getId()) {
+                        seats.get(j).setIcon(seat_taken);
+                        seats.get(j).setOccupato(true);
+                    }
                 }
             }
-        }
-
-        for (int i = 0; i < seats.size(); i++) {
-            if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
-                seats.get(i).addActionListener(seatClick(i));
-            }
-            seats_layout.add(seats.get(i));
-        }
-        center.add(seats_layout, BorderLayout.CENTER);
-
-        JPanel leggenda = new JPanel(new BorderLayout());
-        ImageIcon Seat_description = new ImageIcon("images/Leggenda.png");
-        JLabel legend = new JLabel(Seat_description);
-        leggenda.add(legend, BorderLayout.WEST);
-
-        JPanel total = new JPanel(new GridLayout(2, 2));
-        JLabel totale = new JLabel("TOTALE: ");
-        JButton indietro = new JButton("indietro");
-
-        total.add(totale, BorderLayout.WEST);
-        total.add(prezzo, BorderLayout.EAST);
-        total.add(indietro);
-        total.add(prosegui);
-
-        indietro.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                goback();
-            }
-        });
-
-        prosegui.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (Taken_seats.size() != 0) {
-                    booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0, null);
-                    openPage(new PageFour(booking));
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "Please select the seat.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
+            
+            for (int i = 0; i < seats.size(); i++) {
+                if (seats.get(i).isDisable() == false && seats.get(i).isOccupato() == false) {
+                    seats.get(i).addActionListener(seatClick(i, seat_vip, seat_handicap, seat_free, seat_selezione, seats, Taken_seats, screening, config));
                 }
+                seats_layout.add(seats.get(i));
             }
-        });
-
-        sud.add(leggenda);
-        sud.add(total);
-        
-        this.add(nord, BorderLayout.NORTH);
-        this.add(center, BorderLayout.CENTER);
-        this.add(sud, BorderLayout.SOUTH);
+            center.add(seats_layout, BorderLayout.CENTER);
+            
+            JPanel leggenda = new JPanel(new BorderLayout());
+            ImageIcon Seat_description = new ImageIcon("images/Leggenda.png");
+            JLabel legend = new JLabel(Seat_description);
+            leggenda.add(legend, BorderLayout.WEST);
+            
+            JPanel total = new JPanel(new GridLayout(2, 2));
+            JLabel totale = new JLabel("TOTALE: ");
+            JButton indietro = new JButton("indietro");
+            JButton prosegui = new JButton("PROSEGUI");
+            total.add(totale, BorderLayout.WEST);
+            total.add(prezzo, BorderLayout.EAST);
+            total.add(indietro);
+            total.add(prosegui);
+            
+            indietro.addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    goback();
+                }
+            });
+            
+            prosegui.addActionListener(proseguiClick(Taken_seats, booking, screening));
+            
+            sud.add(leggenda);
+            sud.add(total);
+            
+            this.add(nord, BorderLayout.NORTH);
+            this.add(center, BorderLayout.CENTER);
+            this.add(sud, BorderLayout.SOUTH);
+        } catch (SQLException ex) {
+            Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+    private ActionListener proseguiClick(final ArrayList<Seat> Taken_seats, final Booking booking, final Projection screening) {
+        ActionListener event = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                cartControl(Taken_seats, booking, screening);
+            }
+        };
+        return event;
     }
 
-    public ActionListener seatClick(final int i) {
+    private void cartControl(ArrayList<Seat> Taken_seats, Booking booking, Projection screening) {  //  questo metodo ha il compito di controllare 
+        if (Taken_seats.size() != 0) {
+            booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0, null);
+            openPage(new PageFour(booking));
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Please select the seat.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public ActionListener seatClick(final int i, final ImageIcon seat_vip, final ImageIcon seat_handicap, final ImageIcon seat_free, final ImageIcon seat_selezione,final ArrayList<Seat> seats,
+            final ArrayList<Seat> Taken_seats, final Projection screening, final Config config) {
         ActionListener event = new ActionListener() {
 
             @Override
@@ -199,7 +199,7 @@ public class PageThree extends JPanel {
         this.repaint();
     }
 
-    private void checkTakenSeats() {
+    private void checkTakenSeats(ArrayList<Seat> booked_seats, Projection screening) {
         try {
             booked_seats.clear();
             booked_seats = controller.getTakenSeats(screening.getIdProjection());

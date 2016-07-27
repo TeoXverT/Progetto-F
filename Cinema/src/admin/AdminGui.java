@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -70,9 +72,9 @@ public class AdminGui extends JFrame {
         menuBar.add(menu);
 
         menu.addSeparator();
-        submenu = new JMenu("Hall Status");
-
-        menu.add(CreateHallList(submenu));
+        menuItem = new JMenuItem("Hall Status");
+        menuItem.addActionListener(CreateHallList());
+        menu.add(menuItem);
 
         menuItem = new JMenuItem("Film");
         menuItem.addActionListener(viewFilmList());
@@ -336,37 +338,28 @@ public class AdminGui extends JFrame {
         return event;
     }
 
-    private JMenu CreateHallList(JMenu submenu) {
-        ArrayList<Hall> hall = new ArrayList<>();
-        ArrayList<JMenuItem> menuItem = new ArrayList<>();
-        try {
-            hall = controller.getHall();
-        } catch (SQLException ex) {
-            System.out.println("ERRORE: lettura sale sql exception");
-            serverError();
-        } catch (java.lang.NullPointerException ex) {
-            System.out.println("ERRORE: lettura sale null exception");
-            serverError();
-        }
-
-        for (int i = 0; i < hall.size(); i++) {
-            menuItem.add(new JMenuItem("Sala " + hall.get(i).getIdHall()));
-            menuItem.get(i).addActionListener(hallStatus(hall.get(i).getIdHall()));
-            submenu.add(menuItem.get(i));
-        }
-        return submenu;
-    }
-
-    private ActionListener hallStatus(final int id_sala) {
+    private ActionListener CreateHallList() {
         ActionListener event = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 updateGUI(loadingPanel);
-                updateGUI(new PanelHallState(controller, bottomText, id_sala));
+                bottomText.setText("Opening halls list...");
+                updateGUI(new PanelHallState(controller, bottomText));
             }
         };
         return event;
     }
+
+//    private ActionListener hallStatus(final int id_sala) {
+//        ActionListener event = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                updateGUI(loadingPanel);
+//                updateGUI(new PanelHallState(controller, bottomText, id_sala));
+//            }
+//        };
+//        return event;
+//    }
 ///////////////////////////////////////////////////////   COMMON USE STUFF     ////////////////////////////////
 
     private void updateGUI(final JPanel displayPanel) {
