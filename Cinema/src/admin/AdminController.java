@@ -222,7 +222,7 @@ public class AdminController {
     public boolean fileWriter(String path, String From, String To, ArrayList<Booking> b, String total){
         try{
             try (PrintWriter writer = new PrintWriter(path, "UTF-8")) {
-                writer.println("From: " + From + " To: " + To);
+                writer.println("From: " + From.substring(0, 10) + " To: " + To.substring(0, 10));
                 writer.println("\n");
                 for(Booking a : b){
                     writer.println(a.toStringFileSalesVolume());

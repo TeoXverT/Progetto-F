@@ -115,6 +115,6 @@ public class Booking {
     }
     
     public String toStringFileSalesVolume() {
-        return "ID=" + idBooking + " | Date & Time=" + getData_ora_sql() + " | price=" + price + " | numberOfGlasses=" + numberOfGlasses;
+        return "ID = " + idBooking + " | Date & Time = " + getData_ora_sql() + " | price = " + price + " | 3D Glasses = " + numberOfGlasses;
     }
 }
