@@ -309,7 +309,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
         ResultSet risultato_query;
         String query = "SELECT * \n"
                 + "FROM `Booking`\n"
-                + "WHERE booking_status =1\n"
+                + "WHERE booking_status =3\n"
                 + "AND date_time >= '" + a + "'\n"
                 + "AND date_time <= '" + b + "'";
         risultato_query = SQL.readingQuery(query);

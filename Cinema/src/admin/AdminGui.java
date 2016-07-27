@@ -164,7 +164,6 @@ public class AdminGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (controller.codeVerification(code.getPassword())) {
                     controller = AdminController.getInstance();
- 
                     setJMenuBar(craftMenuBar());
                     JPanel home = new JPanel(new BorderLayout());
                     ImageIcon logo = new ImageIcon("images/logo.png");

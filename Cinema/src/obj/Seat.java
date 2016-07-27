@@ -111,10 +111,10 @@ public class Seat extends JButton {
         if (vip == true) {
             return 2;
         }
-        if (handicap = true) {
+        if (handicap == true) {
             return 3;
         }
-        if (disable = true) {
+        if (disable == true) {
             return 4;
         } else {
             return 1;

@@ -5,10 +5,16 @@
  */
 package Testing;
 
-import com.sun.org.apache.xerces.internal.util.FeatureState;
-import static com.sun.org.apache.xerces.internal.util.FeatureState.is;
 import customer.CustomerController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import obj.Booking;
+import static org.hamcrest.CoreMatchers.is;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -29,10 +35,17 @@ public class TesterAdmin {
     @Test
     public void eliminazioneBiglettiNonPagati() {
         CustomerController c = CustomerController.getInstance();
+        try {
+           
+             assertThat( c.writeBooking(new Booking(1, null, null, null, 0, 0, 0, ""))==0 , is(true));
+        } catch (SQLException ex) {
+            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+  
 
-    private void assertThat(boolean b, FeatureState is) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    private void assertThat(boolean b, FeatureState is) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
 }
