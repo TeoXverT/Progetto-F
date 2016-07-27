@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Testing;
 
 import customer.CustomerController;
@@ -51,9 +46,7 @@ public class TesterCustomer {
     public void filmFuturiGiornoEOra() throws SQLException {
         //testo se dato un giorno molto lontano in cui non ci sono proiezioni effettivamente ritorna un array vuoto
         assertThat(c.futureFilmBySlider(125, 12).isEmpty(), is(true));
-        
-        
-    }
+     }
     
     
     
@@ -69,7 +62,6 @@ public class TesterCustomer {
     public void projectionFilteredByFilmAndTime() throws SQLException {
         //testo se le proiezioni filtrate tramite un id Film inesistente restituisce un array vuoto
         assertThat(c.projectionFilteredByFilmAndTime(154, Calendar.getInstance()).isEmpty(), is(true));
-        
     }
     
     
@@ -84,11 +76,6 @@ public class TesterCustomer {
     public void getSeatsByIdHall() {
         //testo che l'array di posti di una sala inesistente sia effettivamente vuoto
         assertThat(c.getSeatsByIdHall(1121).isEmpty(), is(true));
-        
     }
-    
-    
-    
-    
     
 }
