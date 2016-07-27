@@ -36,7 +36,7 @@ public class PanelAddHall extends JPanel {
     AdminController controller;
     JComboBox seat_type;
 
-    private PanelAddHall(AdminController controller, final JLabel outputGrafico) {
+    public PanelAddHall(AdminController controller, final JLabel outputGrafico) {
         this.outputGrafico = outputGrafico;
         this.controller = controller;
         this.setLayout(new GridLayout(0, 2));
