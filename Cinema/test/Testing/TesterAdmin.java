@@ -70,7 +70,7 @@ public class TesterAdmin {
         CustomerController c = CustomerController.getInstance();
         try {
            
-             assertThat(c.stringCharReplacer("a'a")=="a a" , is(false));
+             assertThat(c.stringCharReplacer("a'a")=="a a" , is(true));
         } catch (SQLException ex) {
             Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
