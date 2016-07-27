@@ -23,14 +23,14 @@ import obj.Seat;
  */
 public class PanelHallState extends JPanel {
 
-    AdminController controller;
-    CustomerController controller_cliente = new CustomerController();
-    JLabel outputGrafico;
-    ArrayList<Projection> proiezioni;
+    private AdminController controller;
+    CustomerController controller_cliente = new CustomerController(); // da togliere
+    private JLabel outputGrafico;
+    private ArrayList<Projection> proiezioni;
     private ArrayList<Seat> seats;
     private ArrayList<Seat> bookedSeats;
-    int id_sala;
-    Hall sala;
+    private int id_sala;
+    private Hall sala;
     private ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
 
     public PanelHallState(final AdminController controller, final JLabel outputGrafico, int id_sala) {
