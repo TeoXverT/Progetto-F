@@ -5,13 +5,16 @@
  */
 package Testing;
 
+import admin.AdminController;
 import customer.CustomerController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import obj.Booking;
+import obj.Config;
 import obj.Film;
+import obj.Hall;
 import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.Test;
@@ -26,53 +29,47 @@ public class TesterAdmin {
     public TesterAdmin() {
     }
 
+   
     @Test
-    public void hello() {
-        assertThat(true, is(true));
-    }
-
-    @Test
-    public void eliminazioneBiglettiNonPagati() {
-        CustomerController c = CustomerController.getInstance();
-        try {
-           
-             assertThat( c.writeBooking(new Booking(1, null, null, null, 0, 0, 0, ""))==0 , is(true));
-        } catch (SQLException ex) {
-            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    @Test
-    public void creazioneFilmCampoVuoto() {
-        CustomerController c = CustomerController.getInstance();
-        try {
-           
-             assertThat(c.writeFilm(new Film(null, null, null, null, null, null)) , is(false));
-        } catch (SQLException ex) {
-            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    @Test
-    public void fileWriterPercorsoNullo() {
-        CustomerController c = CustomerController.getInstance();
-        try {
-           
-             assertThat(c.fileWriter(null, "..", "..", null, "") , is(false));
-        } catch (SQLException ex) {
-            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void writeFilm() {
+        //testo scrittura film
+        AdminController c = AdminController.getInstance();
+        assertThat( c.writeFilm(new Film(null, null, 0, null, null, null)) == false , is(true));
     }
     
     
     @Test
-    public void rimozioneApici() {
-        CustomerController c = CustomerController.getInstance();
-        try {
-           
-             assertThat(c.stringCharReplacer("a'a")=="a a" , is(true));
-        } catch (SQLException ex) {
-            Logger.getLogger(TesterAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void test2() throws SQLException {
+        
+         AdminController c = AdminController.getInstance();
+         assertThat(c.getFilm(0).isEmpty(), is(false));
+        
     }
+    
+    
+    @Test
+    public void test3() throws SQLException {
+        
+        AdminController c = AdminController.getInstance();
+        assertThat(c.writeConfig(new Config(0, 0, 0, 0, 0)) == false, is(true));
+        
+    }
+    
+    
+   
+    
+    @Test
+    public void test5() throws SQLException {
+        AdminController c = AdminController.getInstance();
+        ArrayList<Hall> hall = new ArrayList<Hall>();
+        hall = c.getHall();
+       
+        assertThat(hall.isEmpty(), is(false));
+        
+        
+    }
+    
+    
+    
+    
 }
