@@ -31,7 +31,7 @@ public class PageThree extends JPanel {
         initGui(proiezione);
     }
 
-    public void initGui(Projection screening) {
+    private void initGui(Projection screening) {
         try {
             ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
             ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
