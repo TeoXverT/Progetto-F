@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import obj.Projection;
 import obj.Hall;
@@ -24,63 +25,100 @@ import obj.Seat;
 public class PanelHallState extends JPanel {
 
     private AdminController controller;
-    CustomerController controller_cliente = new CustomerController(); // da togliere
     private JLabel outputGrafico;
-    private ArrayList<Projection> proiezioni;
-    private ArrayList<Seat> seats;
-    private ArrayList<Seat> bookedSeats;
-    private int id_sala;
-    private Hall sala;
     private ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
 
-    public PanelHallState(final AdminController controller, final JLabel outputGrafico, int id_sala) {
-        try {
-            this.controller = controller;
-            this.outputGrafico = outputGrafico;
-            this.id_sala = id_sala;
-
-            sala = controller.getHall(id_sala);
-            init();
-        } catch (SQLException ex) {
-            outputGrafico.setText("Errore letture dati dal database.");
-        }
+    public PanelHallState(final AdminController controller, final JLabel outputGrafico) {
+        this.controller = controller;
+        this.outputGrafico = outputGrafico;
+        drawHallList();
     }
 
-    private void init() {
-        this.removeAll();
+    private void drawHallList() {
         try {
-            proiezioni = controller.getTodayProjectionByHall(id_sala);     // vado a prendere tutte le proiezioni in un sala
-            JPanel container = new JPanel(new GridLayout(0, 4));
-            ArrayList<JButton> show = new ArrayList<>();    // uso per rappresentare tutte le proiezioni
+            this.removeAll();
+            ArrayList<Hall> hall = new ArrayList<>();
+            ArrayList<JButton> hall_buttons = new ArrayList<>();
+            hall = controller.getHall();
+            JPanel hallList = new JPanel(new GridLayout(0, 5));
 
-            for (int i = 0; i < proiezioni.size(); i++) {   // questo ciclo visualizza tutte le proiezioni e aggiunge gli actionListener
+            for (int i = 0; i < hall.size(); i++) {
+                hall_buttons.add(new JButton("Hall " + hall.get(i).getIdHall()));
+                hallList.add(hall_buttons.get(i));
+                hall_buttons.get(i).addActionListener(hallClick(hall.get(i).getIdHall()));
+            }
+            
+            outputGrafico.setText("Done.");
+            this.add(hallList);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Someting goes wrong with server.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
+
+    private ActionListener hallClick(final int hallId) {
+        ActionListener event = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                drawProjections(hallId);
+            }
+        };
+        return event;
+    }
+
+    private void drawProjections(int hallId) {
+        try {
+            this.removeAll();
+            this.setLayout(new BorderLayout(5,100));
+            ArrayList<Projection> proiezioni;
+
+            proiezioni = controller.getTodayProjectionByHall(hallId);     
+            JPanel container = new JPanel(new GridLayout(0, 4));
+            ArrayList<JButton> show = new ArrayList<>();  
+            
+            for (int i = 0; i < proiezioni.size(); i++) {  
                 show.add(new JButton("SHOW " + proiezioni.get(i).getIdProjection()));
-                show.get(i).addActionListener(showClick(proiezioni.get(i).getIdProjection()));
+                show.get(i).addActionListener(showClick(proiezioni.get(i).getIdProjection(), hallId));
                 container.add(show.get(i));
             }
+            JButton backToHall = new JButton("BACK");
+            backToHall.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    goBackToHallList();
+                }
+            });
             this.add(container, BorderLayout.CENTER);
+            this.add(backToHall, BorderLayout.SOUTH);
+            this.revalidate();
+            this.repaint();
         } catch (SQLException ex) {
             outputGrafico.setText("Errore con il server");
         }
 
     }
 
-    private ActionListener showClick(final int id_proiezione) {         // questo metodo è per gestire l'actionListener associato alle proiezioni.
+    private ActionListener showClick(final int id_proiezione, final int hallId) {         // questo metodo è per gestire l'actionListener associato alle proiezioni.
         ActionListener event = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                drawLayout(id_proiezione);
+                drawLayout(id_proiezione, hallId);
             }
         };
         return event;
     }
 
-    private void drawLayout(int id_proiezione) { 
+    private void drawLayout(int id_proiezione, final int hallId) {
         try {
+            ArrayList<Seat> seats;
+            ArrayList<Seat> bookedSeats;
+            Hall hall = controller.getHall(hallId);
+
             this.removeAll();
             this.setLayout(new BorderLayout());
-            JPanel seats_layout = new JPanel(new GridLayout(sala.getRows(), sala.getColumns(), 0, 1));
-            seats = controller_cliente.getSeatsByIdHall(id_sala);
+            JPanel seats_layout = new JPanel(new GridLayout(hall.getRows(), hall.getColumns(),0,1));
+            seats = controller.getSeatsByIdHall(hallId);
             bookedSeats = controller.getTakenSeats(id_proiezione);
 
             for (int i = 0; i < bookedSeats.size(); i++) {
@@ -102,7 +140,7 @@ public class PanelHallState extends JPanel {
 
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    goBack();
+                    goBackToShowList(hallId);
                 }
             });
             this.add(back, BorderLayout.SOUTH);
@@ -111,13 +149,21 @@ public class PanelHallState extends JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(PanelHallState.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
 
-    private void goBack() {
+    }
+    
+    private void goBackToShowList(int hallId) {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        init();
+        drawProjections(hallId);
+        this.revalidate();
+        this.repaint();
+    }
+    
+    private void goBackToHallList() {
+        this.removeAll();
+        this.setLayout(new BorderLayout());
+        drawHallList();
         this.revalidate();
         this.repaint();
     }
