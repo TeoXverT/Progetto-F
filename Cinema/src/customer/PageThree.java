@@ -36,8 +36,8 @@ public class PageThree extends JPanel {
     private CustomerController controller;
     private Projection screening;
     private Booking booking;
-    private ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
-    private ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
+
+   
     private ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
     private ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
     private ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
@@ -77,6 +77,8 @@ public class PageThree extends JPanel {
     }
 
     public void initGui() {
+        ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
+        ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
         this.removeAll();
         this.setLayout(new BorderLayout(20, 30));
 
