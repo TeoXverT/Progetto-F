@@ -85,7 +85,7 @@ public class PageFour extends JPanel {
                 double price = screening.getPrice() + config.getVipOverprice();
                 carrello.add(new JLabel(price + " €"));
             } else if (s.isDisable()) {
-                double price = config.getDisabledPrice();
+                double price = config.getHandicapPrice();
                 carrello.add(new JLabel(price + " €"));
             } else {
                 double price = screening.getPrice();

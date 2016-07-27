@@ -39,7 +39,7 @@ public class PanelConfig extends JPanel {
 
             text[0].setText(String.valueOf(c.getVipOverprice()));
             text[1].setText(String.valueOf(c.getGlassesPrice()));
-            text[2].setText(String.valueOf(c.getDisabledPrice()));
+            text[2].setText(String.valueOf(c.getHandicapPrice()));
             text[3].setText(String.valueOf(c.getOffsetTime()));
             text[4].setText(String.valueOf(c.getBookingValidationTime()));
 
@@ -47,7 +47,7 @@ public class PanelConfig extends JPanel {
             this.add(text[0]);
             this.add(new JLabel("Glasses Price:"));
             this.add(text[1]);
-            this.add(new JLabel("Disabled Price:"));
+            this.add(new JLabel("Handicap Price:"));
             this.add(text[2]);
             this.add(new JLabel("Hall Preparation Time: [MIN]"));
             this.add(text[3]);

@@ -154,7 +154,7 @@ public class AdminController {
     }
 
     public boolean writeConfig(Config config) throws SQLException {
-        if (config.getBookingValidationTime() > 0 && config.getDisabledPrice() > -0.0001 && config.getGlassesPrice() > 0 && config.getOffsetTime() > 0 && config.getVipOverprice() > 0) {
+        if (config.getBookingValidationTime() > 0 && config.getHandicapPrice() > -0.0001 && config.getGlassesPrice() > 0 && config.getOffsetTime() > 0 && config.getVipOverprice() > 0) {
             adapter.writeConfig(config);
             return true;
         } else {

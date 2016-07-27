@@ -153,7 +153,7 @@ public class PageThree extends JPanel {
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
                         seats.get(i).setIcon(seat_handicap);
-                        totale_prezzo -= screening.getPrice();
+                        totale_prezzo -= config.getHandicapPrice();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
                         seats.get(i).setIcon(seat_free);
@@ -166,6 +166,9 @@ public class PageThree extends JPanel {
                     Taken_seats.add(seats.get(i));
                     if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
                         totale_prezzo += (config.getVipOverprice() + screening.getPrice());
+                        prezzo.setText(String.valueOf(totale_prezzo) + "€");
+                    }else if(seats.get(i).isHandicap()) {
+                        totale_prezzo += config.getHandicapPrice();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
                         totale_prezzo += screening.getPrice();

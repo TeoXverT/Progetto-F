@@ -129,9 +129,9 @@ public class AdminGui extends JFrame {
         menuItem.addActionListener(modifyConfiguration());
         menu.add(menuItem);
 
-        menu = new JMenu("Help");
+        menu = new JMenu("About");
         menuBar.add(menu);
-
+        
         menuItem = new JMenuItem("About");
         menuItem.addActionListener(About());
         menu.add(menuItem);
