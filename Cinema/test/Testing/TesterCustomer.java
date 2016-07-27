@@ -74,9 +74,17 @@ public class TesterCustomer {
     
     
     @Test
-    public void test3() throws SQLException {
+    public void configIsNotNULL() throws SQLException {
         //testo se Config non è NULL 
         assertThat(c.getConfig() == null, is(false));
+    }
+    
+    
+    @Test
+    public void getSeatsByIdHall() {
+        //testo che l'array di posti di una sala inesistente sia effettivamente vuoto
+        assertThat(c.getSeatsByIdHall(1121).isEmpty(), is(true));
+        
     }
     
     
