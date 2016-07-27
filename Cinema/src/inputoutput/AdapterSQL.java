@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inputoutput;
 
 import obj.Config;
@@ -14,10 +9,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import obj.Seat;
 
-/**
- *
- * @author Yoga
- */
 public abstract class AdapterSQL {
 
     protected final SQLConnection SQL;
@@ -32,24 +23,6 @@ public abstract class AdapterSQL {
         parser = new ParserObj();
     }
 
-//    public ArrayList<Film> visualizzaFilmFiltratiRispettoOraEData(Calendar Data_ora_inizio, Calendar Data_ora_fine) throws SQLException {
-//        
-//        ArrayList<Film> listaFilmFiltrati;
-//        ResultSet risultatoQuery;
-//        
-//        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String strDate1 = sdfDate.format(Data_ora_fine.getTime());
-//        String strDate2 = sdfDate.format(Data_ora_inizio.getTime());
-//
-//        //TEMPORANEO TEST
-//        //String query = "SELECT Film.id_film, Film.titolo, Film.genere, Film.durata, Film.descrizione, Film.link_youtube, Film.link_copertina FROM  Proiezione LEFT JOIN Film ON Proiezione.id_film = Film.id_film  WHERE ( DATE( Proiezione.data_ora ) > DATE( '" + strDate2 + "' ) AND DATE( Proiezione.data_ora ) < DATE( '" + strDate1 + "' ))";
-//        String query = "SELECT DISTINCT f.id_film, f.titolo, f.genere, f.durata, f.descrizione, f.link_youtube, f.link_copertina FROM  Proiezione p LEFT JOIN Film f ON p.id_film = f.id_film  WHERE (  p.data_ora  > '" + strDate2 + "'  AND p.data_ora  < '" + strDate1 + "' )";
-//        
-//        risultatoQuery = SQL.eseguiQueryLettura(query);
-//        listaFilmFiltrati = parser.Film(risultatoQuery);
-//        
-//        return listaFilmFiltrati;
-//    }
     public Config getConfig() throws SQLException {//PG
         String query;
         ResultSet result;

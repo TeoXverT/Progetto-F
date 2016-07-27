@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package customer;
 
 import java.awt.BorderLayout;
@@ -12,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -21,16 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import obj.Config;
-import obj.Film;
 import obj.Booking;
 import obj.Projection;
 import obj.Hall;
 import obj.Seat;
 
-/**
- *
- * @author Yatin
- */
 public class PageThree extends JPanel {
 
     private CustomerController controller;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inputoutput;
 
 import java.sql.ResultSet;
@@ -16,10 +11,6 @@ import obj.Hall;
 import obj.Projection;
 import obj.Seat;
 
-/**
- *
- * @author Yoga
- */
 public class AdapterSQLAdmin extends AdapterSQL {
 
     public AdapterSQLAdmin() {
