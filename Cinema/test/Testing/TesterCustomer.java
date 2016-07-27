@@ -25,9 +25,7 @@ public class TesterCustomer {
          c = CustomerController.getInstance();
     }
     @Test
-    public void testQuery() throws SQLException {
-        ArrayList<Hall> hall =new ArrayList();
-        
+    public void testQueryGetHall() throws SQLException {
         AdapterSQLAdmin sql  = new AdapterSQLAdmin();
         assertThat(sql.getHall().isEmpty(), is(false));
         
