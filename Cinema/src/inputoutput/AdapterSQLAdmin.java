@@ -94,7 +94,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
                 + "						(SELECT \n"
                 + "							*\n"
                 + "						FROM\n"
-                + "							sql8115909.Config\n"
+                + "							Config\n"
                 + "						ORDER BY Config.id_config DESC\n"
                 + "						LIMIT 1) AS last_config\n"
                 + "					WHERE  Film.id_film = '" + projection.getFilm().getIdFilm() + "' \n"

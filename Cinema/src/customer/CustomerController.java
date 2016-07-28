@@ -64,6 +64,20 @@ public class CustomerController {
             idBooking = adapter.getIdLastBooking();
             adapter.writeBookedSeat(idBooking, booking.getBookedSeat());
         }
+
+        ArrayList<Seat> seatTaken = adapter.getBookedSeat(booking);
+        int i = 0;
+        for (Seat s : seatTaken) {
+            for (Seat seatBooked : booking.getBookedSeat()) {
+                if (s.getId() == seatBooked.getId()) {
+                    i++;
+                }
+            }
+        }
+        if(i!=seatTaken.size()){
+        return 0;
+        }
+
         return idBooking;
     }
 

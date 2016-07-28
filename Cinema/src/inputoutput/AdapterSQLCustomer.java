@@ -124,6 +124,13 @@ public class AdapterSQLCustomer extends AdapterSQL {
         }
         return true;
     }
+    public ArrayList<Seat> getBookedSeat(Booking booking) throws SQLException {//C
+        String query;
+        ResultSet result;
+        query = "SELECT Seats.* FROM Booked_Seat,Seats where Booked_Seat.id_booking = "+ booking.getIdBooking()+" and Booked_Seat.id_seat=Seats.id_seat";
+        result = SQL.readingQuery(query);
+        return parser.seat(result);
+    }
 
     public ArrayList<Seat> getTakenSeats(int idProjection) throws SQLException {//C
         String query;

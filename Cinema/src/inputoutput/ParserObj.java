@@ -90,6 +90,8 @@ public class ParserObj {
         result.close();
         return seat;
     }
+    
+    
 
     ////////////////////////////////////////////////// COMMON USE STUFF ///////////////////////////////////
     private Calendar parseDateTime(Timestamp timestamp) {
