@@ -32,6 +32,7 @@ public class PanelHallState extends JPanel {
         this.controller = controller;
         this.outputGrafico = outputGrafico;
         drawHallList();
+        outputGrafico.setText("Loading halls list...");
     }
 
     private void drawHallList() {
@@ -40,7 +41,7 @@ public class PanelHallState extends JPanel {
             ArrayList<Hall> hall = new ArrayList<>();
             ArrayList<JButton> hall_buttons = new ArrayList<>();
             hall = controller.getHall();
-            JPanel hallList = new JPanel(new GridLayout(0, 5));
+            JPanel hallList = new JPanel(new GridLayout(0, 1));
 
             for (int i = 0; i < hall.size(); i++) {
                 hall_buttons.add(new JButton("Hall " + hall.get(i).getIdHall()));
@@ -62,6 +63,7 @@ public class PanelHallState extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 drawProjections(hallId);
+                outputGrafico.setText("Loading Shows...");
             }
         };
         return event;
@@ -93,6 +95,7 @@ public class PanelHallState extends JPanel {
             this.add(backToHall, BorderLayout.SOUTH);
             this.revalidate();
             this.repaint();
+            outputGrafico.setText("Done.");
         } catch (SQLException ex) {
             outputGrafico.setText("Errore con il server");
         }

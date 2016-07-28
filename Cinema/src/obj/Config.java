@@ -6,13 +6,13 @@ package obj;
  */
 public class Config {
 
-    private double vipOverprice,  glassesPrice,  disabledPrice;
+    private double vipOverprice,  glassesPrice,  handicapPrice;
     private int offsetTime, bookingValidationTime;
 
-    public Config(double vipOverprice, double glassesPrice,  double disabledPrice, int offsetTime, int bookingValidationTime) {
+    public Config(double vipOverprice, double glassesPrice,  double handicapPrice, int offsetTime, int bookingValidationTime) {
         this.vipOverprice = vipOverprice;
         this.glassesPrice = glassesPrice;
-        this.disabledPrice = disabledPrice;
+        this.handicapPrice = handicapPrice;
         this.offsetTime = offsetTime;
         this.bookingValidationTime = bookingValidationTime;
     }
@@ -29,8 +29,8 @@ public class Config {
         return glassesPrice;
     }
 
-    public double getDisabledPrice() {
-        return disabledPrice;
+    public double getHandicapPrice() {
+        return handicapPrice;
     }
 
     public int getBookingValidationTime() {

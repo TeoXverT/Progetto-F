@@ -31,14 +31,9 @@ public class PanelAddHall extends JPanel {
 
     private int x;
     private int y;
-    private ArrayList<Seat> seats = null;
+
     JLabel outputGrafico;
     AdminController controller;
-    ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
-    ImageIcon seat_disable = new ImageIcon("images/hall/seat_disable.png");
-    ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
-    ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
-    ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
     JComboBox seat_type;
 
     public PanelAddHall(AdminController controller, final JLabel outputGrafico) {
@@ -55,7 +50,7 @@ public class PanelAddHall extends JPanel {
         this.add(column_num);
         this.add(column);
         this.add(submit);
-        
+
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -67,31 +62,37 @@ public class PanelAddHall extends JPanel {
         });
     }
 
-    public void creaLayoutPosti() {
+    private void creaLayoutPosti() {
+        ImageIcon seat_free = new ImageIcon("images/hall/seat_free.png");
+        ImageIcon seat_disable = new ImageIcon("images/hall/seat_disable.png");
+        ImageIcon seat_vip = new ImageIcon("images/hall/seat_vip.png");
+        ImageIcon seat_handicap = new ImageIcon("images/hall/seat_handicap.png");
+        ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
+        ArrayList<Seat> seats = null;
         this.removeAll();
         this.setLayout(new BorderLayout(20, 30));
         JPanel nord = new JPanel();
-        JPanel sud = new JPanel(new BorderLayout(10,20));
+        JPanel sud = new JPanel(new BorderLayout(10, 20));
         JPanel west = new JPanel();
         JPanel seats_layout = new JPanel(new GridLayout(x, y, 1, 5));
         JLabel screen = new JLabel(screen_icon);
 
         nord.add(screen);
-        
+
         seats = new ArrayList<>();
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 seats.add(new Seat(i, j, seat_free));
             }
         }
-        
-        for(int i=0; i<seats.size(); i++) {
-            seats.get(i).addActionListener(seatClick(i));
+
+        for (int i = 0; i < seats.size(); i++) {
+            seats.get(i).addActionListener(seatClick(i, seat_vip, seat_handicap, seat_free, seat_disable, seats));
             seats_layout.add(seats.get(i));
         }
-        
+
         JButton create_hall = new JButton("Create Hall");
-        create_hall.addActionListener(createHall());
+        create_hall.addActionListener(createHall(seats));
         sud.add(seats_layout, BorderLayout.CENTER);
         sud.add(create_hall, BorderLayout.SOUTH);
         String[] type_list = {"Disable", "Vip", "Handicap", "Free"};
@@ -99,7 +100,7 @@ public class PanelAddHall extends JPanel {
         seat_type.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                switch ((String)seat_type.getSelectedItem()) {
+                switch ((String) seat_type.getSelectedItem()) {
                     case "Disable":
                         outputGrafico.setText("Select the seats to disable.");
                         break;
@@ -112,21 +113,22 @@ public class PanelAddHall extends JPanel {
                     case "Free":
                         outputGrafico.setText("Select the free seats.");
                         break;
-                }        
+                }
             }
         });
         west.add(seat_type);
- 
+
         this.add(nord, BorderLayout.NORTH);
         this.add(sud, BorderLayout.SOUTH);
         this.add(west, BorderLayout.CENTER);
     }
-    
-    public ActionListener seatClick(final int i) {
+
+    private ActionListener seatClick(final int i, final ImageIcon seat_vip, final ImageIcon seat_handicap, final ImageIcon seat_free,
+            final ImageIcon seat_disable, final ArrayList<Seat> seats) {
         ActionListener event = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                switch ((String)seat_type.getSelectedItem()) {
+                switch ((String) seat_type.getSelectedItem()) {
                     case "Disable":
                         seats.get(i).setDisable(true);
                         seats.get(i).setIcon(seat_disable);
@@ -142,26 +144,26 @@ public class PanelAddHall extends JPanel {
                     case "Free":
                         seats.get(i).setIcon(seat_free);
                         break;
-                }        
+                }
             }
         };
-       return event;
+        return event;
     }
-    
-    public ActionListener createHall() {
+
+    private ActionListener createHall(final ArrayList<Seat> seats) {
         ActionListener event = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Hall sala = new Hall(x,y,seats);
+                Hall sala = new Hall(x, y, seats);
                 controller.writeHall(sala);
                 aggiornaGui();
             }
         };
-        return event; 
+        return event;
     }
-    
-    public void aggiornaGui() {
+
+    private void aggiornaGui() {
         this.removeAll();
         outputGrafico.setText("Sala creata con successo.");
     }

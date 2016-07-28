@@ -210,7 +210,7 @@ public class AdapterSQLAdmin extends AdapterSQL {
 
         String query = "INSERT INTO Config(prezzo_vip,glasses_price,disabled_price,offset_time,booking_validation_time) VALUES("
                 + "'" + config.getVipOverprice() + "','"
-                + config.getGlassesPrice() + "','" + config.getDisabledPrice() + "','"
+                + config.getGlassesPrice() + "','" + config.getHandicapPrice() + "','"
                 + config.getOffsetTime() + "','" + config.getBookingValidationTime() + "')";
         SQL.writingQuery(query);
     }

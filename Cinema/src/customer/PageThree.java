@@ -21,24 +21,17 @@ import obj.Hall;
 import obj.Seat;
 
 public class PageThree extends JPanel {
-
     private CustomerController controller;
-   
-
     private double totale_prezzo;
     private Component frameErrore;
     private JLabel prezzo = new JLabel();
     
-
     public PageThree(Projection proiezione) {
         this.controller = CustomerController.getInstance();
-
-       
-
         initGui(proiezione);
     }
 
-    public void initGui(Projection screening) {
+    private void initGui(Projection screening) {
         try {
             ImageIcon screen_icon = new ImageIcon("images/hall/screen.png");
             ImageIcon seat_taken = new ImageIcon("images/hall/seat_taken.png");
@@ -145,7 +138,7 @@ public class PageThree extends JPanel {
         }
     }
 
-    public ActionListener seatClick(final int i, final ImageIcon seat_vip, final ImageIcon seat_handicap, final ImageIcon seat_free, final ImageIcon seat_selezione,final ArrayList<Seat> seats,
+    private ActionListener seatClick(final int i, final ImageIcon seat_vip, final ImageIcon seat_handicap, final ImageIcon seat_free, final ImageIcon seat_selezione,final ArrayList<Seat> seats,
             final ArrayList<Seat> Taken_seats, final Projection screening, final Config config) {
         ActionListener event = new ActionListener() {
 
@@ -160,7 +153,7 @@ public class PageThree extends JPanel {
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else if (seats.get(i).isHandicap()) {
                         seats.get(i).setIcon(seat_handicap);
-                        totale_prezzo -= screening.getPrice();
+                        totale_prezzo -= config.getHandicapPrice();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
                         seats.get(i).setIcon(seat_free);
@@ -173,6 +166,9 @@ public class PageThree extends JPanel {
                     Taken_seats.add(seats.get(i));
                     if (seats.get(i).isVip()) {                                  // Per aggiornare il prezzo.
                         totale_prezzo += (config.getVipOverprice() + screening.getPrice());
+                        prezzo.setText(String.valueOf(totale_prezzo) + "€");
+                    }else if(seats.get(i).isHandicap()) {
+                        totale_prezzo += config.getHandicapPrice();
                         prezzo.setText(String.valueOf(totale_prezzo) + "€");
                     } else {
                         totale_prezzo += screening.getPrice();
