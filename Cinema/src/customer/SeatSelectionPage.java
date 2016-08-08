@@ -20,13 +20,13 @@ import obj.Projection;
 import obj.Hall;
 import obj.Seat;
 
-public class PageThree extends JPanel {
+public class SeatSelectionPage extends JPanel {
     private CustomerController controller;
     private double totale_prezzo;
     private Component frameErrore;
     private JLabel prezzo = new JLabel();
     
-    public PageThree(Projection proiezione) {
+    public SeatSelectionPage(Projection proiezione) {
         this.controller = CustomerController.getInstance();
         initGui(proiezione);
     }
@@ -112,7 +112,7 @@ public class PageThree extends JPanel {
             this.add(center, BorderLayout.CENTER);
             this.add(sud, BorderLayout.SOUTH);
         } catch (SQLException ex) {
-            Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeatSelectionPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      
@@ -129,7 +129,7 @@ public class PageThree extends JPanel {
     private void cartControl(ArrayList<Seat> Taken_seats, Booking booking, Projection screening) {  //  questo metodo ha il compito di controllare 
         if (Taken_seats.size() != 0) {
             booking = new Booking(0, screening, Taken_seats, null, 0, totale_prezzo, 0, null);
-            openPage(new PageFour(booking));
+            openPage(new CheckoutPage(booking));
         } else {
             JOptionPane.showMessageDialog(null,
                     "Please select the seat.",
@@ -182,7 +182,7 @@ public class PageThree extends JPanel {
 
     private void goback() {  //ritorna alla pagina selezione film
         this.removeAll();
-        this.add(new PageOne());
+        this.add(new DayAndFilmSelectionPage());
         this.revalidate();
         this.repaint();
     }
@@ -200,7 +200,7 @@ public class PageThree extends JPanel {
             booked_seats.clear();
             booked_seats = controller.getTakenSeats(screening.getIdProjection());
         } catch (SQLException ex) {
-            Logger.getLogger(PageThree.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeatSelectionPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

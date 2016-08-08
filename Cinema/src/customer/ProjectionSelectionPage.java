@@ -25,14 +25,14 @@ import obj.Film;
 import obj.YoutubePanel;
 import obj.Projection;
 
-public class PageTwo extends JPanel {
+public class ProjectionSelectionPage extends JPanel {
 
     private CustomerController controller;
     private Film film;
     private ArrayList<Projection> proiezione;
     private Calendar focusedDateTime;
 
-    public PageTwo(Film film, Calendar focusedDateTime) {
+    public ProjectionSelectionPage(Film film, Calendar focusedDateTime) {
         this.controller = CustomerController.getInstance();
         this.film = film;
         this.focusedDateTime = focusedDateTime;
@@ -171,7 +171,7 @@ public class PageTwo extends JPanel {
     private void goBack() {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new PageOne(), BorderLayout.CENTER);
+        this.add(new DayAndFilmSelectionPage(), BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }
@@ -189,7 +189,7 @@ public class PageTwo extends JPanel {
     private void openPageThree(Projection screening) {
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new PageThree(screening), BorderLayout.CENTER);
+        this.add(new SeatSelectionPage(screening), BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }

@@ -13,6 +13,12 @@ public class SQLConnection {
     private final String DbName = "sql8115909";
     private final String user = "sql8115909";
     private final String pass = "ifYmYwRJJS";
+    
+//     private final String url = "87.5.142.77";
+//    private final String DbName = "nexus";
+//    private final String user = "programma_java";
+//    private final String pass = "raspberry@";
+//    
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnection() {

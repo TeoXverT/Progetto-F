@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import obj.Film;
 
-public class PageOne extends JPanel {
+public class DayAndFilmSelectionPage extends JPanel {
 
     private CustomerController controller;
 
@@ -40,7 +40,7 @@ private    JTabbedPane tab = new JTabbedPane();
 
     private JPanel pannelloSlider;
 
-    public PageOne() {
+    public DayAndFilmSelectionPage() {
         this.controller = CustomerController.getInstance();
 
         this.setLayout(new BorderLayout());
@@ -173,10 +173,10 @@ private    JTabbedPane tab = new JTabbedPane();
 
                                     OpenPageTwo(f, focusedDateTime);
                                 } catch (SQLException ex) {
-                                    Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(DayAndFilmSelectionPage.class.getName()).log(Level.SEVERE, null, ex);
                                   
                                 } catch (IOException ex) {
-                                    Logger.getLogger(PageOne.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logger.getLogger(DayAndFilmSelectionPage.class.getName()).log(Level.SEVERE, null, ex);
                                   
                                 }
                             }
@@ -206,7 +206,7 @@ private    JTabbedPane tab = new JTabbedPane();
 
     public void OpenPageTwo(Film film, Calendar focusedDateTime) throws SQLException, IOException { //apre pagina selezione proiezioni del film scelto
         this.removeAll();
-        this.add(new PageTwo(film, focusedDateTime), BorderLayout.CENTER);
+        this.add(new ProjectionSelectionPage(film, focusedDateTime), BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
     }

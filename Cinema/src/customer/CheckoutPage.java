@@ -26,7 +26,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class PageFour extends JPanel {
+public class CheckoutPage extends JPanel {
 
     private CustomerController controller;
 
@@ -42,7 +42,7 @@ public class PageFour extends JPanel {
 
     Component popUpWindow;
 
-    public PageFour(Booking booking) {
+    public CheckoutPage(Booking booking) {
         this.controller = CustomerController.getInstance();
 
         this.booking = booking;
@@ -121,7 +121,7 @@ public class PageFour extends JPanel {
         JButton back = new JButton("Indietro");
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                openPage(new PageThree(screening));
+                openPage(new SeatSelectionPage(screening));
             }
         });
         this.add(back, BorderLayout.BEFORE_LINE_BEGINS);
@@ -155,10 +155,10 @@ public class PageFour extends JPanel {
                         "I Posti da lei scielti sono stati prenotati da qualcun'altro, si prega di scieglere dei nuovi posti.",
                         "Attenzione!!!",
                         JOptionPane.WARNING_MESSAGE);
-                openPage(new PageThree(screening));
+                openPage(new SeatSelectionPage(screening));
             } else {
                 booking.setIdBooking(idBooking);
-                openPage(new PageFive(booking));
+                openPage(new WaitingPage(booking));
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(popUpWindow,

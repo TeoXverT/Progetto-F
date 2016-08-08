@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class PageFive extends JPanel {
+public class WaitingPage extends JPanel {
 
     private final int MAX_TIME; //Min
     private final int DB_READ_POLLING = 5; //Sec
@@ -23,7 +23,7 @@ public class PageFive extends JPanel {
     private JLabel countdownDispaly = new JLabel();
     private JPanel pannelloContenitore;
 
-    public PageFive(final Booking booking) {
+    public WaitingPage(final Booking booking) {
         controller = CustomerController.getInstance();
         this.booking = booking;
 
@@ -145,7 +145,7 @@ public class PageFive extends JPanel {
     private void goBack() {   //ritorna pagina selezione film
         this.removeAll();
         this.setLayout(new BorderLayout());
-        this.add(new PageOne());
+        this.add(new DayAndFilmSelectionPage());
         this.revalidate();
         this.repaint();
     }

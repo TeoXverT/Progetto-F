@@ -21,7 +21,7 @@ public class CustomerGui extends JFrame {
         setIconImage(icon.getImage());
 
         this.add(display);
-        display.add(new PageOne());
+        display.add(new DayAndFilmSelectionPage());
     }
 
 }
