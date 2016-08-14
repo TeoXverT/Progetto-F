@@ -15,21 +15,25 @@ public class SQLConnection {
     private final String pass = "ifYmYwRJJS";
     
 //     private final String url = "87.5.142.77";
-//    private final String DbName = "nexus";
+//    private final String DbName = "progetto_f";
 //    private final String user = "programma_java";
 //    private final String pass = "raspberry@";
-//    
+    
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnection() {
     }
 
     public ResultSet readingQuery(String query) throws SQLException {
+                System.out.println(query);
+
         return stmt.executeQuery(query);
     }
 
     public void writingQuery(String query) throws SQLException {
+        System.out.println(query);
         stmt.executeUpdate(query);
+        
     }
 
     public boolean connect() {

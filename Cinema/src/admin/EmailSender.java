@@ -28,7 +28,6 @@ public class EmailSender {
     }
 
     public boolean sendPaymentRequest(Booking booking) {
-
         Projection screening = booking.getProjection();
         Film film = screening.getFilm();
         return sendEmail(booking.getEmail(), purchaseDescription(film, screening, booking));

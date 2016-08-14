@@ -61,7 +61,7 @@ public class ParserObj {
         Config config = null;
 
         while (result.next()) {//Lo farà una sola volta
-            config = new Config(result.getDouble("prezzo_vip"), result.getDouble("glasses_price"), result.getDouble("disabled_price"), result.getInt("offset_time"), result.getInt("booking_validation_time"));
+            config = new Config(result.getDouble("prezzo_vip"), result.getDouble("glasses_price"), result.getDouble("disabled_price"), result.getInt("offset_time"), result.getInt("booking_validation_time"), result.getString("ticket_validation_ip"));
         }
         result.close();
 

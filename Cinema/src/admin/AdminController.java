@@ -63,6 +63,7 @@ public class AdminController {
             @Override
             public void run() {
                 adapter.bookingCleaner();
+                
                 try {
                     ArrayList<Booking> payedBooking = adapter.getPayedBooking();
                     for (Booking booking : payedBooking) {
@@ -77,6 +78,7 @@ public class AdminController {
                     System.out.println("ERROR: Ticket Sender");
                 }
 
+                
                 try {
                     ArrayList<Booking> unSendedBooking = adapter.getUnSendedBooking();
                     for (Booking booking : unSendedBooking) {

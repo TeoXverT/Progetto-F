@@ -208,10 +208,10 @@ public class AdapterSQLAdmin extends AdapterSQL {
 
     public void writeConfig(Config config) throws SQLException {//G
 
-        String query = "INSERT INTO Config(prezzo_vip,glasses_price,disabled_price,offset_time,booking_validation_time) VALUES("
+        String query = "INSERT INTO Config(prezzo_vip,glasses_price,disabled_price,offset_time,booking_validation_time,ticket_validation_ip) VALUES("
                 + "'" + config.getVipOverprice() + "','"
                 + config.getGlassesPrice() + "','" + config.getHandicapPrice() + "','"
-                + config.getOffsetTime() + "','" + config.getBookingValidationTime() + "')";
+                + config.getOffsetTime() + "','" + config.getBookingValidationTime()+ "','" + config.getTicket_validation_ip()+ "')";
         SQL.writingQuery(query);
     }
 
