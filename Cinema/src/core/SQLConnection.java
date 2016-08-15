@@ -14,15 +14,15 @@ public class SQLConnection {
     private java.sql.Connection conn;
     private Statement stmt;
 
-//    private final String url = "sql8.freemysqlhosting.net";
-//    private final String DbName = "sql8115909";
-//    private final String user = "sql8115909";
-//    private final String pass = "ifYmYwRJJS";
+    private final String url = "sql8.freemysqlhosting.net";
+    private final String DbName = "sql8115909";
+    private final String user = "sql8115909";
+    private final String pass = "ifYmYwRJJS";
     
-    private final String url = "progettof.ipstatico.net";
-    private final String DbName = "progetto_f";
-    private final String user = "programma_java";
-    private final String pass = "raspberry@";
+//    private final String url = "progettof.ipstatico.net";
+//    private final String DbName = "progetto_f";
+//    private final String user = "programma_java";
+//    private final String pass = "raspberry@";
     
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
