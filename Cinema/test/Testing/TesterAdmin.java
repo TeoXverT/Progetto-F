@@ -5,11 +5,11 @@
  */
 package Testing;
 
-import admin.AdminController;
+import core.AdminController;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import obj.Booking;
-import obj.Config;
+import core.obj.Booking;
+import core.obj.Config;
 import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class TesterAdmin {
     @Test
     public void writeconfig() throws SQLException {
        
-        assertThat(c.writeConfig(new Config(0, 0, 0, 0, 0)) == false, is(true));
+        assertThat(c.writeConfig(new Config(0, 0, 0, 0, 0,"0")) == false, is(true));
         
     }
     

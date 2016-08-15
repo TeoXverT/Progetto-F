@@ -1,14 +1,14 @@
 package Testing;
 
-import customer.CustomerController;
-import inputoutput.AdapterSQLAdmin;
+import core.CustomerController;
+import core.AdapterSQLAdmin;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import obj.Booking;
-import obj.Hall;
+import core.obj.Booking;
+import core.obj.Hall;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 import static org.junit.Assert.*;
