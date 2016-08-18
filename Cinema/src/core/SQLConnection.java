@@ -24,6 +24,7 @@ public class SQLConnection {
 //    private final String user = "programma_java";
 //    private final String pass = "raspberry@";
 //    
+    // 
     //Attenzione si ricorda la Pass non e quella corretta, si prega di pushare solo file con pass sbagliata (per motivi di sicurezza).
 
     public SQLConnection() {
